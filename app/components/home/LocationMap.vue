@@ -1,5 +1,8 @@
 <script setup lang="ts">
 const config = useAppConfig()
+
+// Pension coordinates
+const pensionCoords = [51.4124, 10.322] as [number, number]
 </script>
 
 <template>
@@ -8,28 +11,32 @@ const config = useAppConfig()
       <h2 class="font-serif text-3xl font-bold text-sage-900 md:text-4xl">So finden Sie uns</h2>
 
       <div class="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2">
-        <!-- Map image column -->
-        <div>
-          <a
-            href="https://www.openstreetmap.org/?mlat=51.4124&mlon=10.3220#map=14/51.4124/10.3220"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group block overflow-hidden rounded-lg"
+        <!-- Interactive map column (consent-gated) -->
+        <AttractionsMapConsent
+          placeholder-image="/img/map/pension-location.png"
+          placeholder-alt="Karte mit Standort der Pension Volgenandt in Breitenbach, Eichsfeld"
+        >
+          <LMap
+            :zoom="13"
+            :center="pensionCoords"
+            :use-global-leaflet="false"
+            style="height: 100%; width: 100%"
           >
-            <NuxtImg
-              src="/img/map/pension-location.png"
-              alt="Karte mit Standort der Pension Volgenandt in Breitenbach, Eichsfeld"
-              class="w-full transition-transform duration-300 group-hover:scale-[1.02]"
-              width="600"
-              height="400"
-              loading="lazy"
-              sizes="(max-width: 768px) 100vw, 50vw"
+            <LTileLayer
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a>"
+              layer-type="base"
+              name="OpenStreetMap"
             />
-          </a>
-          <span class="mt-2 block text-sm text-sage-600">
-            Klicken f&uuml;r interaktive Karte auf OpenStreetMap
-          </span>
-        </div>
+            <LMarker :lat-lng="pensionCoords">
+              <LPopup>
+                <strong>Pension Volgenandt</strong><br />
+                Otto-Reuter-Straße 28<br />
+                37327 Breitenbach
+              </LPopup>
+            </LMarker>
+          </LMap>
+        </AttractionsMapConsent>
 
         <!-- Address + contact column -->
         <div class="flex flex-col justify-center">
