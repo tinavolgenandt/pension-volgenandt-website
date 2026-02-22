@@ -32,13 +32,13 @@ pricing:
 
 startingPrice: 58
 
-heroImage: /img/rooms/doppelzimmer-hero.jpg
-heroImageAlt: 'Zimmer Rosengarten – gemütliches Doppelzimmer'
+heroImage: /img/rooms/rosengarten-hero.jpg
+heroImageAlt: 'Zimmer Rosengarten – Doppelbett mit Fensterblick'
 gallery:
-  - src: /img/rooms/einzelzimmer-hero.jpg
-    alt: 'Zimmer-Ansicht'
-  - src: /img/rooms/zimmer-badezimmer.png
-    alt: 'Privates Badezimmer'
+  - src: /img/rooms/rosengarten-1.jpg
+    alt: 'Rosengarten – Zimmeransicht mit Doppelbett und Sessel'
+  - src: /img/rooms/rosengarten-bad.jpg
+    alt: 'Privates Badezimmer mit Dusche'
   - src: /img/rooms/zimmer-gemeinschaftskueche-1.jpg
     alt: 'Gemeinschaftsküche mit Herd und Ofen'
   - src: /img/rooms/zimmer-gemeinschaftskueche-2.jpg

@@ -31,13 +31,11 @@ pricing:
 
 startingPrice: 58
 
-heroImage: /img/rooms/doppelzimmer-hero.jpg
-heroImageAlt: 'Balkonzimmer – Doppelzimmer mit Einrichtung'
+heroImage: /img/rooms/balkonzimmer-hero.jpg
+heroImageAlt: 'Balkonzimmer – Doppelbett mit gemütlicher Einrichtung'
 gallery:
-  - src: /img/rooms/einzelzimmer-hero.jpg
-    alt: 'Zimmer-Ansicht'
-  - src: /img/rooms/zimmer-badezimmer.png
-    alt: 'Privates Badezimmer'
+  - src: /img/rooms/balkonzimmer-bad.jpg
+    alt: 'Badezimmer mit Glasdusche'
   - src: /img/rooms/zimmer-gemeinschaftskueche-1.jpg
     alt: 'Gemeinschaftsküche mit Herd und Ofen'
   - src: /img/rooms/zimmer-gemeinschaftskueche-2.jpg
