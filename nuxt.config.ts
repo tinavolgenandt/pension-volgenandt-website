@@ -75,9 +75,14 @@ export default defineNuxtConfig({
     typeCheck: 'build',
   },
 
-  // Image optimization — no server-side processing (static GitHub Pages has no /_ipx endpoint)
+  // Image — custom pass-through provider that prepends app.baseURL for GitHub Pages subpath
   image: {
-    provider: 'none',
+    provider: 'static',
+    providers: {
+      static: {
+        provider: '~/providers/static.ts',
+      },
+    },
   },
 
   // Content module (better-sqlite3 build approved in package.json pnpm config)
