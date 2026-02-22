@@ -120,18 +120,20 @@ Plans:
 
 **Goal**: Visitors can check availability and book directly on the site without leaving -- the core conversion flow works end-to-end
 **Depends on**: Phase 1 (consent system), Phase 2 (room YAML data with beds24PropertyId/beds24RoomId), Phase 4 (all content pages stable)
-**Requirements**: BOOK-01, BOOK-02, BOOK-03, BOOK-04, BOOK-05, BOOK-06
+**Requirements**: BOOK-01, BOOK-03 (BOOK-04/BOOK-05 overridden by CONTEXT.md -- no BookingBar, no iframes)
+**Plans:** 2 plans
 **Success Criteria** (what must be TRUE):
 
-1. Visitor who has granted booking consent sees the Beds24 widget embedded as an iframe on room detail pages; the iframe is pre-filtered to the specific room's property and room ID
-2. Visitor who has NOT granted booking consent sees a ConsentPlaceholder component explaining what the widget does and offering a button to grant consent -- zero requests to beds24.com exist in Network tab
-3. Every page shows a BookingBar (sticky desktop bar) or floating booking button (mobile) for quick access to availability checking
-4. Beds24 iframe height adjusts dynamically via iframeResizer as the visitor navigates booking steps (calendar, guest details, confirmation)
+1. Visitor who has granted booking consent sees Beds24 JavaScript widgets (BookingBox + AvailabilityCalendar) on room detail pages, pre-filtered to the specific room's property and room ID
+2. Visitor who has NOT granted booking consent sees NO booking widget area at all -- zero requests to beds24.com or media.xmlcal.com in Network tab
+3. Room detail pages show booking section near the top (after gallery, before amenities) for maximum conversion
+4. Room cards on /zimmer/ show live Beds24 prices when API token is configured, with YAML fallback prices using "ab" prefix when unavailable
+5. Booking form submission opens Beds24 responsive booking page (booking2.php) in a new tab
 
 Plans:
 
-- [ ] 05-01-PLAN.md -- iframe-resizer install, BookingWidget + BookingConsentPlaceholder, room detail page wiring
-- [ ] 05-02-PLAN.md -- BookingBar (sticky desktop bar + mobile FAB), layout integration, visual verification
+- [ ] 05-01-PLAN.md -- Beds24 JS widget components (BookingBox + AvailabilityCalendar), consent-gated loading, room detail page booking section, room card conversion optimization
+- [ ] 05-02-PLAN.md -- Build-time Beds24 API V2 price fetching, live pricing with YAML fallback, GitHub Actions integration, visual verification
 
 ### Phase 6: Optimization & Launch
 
@@ -163,10 +165,10 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 4.1 -> 5 -> 6
 | 3. Homepage & Hero                            | 2/2            | Complete    | 2026-02-22 |
 | 4. Content Pages, Attractions & SEO           | 4/4            | Complete    | 2026-02-22 |
 | 4.1. GitHub Pages & GitHub Actions (INSERTED) | 2/2            | Complete    | 2026-02-22 |
-| 5. Booking Integration                        | 0/2            | Not started | -          |
+| 5. Booking Integration                        | 0/2            | Planned     | -          |
 | 6. Optimization & Launch                      | 0/2            | Not started | -          |
 
 ---
 
 _Roadmap created: 2026-02-21_
-_Last updated: 2026-02-22 - Phase 4.1 complete (2/2 plans, site deployed to GitHub Pages)_
+_Last updated: 2026-02-22 - Phase 5 planned (2 plans in 2 waves)_
