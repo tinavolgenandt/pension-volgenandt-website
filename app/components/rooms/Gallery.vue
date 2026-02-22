@@ -39,7 +39,7 @@ const {
       @click="openLightbox(currentIndex)"
     >
       <div class="aspect-[3/2] bg-sage-100">
-        <img
+        <NuxtImg
           v-if="currentImage"
           :src="currentImage.src"
           :alt="currentImage.alt"
