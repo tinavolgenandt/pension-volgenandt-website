@@ -37,7 +37,7 @@ function isActive(to: string): boolean {
   >
     <div class="mx-auto flex max-w-screen-xl items-center justify-between px-4 lg:px-6">
       <!-- Logo -->
-      <div class="shrink-0">
+      <div class="min-w-0 shrink">
         <NuxtLink to="/" class="group block">
           <span
             class="font-serif text-xl font-bold text-white transition-all duration-300 nav:text-2xl"
@@ -98,9 +98,9 @@ function isActive(to: string): boolean {
       <!-- Mobile: CTA + Hamburger (< 1024px) -->
       <div class="flex items-center gap-3 nav:hidden">
         <!-- CTA button (always visible, never hidden in hamburger) -->
-        <UiBaseButton variant="primary" size="sm" to="/zimmer">
-          <span class="min-[400px]:hidden">Anfragen</span>
-          <span class="hidden min-[400px]:inline">Verfügbarkeit prüfen</span>
+        <UiBaseButton variant="primary" size="sm" to="/zimmer" class="whitespace-nowrap">
+          <span class="min-[480px]:hidden">Anfragen</span>
+          <span class="hidden min-[480px]:inline">Verfügbarkeit</span>
         </UiBaseButton>
 
         <!-- Hamburger button -->

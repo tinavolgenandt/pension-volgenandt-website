@@ -8,8 +8,9 @@ defineProps<{
 const mapConsented = ref(false)
 const { isAllowed } = useCookieConsent()
 
-// If media consent already granted via cookie banner, skip two-click
-const shouldShowMap = computed(() => mapConsented.value || isAllowed('media'))
+// Start with placeholder on SSG, check consent only on client
+const isClient = import.meta.client
+const shouldShowMap = computed(() => mapConsented.value || (isClient && isAllowed('media')))
 
 function loadMap() {
   mapConsented.value = true

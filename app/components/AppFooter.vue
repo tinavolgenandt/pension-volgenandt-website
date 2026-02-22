@@ -164,7 +164,7 @@ function openCookieSettings() {
     <!-- Sub-footer copyright bar -->
     <section class="bg-charcoal-950">
       <div class="mx-auto max-w-screen-xl px-4 py-4 text-center text-sm text-sage-400">
-        &copy; {{ new Date().getFullYear() }} {{ config.siteName }}. Alle Rechte vorbehalten.
+        &copy; 2026 {{ config.siteName }}. Alle Rechte vorbehalten.
       </div>
     </section>
   </footer>

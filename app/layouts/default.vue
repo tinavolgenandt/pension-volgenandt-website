@@ -6,7 +6,9 @@
       <slot />
     </main>
     <AppFooter />
-    <CookieConsent />
-    <CookieSettings />
+    <ClientOnly>
+      <CookieConsent />
+      <CookieSettings />
+    </ClientOnly>
   </div>
 </template>
