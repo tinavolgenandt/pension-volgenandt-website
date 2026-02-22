@@ -3,9 +3,9 @@ useSeoMeta({
   title: 'Zimmer & Ferienwohnungen',
   ogTitle: 'Zimmer & Ferienwohnungen | Pension Volgenandt',
   description:
-    'Entdecken Sie unsere 7 gemütlichen Zimmer und Ferienwohnungen in Breitenbach im Eichsfeld. Ab 38 EUR pro Nacht inkl. MwSt.',
+    'Entdecken Sie unsere 6 gemütlichen Zimmer und Ferienwohnungen in Breitenbach im Eichsfeld. Ab 50 EUR pro Nacht inkl. MwSt.',
   ogDescription:
-    'Entdecken Sie unsere 7 gemütlichen Zimmer und Ferienwohnungen in Breitenbach im Eichsfeld. Ab 38 EUR pro Nacht inkl. MwSt.',
+    'Entdecken Sie unsere 6 gemütlichen Zimmer und Ferienwohnungen in Breitenbach im Eichsfeld. Ab 50 EUR pro Nacht inkl. MwSt.',
   ogImage: '/img/rooms/emils-kuhwiese/hero.webp',
   ogType: 'website',
 })
