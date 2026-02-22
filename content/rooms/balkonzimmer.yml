@@ -23,14 +23,12 @@ beds: '1 Doppelbett'
 sizeM2: 25
 
 pricing:
-  - label: 'Standardpreis'
+  - label: 'Direktbuchung'
     rates:
-      - occupancy: 1
-        pricePerNight: 45
       - occupancy: 2
-        pricePerNight: 60
+        pricePerNight: 58
 
-startingPrice: 45
+startingPrice: 58
 
 heroImage: /img/rooms/doppelzimmer-hero.jpg
 heroImageAlt: 'Balkonzimmer – Doppelzimmer mit Einrichtung'

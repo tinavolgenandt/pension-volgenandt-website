@@ -24,14 +24,12 @@ beds: '1 Doppelbett, 1 Schlafsofa'
 sizeM2: 45
 
 pricing:
-  - label: 'Standardpreis'
+  - label: 'Direktbuchung'
     rates:
-      - occupancy: 1
-        pricePerNight: 55
       - occupancy: 2
-        pricePerNight: 70
+        pricePerNight: 73
 
-startingPrice: 55
+startingPrice: 73
 
 heroImage: /img/rooms/emils-kuhwiese-hero.jpg
 heroImageAlt: "Ferienwohnung Emil's Kuhwiese – gemütlicher Wohnbereich"

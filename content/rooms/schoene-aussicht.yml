@@ -22,14 +22,12 @@ beds: '1 Doppelbett, 1 Schlafsofa'
 sizeM2: 40
 
 pricing:
-  - label: 'Standardpreis'
+  - label: 'Direktbuchung'
     rates:
-      - occupancy: 1
-        pricePerNight: 50
       - occupancy: 2
-        pricePerNight: 65
+        pricePerNight: 126
 
-startingPrice: 50
+startingPrice: 126
 
 heroImage: /img/rooms/schoene-aussicht-hero.jpg
 heroImageAlt: 'Ferienwohnung Schöne Aussicht – Wohn- und Essbereich'

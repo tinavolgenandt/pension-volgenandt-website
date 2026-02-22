@@ -23,12 +23,12 @@ beds: '1 Einzelbett'
 sizeM2: 15
 
 pricing:
-  - label: 'Standardpreis'
+  - label: 'Direktbuchung'
     rates:
       - occupancy: 1
-        pricePerNight: 38
+        pricePerNight: 50
 
-startingPrice: 38
+startingPrice: 50
 
 heroImage: /img/rooms/einzelzimmer-hero.jpg
 heroImageAlt: 'Einzelzimmer mit gemütlichem Bett'

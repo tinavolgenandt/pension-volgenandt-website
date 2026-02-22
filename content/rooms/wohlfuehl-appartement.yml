@@ -23,14 +23,12 @@ beds: '1 Doppelbett, 1 Schlafsofa'
 sizeM2: 50
 
 pricing:
-  - label: 'Standardpreis'
+  - label: 'Direktbuchung'
     rates:
-      - occupancy: 1
-        pricePerNight: 60
       - occupancy: 2
-        pricePerNight: 75
+        pricePerNight: 65
 
-startingPrice: 60
+startingPrice: 65
 
 heroImage: /img/rooms/wohlfuehl-appartement-hero.jpg
 heroImageAlt: 'Wohlfühl-Appartement – Schlafbereich mit Doppelbett'
