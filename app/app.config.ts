@@ -3,8 +3,8 @@ export default defineAppConfig({
   formspreeId: 'xPLACEHOLDER', // Replace with real Formspree form ID from https://formspree.io
   siteTagline: 'Ruhe finden im Eichsfeld',
   contact: {
-    phone: '+49 3605 542775',
-    phoneDisplay: '03605 542775',
+    phone: '+49 160 97719112',
+    phoneDisplay: '0160 97719112',
     mobile: '+49 160 97719112',
     mobileDisplay: '0160 97719112',
     email: 'kontakt@pension-volgenandt.de',
