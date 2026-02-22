@@ -65,12 +65,23 @@ withDefaults(defineProps<Props>(), {
       </div>
 
       <!-- Starting price -->
-      <p class="font-semibold text-sage-800" :class="compact ? 'mt-2 text-sm' : 'mt-4 text-base'">
-        ab {{ startingPrice }} EUR / Nacht
+      <p :class="compact ? 'mt-2 text-sm' : 'mt-4'">
+        <span class="font-normal text-sage-500" :class="compact ? 'text-xs' : 'text-sm'">ab </span>
+        <span class="font-semibold text-waldhonig-600" :class="compact ? 'text-sm' : 'text-lg'">
+          {{ startingPrice }} EUR
+        </span>
         <span class="font-normal text-sage-500" :class="compact ? 'text-xs' : 'text-sm'">
-          inkl. MwSt.
+          / Nacht inkl. MwSt.
         </span>
       </p>
+
+      <!-- CTA button (full variant only) -->
+      <div
+        v-if="!compact"
+        class="mt-4 rounded-lg bg-waldhonig-500 px-4 py-2.5 text-center text-sm font-semibold text-white transition-colors duration-200 group-hover:bg-waldhonig-600"
+      >
+        Verfügbarkeit prüfen
+      </div>
     </div>
   </NuxtLink>
 </template>

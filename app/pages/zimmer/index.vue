@@ -51,6 +51,9 @@ const categoryHeadings: Record<string, string> = {
         Ob gemütliche Ferienwohnung für die ganze Familie oder komfortables Doppelzimmer für Paare
         &ndash; bei uns finden Sie den passenden Rückzugsort für Ihren Aufenthalt im Eichsfeld.
       </p>
+      <p class="mt-2 text-sm text-sage-500">
+        Wählen Sie ein Zimmer, um Verfügbarkeit und Buchungsmöglichkeiten zu sehen.
+      </p>
     </div>
 
     <!-- Room groups by category -->
