@@ -1,20 +1,28 @@
 items:
-  - name: 'Sabine'
-    quote: 'Ein wunderbarer Ort der Ruhe. Die Pension liegt traumhaft schön und die Gastgeber sind herzlich und aufmerksam.'
+  - name: 'Helmut Palm'
+    quote: 'Freundliche Vermieter, optimales Objekt mit Parkmöglichkeit, gute Zimmer, Nutzung der Terrasse mit Grill und große Küche für Frühstück (mit leckerer hausgemachter Konfitüre). Gute Erreichbarkeit und herrliche Umgebung! Wir kommen wieder!'
     rating: 5
 
-  - name: 'Thomas'
-    quote: 'Sehr saubere Zimmer, ein herrliches Frühstück und die Lage mitten im Grünen ist einfach perfekt für eine Auszeit.'
+  - name: 'Marika J.'
+    quote: 'Sehr idyllisch gelegen, super zum Entspannen und Spazierengehen. Auch für Kinder gibt es viele Spielmöglichkeiten im großen Garten. Unsere Fewo war sehr groß, sauber und ordentlich. Es hat an nichts gefehlt. Das Frühstück war liebevoll zubereitet.'
     rating: 5
 
-  - name: 'Monika'
-    quote: 'Wir kommen seit Jahren hierher und fühlen uns jedes Mal wie zu Hause. Der Garten ist ein Traum!'
+  - name: 'Mel R.'
+    quote: 'Freundliche Gastgeber, tolle Lage. Zimmer einfach und sauber, Küche kann genutzt werden, Grillen ist möglich. Die Landschaft ist traumhaft. Wir hatten sehr schöne und ruhige Tage.'
     rating: 5
 
-  - name: 'Jürgen'
-    quote: 'Idealer Ausgangspunkt für Wanderungen im Eichsfeld. Das Frühstück mit regionalen Produkten war hervorragend.'
-    rating: 4
+  - name: 'Thomas Bruck'
+    quote: 'Eine sehr schöne Pension in malerischer Umgebung. Gepflegter Garten und wir hatten einen herrlichen Blick über das Eichsfeld. Unsere Gastgeber waren sehr nett und es gab ein leckeres Frühstück.'
+    rating: 5
 
-  - name: 'Andrea'
-    quote: 'Ruhige Lage, freundliche Vermieter und ein tolles Preis-Leistungs-Verhältnis. Sehr empfehlenswert!'
+  - name: 'Francis Fähnrich'
+    quote: 'Wir waren im Oktober in der schönen Dachgeschosswohnung, zusammen mit einer befreundeten Familie. Alles war sauber und ordentlich. Die Familie war super lieb und sehr zuvorkommend. Das Frühstück war Top und wir können die Pension nur weiterempfehlen.'
+    rating: 5
+
+  - name: 'Christian Wittich'
+    quote: 'Sehr freundlicher Empfang. Tolle Zimmer. Gemeinschaftsterrasse, große Küche. Weitläufige Freiflächen. Sehr ruhige Lage. Reichhaltiges Frühstück.'
+    rating: 5
+
+  - name: 'Kirstin Berger'
+    quote: 'Wir waren für 3 Nächte in dieser Pension. Etwas abgelegen, sehr viel Ruhe. Ideal für den erholsamen Urlaub. Frühstück liebevoll zurechtgemacht, lecker und ausreichend. Sehr zu empfehlen, auch die Gegend!'
     rating: 5
