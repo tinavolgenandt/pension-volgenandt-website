@@ -3,11 +3,13 @@ const scrollIndicatorVisible = ref(true)
 const posterError = ref(false)
 const videoReady = ref(false)
 
-// Video source paths as constants to prevent Vite static resolution
+// Prefix static asset paths with baseURL for GitHub Pages subpath deployment
+const baseURL = useRuntimeConfig().app.baseURL
 const videoSources = {
-  webm: '/video/hero.webm',
-  mp4: '/video/hero.mp4',
+  webm: `${baseURL}video/hero.webm`,
+  mp4: `${baseURL}video/hero.mp4`,
 }
+const posterPath = `${baseURL}img/hero/hero-poster.webp`
 
 function handleScrollIndicatorClick() {
   const welcome = document.getElementById('willkommen')
@@ -38,7 +40,7 @@ if (import.meta.client) {
     <!-- Desktop poster (landscape, CSS background — video crossfades over it) -->
     <div
       class="hero-poster absolute inset-0 hidden bg-cover bg-center md:block"
-      style="background-image: url('/img/hero/hero-poster.webp')"
+      :style="{ backgroundImage: `url('${posterPath}')` }"
     />
 
     <!-- Mobile poster (portrait crop, better composition for small screens) -->

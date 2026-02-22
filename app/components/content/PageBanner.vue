@@ -10,7 +10,7 @@ defineProps<{
 <template>
   <section class="relative h-[200px] overflow-hidden md:h-[300px]">
     <!-- Banner photo -->
-    <img
+    <NuxtImg
       :src="image"
       :alt="imageAlt"
       class="absolute inset-0 h-full w-full object-cover"

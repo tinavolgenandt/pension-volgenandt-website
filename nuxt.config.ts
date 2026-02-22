@@ -39,9 +39,10 @@ export default defineNuxtConfig({
     // Auto-discovers all prerendered routes
   },
 
-  // Robots configuration
+  // Robots configuration (robotsTxt disabled for GitHub Pages subpath compatibility)
   robots: {
     groups: [{ userAgent: '*', allow: '/' }],
+    robotsTxt: false,
   },
 
   // Link checker: warn only during incremental build (pages added across phases)
@@ -86,6 +87,9 @@ export default defineNuxtConfig({
   // Icon module: Lucide icon set with server bundle for SSG
   icon: {
     serverBundle: 'local',
+    clientBundle: {
+      scan: true,
+    },
   },
 
   // SSG configuration: prerender routes for all static pages
@@ -136,12 +140,7 @@ export default defineNuxtConfig({
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       ],
-      link: [
-        { rel: 'icon', href: '/favicon.ico', sizes: '32x32' },
-        { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
-        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
-        { rel: 'manifest', href: '/site.webmanifest' },
-      ],
+      // Favicon/manifest links are in app.vue useHead() so baseURL is applied dynamically
     },
   },
 })

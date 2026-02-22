@@ -1,4 +1,15 @@
 <script setup lang="ts">
+const baseURL = useRuntimeConfig().app.baseURL
+
+useHead({
+  link: [
+    { rel: 'icon', href: `${baseURL}favicon.ico`, sizes: '32x32' },
+    { rel: 'icon', href: `${baseURL}favicon.svg`, type: 'image/svg+xml' },
+    { rel: 'apple-touch-icon', href: `${baseURL}apple-touch-icon.png` },
+    { rel: 'manifest', href: `${baseURL}site.webmanifest` },
+  ],
+})
+
 useSchemaOrg([
   {
     '@type': 'BedAndBreakfast',
