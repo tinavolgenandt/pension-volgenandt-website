@@ -1,24 +1,25 @@
 name: 'Wohlfühl-Appartement'
 slug: wohlfuehl-appartement
-type: ferienwohnung
-category: 'Ferienwohnung'
+type: doppelzimmer
+category: 'Doppelzimmer'
 shortDescription: >-
-  Geräumiges Appartement zum Wohlfühlen mit eigener Küche,
-  separatem Wohnbereich und Platz für bis zu 4 Gäste.
-  Ideal für längere Aufenthalte.
+  Geräumiges Appartement zum Wohlfühlen mit Wasserkocher,
+  Kühlschrank und Spüle im Zimmer. Ideal für 2 Personen,
+  mit zusätzlichem Schlafsofa.
 description: >-
   Das Wohlfühl-Appartement ist mit ca. 50 m² unsere
   größte Unterkunft und bietet Ihnen allen Komfort für
-  einen erholsamen Aufenthalt. Der separate Wohnbereich mit
-  Schlafsofa, die voll ausgestattete Küche und das geräumige
-  Schlafzimmer mit Doppelbett lassen keine Wünsche offen.
-  Besonders für Familien und Gäste, die länger bleiben
-  möchten, ist dieses Appartement die perfekte Wahl.
+  einen erholsamen Aufenthalt. Im Zimmer stehen Ihnen
+  ein Wasserkocher, ein Kühlschrank und eine Spüle zur
+  Verfügung. Das Doppelbett bietet Platz für 2 Gäste;
+  ein zusätzliches Schlafsofa eignet sich gut für kleine
+  Kinder. WLAN, Fernseher und ein eigenes Badezimmer
+  mit Dusche gehören selbstverständlich dazu.
 
 beds24PropertyId: 261258
 beds24RoomId: 1
 
-maxGuests: 4
+maxGuests: 2
 beds: '1 Doppelbett, 1 Schlafsofa'
 sizeM2: 50
 
@@ -45,9 +46,9 @@ gallery:
 amenities:
   - wifi
   - tv
-  - kueche
+  - wasserkocher
   - kuehlschrank
-  - kaffeemaschine
+  - spuele
   - garten
   - parkplatz
   - bettwaesche
@@ -57,8 +58,8 @@ amenities:
 
 highlights:
   - '50 m² – unsere größte Unterkunft'
-  - 'Separater Wohnbereich'
-  - 'Ideal für längere Aufenthalte'
+  - 'Wasserkocher, Kühlschrank & Spüle'
+  - 'Schlafsofa für kleine Kinder'
 
 extras:
   - name: 'Frühstück'

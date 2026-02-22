@@ -11,6 +11,8 @@ export const amenityMap: Record<string, AmenityInfo> = {
   kueche: { icon: 'lucide:cooking-pot', label: 'Küche' },
   kuehlschrank: { icon: 'lucide:refrigerator', label: 'Kühlschrank' },
   kaffeemaschine: { icon: 'lucide:coffee', label: 'Kaffeemaschine' },
+  wasserkocher: { icon: 'lucide:cup-soda', label: 'Wasserkocher' },
+  spuele: { icon: 'lucide:droplets', label: 'Spüle' },
   dusche: { icon: 'lucide:shower-head', label: 'Dusche' },
   badewanne: { icon: 'lucide:bath', label: 'Badewanne' },
   parkplatz: { icon: 'lucide:circle-parking', label: 'Kostenloser Parkplatz' },
