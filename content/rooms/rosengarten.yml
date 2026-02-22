@@ -9,7 +9,7 @@ shortDescription: >-
 description: >-
   Das Zimmer Rosengarten verdankt seinen Namen dem
   wunderschönen Blick auf unseren gepflegten Rosengarten.
-  Auf ca. 22 m² erwartet Sie ein gemütliches Doppelbett,
+  Es erwartet Sie ein gemütliches Doppelbett,
   ein eigenes Badezimmer mit Dusche und eine geschmackvolle
   Einrichtung im ländlichen Stil. WLAN und Fernseher
   stehen Ihnen selbstverständlich zur Verfügung. Lassen
@@ -20,7 +20,6 @@ beds24RoomId: 3
 
 maxGuests: 2
 beds: '1 Doppelbett'
-sizeM2: 22
 
 pricing:
   - label: 'Direktbuchung'

@@ -8,8 +8,8 @@ shortDescription: >-
   und Alleinreisende.
 description: >-
   Das Balkonzimmer verbindet gemütliche Atmosphäre mit
-  dem besonderen Extra eines eigenen Balkons. Auf ca. 25 m²
-  finden Sie ein bequemes Doppelbett, einen Schreibtisch
+  dem besonderen Extra eines eigenen Balkons. Sie finden
+  ein bequemes Doppelbett, einen Schreibtisch
   und ein eigenes Badezimmer mit Dusche. Morgens können
   Sie Ihren Kaffee auf dem Balkon genießen und den Blick
   über den Garten schweifen lassen. WLAN und Fernseher
@@ -20,7 +20,6 @@ beds24RoomId: 2
 
 maxGuests: 2
 beds: '1 Doppelbett'
-sizeM2: 25
 
 pricing:
   - label: 'Direktbuchung'

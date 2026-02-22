@@ -7,7 +7,7 @@ shortDescription: >-
   des Eichsfelds. Eigene Küche, Terrasse und ein zusätzliches
   Schlafsofa – ideal für 2 Personen oder kleine Familien.
 description: >-
-  Die Ferienwohnung Emil's Kuhwiese bietet Ihnen auf ca. 45 m²
+  Die Ferienwohnung Emil's Kuhwiese bietet Ihnen
   alles, was Sie für einen entspannten Aufenthalt brauchen.
   Die voll ausgestattete Küche ermöglicht Selbstversorgung,
   während die Terrasse zum Frühstück im Grünen einlädt.
@@ -21,7 +21,6 @@ beds24PropertyId: 257613
 
 maxGuests: 2
 beds: '1 Doppelbett, 1 Schlafsofa'
-sizeM2: 45
 
 pricing:
   - label: 'Direktbuchung'

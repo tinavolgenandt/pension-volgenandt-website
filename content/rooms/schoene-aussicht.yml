@@ -9,7 +9,7 @@ shortDescription: >-
 description: >-
   Die Ferienwohnung Schöne Aussicht überzeugt mit ihrem
   weiten Blick über die Hügellandschaft des Eichsfelds.
-  Auf ca. 40 m² finden Sie eine voll ausgestattete Küche,
+  Sie finden eine voll ausgestattete Küche,
   einen gemütlichen Wohnbereich und ein Schlafzimmer mit
   Doppelbett. Ein zusätzliches Schlafsofa bietet Platz für
   einen dritten Gast. WLAN, Fernseher und ein eigenes
@@ -19,7 +19,6 @@ beds24PropertyId: 257610
 
 maxGuests: 3
 beds: '1 Doppelbett, 1 Schlafsofa'
-sizeM2: 40
 
 pricing:
   - label: 'Direktbuchung'

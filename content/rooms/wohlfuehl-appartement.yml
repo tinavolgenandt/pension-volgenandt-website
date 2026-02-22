@@ -7,8 +7,7 @@ shortDescription: >-
   Kühlschrank und Spüle im Zimmer. Ideal für 2 Personen,
   mit zusätzlichem Schlafsofa.
 description: >-
-  Das Wohlfühl-Appartement ist mit ca. 50 m² unsere
-  größte Unterkunft und bietet Ihnen allen Komfort für
+  Das Wohlfühl-Appartement bietet Ihnen allen Komfort für
   einen erholsamen Aufenthalt. Im Zimmer stehen Ihnen
   ein Wasserkocher, ein Kühlschrank und eine Spüle zur
   Verfügung. Das Doppelbett bietet Platz für 2 Gäste;
@@ -21,7 +20,6 @@ beds24RoomId: 1
 
 maxGuests: 2
 beds: '1 Doppelbett, 1 Schlafsofa'
-sizeM2: 50
 
 pricing:
   - label: 'Direktbuchung'
@@ -57,7 +55,7 @@ amenities:
   - heizung
 
 highlights:
-  - '50 m² – unsere größte Unterkunft'
+  - 'Unsere größte Unterkunft'
   - 'Wasserkocher, Kühlschrank & Spüle'
   - 'Schlafsofa für kleine Kinder'
 
