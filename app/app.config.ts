@@ -21,7 +21,7 @@ export default defineAppConfig({
   },
   nav: [
     { label: 'Zimmer', to: '/zimmer' },
-    { label: 'Familie', to: '/familie' },
+    { label: 'Für Familien', to: '/familie' },
     { label: 'Aktivitäten', to: '/aktivitaeten' },
     { label: 'Nachhaltigkeit', to: '/nachhaltigkeit' },
     { label: 'Kontakt', to: '/kontakt' },

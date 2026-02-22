@@ -3,7 +3,7 @@ const config = useAppConfig()
 
 const footerNav = [
   { label: 'Zimmer & Preise', to: '/zimmer' },
-  { label: 'Familie & Kinder', to: '/familie' },
+  { label: 'Für Familien', to: '/familie' },
   { label: 'Aktivitäten', to: '/aktivitaeten' },
   { label: 'Nachhaltigkeit', to: '/nachhaltigkeit' },
   { label: 'Ausflugsziele', to: '/ausflugsziele' },
