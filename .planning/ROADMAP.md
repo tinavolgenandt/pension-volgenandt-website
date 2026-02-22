@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Content Infrastructure & Room Pages** - Nuxt Content YAML collections, room data, room overview and detail pages
 - [x] **Phase 3: Homepage & Hero** - Hero video, welcome section, room previews, testimonials, sustainability teaser
 - [x] **Phase 4: Content Pages, Attractions & SEO** - Familie, Aktivitaeten, Nachhaltigkeit, Kontakt, attraction landing pages, structured data, sitemap
-- [ ] **Phase 4.1: GitHub Pages Hosting & GitHub Actions CI/CD** (INSERTED) - GitHub Pages deployment, GitHub Actions build pipeline, automatic SSG builds
+- [x] **Phase 4.1: GitHub Pages Hosting & GitHub Actions CI/CD** (INSERTED) - GitHub Pages deployment, GitHub Actions build pipeline, automatic SSG builds
 - [ ] **Phase 5: Booking Integration** - Beds24 iframe with consent gating, booking bar, per-room filtering
 - [ ] **Phase 6: Optimization & Launch** - Performance tuning, accessibility audit, Lighthouse scores, deployment, DNS cutover
 
@@ -107,14 +107,14 @@ Plans:
 **Success Criteria** (what must be TRUE):
 
 1. Pushing to `main` triggers a GitHub Actions workflow that runs `nuxt build --preset github_pages` and deploys the `.output/public/` directory to GitHub Pages
-2. The site is accessible at the GitHub Pages URL (or custom domain if configured) with HTTPS enforced
+2. The site is accessible at the standard github.io URL with HTTPS enforced (custom domain deferred)
 3. Build failures in the Actions workflow are clearly reported; successful deploys are automatic with no manual steps
-4. The contact form solution works with GitHub Pages hosting (Formspree, since Netlify Forms won't be available)
+4. The contact form code is migrated from Netlify Forms to Formspree with placeholder ID (Formspree account creation deferred)
 
 Plans:
 
-- [ ] 04.1-01-PLAN.md -- GitHub Actions workflow, CNAME file, contact form migration to Formspree
-- [ ] 04.1-02-PLAN.md -- Configure GitHub Pages source + Formspree account, verify deployment
+- [x] 04.1-01-PLAN.md -- GitHub Actions workflow, pnpm config fix, contact form migration to Formspree (placeholder ID)
+- [x] 04.1-02-PLAN.md -- Configure GitHub Pages source, push + deploy, end-to-end verification
 
 ### Phase 5: Booking Integration
 
@@ -162,11 +162,11 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 4.1 -> 5 -> 6
 | 2. Content Infrastructure & Room Pages        | 3/3            | Complete    | 2026-02-22 |
 | 3. Homepage & Hero                            | 2/2            | Complete    | 2026-02-22 |
 | 4. Content Pages, Attractions & SEO           | 4/4            | Complete    | 2026-02-22 |
-| 4.1. GitHub Pages & GitHub Actions (INSERTED) | 0/2            | Not started | -          |
+| 4.1. GitHub Pages & GitHub Actions (INSERTED) | 2/2            | Complete    | 2026-02-22 |
 | 5. Booking Integration                        | 0/2            | Not started | -          |
 | 6. Optimization & Launch                      | 0/2            | Not started | -          |
 
 ---
 
 _Roadmap created: 2026-02-21_
-_Last updated: 2026-02-22 - Phase 4.1 planned (2 plans in 2 waves)_
+_Last updated: 2026-02-22 - Phase 4.1 complete (2/2 plans, site deployed to GitHub Pages)_

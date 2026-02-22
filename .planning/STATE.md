@@ -5,24 +5,24 @@
 See: .planning/PROJECT.md (updated 2026-02-21)
 
 **Core value:** Visitors can easily discover rooms, see prices, and book directly
-**Current focus:** Phase 4.1 in progress (GitHub Pages hosting + GitHub Actions CI/CD).
+**Current focus:** Phase 4.1 complete. Ready for Phase 5 (Booking Integration).
 
 ## Current Position
 
 Phase: 4.1 of 6 (GitHub Pages & GitHub Actions Hosting)
-Plan: 1 of 2 in Phase 4.1
-Status: In progress
-Last activity: 2026-02-22 - Completed 04.1-01-PLAN.md (GitHub Actions workflow + Formspree contact form)
+Plan: 2 of 2 in Phase 4.1
+Status: Phase complete
+Last activity: 2026-02-22 - Completed 04.1-02-PLAN.md (Deploy, verify, fix asset paths + hydration)
 
-Progress: [#############-] 93% (13/14 plans)
+Progress: [##############] 100% (14/14 plans)
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 13
-- Average duration: 18min
-- Total execution time: ~3.7 hours
+- Total plans completed: 14
+- Average duration: 17min
+- Total execution time: ~4 hours
 
 **By Phase:**
 
@@ -32,12 +32,12 @@ Progress: [#############-] 93% (13/14 plans)
 | 2. Content Infrastructure | 3/3   | 50min  | 17min    |
 | 3. Homepage & Hero        | 2/2   | ~66min | ~33min   |
 | 4. Content & SEO          | 4/4   | ~90min | ~23min   |
-| 4.1. GH Pages Hosting     | 1/2   | 5min   | 5min     |
+| 4.1. GH Pages Hosting     | 2/2   | 30min  | 15min    |
 
 **Recent Trend:**
 
-- Last 5 plans: 04-01 (~50min), 04-02 (~15min), 04-03 (~14min), 04-04 (~11min), 04.1-01 (5min)
-- Trend: Infrastructure/config plans execute much faster than content pages
+- Last 5 plans: 04-02 (~15min), 04-03 (~14min), 04-04 (~11min), 04.1-01 (5min), 04.1-02 (25min)
+- Trend: Deployment plans include iteration time for path fixes and verification
 
 _Updated after each plan completion_
 
@@ -102,6 +102,13 @@ Recent decisions affecting current work:
 - [04.1-01]: NUXT_APP_BASE_URL set as env var in workflow (not nuxt.config.ts) for GH Pages subpath
 - [04.1-01]: Formspree form ID stored in app.config.ts as formspreeId (placeholder xPLACEHOLDER)
 - [04.1-01]: No CNAME file -- site served at standard github.io URL; custom domain deferred
+- [04.1-02]: Favicon/manifest links in useHead() with baseURL prefix (not static nuxt.config head)
+- [04.1-02]: Hero video/poster paths use useRuntimeConfig().app.baseURL for subpath deployments
+- [04.1-02]: PageBanner switched from plain img to NuxtImg for automatic baseURL handling
+- [04.1-02]: CookieConsent/CookieSettings wrapped in ClientOnly to prevent SSG hydration mismatch
+- [04.1-02]: MapConsent guards isAllowed() with import.meta.client for consistent SSG rendering
+- [04.1-02]: Icon clientBundle.scan: true bundles icons for client-side rendering (no API endpoint needed)
+- [04.1-02]: robots.txt generation disabled (module doesn't support baseURL)
 
 ### Roadmap Evolution
 
@@ -116,7 +123,7 @@ Recent decisions affecting current work:
 - Replace placeholder hero images in attraction YAML files with real photography before production
 - Replace placeholder banner images for content pages (/img/banners/\*-banner.webp) before launch
 - Replace Formspree placeholder ID (xPLACEHOLDER) in app.config.ts with real form ID before contact form is functional
-- Set GitHub Pages source to "GitHub Actions" in repo Settings > Pages before first deployment
+- ~~Set GitHub Pages source to "GitHub Actions" in repo Settings > Pages~~ (DONE)
 
 ### Blockers/Concerns
 
@@ -131,7 +138,7 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-02-22
-Stopped at: Completed 04.1-01-PLAN.md; ready for 04.1-02
+Stopped at: Phase 4.1 complete. Site deployed to GitHub Pages. Ready for Phase 5.
 Resume file: None
 
 ---
