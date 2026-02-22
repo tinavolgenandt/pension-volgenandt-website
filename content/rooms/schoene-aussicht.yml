@@ -3,22 +3,23 @@ slug: schoene-aussicht
 type: ferienwohnung
 category: 'Ferienwohnung'
 shortDescription: >-
-  Helle Ferienwohnung mit schönem Ausblick über das Eichsfeld.
-  Eigene Küche, gemütlicher Wohnbereich und Platz für
-  bis zu 3 Gäste.
+  Großzügige Ferienwohnung mit schönem Ausblick über das
+  Eichsfeld. Zwei Schlafzimmer mit eigenem Bad, großer
+  Wohnbereich mit Küche – ideal für bis zu 6 Gäste.
 description: >-
   Die Ferienwohnung Schöne Aussicht überzeugt mit ihrem
   weiten Blick über die Hügellandschaft des Eichsfelds.
-  Sie finden eine voll ausgestattete Küche,
-  einen gemütlichen Wohnbereich und ein Schlafzimmer mit
-  Doppelbett. Ein zusätzliches Schlafsofa bietet Platz für
-  einen dritten Gast. WLAN, Fernseher und ein eigenes
-  Badezimmer mit Dusche sind selbstverständlich.
+  Zwei Schlafzimmer mit je einem Doppelbett, Schlafsofa
+  und eigenem Badezimmer bieten bequem Platz für 4 Gäste.
+  Der großzügige Wohnbereich mit voll ausgestatteter Küche,
+  einem weiteren Schlafsofa und einem dritten Badezimmer
+  ermöglicht auch 6 Personen einen komfortablen Aufenthalt.
+  WLAN und Fernseher sind selbstverständlich.
 
 beds24PropertyId: 257610
 
-maxGuests: 3
-beds: '1 Doppelbett, 1 Schlafsofa'
+maxGuests: 6
+beds: '2 Doppelbetten, 3 Schlafsofas'
 
 pricing:
   - label: 'Direktbuchung'
@@ -60,8 +61,8 @@ amenities:
 
 highlights:
   - 'Panoramablick über das Eichsfeld'
-  - 'Eigene Küche für Selbstversorger'
-  - 'Bis zu 3 Gäste'
+  - '2 Schlafzimmer mit eigenem Bad'
+  - 'Bis zu 6 Gäste'
 
 extras:
   - name: 'Frühstück'

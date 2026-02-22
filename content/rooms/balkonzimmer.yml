@@ -4,7 +4,7 @@ type: doppelzimmer
 category: 'Doppelzimmer'
 shortDescription: >-
   Gemütliches Doppelzimmer mit eigenem Balkon und Blick
-  ins Grüne. Der perfekte Rückzugsort für Paare
+  in den Innenhof. Der perfekte Rückzugsort für Paare
   und Alleinreisende.
 description: >-
   Das Balkonzimmer verbindet gemütliche Atmosphäre mit
@@ -12,7 +12,7 @@ description: >-
   ein bequemes Doppelbett, einen Schreibtisch
   und ein eigenes Badezimmer mit Dusche. Morgens können
   Sie Ihren Kaffee auf dem Balkon genießen und den Blick
-  über den Garten schweifen lassen. WLAN und Fernseher
+  über den Innenhof schweifen lassen. WLAN und Fernseher
   sorgen für Unterhaltung am Abend.
 
 beds24PropertyId: 261258
@@ -54,7 +54,7 @@ amenities:
   - heizung
 
 highlights:
-  - 'Eigener Balkon mit Gartenblick'
+  - 'Eigener Balkon mit Blick in den Innenhof'
   - 'Ruhige Lage'
   - 'Schreibtisch zum Arbeiten'
 
