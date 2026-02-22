@@ -34,8 +34,16 @@ startingPrice: 58
 heroImage: /img/rooms/balkonzimmer-hero.jpg
 heroImageAlt: 'Balkonzimmer – Doppelbett mit gemütlicher Einrichtung'
 gallery:
+  - src: /img/rooms/balkonzimmer-balkon.jpg
+    alt: 'Balkon mit Blumenkasten und Sitzgelegenheit'
+  - src: /img/rooms/balkonzimmer-balkon-2.jpg
+    alt: 'Blick vom Balkon in den Innenhof'
   - src: /img/rooms/balkonzimmer-bad.jpg
     alt: 'Badezimmer mit Glasdusche'
+  - src: /img/rooms/balkonzimmer-bad-2.jpg
+    alt: 'Badezimmer mit Waschbecken und Handtuchheizung'
+  - src: /img/rooms/balkonzimmer-innenhof.jpg
+    alt: 'Innenhof der Pension'
   - src: /img/rooms/zimmer-gemeinschaftskueche-1.jpg
     alt: 'Gemeinschaftsküche mit Herd und Ofen'
   - src: /img/rooms/zimmer-gemeinschaftskueche-2.jpg
