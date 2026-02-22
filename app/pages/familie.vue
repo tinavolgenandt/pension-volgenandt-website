@@ -1,13 +1,13 @@
 <script setup lang="ts">
 definePageMeta({
   breadcrumb: {
-    label: 'Familie & Kinder',
+    label: 'Für Familien',
   },
 })
 
 useSeoMeta({
-  title: 'Familie & Kinder',
-  ogTitle: 'Familie & Kinder | Pension Volgenandt',
+  title: 'Für Familien',
+  ogTitle: 'Für Familien | Pension Volgenandt',
   description:
     'Familienurlaub im Eichsfeld: Spielplatz, Garten, Kinderfahrzeuge, Kinderbetten und mehr. Pension Volgenandt in Breitenbach.',
   ogDescription:
@@ -67,7 +67,7 @@ const familyFeatures = [
     <ContentPageBanner
       image="/img/banners/familie-banner.webp"
       image-alt="Kinder spielen im Garten der Pension Volgenandt"
-      title="Familie & Kinder"
+      title="Für Familien"
       subtitle="Bei uns sind die Kleinen die Größten"
     />
 

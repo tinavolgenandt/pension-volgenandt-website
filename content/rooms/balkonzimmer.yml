@@ -4,41 +4,44 @@ type: doppelzimmer
 category: 'Doppelzimmer'
 shortDescription: >-
   Gemütliches Doppelzimmer mit eigenem Balkon und Blick
-  ins Grüne. Der perfekte Rückzugsort für Paare
+  in den Innenhof. Der perfekte Rückzugsort für Paare
   und Alleinreisende.
 description: >-
   Das Balkonzimmer verbindet gemütliche Atmosphäre mit
-  dem besonderen Extra eines eigenen Balkons. Auf ca. 25 m²
-  finden Sie ein bequemes Doppelbett, einen Schreibtisch
+  dem besonderen Extra eines eigenen Balkons. Sie finden
+  ein bequemes Doppelbett, einen Schreibtisch
   und ein eigenes Badezimmer mit Dusche. Morgens können
   Sie Ihren Kaffee auf dem Balkon genießen und den Blick
-  über den Garten schweifen lassen. WLAN und Fernseher
-  sorgen für Unterhaltung am Abend.
+  über den Innenhof schweifen lassen. WLAN und Fernseher
+  sorgen für Unterhaltung am Abend. Die voll ausgestattete
+  Gemeinschaftsküche und die Terrasse stehen allen Gästen
+  zur Verfügung – wir bitten um Rücksichtnahme auf andere Gäste.
 
 beds24PropertyId: 261258
 beds24RoomId: 2
 
 maxGuests: 2
 beds: '1 Doppelbett'
-sizeM2: 25
 
 pricing:
-  - label: 'Standardpreis'
+  - label: 'Direktbuchung'
     rates:
-      - occupancy: 1
-        pricePerNight: 45
       - occupancy: 2
-        pricePerNight: 60
+        pricePerNight: 58
 
-startingPrice: 45
+startingPrice: 58
 
-heroImage: /img/rooms/doppelzimmer-hero.jpg
-heroImageAlt: 'Balkonzimmer – Doppelzimmer mit Einrichtung'
+heroImage: /img/rooms/balkonzimmer-balkon-1.jpg
+heroImageAlt: 'Balkonzimmer – Balkon mit Blumenkasten und Aussicht'
 gallery:
-  - src: /img/rooms/einzelzimmer-hero.jpg
-    alt: 'Zimmer-Ansicht'
-  - src: /img/rooms/zimmer-badezimmer.png
-    alt: 'Privates Badezimmer'
+  - src: /img/rooms/balkonzimmer-zimmer.jpg
+    alt: 'Doppelbett mit gemütlicher Einrichtung'
+  - src: /img/rooms/balkonzimmer-balkon-2.jpg
+    alt: 'Blick vom Balkon in den Innenhof'
+  - src: /img/rooms/balkonzimmer-bad-dusche.jpg
+    alt: 'Badezimmer mit Glasdusche'
+  - src: /img/rooms/balkonzimmer-bad-wc.jpg
+    alt: 'Badezimmer mit Waschbecken und Handtuchheizung'
   - src: /img/rooms/zimmer-gemeinschaftskueche-1.jpg
     alt: 'Gemeinschaftsküche mit Herd und Ofen'
   - src: /img/rooms/zimmer-gemeinschaftskueche-2.jpg
@@ -57,7 +60,7 @@ amenities:
   - heizung
 
 highlights:
-  - 'Eigener Balkon mit Gartenblick'
+  - 'Eigener Balkon mit Blick in den Innenhof'
   - 'Ruhige Lage'
   - 'Schreibtisch zum Arbeiten'
 

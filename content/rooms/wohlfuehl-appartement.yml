@@ -1,55 +1,57 @@
 name: 'Wohlfühl-Appartement'
 slug: wohlfuehl-appartement
-type: ferienwohnung
-category: 'Ferienwohnung'
+type: doppelzimmer
+category: 'Doppelzimmer'
 shortDescription: >-
-  Geräumiges Appartement zum Wohlfühlen mit eigener Küche,
-  separatem Wohnbereich und Platz für bis zu 4 Gäste.
-  Ideal für längere Aufenthalte.
+  Geräumiges Appartement zum Wohlfühlen mit Wasserkocher,
+  Kühlschrank und Spüle im Zimmer. Ideal für 2 Personen,
+  mit zusätzlichem Schlafsofa.
 description: >-
-  Das Wohlfühl-Appartement ist mit ca. 50 m² unsere
-  größte Unterkunft und bietet Ihnen allen Komfort für
-  einen erholsamen Aufenthalt. Der separate Wohnbereich mit
-  Schlafsofa, die voll ausgestattete Küche und das geräumige
-  Schlafzimmer mit Doppelbett lassen keine Wünsche offen.
-  Besonders für Familien und Gäste, die länger bleiben
-  möchten, ist dieses Appartement die perfekte Wahl.
+  Das Wohlfühl-Appartement bietet Ihnen allen Komfort für
+  einen erholsamen Aufenthalt. Im Zimmer stehen Ihnen
+  ein Wasserkocher, ein Kühlschrank und eine Spüle zur
+  Verfügung. Das Doppelbett bietet Platz für 2 Gäste;
+  ein zusätzliches Schlafsofa eignet sich gut für kleine
+  Kinder. WLAN, Fernseher und ein eigenes Badezimmer
+  mit Dusche gehören selbstverständlich dazu. Die voll
+  ausgestattete Gemeinschaftsküche und die Terrasse stehen
+  allen Gästen zur Verfügung – wir bitten um Rücksichtnahme
+  auf andere Gäste.
 
 beds24PropertyId: 261258
 beds24RoomId: 1
 
-maxGuests: 4
+maxGuests: 2
 beds: '1 Doppelbett, 1 Schlafsofa'
-sizeM2: 50
 
 pricing:
-  - label: 'Standardpreis'
+  - label: 'Direktbuchung'
     rates:
-      - occupancy: 1
-        pricePerNight: 60
       - occupancy: 2
-        pricePerNight: 75
+        pricePerNight: 65
 
-startingPrice: 60
+startingPrice: 65
 
 heroImage: /img/rooms/wohlfuehl-appartement-hero.jpg
 heroImageAlt: 'Wohlfühl-Appartement – Schlafbereich mit Doppelbett'
 gallery:
   - src: /img/rooms/wohlfuehl-appartement-1.jpg
     alt: 'Schlafbereich mit gemütlicher Einrichtung'
-  - src: /img/rooms/wohlfuehl-appartement-2.jpg
-    alt: 'Schlafcouch im Wohnbereich'
   - src: /img/rooms/wohlfuehl-appartement-3.jpg
-    alt: 'Küchenzeile mit Ausstattung'
+    alt: 'Wasserkocher, Kühlschrank und Spüle im Zimmer'
   - src: /img/rooms/wohlfuehl-appartement-4.jpg
     alt: 'Privates Badezimmer mit Dusche'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-1.jpg
+    alt: 'Gemeinschaftsküche mit Herd und Ofen'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-2.jpg
+    alt: 'Gemeinschaftsküche mit Kühlschrank'
 
 amenities:
   - wifi
   - tv
-  - kueche
+  - wasserkocher
   - kuehlschrank
-  - kaffeemaschine
+  - spuele
   - garten
   - parkplatz
   - bettwaesche
@@ -58,9 +60,9 @@ amenities:
   - heizung
 
 highlights:
-  - '50 m² – unsere größte Unterkunft'
-  - 'Separater Wohnbereich'
-  - 'Ideal für längere Aufenthalte'
+  - 'Unsere größte Unterkunft'
+  - 'Wasserkocher, Kühlschrank & Spüle'
+  - 'Schlafsofa für kleine Kinder'
 
 extras:
   - name: 'Frühstück'

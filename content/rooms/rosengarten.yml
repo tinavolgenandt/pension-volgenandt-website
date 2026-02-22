@@ -9,36 +9,36 @@ shortDescription: >-
 description: >-
   Das Zimmer Rosengarten verdankt seinen Namen dem
   wunderschönen Blick auf unseren gepflegten Rosengarten.
-  Auf ca. 22 m² erwartet Sie ein gemütliches Doppelbett,
+  Es erwartet Sie ein gemütliches Doppelbett,
   ein eigenes Badezimmer mit Dusche und eine geschmackvolle
   Einrichtung im ländlichen Stil. WLAN und Fernseher
   stehen Ihnen selbstverständlich zur Verfügung. Lassen
   Sie sich vom Duft der Rosen in den Schlaf wiegen.
+  Die voll ausgestattete Gemeinschaftsküche und die Terrasse
+  stehen allen Gästen zur Verfügung – wir bitten um
+  Rücksichtnahme auf andere Gäste.
 
 beds24PropertyId: 261258
 beds24RoomId: 3
 
 maxGuests: 2
 beds: '1 Doppelbett'
-sizeM2: 22
 
 pricing:
-  - label: 'Standardpreis'
+  - label: 'Direktbuchung'
     rates:
-      - occupancy: 1
-        pricePerNight: 45
       - occupancy: 2
-        pricePerNight: 55
+        pricePerNight: 58
 
-startingPrice: 45
+startingPrice: 58
 
-heroImage: /img/rooms/doppelzimmer-hero.jpg
-heroImageAlt: 'Zimmer Rosengarten – gemütliches Doppelzimmer'
+heroImage: /img/rooms/rosengarten-hero.jpg
+heroImageAlt: 'Zimmer Rosengarten – Doppelbett mit Fensterblick'
 gallery:
-  - src: /img/rooms/einzelzimmer-hero.jpg
-    alt: 'Zimmer-Ansicht'
-  - src: /img/rooms/zimmer-badezimmer.png
-    alt: 'Privates Badezimmer'
+  - src: /img/rooms/rosengarten-1.jpg
+    alt: 'Rosengarten – Zimmeransicht mit Doppelbett und Sessel'
+  - src: /img/rooms/rosengarten-bad.jpg
+    alt: 'Privates Badezimmer mit Dusche'
   - src: /img/rooms/zimmer-gemeinschaftskueche-1.jpg
     alt: 'Gemeinschaftsküche mit Herd und Ofen'
   - src: /img/rooms/zimmer-gemeinschaftskueche-2.jpg
