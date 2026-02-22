@@ -3,6 +3,7 @@ import { amenityMap } from '~/utils/amenities'
 
 const route = useRoute()
 const slug = route.params.slug as string
+const config = useAppConfig()
 
 // Fetch current room by slug
 const { data: room } = await useAsyncData(`room-${slug}`, () =>
@@ -18,6 +19,11 @@ if (!room.value) {
 const { data: otherRooms } = await useAsyncData(`other-rooms-${slug}`, () =>
   queryCollection('rooms').where('slug', '<>', slug).order('sortOrder', 'ASC').all(),
 )
+
+// Booking consent check (SSG-safe, same pattern as MapConsent)
+const { isAllowed } = useCookieConsent()
+const isClient = import.meta.client
+const showBooking = computed(() => isClient && isAllowed('booking'))
 
 // Dynamic SEO meta
 useSeoMeta({
@@ -110,13 +116,48 @@ useSchemaOrg([
         </h1>
       </div>
 
-      <!-- 3. Description -->
-      <RoomsDescription
-        :short-description="room.shortDescription"
-        :description="room.description"
-      />
+      <!-- 3. Booking Section (consent-gated, completely absent when not granted) -->
+      <ClientOnly>
+        <section v-if="showBooking && room.beds24PropertyId" aria-label="Verfügbarkeit & Buchung">
+          <h2 class="mb-4 font-serif text-2xl font-semibold text-sage-800">
+            Verfügbarkeit & Buchung
+          </h2>
+          <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <BookingBeds24Calendar
+              :beds24-property-id="room.beds24PropertyId"
+              :beds24-room-id="room.beds24RoomId"
+              :room-name="room.name"
+            />
+            <BookingBeds24Widget
+              :beds24-property-id="room.beds24PropertyId"
+              :beds24-room-id="room.beds24RoomId"
+              :room-name="room.name"
+            />
+          </div>
+        </section>
+      </ClientOnly>
 
-      <!-- 4. Amenities -->
+      <!-- Phone CTA fallback for rooms without beds24PropertyId -->
+      <div
+        v-if="!room.beds24PropertyId"
+        class="rounded-lg border border-sage-200 bg-sage-50 p-6 text-center"
+      >
+        <p class="font-serif text-lg font-semibold text-sage-800">
+          Dieses Zimmer ist nur telefonisch buchbar
+        </p>
+        <a
+          :href="`tel:${config.contact.phone}`"
+          class="mt-3 inline-flex items-center gap-2 rounded-lg bg-waldhonig-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-waldhonig-600"
+        >
+          <Icon name="lucide:phone" :size="18" aria-hidden="true" />
+          {{ config.contact.phoneDisplay }}
+        </a>
+      </div>
+
+      <!-- 4. Price Table -->
+      <RoomsPriceTable :pricing="room.pricing" />
+
+      <!-- 5. Amenities -->
       <RoomsAmenities
         :amenities="room.amenities"
         :size-m2="room.sizeM2"
@@ -124,10 +165,13 @@ useSchemaOrg([
         :beds="room.beds"
       />
 
-      <!-- 5. Price Table -->
-      <RoomsPriceTable :pricing="room.pricing" />
+      <!-- 6. Description -->
+      <RoomsDescription
+        :short-description="room.shortDescription"
+        :description="room.description"
+      />
 
-      <!-- 6. Extras / Zusatzleistungen -->
+      <!-- 7. Extras / Zusatzleistungen -->
       <RoomsExtras :extras="room.extras ?? []" />
     </div>
 
