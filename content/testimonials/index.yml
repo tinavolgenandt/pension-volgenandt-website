@@ -1,0 +1,20 @@
+items:
+  - name: 'Sabine'
+    quote: 'Ein wunderbarer Ort der Ruhe. Die Pension liegt traumhaft schön und die Gastgeber sind herzlich und aufmerksam.'
+    rating: 5
+
+  - name: 'Thomas'
+    quote: 'Sehr saubere Zimmer, ein herrliches Frühstück und die Lage mitten im Grünen ist einfach perfekt für eine Auszeit.'
+    rating: 5
+
+  - name: 'Monika'
+    quote: 'Wir kommen seit Jahren hierher und fühlen uns jedes Mal wie zu Hause. Der Garten ist ein Traum!'
+    rating: 5
+
+  - name: 'Jürgen'
+    quote: 'Idealer Ausgangspunkt für Wanderungen im Eichsfeld. Das Frühstück mit regionalen Produkten war hervorragend.'
+    rating: 4
+
+  - name: 'Andrea'
+    quote: 'Ruhige Lage, freundliche Vermieter und ein tolles Preis-Leistungs-Verhältnis. Sehr empfehlenswert!'
+    rating: 5

@@ -1,0 +1,79 @@
+name: 'Rosengarten'
+slug: rosengarten
+type: doppelzimmer
+category: 'Doppelzimmer'
+shortDescription: >-
+  Charmantes Doppelzimmer mit Blick auf den Rosengarten.
+  Gemütlich eingerichtet und ideal für einen erholsamen
+  Aufenthalt zu zweit.
+description: >-
+  Das Zimmer Rosengarten verdankt seinen Namen dem
+  wunderschönen Blick auf unseren gepflegten Rosengarten.
+  Auf ca. 22 m² erwartet Sie ein gemütliches Doppelbett,
+  ein eigenes Badezimmer mit Dusche und eine geschmackvolle
+  Einrichtung im ländlichen Stil. WLAN und Fernseher
+  stehen Ihnen selbstverständlich zur Verfügung. Lassen
+  Sie sich vom Duft der Rosen in den Schlaf wiegen.
+
+beds24PropertyId: 261258
+beds24RoomId: 3
+
+maxGuests: 2
+beds: '1 Doppelbett'
+sizeM2: 22
+
+pricing:
+  - label: 'Standardpreis'
+    rates:
+      - occupancy: 1
+        pricePerNight: 45
+      - occupancy: 2
+        pricePerNight: 55
+
+startingPrice: 45
+
+heroImage: /img/rooms/doppelzimmer-hero.jpg
+heroImageAlt: 'Zimmer Rosengarten – gemütliches Doppelzimmer'
+gallery:
+  - src: /img/rooms/einzelzimmer-hero.jpg
+    alt: 'Zimmer-Ansicht'
+  - src: /img/rooms/zimmer-badezimmer.png
+    alt: 'Privates Badezimmer'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-1.jpg
+    alt: 'Gemeinschaftsküche mit Herd und Ofen'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-2.jpg
+    alt: 'Gemeinschaftsküche mit Kühlschrank'
+
+amenities:
+  - wifi
+  - tv
+  - garten
+  - parkplatz
+  - bettwaesche
+  - handtuecher
+  - dusche
+  - foehn
+  - heizung
+
+highlights:
+  - 'Blick auf den Rosengarten'
+  - 'Ländlicher Charme'
+  - 'Ruhige Lage im Grünen'
+
+extras:
+  - name: 'Frühstück'
+    description: 'Reichhaltiges Frühstücksbuffet'
+    price: 10
+    unit: 'pro Person / Nacht'
+  - name: 'Genießer-Frühstück'
+    description: 'Erweitertes Frühstück mit regionalen Spezialitäten'
+    price: 15
+    unit: 'pro Person / Nacht'
+  - name: 'Hund'
+    price: 10
+    unit: 'pro Nacht'
+  - name: 'BBQ-Set'
+    price: 10
+    unit: 'pro Nutzung'
+
+sortOrder: 5

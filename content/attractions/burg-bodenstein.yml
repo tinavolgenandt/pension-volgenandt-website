@@ -1,0 +1,47 @@
+name: 'Burg Bodenstein'
+slug: burg-bodenstein
+seoTitle: 'Burg Bodenstein | Pension nahe Burg Bodenstein'
+seoDescription: 'Entdecken Sie die mittelalterliche Burg Bodenstein im Eichsfeld – nur 20 km von unserer Pension. Panoramablick, Kapelle und Burgcafe.'
+heroImage: /img/attractions/burg-bodenstein.webp
+heroImageAlt: 'Mittelalterliche Burg Bodenstein im Eichsfeld'
+distanceKm: 20
+drivingMinutes: 25
+category: kultur
+shortDescription: 'Mittelalterliche Höhenburg mit Panoramablick und Burgcafe'
+intro: >-
+  Die Burg Bodenstein thront majestätisch über dem Leinetal und gehört
+  zu den am besten erhaltenen mittelalterlichen Burgen in Thüringen.
+  Ein Besuch lohnt sich für Geschichtsinteressierte und Genießer gleichermaßen.
+content: >-
+  Etwa 20 Kilometer von unserer Pension entfernt erhebt sich die Burg Bodenstein
+  auf einem Felssporn über dem Tal. Die über 900 Jahre alte Höhenburg
+  beeindruckt mit ihrem mächtigen Bergfried, der romanischen Kapelle und
+  dem weitläufigen Innenhof.
+
+
+  Heute dient die Burg als Familien- und Tagungsstätte der Evangelischen
+  Kirche in Mitteldeutschland. Besucher können die historischen Räume
+  besichtigen, die Burgkapelle besuchen und den atemberaubenden Panoramablick
+  über das Eichsfeld genießen.
+
+
+  Das Burgcafe lädt mit hausgemachtem Kuchen und regionalen Spezialitäten
+  zum Verweilen ein. Besonders empfehlenswert ist die Terrasse mit Blick
+  ins Tal – ein herrlicher Ort für eine Kaffeepause nach der Besichtigung.
+
+
+  Rund um die Burg führen mehrere Wanderwege durch die bewaldeten Hänge.
+  Die Kombination aus Natur, Geschichte und Gastronomie macht Burg Bodenstein
+  zu einem perfekten Tagesausflug.
+hostTip: >-
+  Verbinden Sie den Besuch mit einer Wanderung auf dem Burgenweg.
+  Der Weg von Burg Bodenstein zur Burg Hanstein ist besonders schön
+  und führt durch herrliche Laubwälder.
+bestTimeToVisit: 'Ganzjährig, besonders schön im Herbst'
+openingHours: 'Burggelände täglich zugänglich, Cafe Mi-So 11:00 - 17:00'
+website: 'https://www.burg-bodenstein.de'
+coordinates:
+  lat: 51.4188
+  lng: 10.1367
+gallery: []
+sortOrder: 2

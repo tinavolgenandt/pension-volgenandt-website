@@ -1,0 +1,47 @@
+name: 'Alternativer Bärenpark Worbis'
+slug: baerenpark-worbis
+seoTitle: 'Bärenpark Worbis | Pension nahe Bärenpark'
+seoDescription: 'Besuchen Sie den Alternativen Bärenpark Worbis – nur 12 km von unserer Pension. Tipps, Öffnungszeiten und Unterkunft im Eichsfeld.'
+heroImage: /img/attractions/baerenpark-worbis.webp
+heroImageAlt: 'Braunbär im Alternativen Bärenpark Worbis'
+distanceKm: 12
+drivingMinutes: 15
+category: natur
+shortDescription: 'Braun- und Schwarzbären in naturnahen Gehegen erleben'
+intro: >-
+  Der Alternative Bärenpark Worbis ist einer der beliebtesten Ausflugsziele
+  in unserer Nähe. Hier leben Bären und Wölfe, die aus schlechter Haltung
+  gerettet wurden, in großen naturnahen Gehegen.
+content: >-
+  Nur 12 Kilometer von unserer Pension entfernt liegt der Alternative
+  Bärenpark in Worbis. Auf einer Fläche von 4 Hektar leben hier
+  Braunbären, Schwarzbären und Wölfe in artgerechten Gehegen.
+
+
+  Der Park wurde als Auffangstation für Bären aus schlechter Haltung
+  gegründet und bietet Besuchern einen einzigartigen Einblick in das
+  Leben dieser faszinierenden Tiere. Ein Rundweg führt durch den
+  gesamten Park, vorbei an Beobachtungspunkten und Informationstafeln.
+
+
+  Für Familien mit Kindern gibt es einen großen Abenteuerspielplatz
+  und ein Streichelgehege. Im Parkrestaurant können Sie sich bei
+  regionaler Küche stärken.
+
+
+  Der Bärenpark setzt sich aktiv für den Tierschutz ein und informiert
+  über die Problematik privater Wildtierhaltung. Ein Besuch ist nicht
+  nur ein schönes Erlebnis, sondern unterstützt auch eine wichtige Sache.
+hostTip: >-
+  Kommen Sie am besten morgens, wenn die Bären am aktivsten sind.
+  Der Rundweg dauert etwa 1-2 Stunden. Nehmen Sie festes Schuhwerk
+  mit – der Weg führt durch hügelige Waldlandschaft.
+bestTimeToVisit: 'Frühling bis Herbst, morgens'
+openingHours: 'Täglich 10:00 - 18:00 (März-Oktober), 10:00 - 16:00 (November-Februar)'
+entryPrice: 'Erwachsene 11 EUR, Kinder (4-14) 6 EUR'
+website: 'https://www.baer.de'
+coordinates:
+  lat: 51.3891
+  lng: 10.2064
+gallery: []
+sortOrder: 1

@@ -1,0 +1,41 @@
+name: 'Radfahren & Leine-Radweg'
+slug: radfahren
+seoTitle: 'Radfahren im Eichsfeld'
+seoDescription: 'Radtouren im Eichsfeld und auf dem Leine-Radweg. Unsere Pension ist der ideale Ausgangspunkt für Radfahrer in Thüringen.'
+heroImage: /img/activities/radfahren.webp
+heroImageAlt: 'Radfahrer auf dem Leine-Radweg im Eichsfeld'
+intro: >-
+  Ob gemütliche Radtour entlang der Leine oder sportliche Runde
+  durch die Hügel des Eichsfelds – unsere Pension ist der ideale
+  Ausgangspunkt für Radfahrer. Der bekannte Leine-Radweg führt
+  direkt an Breitenbach vorbei.
+regionDescription: >-
+  Das Eichsfeld bietet Radfahrern eine abwechslungsreiche Landschaft
+  mit gut ausgebauten Radwegen und ruhigen Nebenstraßen. Der Leine-Radweg,
+  einer der beliebtesten Fernradwege Norddeutschlands, führt von der
+  Leinequelle bei Leinefelde bis nach Hannover und passiert dabei unseren
+  Ort Breitenbach. Die Region eignet sich besonders für Tourenradler,
+  die sanfte Hügel und ländliche Idylle schätzen. E-Bike-Fahrer finden
+  in der hügeligen Landschaft ideale Bedingungen – die Steigungen sind
+  moderat, die Belohnung durch die Aussichten umso größer.
+routes:
+  - name: 'Leine-Radweg (Etappe Leinefelde – Heiligenstadt)'
+    distance: '28 km'
+    difficulty: leicht
+    highlight: 'Flache Strecke entlang der Leine mit Einkehrmöglichkeiten in historischen Orten'
+    externalUrl: 'https://www.komoot.de/tour/148562739'
+  - name: 'Eichsfeld-Rundtour über Worbis'
+    distance: '35 km'
+    difficulty: mittel
+    highlight: 'Hügelige Rundtour durch typische Eichsfelder Dörfer mit Besuch im Bärenpark'
+    externalUrl: 'https://www.komoot.de/tour/287451890'
+  - name: 'Unstrut-Radweg (Abschnitt Dingelstädt)'
+    distance: '22 km'
+    difficulty: leicht
+    highlight: 'Gemütliche Tour entlang der Unstrut durch das südliche Eichsfeld'
+    externalUrl: 'https://www.komoot.de/tour/195823641'
+externalPortals:
+  - name: 'komoot'
+    url: 'https://www.komoot.de/guide/1276/radfahren-im-eichsfeld'
+  - name: 'outdooractive'
+    url: 'https://www.outdooractive.com/de/radtouren/eichsfeld/radtouren-im-eichsfeld/1472842/'

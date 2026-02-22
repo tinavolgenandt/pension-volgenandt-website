@@ -1,0 +1,51 @@
+name: 'Burg Hanstein'
+slug: burg-hanstein
+seoTitle: 'Burg Hanstein | Pension nahe Burgruine Hanstein'
+seoDescription: 'Besuchen Sie die Burgruine Hanstein bei Bornhagen – eine der größten Burgruinen Mitteldeutschlands. Nur 18 km von unserer Pension.'
+heroImage: /img/attractions/burg-hanstein.webp
+heroImageAlt: 'Burgruine Hanstein bei Bornhagen im Eichsfeld'
+distanceKm: 18
+drivingMinutes: 22
+category: kultur
+shortDescription: 'Eine der größten Burgruinen Mitteldeutschlands mit Panoramablick'
+intro: >-
+  Die Burgruine Hanstein bei Bornhagen zählt zu den größten und
+  eindrucksvollsten Burgruinen in Mitteldeutschland. Von den mächtigen
+  Mauern genießt man einen unvergesslichen Panoramablick über das Werratal
+  und das Eichsfeld.
+content: >-
+  Nur 18 Kilometer von unserer Pension erhebt sich die Burgruine Hanstein
+  auf einem Bergsporn oberhalb des Ortes Bornhagen. Die im 13. Jahrhundert
+  erbaute Burg war einst Sitz der Herren von Hanstein und beherrschte die
+  Handelsstraße durchs Werratal.
+
+
+  Die imposante Ruine mit ihren bis zu 20 Meter hohen Mauern, dem Bergfried
+  und den erhaltenen Gewölbekellern vermittelt noch heute einen lebendigen
+  Eindruck von der einstigen Größe der Anlage. Der Aufstieg zum Bergfried
+  wird mit einem atemberaubenden Rundblick belohnt.
+
+
+  Besonders eindrucksvoll ist der Blick nach Süden ins Werratal und zum
+  Hohen Meißner. Bei klarer Sicht reicht der Blick bis zum Brocken im Harz.
+  Kein Wunder, dass die Burg Hanstein als einer der schönsten Aussichtspunkte
+  im Eichsfeld gilt.
+
+
+  Rund um die Burg laden gut markierte Wanderwege zum Erkunden der Umgebung
+  ein. Besonders empfehlenswert ist der Weg zum nahegelegenen Ludwigstein
+  auf der hessischen Seite.
+hostTip: >-
+  Besuchen Sie die Burg am besten bei klarem Wetter für den
+  besten Panoramablick. Im Sommer finden auf der Burg regelmäßig
+  Veranstaltungen und Mittelalterfeste statt – fragen Sie uns nach
+  aktuellen Terminen.
+bestTimeToVisit: 'Frühling bis Herbst bei klarem Wetter'
+openingHours: 'April-Oktober täglich 10:00 - 18:00, November-März Sa/So 10:00 - 16:00'
+entryPrice: 'Erwachsene 4 EUR, Kinder (6-14) 2 EUR'
+website: 'https://www.burgruine-hanstein.de'
+coordinates:
+  lat: 51.3561
+  lng: 9.9919
+gallery: []
+sortOrder: 3

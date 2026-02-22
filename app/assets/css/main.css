@@ -1,0 +1,92 @@
+@import 'leaflet/dist/leaflet.css';
+@import 'tailwindcss';
+
+@theme {
+  /* Typography */
+  --font-serif: 'Lora Variable', Georgia, serif;
+  --font-sans: 'DM Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+  /* Sage green palette */
+  --color-sage-50: oklch(0.97 0.01 145);
+  --color-sage-100: oklch(0.94 0.02 145);
+  --color-sage-200: oklch(0.88 0.04 145);
+  --color-sage-300: oklch(0.8 0.06 145);
+  --color-sage-400: oklch(0.7 0.08 145);
+  --color-sage-500: oklch(0.6 0.09 145);
+  --color-sage-600: oklch(0.5 0.08 145);
+  --color-sage-700: oklch(0.42 0.07 145);
+  --color-sage-800: oklch(0.34 0.06 145);
+  --color-sage-900: oklch(0.26 0.05 145);
+  --color-sage-950: oklch(0.18 0.04 145);
+
+  /* Waldhonig CTA palette: forest honey amber (#8B5E2E base) */
+  --color-waldhonig-50: oklch(0.97 0.01 65);
+  --color-waldhonig-100: oklch(0.93 0.03 65);
+  --color-waldhonig-200: oklch(0.86 0.05 65);
+  --color-waldhonig-300: oklch(0.78 0.07 65);
+  --color-waldhonig-400: oklch(0.68 0.09 65);
+  --color-waldhonig-500: oklch(0.5 0.09 65);
+  --color-waldhonig-600: oklch(0.44 0.08 65);
+  --color-waldhonig-700: oklch(0.38 0.07 65);
+  --color-waldhonig-800: oklch(0.32 0.06 65);
+  --color-waldhonig-900: oklch(0.26 0.05 65);
+
+  /* Warm backgrounds */
+  --color-cream: oklch(0.97 0.01 85);
+  --color-warm-white: oklch(0.99 0.005 85);
+
+  /* Charcoal for header/footer dark backgrounds */
+  --color-charcoal-800: oklch(0.28 0.01 240);
+  --color-charcoal-900: oklch(0.22 0.01 240);
+  --color-charcoal-950: oklch(0.16 0.01 240);
+
+  /* Border radius: 8px base per DSGN-01 */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+
+  /* Custom breakpoints */
+  --breakpoint-nav: 64rem; /* 1024px: mobile nav breakpoint */
+}
+
+/* Base typography: 18px body, 1.7 line-height, max 70ch per DSGN-05 */
+html {
+  font-size: 18px;
+}
+
+body {
+  font-family: var(--font-sans);
+  line-height: 1.7;
+  color: var(--color-sage-800);
+  background-color: var(--color-warm-white);
+}
+
+/* Heading typography: Lora Variable serif per CONTEXT decisions */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
+  line-height: 1.3;
+}
+
+h1 {
+  font-weight: 700;
+} /* Lora Bold */
+h2,
+h3 {
+  font-weight: 600;
+} /* Lora Semibold */
+
+/* Prose container for content pages */
+.prose-content {
+  max-width: 70ch;
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-waldhonig-500);
+  outline-offset: 2px;
+}

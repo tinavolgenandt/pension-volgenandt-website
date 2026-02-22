@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <style>
+    .trunk { fill: #6D4C2A; }
+    .canopy-dark { fill: #1B5E20; }
+    .canopy-light { fill: #2E7D32; }
+    @media (prefers-color-scheme: dark) {
+      .trunk { fill: #A67C52; }
+      .canopy-dark { fill: #2E7D32; }
+      .canopy-light { fill: #43A047; }
+    }
+  </style>
+  <!-- Trunk -->
+  <rect class="trunk" x="14" y="22" width="4" height="8" rx="1.5"/>
+  <!-- Canopy: layered pine/fir with rounded edges -->
+  <path class="canopy-dark" d="M16 2L7 15h4L5 24h22L21 15h4L16 2z"/>
+  <path class="canopy-light" d="M16 2L9 12h3.5L7 20h18L19.5 12H23L16 2z"/>
+</svg>

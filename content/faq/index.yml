@@ -1,0 +1,102 @@
+items:
+  - question: 'Wie kann ich ein Zimmer buchen?'
+    answer: >-
+      Sie können direkt über unsere Website buchen, uns eine E-Mail an
+      kontakt@pension-volgenandt.de schreiben oder telefonisch unter
+      +49 3605 542775 erreichen. Wir bestätigen Ihre Buchung
+      innerhalb von 24 Stunden.
+    category: buchung
+    sortOrder: 1
+
+  - question: 'Wie sind die Check-in und Check-out Zeiten?'
+    answer: >-
+      Check-in ist ab 15:00 Uhr, Check-out bis 10:00 Uhr. Wenn Sie
+      früher ankommen oder später abreisen möchten, sprechen Sie
+      uns einfach an – wir finden fast immer eine Lösung.
+    category: buchung
+    sortOrder: 2
+
+  - question: 'Wie ist die Stornierungspolitik?'
+    answer: >-
+      Eine kostenlose Stornierung ist bis 7 Tage vor Anreise möglich.
+      Bei kurzfristigeren Absagen berechnen wir die erste Nacht.
+      Details finden Sie in unseren <a href="/agb/">AGB</a>.
+    category: buchung
+    relatedPage: /agb/
+    sortOrder: 3
+
+  - question: 'Gibt es kostenlose Parkplätze?'
+    answer: >-
+      Ja, wir haben ausreichend kostenlose Parkplätze direkt vor
+      dem Haus. Eine Reservierung ist nicht nötig.
+    category: ausstattung
+    sortOrder: 4
+
+  - question: 'Bieten Sie Frühstück an?'
+    answer: >-
+      Ja! Wir bieten ein reichhaltiges Frühstück für 10 EUR
+      pro Person und ein Genießer-Frühstück mit regionalen
+      Spezialitäten für 15 EUR pro Person. Bitte geben Sie
+      bei der Buchung Bescheid.
+    category: ausstattung
+    sortOrder: 5
+
+  - question: 'Sind Hunde willkommen?'
+    answer: >-
+      Ja, Hunde sind bei uns herzlich willkommen! Wir berechnen
+      5 EUR pro Nacht. Unser großer Garten bietet viel Auslauf,
+      und die Umgebung ist ideal für Spaziergänge mit Hund.
+    category: ausstattung
+    sortOrder: 6
+
+  - question: 'Ist die Pension familienfreundlich?'
+    answer: >-
+      Auf jeden Fall! Wir haben einen großen Garten mit Spielplatz,
+      Kinderfahrzeuge, Kinderbetten und Hochstühle. Mehr dazu auf
+      unserer <a href="/familie/">Familienseite</a>.
+    category: ausstattung
+    relatedPage: /familie/
+    sortOrder: 7
+
+  - question: 'Wie komme ich zur Pension?'
+    answer: >-
+      Von der A38 nehmen Sie die Ausfahrt Leinefelde und folgen der
+      Beschilderung Richtung Breitenbach. Die Fahrt vom Autobahnkreuz
+      dauert etwa 10 Minuten. Vom Bahnhof Leinefelde sind es 8 km –
+      wir holen Sie gerne ab!
+    category: anreise
+    sortOrder: 8
+
+  - question: 'Was kann man in der Umgebung unternehmen?'
+    answer: >-
+      Das Eichsfeld bietet vieles: den Bärenpark Worbis (12 km),
+      Burg Hanstein (18 km), den Baumkronenpfad Hainich (45 km)
+      und herrliche Wanderwege direkt vor der Tür. Alle Ausflugsziele
+      finden Sie auf unserer <a href="/ausflugsziele/">Ausflugsseite</a>.
+    category: umgebung
+    relatedPage: /ausflugsziele/
+    sortOrder: 9
+
+  - question: 'Wann ist die beste Reisezeit?'
+    answer: >-
+      Das Eichsfeld ist zu jeder Jahreszeit schön. Im Frühling
+      blühen die Wiesen, der Sommer lädt zum Wandern und Radfahren
+      ein, der Herbst verzaubert mit Laubfärbung, und im Winter
+      genießen Sie die Ruhe bei Spaziergängen durch verschneite Wälder.
+    category: umgebung
+    sortOrder: 10
+
+  - question: 'Haben Sie WLAN?'
+    answer: >-
+      Ja, kostenloses WLAN steht Ihnen in allen Zimmern und
+      Ferienwohnungen zur Verfügung.
+    category: ausstattung
+    sortOrder: 11
+
+  - question: 'Gibt es einen Aufzug?'
+    answer: >-
+      Nein, unsere Pension hat keinen Aufzug. Einige Zimmer im
+      Erdgeschoss sind barrierefrei erreichbar. Bitte sprechen Sie
+      uns bei Bedarf an – wir finden eine passende Lösung.
+    category: ausstattung
+    sortOrder: 12

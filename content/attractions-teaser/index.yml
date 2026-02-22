@@ -1,0 +1,36 @@
+items:
+  - name: 'Alternativer Bärenpark Worbis'
+    slug: baerenpark-worbis
+    shortDescription: 'Erleben Sie Braun- und Schwarzbären in naturnahen Gehegen'
+    image: /img/attractions/baerenpark.webp
+    imageAlt: 'Braunbär im Alternativen Bärenpark Worbis'
+    distanceKm: 12
+    featured: true
+    category: natur
+
+  - name: 'Burg Hanstein'
+    slug: burg-hanstein
+    shortDescription: 'Eine der größten Burgruinen Mitteldeutschlands'
+    image: /img/attractions/burg-hanstein.webp
+    imageAlt: 'Burgruine Hanstein im Eichsfeld'
+    distanceKm: 18
+    featured: false
+    category: kultur
+
+  - name: 'Burg Bodenstein'
+    slug: burg-bodenstein
+    shortDescription: 'Mittelalterliche Höhenburg mit Familienhotel und Veranstaltungen'
+    image: /img/attractions/burg-bodenstein.webp
+    imageAlt: 'Burg Bodenstein im Eichsfeld'
+    distanceKm: 15
+    featured: false
+    category: kultur
+
+  - name: 'Baumkronenpfad Hainich'
+    slug: baumkronenpfad-hainich
+    shortDescription: 'Wandeln Sie in den Baumkronen des UNESCO-Weltnaturerbes'
+    image: /img/attractions/baumkronenpfad.webp
+    imageAlt: 'Baumkronenpfad im Nationalpark Hainich'
+    distanceKm: 45
+    featured: false
+    category: natur

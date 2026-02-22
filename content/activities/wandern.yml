@@ -1,0 +1,42 @@
+name: 'Wandern im Eichsfeld'
+slug: wandern
+seoTitle: 'Wandern im Eichsfeld'
+seoDescription: 'Entdecken Sie die schönsten Wanderwege im Eichsfeld direkt von unserer Pension. Routen, Tipps und Tourenvorschläge für jeden Anspruch.'
+heroImage: /img/activities/wandern.webp
+heroImageAlt: 'Wanderweg durch die hügelige Landschaft des Eichsfelds'
+intro: >-
+  Das Eichsfeld ist ein Paradies für Wanderer. Direkt von unserer
+  Haustür führen Wege in die sanfte Hügellandschaft mit weiten
+  Wiesen, dichten Wäldern und herrlichen Aussichtspunkten. Ob gemütlicher
+  Spaziergang oder anspruchsvolle Tagestour – hier findet jeder
+  seinen Lieblingsweg.
+regionDescription: >-
+  Die Landschaft des Eichsfelds besticht durch ihren besonderen Charakter:
+  sanfte Hügel, tief eingeschnittene Täler und ausgedehnte Buchenwälder
+  wechseln sich mit offenen Wiesenlandschaften ab. Das gut markierte
+  Wanderwegenetz verbindet historische Dörfer, Burgruinen und Naturschutzgebiete.
+  Die Höhenzüge des Ohmgebirges und des Dünwaldes bieten weite Ausblicke,
+  während die Flusstäler von Leine und Unstrut zu entspannten Wanderungen
+  einladen. Die Region gehört zu den am dünnsten besiedelten Gebieten
+  Deutschlands – perfekt für alle, die Ruhe in der Natur suchen.
+routes:
+  - name: 'Eichsfelder Burgenweg'
+    distance: '14 km'
+    difficulty: mittel
+    highlight: 'Verbindet Burg Bodenstein und Burg Hanstein durch herrliche Laubwälder'
+    externalUrl: 'https://www.komoot.de/tour/225137428'
+  - name: 'Rund um den Ohmberg'
+    distance: '9 km'
+    difficulty: leicht
+    highlight: 'Aussichtsreicher Rundweg mit Blick über das gesamte Eichsfeld'
+    externalUrl: 'https://www.komoot.de/tour/243891265'
+  - name: 'Naturpfad Dünwald'
+    distance: '18 km'
+    difficulty: schwer
+    highlight: 'Durch den größten zusammenhängenden Wald des Eichsfelds mit seltener Flora'
+    externalUrl: 'https://www.komoot.de/tour/259712043'
+externalPortals:
+  - name: 'komoot'
+    url: 'https://www.komoot.de/guide/1275/wandern-im-eichsfeld'
+  - name: 'outdooractive'
+    url: 'https://www.outdooractive.com/de/wanderungen/eichsfeld/wanderungen-im-eichsfeld/1472841/'

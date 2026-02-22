@@ -1,0 +1,48 @@
+name: 'Skywalk Sonnenstein'
+slug: skywalk-sonnenstein
+seoTitle: 'Skywalk Sonnenstein | Pension nahe Skywalk'
+seoDescription: 'Erleben Sie den Skywalk Sonnenstein bei Sontra – eine spektakuläre Aussichtsplattform. Nur 25 km von unserer Pension im Eichsfeld.'
+heroImage: /img/attractions/skywalk-sonnenstein.webp
+heroImageAlt: 'Skywalk Aussichtsplattform am Sonnenstein bei Sontra'
+distanceKm: 25
+drivingMinutes: 30
+category: natur
+shortDescription: 'Spektakuläre Aussichtsplattform mit Panoramablick'
+intro: >-
+  Der Skywalk am Sonnenstein bei Sontra bietet ein unvergessliches
+  Naturerlebnis. Die frei schwebende Aussichtsplattform ragt über
+  den Felsen hinaus und belohnt mutige Besucher mit einem atemberaubenden
+  Panorama.
+content: >-
+  Etwa 25 Kilometer von unserer Pension entfernt erwartet Sie der
+  Skywalk am Sonnenstein – eine der spektakulärsten Aussichtsplattformen
+  in Hessen. Die Stahlkonstruktion ragt mehrere Meter frei über den
+  Felsrand hinaus und bietet einen einzigartigen Blick in die Tiefe
+  und über die weite Landschaft.
+
+
+  Der Weg zum Skywalk führt durch den Geo-Naturpark Frau-Holle-Land
+  und ist bereits ein Erlebnis für sich. Entlang des Premiumwanderwegs
+  passieren Sie bizarre Felsformationen und dichten Mischwald, bevor
+  Sie die Plattform erreichen.
+
+
+  Neben dem Skywalk lohnt sich auch ein Besuch des nahen Kalksteinbruchs,
+  in dem sich ein kleiner See gebildet hat. Die Verbindung aus Geologie,
+  Natur und moderner Architektur macht den Sonnenstein zu einem
+  besonderen Ausflugsziel.
+
+
+  Für den Besuch sollten Sie etwa 2-3 Stunden einplanen, wenn Sie den
+  Rundwanderweg mitnehmen möchten. Festes Schuhwerk ist empfehlenswert.
+hostTip: >-
+  Kombinieren Sie den Skywalk-Besuch mit einer Wanderung auf dem
+  Premiumwanderweg P23. Die gesamte Runde dauert etwa 3 Stunden
+  und bietet immer wieder überraschende Ausblicke.
+bestTimeToVisit: 'Frühling bis Herbst bei klarer Sicht'
+openingHours: 'Frei zugänglich'
+coordinates:
+  lat: 51.0453
+  lng: 9.9361
+gallery: []
+sortOrder: 4

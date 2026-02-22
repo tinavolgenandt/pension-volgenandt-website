@@ -1,0 +1,82 @@
+name: 'Wohlfühl-Appartement'
+slug: wohlfuehl-appartement
+type: ferienwohnung
+category: 'Ferienwohnung'
+shortDescription: >-
+  Geräumiges Appartement zum Wohlfühlen mit eigener Küche,
+  separatem Wohnbereich und Platz für bis zu 4 Gäste.
+  Ideal für längere Aufenthalte.
+description: >-
+  Das Wohlfühl-Appartement ist mit ca. 50 m² unsere
+  größte Unterkunft und bietet Ihnen allen Komfort für
+  einen erholsamen Aufenthalt. Der separate Wohnbereich mit
+  Schlafsofa, die voll ausgestattete Küche und das geräumige
+  Schlafzimmer mit Doppelbett lassen keine Wünsche offen.
+  Besonders für Familien und Gäste, die länger bleiben
+  möchten, ist dieses Appartement die perfekte Wahl.
+
+beds24PropertyId: 261258
+beds24RoomId: 1
+
+maxGuests: 4
+beds: '1 Doppelbett, 1 Schlafsofa'
+sizeM2: 50
+
+pricing:
+  - label: 'Standardpreis'
+    rates:
+      - occupancy: 1
+        pricePerNight: 60
+      - occupancy: 2
+        pricePerNight: 75
+
+startingPrice: 60
+
+heroImage: /img/rooms/wohlfuehl-appartement-hero.jpg
+heroImageAlt: 'Wohlfühl-Appartement – Schlafbereich mit Doppelbett'
+gallery:
+  - src: /img/rooms/wohlfuehl-appartement-1.jpg
+    alt: 'Schlafbereich mit gemütlicher Einrichtung'
+  - src: /img/rooms/wohlfuehl-appartement-2.jpg
+    alt: 'Schlafcouch im Wohnbereich'
+  - src: /img/rooms/wohlfuehl-appartement-3.jpg
+    alt: 'Küchenzeile mit Ausstattung'
+  - src: /img/rooms/wohlfuehl-appartement-4.jpg
+    alt: 'Privates Badezimmer mit Dusche'
+
+amenities:
+  - wifi
+  - tv
+  - kueche
+  - kuehlschrank
+  - kaffeemaschine
+  - garten
+  - parkplatz
+  - bettwaesche
+  - handtuecher
+  - dusche
+  - heizung
+
+highlights:
+  - '50 m² – unsere größte Unterkunft'
+  - 'Separater Wohnbereich'
+  - 'Ideal für längere Aufenthalte'
+
+extras:
+  - name: 'Frühstück'
+    description: 'Reichhaltiges Frühstücksbuffet'
+    price: 10
+    unit: 'pro Person / Nacht'
+  - name: 'Genießer-Frühstück'
+    description: 'Erweitertes Frühstück mit regionalen Spezialitäten'
+    price: 15
+    unit: 'pro Person / Nacht'
+  - name: 'Hund'
+    price: 10
+    unit: 'pro Nacht'
+  - name: 'BBQ-Set'
+    price: 10
+    unit: 'pro Nutzung'
+
+sortOrder: 3
+featured: true

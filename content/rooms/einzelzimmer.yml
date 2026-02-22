@@ -1,0 +1,77 @@
+name: 'Einzelzimmer'
+slug: einzelzimmer
+type: einzelzimmer
+category: 'Einzelzimmer'
+shortDescription: >-
+  Gemütliches Einzelzimmer für Alleinreisende und
+  Geschäftsreisende. Kompakt, komfortabel und mit
+  allem Wichtigen ausgestattet.
+description: >-
+  Unser Einzelzimmer ist der ideale Rückzugsort für
+  Alleinreisende und Geschäftsreisende. Auf ca. 15 m²
+  finden Sie ein bequemes Einzelbett, einen Schreibtisch
+  zum Arbeiten und ein eigenes Badezimmer mit Dusche.
+  WLAN und Fernseher sorgen für Komfort und Unterhaltung.
+  Trotz seiner kompakten Größe bietet das Zimmer alles,
+  was Sie für einen angenehmen Aufenthalt brauchen.
+
+beds24PropertyId: 261258
+beds24RoomId: 5
+
+maxGuests: 1
+beds: '1 Einzelbett'
+sizeM2: 15
+
+pricing:
+  - label: 'Standardpreis'
+    rates:
+      - occupancy: 1
+        pricePerNight: 38
+
+startingPrice: 38
+
+heroImage: /img/rooms/einzelzimmer-hero.jpg
+heroImageAlt: 'Einzelzimmer mit gemütlichem Bett'
+gallery:
+  - src: /img/rooms/doppelzimmer-hero.jpg
+    alt: 'Doppelzimmer-Ansicht'
+  - src: /img/rooms/zimmer-badezimmer.png
+    alt: 'Privates Badezimmer'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-1.jpg
+    alt: 'Gemeinschaftsküche mit Herd und Ofen'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-2.jpg
+    alt: 'Gemeinschaftsküche mit Kühlschrank'
+
+amenities:
+  - wifi
+  - tv
+  - schreibtisch
+  - parkplatz
+  - bettwaesche
+  - handtuecher
+  - dusche
+  - foehn
+  - heizung
+
+highlights:
+  - 'Ideal für Alleinreisende'
+  - 'Schreibtisch zum Arbeiten'
+  - 'Eigenes Badezimmer'
+
+extras:
+  - name: 'Frühstück'
+    description: 'Reichhaltiges Frühstücksbuffet'
+    price: 10
+    unit: 'pro Person / Nacht'
+  - name: 'Genießer-Frühstück'
+    description: 'Erweitertes Frühstück mit regionalen Spezialitäten'
+    price: 15
+    unit: 'pro Person / Nacht'
+  - name: 'Hund'
+    price: 10
+    unit: 'pro Nacht'
+  - name: 'BBQ-Set'
+    price: 10
+    unit: 'pro Nutzung'
+
+sortOrder: 7

@@ -1,0 +1,79 @@
+name: "Ferienwohnung Emil's Kuhwiese"
+slug: emils-kuhwiese
+type: ferienwohnung
+category: 'Ferienwohnung'
+shortDescription: >-
+  Gemütliche Ferienwohnung mit Blick auf die grünen Wiesen
+  des Eichsfelds. Eigene Küche, Terrasse und Platz für
+  bis zu 4 Gäste.
+description: >-
+  Die Ferienwohnung Emil's Kuhwiese bietet Ihnen auf ca. 45 m²
+  alles, was Sie für einen entspannten Aufenthalt brauchen.
+  Die voll ausgestattete Küche ermöglicht Selbstversorgung,
+  während die Terrasse zum Frühstück im Grünen einlädt.
+  Ein Doppelbett und ein Schlafsofa bieten Platz für Familien
+  oder kleine Gruppen. WLAN, Fernseher und ein eigenes
+  Badezimmer mit Dusche gehören selbstverständlich dazu.
+
+beds24PropertyId: 257613
+
+maxGuests: 4
+beds: '1 Doppelbett, 1 Schlafsofa'
+sizeM2: 45
+
+pricing:
+  - label: 'Standardpreis'
+    rates:
+      - occupancy: 1
+        pricePerNight: 55
+      - occupancy: 2
+        pricePerNight: 70
+
+startingPrice: 55
+
+heroImage: /img/rooms/emils-kuhwiese-hero.jpg
+heroImageAlt: "Ferienwohnung Emil's Kuhwiese – gemütlicher Wohnbereich"
+gallery:
+  - src: /img/rooms/emils-kuhwiese-1.jpg
+    alt: 'Schlafbereich mit Doppelbett'
+  - src: /img/rooms/emils-kuhwiese-2.jpg
+    alt: 'Wohnbereich mit Einrichtung'
+  - src: /img/rooms/emils-kuhwiese-3.jpg
+    alt: 'Tageslicht-Badezimmer mit Dusche'
+
+amenities:
+  - wifi
+  - tv
+  - kueche
+  - kuehlschrank
+  - kaffeemaschine
+  - terrasse
+  - parkplatz
+  - bettwaesche
+  - handtuecher
+  - dusche
+  - heizung
+
+highlights:
+  - 'Eigene Küche für Selbstversorger'
+  - 'Terrasse mit Gartenblick'
+  - 'Bis zu 4 Gäste'
+
+extras:
+  - name: 'Frühstück'
+    description: 'Reichhaltiges Frühstücksbuffet'
+    price: 10
+    unit: 'pro Person / Nacht'
+  - name: 'Genießer-Frühstück'
+    description: 'Erweitertes Frühstück mit regionalen Spezialitäten'
+    price: 15
+    unit: 'pro Person / Nacht'
+  - name: 'Hund'
+    price: 10
+    unit: 'pro Nacht'
+  - name: 'BBQ-Set'
+    price: 10
+    unit: 'pro Nutzung'
+
+sortOrder: 1
+featured: true

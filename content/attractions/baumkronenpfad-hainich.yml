@@ -1,0 +1,52 @@
+name: 'Baumkronenpfad Hainich'
+slug: baumkronenpfad-hainich
+seoTitle: 'Baumkronenpfad Hainich | Pension nahe Nationalpark'
+seoDescription: 'Wandeln Sie in den Baumkronen des UNESCO-Weltnaturerbes Hainich – nur 45 km von unserer Pension. Baumkronenpfad auf 44 Meter Höhe.'
+heroImage: /img/attractions/baumkronenpfad-hainich.webp
+heroImageAlt: 'Baumkronenpfad im Nationalpark Hainich'
+distanceKm: 45
+drivingMinutes: 50
+category: natur
+shortDescription: 'UNESCO-Weltnaturerbe mit Baumkronenpfad auf 44 Metern Höhe'
+intro: >-
+  Der Nationalpark Hainich ist Heimat des größten zusammenhängenden
+  Laubwaldes in Deutschland und gehört zum UNESCO-Weltnaturerbe.
+  Der berühmte Baumkronenpfad führt Sie auf 44 Meter Höhe mitten
+  durch die Baumkronen.
+content: >-
+  Etwa 45 Kilometer südwestlich von unserer Pension liegt der
+  Nationalpark Hainich – ein einzigartiges Naturparadies, das seit
+  2011 zum UNESCO-Weltnaturerbe gehört. Hier wächst der größte
+  zusammenhängende Laubwald Deutschlands weitgehend ungestört.
+
+
+  Das Highlight für Besucher ist der Baumkronenpfad mit seinem 44
+  Meter hohen Aussichtsturm. Der 540 Meter lange Pfad führt
+  barrierefrei durch die verschiedenen Schichten des Waldes – vom
+  Waldboden bis hinauf in die Baumkronen. Von oben eröffnet sich
+  ein faszinierender Blick über das endlose Laubdach.
+
+
+  Im Nationalparkzentrum an der Thiemsburg erfahren Besucher alles
+  über das Ökosystem Buchenwald. Die interaktive Ausstellung
+  begeistert Erwachsene und Kinder gleichermaßen. Mehrere
+  Wanderwege unterschiedlicher Länge führen durch den Nationalpark.
+
+
+  Besonders im Frühling, wenn der Waldboden mit Bärlauch und
+  Buschwindröschen bedeckt ist, und im Herbst mit seiner leuchtenden
+  Laubfärbung ist der Hainich ein unvergessliches Naturerlebnis.
+hostTip: >-
+  Planen Sie für den Hainich einen ganzen Tag ein. Kombinieren
+  Sie den Baumkronenpfad mit einer Wanderung auf dem Feensteig
+  oder dem Naturpfad Brunstal. Im Frühling lohnt sich der
+  Bärlauch-Wanderweg besonders.
+bestTimeToVisit: 'Frühling (Bärlauchblüte) und Herbst (Laubfärbung)'
+openingHours: 'Baumkronenpfad April-Oktober täglich 10:00 - 19:00, November-März 10:00 - 16:00'
+entryPrice: 'Erwachsene 14 EUR, Kinder (4-14) 10 EUR'
+website: 'https://www.nationalpark-hainich.de'
+coordinates:
+  lat: 51.0806
+  lng: 10.4581
+gallery: []
+sortOrder: 5

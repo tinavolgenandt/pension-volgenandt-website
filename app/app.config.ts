@@ -1,0 +1,28 @@
+export default defineAppConfig({
+  siteName: 'Pension Volgenandt',
+  siteTagline: 'Ruhe finden im Eichsfeld',
+  contact: {
+    phone: '+49 3605 542775',
+    phoneDisplay: '03605 542775',
+    mobile: '+49 160 97719112',
+    mobileDisplay: '0160 97719112',
+    email: 'kontakt@pension-volgenandt.de',
+    address: {
+      street: 'Otto-Reuter-Straße 28',
+      city: '37327 Leinefelde-Worbis OT Breitenbach',
+      country: 'Deutschland',
+    },
+  },
+  legal: {
+    ownerName: '[INHABER_NAME]',
+    taxId: '[STEUERNUMMER_ODER_UST_IDNR]',
+    authority: '',
+  },
+  nav: [
+    { label: 'Zimmer', to: '/zimmer' },
+    { label: 'Familie', to: '/familie' },
+    { label: 'Aktivitäten', to: '/aktivitaeten' },
+    { label: 'Nachhaltigkeit', to: '/nachhaltigkeit' },
+    { label: 'Kontakt', to: '/kontakt' },
+  ],
+})

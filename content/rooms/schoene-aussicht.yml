@@ -1,0 +1,86 @@
+name: 'Ferienwohnung Schöne Aussicht'
+slug: schoene-aussicht
+type: ferienwohnung
+category: 'Ferienwohnung'
+shortDescription: >-
+  Helle Ferienwohnung mit schönem Ausblick über das Eichsfeld.
+  Eigene Küche, gemütlicher Wohnbereich und Platz für
+  bis zu 3 Gäste.
+description: >-
+  Die Ferienwohnung Schöne Aussicht überzeugt mit ihrem
+  weiten Blick über die Hügellandschaft des Eichsfelds.
+  Auf ca. 40 m² finden Sie eine voll ausgestattete Küche,
+  einen gemütlichen Wohnbereich und ein Schlafzimmer mit
+  Doppelbett. Ein zusätzliches Schlafsofa bietet Platz für
+  einen dritten Gast. WLAN, Fernseher und ein eigenes
+  Badezimmer mit Dusche sind selbstverständlich.
+
+beds24PropertyId: 257610
+
+maxGuests: 3
+beds: '1 Doppelbett, 1 Schlafsofa'
+sizeM2: 40
+
+pricing:
+  - label: 'Standardpreis'
+    rates:
+      - occupancy: 1
+        pricePerNight: 50
+      - occupancy: 2
+        pricePerNight: 65
+
+startingPrice: 50
+
+heroImage: /img/rooms/schoene-aussicht-hero.jpg
+heroImageAlt: 'Ferienwohnung Schöne Aussicht – Wohn- und Essbereich'
+gallery:
+  - src: /img/rooms/schoene-aussicht-1.jpg
+    alt: 'Wohnbereich mit gemütlicher Einrichtung'
+  - src: /img/rooms/schoene-aussicht-2.jpg
+    alt: 'Wohnbereich mit Schlafsofa'
+  - src: /img/rooms/schoene-aussicht-3.jpg
+    alt: 'Spieleecke für Kinder'
+  - src: /img/rooms/schoene-aussicht-4.jpg
+    alt: 'Schlafzimmer 2 mit Doppelbett'
+  - src: /img/rooms/schoene-aussicht-5.jpg
+    alt: 'Schlafzimmer 1 mit Kingsize-Bett'
+  - src: /img/rooms/schoene-aussicht-6.jpg
+    alt: 'Aussicht aus Schlafzimmer 1'
+  - src: /img/rooms/schoene-aussicht-7.jpg
+    alt: 'Essbereich mit Esstisch'
+
+amenities:
+  - wifi
+  - tv
+  - kueche
+  - kuehlschrank
+  - kaffeemaschine
+  - parkplatz
+  - bettwaesche
+  - handtuecher
+  - dusche
+  - heizung
+
+highlights:
+  - 'Panoramablick über das Eichsfeld'
+  - 'Eigene Küche für Selbstversorger'
+  - 'Bis zu 3 Gäste'
+
+extras:
+  - name: 'Frühstück'
+    description: 'Reichhaltiges Frühstücksbuffet'
+    price: 10
+    unit: 'pro Person / Nacht'
+  - name: 'Genießer-Frühstück'
+    description: 'Erweitertes Frühstück mit regionalen Spezialitäten'
+    price: 15
+    unit: 'pro Person / Nacht'
+  - name: 'Hund'
+    price: 10
+    unit: 'pro Nacht'
+  - name: 'BBQ-Set'
+    price: 10
+    unit: 'pro Nutzung'
+
+sortOrder: 2
+featured: true
