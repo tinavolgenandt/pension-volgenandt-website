@@ -1,5 +1,6 @@
 export default defineAppConfig({
   siteName: 'Pension Volgenandt',
+  formspreeId: 'xPLACEHOLDER', // Replace with real Formspree form ID from https://formspree.io
   siteTagline: 'Ruhe finden im Eichsfeld',
   contact: {
     phone: '+49 3605 542775',

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const appConfig = useAppConfig()
+
 const formData = reactive({
   name: '',
   email: '',
@@ -14,18 +16,29 @@ async function handleSubmit() {
   errorMessage.value = ''
 
   try {
-    const body = new URLSearchParams({
-      'form-name': 'kontakt',
-      ...formData,
-    })
-
-    await $fetch('/', {
+    const response = await fetch(`https://formspree.io/f/${appConfig.formspreeId}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: body.toString(),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+      }),
     })
 
-    isSubmitted.value = true
+    if (response.ok) {
+      isSubmitted.value = true
+    } else {
+      const data = await response.json()
+      if (data.errors) {
+        errorMessage.value = data.errors.map((e: { message: string }) => e.message).join(', ')
+      } else {
+        errorMessage.value = 'Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.'
+      }
+    }
   } catch {
     errorMessage.value =
       'Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder rufen Sie uns an.'
@@ -36,13 +49,6 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <!-- Hidden form for Netlify detection (must be in pre-rendered HTML) -->
-  <form name="kontakt" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
-    <input type="text" name="name" />
-    <input type="email" name="email" />
-    <textarea name="message" />
-  </form>
-
   <!-- Success state -->
   <div v-if="isSubmitted" class="rounded-lg bg-sage-50 p-8 text-center">
     <Icon name="ph:check-circle-duotone" class="mx-auto mb-4 size-12 text-sage-600" />
@@ -53,19 +59,9 @@ async function handleSubmit() {
   </div>
 
   <!-- Form -->
-  <form
-    v-else
-    name="kontakt"
-    method="POST"
-    data-netlify="true"
-    data-netlify-honeypot="bot-field"
-    @submit.prevent="handleSubmit"
-  >
-    <input type="hidden" name="form-name" value="kontakt" />
-    <!-- Honeypot (hidden from users, catches bots) -->
-    <div class="hidden">
-      <input name="bot-field" />
-    </div>
+  <form v-else @submit.prevent="handleSubmit">
+    <!-- Formspree honeypot (hidden from users, catches bots) -->
+    <input type="text" name="_gotcha" style="display: none" tabindex="-1" autocomplete="off" />
 
     <div class="space-y-6">
       <div>
