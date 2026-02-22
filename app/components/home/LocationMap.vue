@@ -23,6 +23,7 @@ const config = useAppConfig()
               width="600"
               height="400"
               loading="lazy"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
           </a>
           <span class="mt-2 block text-sm text-sage-600">

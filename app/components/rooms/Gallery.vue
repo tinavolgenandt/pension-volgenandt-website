@@ -61,7 +61,7 @@ const {
         :key="image.src"
         type="button"
         role="listitem"
-        class="shrink-0 cursor-pointer overflow-hidden rounded-lg transition-all duration-200 focus-visible:ring-2 focus-visible:ring-waldhonig-500 focus-visible:ring-offset-2"
+        class="shrink-0 cursor-pointer overflow-hidden rounded-lg transition-opacity duration-200 focus-visible:ring-2 focus-visible:ring-waldhonig-500 focus-visible:ring-offset-2"
         :class="[
           index === currentIndex
             ? 'opacity-100 ring-2 ring-waldhonig-500'
@@ -77,6 +77,7 @@ const {
           loading="lazy"
           width="120"
           height="80"
+          sizes="120px"
           class="h-20 w-[120px] object-cover"
         />
       </button>

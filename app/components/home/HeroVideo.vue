@@ -103,7 +103,7 @@ if (import.meta.client) {
       <div class="hero-animate mt-4 md:mt-6" style="animation-delay: 800ms">
         <NuxtLink
           to="/zimmer/"
-          class="inline-block w-full rounded-lg bg-waldhonig-600 px-6 py-3 text-center font-sans text-base font-semibold text-white transition-all hover:scale-[1.02] hover:bg-waldhonig-700 md:w-auto md:px-8 md:py-4 md:text-left md:text-lg"
+          class="inline-block w-full rounded-lg bg-waldhonig-600 px-6 py-3 text-center font-sans text-base font-semibold text-white transition-[transform,background-color] hover:scale-[1.02] hover:bg-waldhonig-700 md:w-auto md:px-8 md:py-4 md:text-left md:text-lg"
         >
           Zimmer entdecken
         </NuxtLink>

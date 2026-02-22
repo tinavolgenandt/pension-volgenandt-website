@@ -19,7 +19,7 @@ withDefaults(defineProps<Props>(), {
 <template>
   <NuxtLink
     :to="`/zimmer/${slug}`"
-    class="group block overflow-hidden rounded-xl bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus-visible:ring-2 focus-visible:ring-waldhonig-500 focus-visible:ring-offset-2"
+    class="group block overflow-hidden rounded-xl bg-white shadow-sm transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-lg focus-visible:ring-2 focus-visible:ring-waldhonig-500 focus-visible:ring-offset-2"
   >
     <!-- Image area -->
     <div class="relative overflow-hidden" :class="compact ? 'aspect-[3/2]' : 'aspect-[4/3]'">

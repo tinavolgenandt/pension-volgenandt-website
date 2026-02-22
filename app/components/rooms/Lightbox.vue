@@ -122,6 +122,7 @@ const { direction } = useSwipe(imageContainerRef, {
           :src="images[currentIndex]?.src"
           :alt="images[currentIndex]?.alt"
           loading="eager"
+          sizes="90vw"
           class="max-h-full max-w-full object-contain"
         />
       </div>
@@ -142,7 +143,7 @@ const { direction } = useSwipe(imageContainerRef, {
           :key="image.src"
           type="button"
           role="listitem"
-          class="shrink-0 cursor-pointer overflow-hidden rounded transition-all duration-200 focus-visible:ring-2 focus-visible:ring-white"
+          class="shrink-0 cursor-pointer overflow-hidden rounded transition-opacity duration-200 focus-visible:ring-2 focus-visible:ring-white"
           :class="[
             index === currentIndex
               ? 'opacity-100 ring-2 ring-white'
@@ -158,6 +159,7 @@ const { direction } = useSwipe(imageContainerRef, {
             loading="lazy"
             width="80"
             height="54"
+            sizes="80px"
             class="h-[54px] w-20 object-cover"
           />
         </button>

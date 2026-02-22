@@ -49,6 +49,7 @@ defineEmits<{
   height: 6px;
   background: currentColor;
   border-radius: 2px;
+  will-change: transform, opacity;
 }
 
 /* Focus style */
@@ -67,15 +68,15 @@ defineEmits<{
 
 @keyframes mouse-dot-scroll {
   0% {
-    top: 6px;
+    transform: translateX(-50%) translateY(0);
     opacity: 1;
   }
   50% {
-    top: 20px;
+    transform: translateX(-50%) translateY(14px);
     opacity: 0;
   }
   100% {
-    top: 6px;
+    transform: translateX(-50%) translateY(0);
     opacity: 0;
   }
 }

@@ -15,6 +15,7 @@ defineProps<{
       :alt="imageAlt"
       class="absolute inset-0 h-full w-full object-cover"
       loading="eager"
+      sizes="100vw"
     />
 
     <!-- Dark gradient overlay (bottom-to-top, 80% at bottom) -->

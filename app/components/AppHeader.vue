@@ -32,7 +32,7 @@ function isActive(to: string): boolean {
 
 <template>
   <header
-    class="fixed inset-x-0 top-0 z-40 bg-charcoal-900 transition-all duration-300"
+    class="fixed inset-x-0 top-0 z-40 bg-charcoal-900 transition-[padding] duration-300"
     :class="isCompressed ? 'py-2' : 'py-4'"
   >
     <div class="mx-auto flex max-w-screen-xl items-center justify-between px-4 lg:px-6">
@@ -40,13 +40,13 @@ function isActive(to: string): boolean {
       <div class="min-w-0 shrink">
         <NuxtLink to="/" class="group block">
           <span
-            class="font-serif text-xl font-bold text-white transition-all duration-300 nav:text-2xl"
+            class="font-serif text-xl font-bold text-white transition-[font-size] duration-300 nav:text-2xl"
             :class="isCompressed ? 'nav:text-xl' : 'nav:text-2xl'"
           >
             {{ config.siteName }}
           </span>
           <span
-            class="block font-sans text-xs text-sage-300 transition-all duration-300 nav:text-sm"
+            class="block font-sans text-xs text-sage-300 transition-[opacity,height] duration-300 nav:text-sm"
             :class="isCompressed ? 'h-0 overflow-hidden opacity-0' : 'opacity-100'"
           >
             {{ config.siteTagline }}
@@ -149,19 +149,22 @@ function isActive(to: string): boolean {
 
     <!-- Mobile menu dropdown -->
     <Transition
-      enter-active-class="transition-all duration-300 ease-out"
-      enter-from-class="max-h-0 opacity-0"
-      enter-to-class="max-h-screen opacity-100"
-      leave-active-class="transition-all duration-200 ease-in"
-      leave-from-class="max-h-screen opacity-100"
-      leave-to-class="max-h-0 opacity-0"
+      enter-active-class="transition-[opacity,grid-template-rows] duration-300 ease-out"
+      enter-from-class="grid-rows-[0fr] opacity-0"
+      enter-to-class="grid-rows-[1fr] opacity-100"
+      leave-active-class="transition-[opacity,grid-template-rows] duration-200 ease-in"
+      leave-from-class="grid-rows-[1fr] opacity-100"
+      leave-to-class="grid-rows-[0fr] opacity-0"
     >
       <div
         v-if="isMenuOpen"
         id="mobile-menu"
-        class="overflow-hidden border-t border-sage-700 bg-charcoal-900 nav:hidden"
+        class="grid border-t border-sage-700 bg-charcoal-900 nav:hidden"
       >
-        <nav class="mx-auto max-w-screen-xl px-4 py-4" aria-label="Mobile Navigation">
+        <nav
+          class="mx-auto max-w-screen-xl overflow-hidden px-4 py-4"
+          aria-label="Mobile Navigation"
+        >
           <!-- Nav items -->
           <NuxtLink
             v-for="item in config.nav"

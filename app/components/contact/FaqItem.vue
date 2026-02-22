@@ -27,11 +27,11 @@ defineEmits<{
       />
     </button>
     <div
-      class="overflow-hidden transition-all duration-300"
-      :class="isOpen ? 'max-h-96 pb-5' : 'max-h-0'"
+      class="grid transition-[grid-template-rows,padding] duration-300"
+      :class="isOpen ? 'grid-rows-[1fr] pb-5' : 'grid-rows-[0fr]'"
     >
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <div class="leading-relaxed text-sage-700" v-html="answer" />
+      <div class="overflow-hidden leading-relaxed text-sage-700" v-html="answer" />
     </div>
   </div>
 </template>

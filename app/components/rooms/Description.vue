@@ -22,10 +22,10 @@ function toggle() {
 
     <!-- Full description (expandable) -->
     <div
-      class="overflow-hidden transition-all duration-300 ease-in-out"
-      :class="isExpanded ? 'mt-4 max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'"
+      class="grid transition-[grid-template-rows,opacity] duration-300 ease-in-out"
+      :class="isExpanded ? 'mt-4 grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'"
     >
-      <p class="leading-relaxed whitespace-pre-line text-sage-700">
+      <p class="overflow-hidden leading-relaxed whitespace-pre-line text-sage-700">
         {{ description }}
       </p>
     </div>
