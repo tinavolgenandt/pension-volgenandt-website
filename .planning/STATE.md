@@ -5,24 +5,24 @@
 See: .planning/PROJECT.md (updated 2026-02-21)
 
 **Core value:** Visitors can easily discover rooms, see prices, and book directly
-**Current focus:** Phase 4 complete (4/4 plans, gap closure done). Ready for Phase 5 (Booking Integration).
+**Current focus:** Phase 4.1 in progress (GitHub Pages hosting + GitHub Actions CI/CD).
 
 ## Current Position
 
-Phase: 4 of 6 (Content Pages, Attractions & SEO)
-Plan: 4 of 4 in Phase 4
-Status: Phase complete
-Last activity: 2026-02-22 - Completed 04-04-PLAN.md (Gap closure: BedAndBreakfast schema, meta titles, OG/hreflang)
+Phase: 4.1 of 6 (GitHub Pages & GitHub Actions Hosting)
+Plan: 1 of 2 in Phase 4.1
+Status: In progress
+Last activity: 2026-02-22 - Completed 04.1-01-PLAN.md (GitHub Actions workflow + Formspree contact form)
 
-Progress: [############] 100% (12/12 existing plans)
+Progress: [#############-] 93% (13/14 plans)
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 12
-- Average duration: 19min
-- Total execution time: ~3.6 hours
+- Total plans completed: 13
+- Average duration: 18min
+- Total execution time: ~3.7 hours
 
 **By Phase:**
 
@@ -32,11 +32,12 @@ Progress: [############] 100% (12/12 existing plans)
 | 2. Content Infrastructure | 3/3   | 50min  | 17min    |
 | 3. Homepage & Hero        | 2/2   | ~66min | ~33min   |
 | 4. Content & SEO          | 4/4   | ~90min | ~23min   |
+| 4.1. GH Pages Hosting     | 1/2   | 5min   | 5min     |
 
 **Recent Trend:**
 
-- Last 5 plans: 03-01 (21min), 03-02 (~45min), 04-01 (~50min), 04-02 (~15min), 04-03 (~14min)
-- Trend: content pages faster than infrastructure setup; shared components pay off
+- Last 5 plans: 04-01 (~50min), 04-02 (~15min), 04-03 (~14min), 04-04 (~11min), 04.1-01 (5min)
+- Trend: Infrastructure/config plans execute much faster than content pages
 
 _Updated after each plan completion_
 
@@ -98,10 +99,13 @@ Recent decisions affecting current work:
 - [04-03]: Practical info on attraction pages rendered conditionally from YAML optional fields
 - [04-03]: Explicit amenityMap import in room detail page for HotelRoom schema
 - [04-03]: Activity pages use optional chaining for externalPortals to handle schema .default([])
+- [04.1-01]: NUXT_APP_BASE_URL set as env var in workflow (not nuxt.config.ts) for GH Pages subpath
+- [04.1-01]: Formspree form ID stored in app.config.ts as formspreeId (placeholder xPLACEHOLDER)
+- [04.1-01]: No CNAME file -- site served at standard github.io URL; custom domain deferred
 
 ### Roadmap Evolution
 
-- Phase 4.1 inserted after Phase 4: GitHub Pages with GitHub Actions for hosting and automatic build (URGENT) — replaces Netlify/Cloudflare Pages hosting assumption; contact form must switch to Formspree or similar
+- Phase 4.1 inserted after Phase 4: GitHub Pages with GitHub Actions for hosting and automatic build (URGENT) -- replaces Netlify/Cloudflare Pages hosting assumption; contact form must switch to Formspree or similar
 
 ### Pending Todos
 
@@ -111,6 +115,8 @@ Recent decisions affecting current work:
 - Replace Wikimedia Commons attraction images with owner's own photos before launch
 - Replace placeholder hero images in attraction YAML files with real photography before production
 - Replace placeholder banner images for content pages (/img/banners/\*-banner.webp) before launch
+- Replace Formspree placeholder ID (xPLACEHOLDER) in app.config.ts with real form ID before contact form is functional
+- Set GitHub Pages source to "GitHub Actions" in repo Settings > Pages before first deployment
 
 ### Blockers/Concerns
 
@@ -118,14 +124,14 @@ Recent decisions affecting current work:
 - Photography: Attraction YAML files reference placeholder image paths (/img/attractions/\*.webp); actual photos needed before production
 - Photography: Content page banners reference placeholder paths (/img/banners/\*-banner.webp); actual photos needed before production
 - Room data: beds24RoomId assignments are placeholders; confirm exact Beds24 room IDs from owner
-- Hosting decision: Netlify Forms used for contact form. If hosting changes to Cloudflare Pages, switch to Formspree.
+- Formspree: Contact form has placeholder ID; create Formspree account and replace xPLACEHOLDER before launch
 - Windows dev environment: better-sqlite3 prebuilt binaries may be lost after pnpm install; document workaround
 - Owner action before launch: Fill [INHABER_NAME] and [STEUERNUMMER] placeholders in /impressum/, review AGB terms
 
 ## Session Continuity
 
 Last session: 2026-02-22
-Stopped at: Completed 04-04-PLAN.md (gap closure); Phase 4 fully complete, ready for Phase 5
+Stopped at: Completed 04.1-01-PLAN.md; ready for 04.1-02
 Resume file: None
 
 ---
