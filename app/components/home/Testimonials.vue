@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import useEmblaCarousel from 'embla-carousel-vue'
 import Autoplay from 'embla-carousel-autoplay'
-import Accessibility from 'embla-carousel-accessibility'
 
 // Load testimonials via Nuxt Content queryCollection
 const { data: testimonialsData } = await useAsyncData('testimonials', () =>
@@ -10,10 +9,9 @@ const { data: testimonialsData } = await useAsyncData('testimonials', () =>
 
 const items = computed(() => testimonialsData.value?.[0]?.items ?? [])
 
-// Carousel setup (client-only: wrapped in ClientOnly in template)
+// Carousel setup — Accessibility plugin removed (v9 RC incompatible with Embla v8)
 const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center' }, [
   Autoplay({ delay: 6000, stopOnInteraction: true }),
-  Accessibility(),
 ])
 
 // Navigation state
@@ -59,46 +57,45 @@ watch(emblaApi, (api) => {
         Was unsere G&auml;ste sagen
       </h2>
 
-      <!-- SSR fallback: show first testimonial statically -->
       <div v-if="items.length" class="mt-12">
-        <ClientOnly>
-          <!-- Embla carousel (client-only) -->
-          <div class="relative">
-            <!-- Viewport -->
-            <div ref="emblaRef" class="overflow-hidden">
-              <div class="flex">
-                <div
-                  v-for="(testimonial, index) in items"
-                  :key="index"
-                  class="min-w-0 flex-[0_0_100%]"
-                >
-                  <div class="px-4 py-6 text-center md:px-12">
-                    <!-- Decorative quote mark -->
-                    <span
-                      class="mb-4 block font-serif text-6xl leading-none text-sage-200"
-                      aria-hidden="true"
-                    >
-                      &ldquo;
-                    </span>
-                    <!-- Quote text -->
-                    <p class="text-lg leading-relaxed text-sage-800 italic md:text-xl">
-                      {{ testimonial.quote }}
-                    </p>
-                    <!-- Star rating -->
-                    <div class="mt-4 flex justify-center">
-                      <UiStarRating :rating="testimonial.rating" />
-                    </div>
-                    <!-- Name + source -->
-                    <p class="mt-4 font-semibold text-sage-600">
-                      {{ testimonial.name }}
-                    </p>
-                    <p class="mt-1 text-xs text-sage-400">Google Bewertung</p>
+        <!-- Embla carousel -->
+        <div class="relative">
+          <!-- Viewport -->
+          <div ref="emblaRef" class="overflow-hidden">
+            <div class="flex">
+              <div
+                v-for="(testimonial, index) in items"
+                :key="index"
+                class="min-w-0 flex-[0_0_100%]"
+              >
+                <div class="px-4 py-6 text-center md:px-12">
+                  <!-- Decorative quote mark -->
+                  <span
+                    class="mb-4 block font-serif text-6xl leading-none text-sage-200"
+                    aria-hidden="true"
+                  >
+                    &ldquo;
+                  </span>
+                  <!-- Quote text -->
+                  <p class="text-lg leading-relaxed text-sage-800 italic md:text-xl">
+                    {{ testimonial.quote }}
+                  </p>
+                  <!-- Star rating -->
+                  <div class="mt-4 flex justify-center">
+                    <UiStarRating :rating="testimonial.rating" />
                   </div>
+                  <!-- Name + source -->
+                  <p class="mt-4 font-semibold text-sage-600">
+                    {{ testimonial.name }}
+                  </p>
+                  <p class="mt-1 text-xs text-sage-400">Google Bewertung</p>
                 </div>
               </div>
             </div>
+          </div>
 
-            <!-- Prev / Next arrows -->
+          <!-- Prev / Next arrows (client-only to avoid hydration mismatch with Embla state) -->
+          <ClientOnly>
             <button
               type="button"
               class="absolute top-1/2 left-2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-sage-700 shadow-sm transition-colors hover:bg-white md:left-0"
@@ -115,9 +112,11 @@ watch(emblaApi, (api) => {
             >
               <Icon name="lucide:chevron-right" class="size-5" />
             </button>
-          </div>
+          </ClientOnly>
+        </div>
 
-          <!-- Dot indicators -->
+        <!-- Dot indicators -->
+        <ClientOnly>
           <div class="mt-6 flex items-center justify-center gap-2">
             <button
               v-for="(_, index) in scrollSnaps"
@@ -129,28 +128,6 @@ watch(emblaApi, (api) => {
               @click="scrollTo(index)"
             />
           </div>
-
-          <!-- SSR fallback slot: static first testimonial -->
-          <template #fallback>
-            <div class="px-4 py-6 text-center md:px-12">
-              <span
-                class="mb-4 block font-serif text-6xl leading-none text-sage-200"
-                aria-hidden="true"
-              >
-                &ldquo;
-              </span>
-              <p class="text-lg leading-relaxed text-sage-800 italic md:text-xl">
-                {{ items[0].quote }}
-              </p>
-              <div class="mt-4 flex justify-center">
-                <UiStarRating :rating="items[0].rating" />
-              </div>
-              <p class="mt-4 font-semibold text-sage-600">
-                {{ items[0].name }}
-              </p>
-              <p class="mt-1 text-xs text-sage-400">Google Bewertung</p>
-            </div>
-          </template>
         </ClientOnly>
       </div>
     </div>
