@@ -35,10 +35,8 @@ startingPrice: 50
 heroImage: /img/rooms/einzelzimmer-hero.jpg
 heroImageAlt: 'Einzelzimmer mit gemütlichem Bett'
 gallery:
-  - src: /img/rooms/doppelzimmer-hero.jpg
-    alt: 'Doppelzimmer-Ansicht'
   - src: /img/rooms/zimmer-badezimmer.png
-    alt: 'Privates Badezimmer'
+    alt: 'Privates Badezimmer mit Dusche'
   - src: /img/rooms/zimmer-gemeinschaftskueche-1.jpg
     alt: 'Gemeinschaftsküche mit Herd und Ofen'
   - src: /img/rooms/zimmer-gemeinschaftskueche-2.jpg

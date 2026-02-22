@@ -37,12 +37,14 @@ heroImageAlt: 'Wohlfühl-Appartement – Schlafbereich mit Doppelbett'
 gallery:
   - src: /img/rooms/wohlfuehl-appartement-1.jpg
     alt: 'Schlafbereich mit gemütlicher Einrichtung'
-  - src: /img/rooms/wohlfuehl-appartement-2.jpg
-    alt: 'Schlafcouch im Wohnbereich'
   - src: /img/rooms/wohlfuehl-appartement-3.jpg
-    alt: 'Küchenzeile mit Ausstattung'
+    alt: 'Wasserkocher, Kühlschrank und Spüle im Zimmer'
   - src: /img/rooms/wohlfuehl-appartement-4.jpg
     alt: 'Privates Badezimmer mit Dusche'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-1.jpg
+    alt: 'Gemeinschaftsküche mit Herd und Ofen'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-2.jpg
+    alt: 'Gemeinschaftsküche mit Kühlschrank'
 
 amenities:
   - wifi
