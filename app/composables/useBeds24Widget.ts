@@ -9,7 +9,10 @@
 // Module-level promise to prevent duplicate loading across components
 let loadPromise: Promise<void> | null = null
 
-function loadScript(src: string, options?: { integrity?: string; crossOrigin?: string }): Promise<void> {
+function loadScript(
+  src: string,
+  options?: { integrity?: string; crossOrigin?: string },
+): Promise<void> {
   return new Promise((resolve, reject) => {
     // Check if script is already loaded
     const existing = document.querySelector(`script[src="${src}"]`)
@@ -44,7 +47,7 @@ async function loadBeds24Scripts(): Promise<void> {
   })
 
   // Then load Beds24 widget script (depends on jQuery)
-  await loadScript('https://media.xmlcal.com/widget/1.00/js/bookWidget.min.js')
+  await loadScript('https://media.xmlcal.com/widget/1.01/js/bookWidget.min.js')
 }
 
 export function useBeds24Widget() {

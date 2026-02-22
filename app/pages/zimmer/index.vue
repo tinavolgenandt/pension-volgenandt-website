@@ -74,6 +74,8 @@ const categoryHeadings: Record<string, string> = {
             :starting-price="room.startingPrice"
             :max-guests="room.maxGuests"
             :highlights="room.highlights"
+            :beds24-property-id="room.beds24PropertyId"
+            :beds24-room-id="room.beds24RoomId"
           />
         </div>
       </section>

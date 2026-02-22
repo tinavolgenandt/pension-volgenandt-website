@@ -20,7 +20,11 @@ watch(
   ([ready, container]) => {
     if (!ready || !container) return
 
-    const $ = (window as any).jQuery
+    const $ = (
+      window as unknown as {
+        jQuery?: (el: HTMLElement) => { bookWidget: (opts: Record<string, unknown>) => void }
+      }
+    ).jQuery
     if (!$) return
 
     $(container).bookWidget({
@@ -28,10 +32,26 @@ watch(
       propid: props.beds24PropertyId,
       ...(props.beds24RoomId != null ? { roomid: props.beds24RoomId } : {}),
       widgetLang: 'de',
-      // Design system colors
-      color: '#2d4a3e', // sage-800
-      backgroundColor: '#f9f7f4', // warm-white
-      borderColor: '#bfc9c3', // sage-300
+      numMonth: 3,
+      dateFormat: 'dd.mm.yy',
+      weekFirstDay: 1,
+      defaultNumAdult: 2,
+      defaultNumNight: 2,
+      fontSize: '16px',
+      backgroundColor: '#fdfcf8',
+      borderColor: '#c8dfc8',
+      color: '#234024',
+      availableBackgroundColor: '#e3efe3',
+      availableColor: '#234024',
+      unavailableBackgroundColor: '#f2dede',
+      unavailableColor: '#a94442',
+      pastBackgroundColor: '#f1f7f1',
+      pastColor: '#a6c9a6',
+      requestBackgroundColor: '#f8f5ee',
+      requestColor: '#865725',
+      searchLinkText: 'Verfügbarkeit prüfen',
+      formAction: 'https://beds24.com/booking2.php',
+      formTarget: '_blank',
     })
   },
   { flush: 'post' },
@@ -39,7 +59,6 @@ watch(
 </script>
 
 <template>
-  <!-- Completely absent from DOM when consent not granted -->
   <div v-if="showCalendar" class="rounded-lg border border-sage-200 bg-white p-4 shadow-sm sm:p-6">
     <h3 class="mb-4 font-serif text-lg font-semibold text-sage-800">Verfügbarkeit</h3>
     <div
@@ -51,7 +70,11 @@ watch(
     <div v-else class="flex items-center gap-2 py-4 text-sm text-sage-500">
       <svg class="size-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+        />
       </svg>
       Kalender wird geladen...
     </div>

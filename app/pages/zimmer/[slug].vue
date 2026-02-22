@@ -25,6 +25,22 @@ const { isAllowed } = useCookieConsent()
 const isClient = import.meta.client
 const showBooking = computed(() => isClient && isAllowed('booking'))
 
+// Direct booking URL for Beds24
+const bookingUrl = computed(() => {
+  if (!room.value?.beds24PropertyId) return null
+  const params = new URLSearchParams({
+    propid: String(room.value.beds24PropertyId),
+    lang: 'de',
+    referer: 'Website',
+    numnight: '2',
+    numadult: '2',
+  })
+  if (room.value.beds24RoomId) {
+    params.set('roomid', String(room.value.beds24RoomId))
+  }
+  return `https://beds24.com/booking2.php?${params}`
+})
+
 // Dynamic SEO meta
 useSeoMeta({
   title: room.value.name,
@@ -104,7 +120,7 @@ useSchemaOrg([
         :gallery="room.gallery"
       />
 
-      <!-- 2. Title & Category -->
+      <!-- 2. Title & Category with price and direct booking link -->
       <div>
         <span
           class="mb-2 inline-block rounded-full bg-sage-100 px-3 py-1 text-xs font-medium tracking-wide text-sage-600"
@@ -114,9 +130,25 @@ useSchemaOrg([
         <h1 class="font-serif text-3xl font-bold text-sage-800 sm:text-4xl">
           {{ room.name }}
         </h1>
+        <p class="mt-2 text-lg">
+          <span class="text-sm text-sage-500">ab </span>
+          <span class="font-semibold text-waldhonig-600">{{ room.startingPrice }} EUR</span>
+          <span class="text-sm text-sage-500"> / Nacht inkl. MwSt.</span>
+        </p>
+        <!-- Direct booking link -->
+        <a
+          v-if="bookingUrl"
+          :href="bookingUrl"
+          target="_blank"
+          rel="noopener"
+          class="mt-4 inline-flex items-center gap-2 rounded-lg bg-waldhonig-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-waldhonig-600"
+        >
+          <Icon name="lucide:calendar-check" :size="18" aria-hidden="true" />
+          Jetzt buchen
+        </a>
       </div>
 
-      <!-- 3. Booking Section (consent-gated, completely absent when not granted) -->
+      <!-- 3. Booking Widgets (consent-gated, completely absent when not granted) -->
       <ClientOnly>
         <section v-if="showBooking && room.beds24PropertyId" aria-label="Verfügbarkeit & Buchung">
           <h2 class="mb-4 font-serif text-2xl font-semibold text-sage-800">
@@ -175,7 +207,7 @@ useSchemaOrg([
       <RoomsExtras :extras="room.extras ?? []" />
     </div>
 
-    <!-- 7. Weitere Zimmer (full width for grid) -->
+    <!-- 8. Weitere Zimmer (full width for grid) -->
     <div class="mt-16">
       <RoomsOtherRooms v-if="otherRooms" :rooms="otherRooms" />
     </div>
