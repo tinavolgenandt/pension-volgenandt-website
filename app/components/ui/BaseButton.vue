@@ -3,6 +3,7 @@ interface Props {
   variant?: 'primary' | 'secondary' | 'outline'
   size?: 'sm' | 'md' | 'lg'
   to?: string
+  target?: string
   type?: 'button' | 'submit' | 'reset'
   disabled?: boolean
 }
@@ -11,6 +12,7 @@ const props = withDefaults(defineProps<Props>(), {
   variant: 'primary',
   size: 'md',
   to: undefined,
+  target: undefined,
   type: 'button',
   disabled: false,
 })
@@ -36,7 +38,7 @@ const classes = computed(() => {
 </script>
 
 <template>
-  <NuxtLink v-if="to" :to="to" :class="classes">
+  <NuxtLink v-if="to" :to="to" :target="target" :class="classes">
     <slot />
   </NuxtLink>
   <button v-else :type="type" :disabled="disabled" :class="classes">

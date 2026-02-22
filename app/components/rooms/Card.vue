@@ -52,7 +52,6 @@ const bookingUrl = computed(() => {
           loading="lazy"
           sizes="sm:100vw md:50vw"
           class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          placeholder
         />
       </div>
 

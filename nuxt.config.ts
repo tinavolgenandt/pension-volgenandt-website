@@ -75,10 +75,9 @@ export default defineNuxtConfig({
     typeCheck: 'build',
   },
 
-  // Image optimization
+  // Image optimization — no server-side processing (static GitHub Pages has no /_ipx endpoint)
   image: {
-    format: ['avif', 'webp'],
-    quality: 80,
+    provider: 'none',
   },
 
   // Content module (better-sqlite3 build approved in package.json pnpm config)

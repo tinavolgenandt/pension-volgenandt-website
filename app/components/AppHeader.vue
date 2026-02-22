@@ -91,16 +91,29 @@ function isActive(to: string): boolean {
           <span>{{ config.contact.phoneDisplay }}</span>
         </a>
 
-        <!-- CTA button -->
-        <UiBaseButton variant="primary" size="md" to="/zimmer"> Verfügbarkeit prüfen </UiBaseButton>
+        <!-- CTA button — direct to Beds24 booking -->
+        <UiBaseButton
+          variant="primary"
+          size="md"
+          to="https://beds24.com/booking2.php?propid=261258&lang=de&referer=Website&numnight=2&numadult=2"
+          target="_blank"
+        >
+          Jetzt buchen
+        </UiBaseButton>
       </div>
 
       <!-- Mobile: CTA + Hamburger (< 1024px) -->
       <div class="flex items-center gap-3 nav:hidden">
         <!-- CTA button (always visible, never hidden in hamburger) -->
-        <UiBaseButton variant="primary" size="sm" to="/zimmer" class="whitespace-nowrap">
-          <span class="min-[480px]:hidden">Anfragen</span>
-          <span class="hidden min-[480px]:inline">Verfügbarkeit</span>
+        <UiBaseButton
+          variant="primary"
+          size="sm"
+          to="https://beds24.com/booking2.php?propid=261258&lang=de&referer=Website&numnight=2&numadult=2"
+          target="_blank"
+          class="whitespace-nowrap"
+        >
+          <span class="min-[480px]:hidden">Buchen</span>
+          <span class="hidden min-[480px]:inline">Jetzt buchen</span>
         </UiBaseButton>
 
         <!-- Hamburger button -->
@@ -203,8 +216,14 @@ function isActive(to: string): boolean {
 
           <!-- CTA button (full-width) -->
           <div class="mt-3 px-4">
-            <UiBaseButton variant="primary" size="lg" to="/zimmer" class="w-full">
-              Verfügbarkeit prüfen
+            <UiBaseButton
+              variant="primary"
+              size="lg"
+              to="https://beds24.com/booking2.php?propid=261258&lang=de&referer=Website&numnight=2&numadult=2"
+              target="_blank"
+              class="w-full"
+            >
+              Jetzt buchen
             </UiBaseButton>
           </div>
         </nav>

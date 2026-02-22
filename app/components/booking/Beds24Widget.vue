@@ -68,6 +68,7 @@ watch(
     <h3 class="mb-4 font-serif text-lg font-semibold text-sage-800">Buchung</h3>
     <div
       v-if="isReady"
+      :id="`beds24-booking-${beds24PropertyId}-${beds24RoomId ?? 'all'}`"
       ref="containerRef"
       :aria-label="`Buchungswidget für ${roomName}`"
       role="region"
