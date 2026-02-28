@@ -43,8 +43,8 @@ const sustainabilityFeatures = [
   },
   {
     icon: 'ph:drop-duotone',
-    title: 'Eigene Kläranlage',
-    description: 'Biologische Abwasserbehandlung',
+    title: 'Vollbiologische Kläranlage',
+    description: 'Natürliche Abwasserreinigung ohne Chemie',
   },
   {
     icon: 'ph:butterfly-duotone',
@@ -142,15 +142,45 @@ const sustainabilityFeatures = [
               ebenso dazu.
             </p>
             <p class="mt-4 leading-relaxed text-sage-800">
-              Unser Kompost verwertet organische Abfälle, und die eigene biologische Kläranlage
-              sorgt dafür, dass unser Abwasser die Umgebung nicht belastet.
+              Unser Kompost verwertet organische Abfälle und gibt die Nährstoffe als natürlichen
+              Dünger zurück an den Garten.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 6. Regional products highlight -->
+    <!-- 6. Vollbiologische Kläranlage -->
+    <section class="mx-auto max-w-5xl px-6 py-12 md:py-16">
+      <div class="grid items-center gap-8 md:grid-cols-2">
+        <div>
+          <h2 class="font-serif text-2xl font-bold text-sage-900">
+            Sauberes Wasser – ganz natürlich
+          </h2>
+          <p class="mt-4 leading-relaxed text-sage-800">
+            Unsere Pension liegt ländlich und ist nicht an die öffentliche Kanalisation
+            angeschlossen. Deshalb betreiben wir eine eigene vollbiologische Kläranlage, die unser
+            Abwasser auf natürliche Weise reinigt – ganz ohne Chemie.
+          </p>
+          <p class="mt-4 leading-relaxed text-sage-800">
+            In der Anlage übernehmen Mikroorganismen die Arbeit: Sie bauen organische Stoffe im
+            Abwasser ab, ähnlich wie es in einem gesunden Gewässer geschieht. Nach der mechanischen
+            Vorklärung und der biologischen Reinigung wird das saubere Wasser sicher in den
+            natürlichen Kreislauf zurückgeführt.
+          </p>
+          <p class="mt-4 leading-relaxed text-sage-800">
+            So schützen wir das Grundwasser und die Gewässer in unserer Umgebung. Zusammen mit der
+            Solaranlage und der Kompostierung ist die Kläranlage ein wichtiger Baustein unseres
+            Nachhaltigkeitskonzepts.
+          </p>
+        </div>
+        <div class="flex items-center justify-center rounded-lg bg-sage-100 p-12">
+          <Icon name="ph:drop-duotone" class="size-32 text-sage-400" />
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Regional products highlight -->
     <section class="mx-auto max-w-3xl px-6 py-12 md:py-16">
       <h2 class="mb-6 text-center font-serif text-2xl font-semibold text-sage-900">
         Regional genießen
@@ -161,10 +191,10 @@ const sustainabilityFeatures = [
       </p>
     </section>
 
-    <!-- 7. Soft CTA -->
+    <!-- 8. Soft CTA -->
     <ContentSoftCta text="Haben Sie Fragen zu unseren Nachhaltigkeitsmaßnahmen?" />
 
-    <!-- 8. Booking CTA -->
+    <!-- 9. Booking CTA -->
     <ContentBookingCta text="Nachhaltig urlauben im Eichsfeld" />
   </div>
 </template>
