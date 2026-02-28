@@ -43,6 +43,11 @@ const sustainabilityFeatures = [
   },
   {
     icon: 'ph:drop-duotone',
+    title: 'Eigener Brunnen',
+    description: 'Eigenes Wasser mit UV-Aufbereitung',
+  },
+  {
+    icon: 'ph:waves-duotone',
     title: 'Vollbiologische Kläranlage',
     description: 'Natürliche Abwasserreinigung ohne Chemie',
   },
@@ -155,23 +160,22 @@ const sustainabilityFeatures = [
       <div class="grid items-center gap-8 md:grid-cols-2">
         <div>
           <h2 class="font-serif text-2xl font-bold text-sage-900">
-            Sauberes Wasser – ganz natürlich
+            Eigenes Wasser – vom Brunnen bis zur Kläranlage
           </h2>
           <p class="mt-4 leading-relaxed text-sage-800">
-            Unsere Pension liegt ländlich und ist nicht an die öffentliche Kanalisation
-            angeschlossen. Deshalb betreiben wir eine eigene vollbiologische Kläranlage, die unser
-            Abwasser auf natürliche Weise reinigt – ganz ohne Chemie.
+            Unser Trinkwasser kommt aus einem eigenen Brunnen auf dem Gelände. Eine UV-Anlage
+            bereitet das Wasser auf – zuverlässig und ganz ohne chemische Zusätze. So genießen
+            unsere Gäste frisches, sauberes Wasser direkt aus der Natur.
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
-            In der Anlage übernehmen Mikroorganismen die Arbeit: Sie bauen organische Stoffe im
-            Abwasser ab, ähnlich wie es in einem gesunden Gewässer geschieht. Nach der mechanischen
-            Vorklärung und der biologischen Reinigung wird das saubere Wasser sicher in den
-            natürlichen Kreislauf zurückgeführt.
+            Auch das Abwasser bleibt in unserem Kreislauf: Unsere vollbiologische Kläranlage
+            reinigt es auf natürliche Weise. Mikroorganismen bauen organische Stoffe ab, ähnlich
+            wie in einem gesunden Gewässer. Nach der mechanischen Vorklärung und der biologischen
+            Reinigung wird das saubere Wasser in den natürlichen Kreislauf zurückgeführt.
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
-            So schützen wir das Grundwasser und die Gewässer in unserer Umgebung. Zusammen mit der
-            Solaranlage und der Kompostierung ist die Kläranlage ein wichtiger Baustein unseres
-            Nachhaltigkeitskonzepts.
+            Vom Brunnen bis zur Kläranlage – wir kümmern uns selbst um unser Wasser und schützen
+            so das Grundwasser und die Gewässer in unserer Umgebung.
           </p>
         </div>
         <div class="flex items-center justify-center rounded-lg bg-sage-100 p-12">
