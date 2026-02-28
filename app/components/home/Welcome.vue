@@ -16,8 +16,8 @@ defineOptions({
 
           <div class="mt-6 space-y-4 text-lg leading-relaxed text-sage-700">
             <p>
-              Wir sind die Familie Volgenandt und freuen uns, Sie in unserem Zuhause im Eichsfeld
-              willkommen zu heißen. Unsere Pension liegt in Breitenbach, eingebettet in die sanfte
+              Wir sind Simone &amp; Ralf Volgenandt und freuen uns, Sie in unserem Zuhause im Eichsfeld
+              willkommen zu heißen. Unsere Pension liegt etwa einen Kilometer außerhalb von Breitenbach, eingebettet in die sanfte
               Hügellandschaft Thüringens – ein Ort, an dem die Zeit ein wenig langsamer vergeht.
             </p>
             <p>
