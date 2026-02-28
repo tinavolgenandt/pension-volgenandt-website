@@ -59,7 +59,7 @@ const sustainabilityFeatures = [
   {
     icon: 'ph:tree-duotone',
     title: 'Naturnaher Garten',
-    description: 'Einheimische Pflanzen und alte Obstsorten',
+    description: 'Obst, Beeren und Gemüse aus eigenem Anbau',
   },
   {
     icon: 'ph:leaf-duotone',
@@ -152,14 +152,15 @@ const sustainabilityFeatures = [
               angelegt – Deutschlands erster Blühwiesen-Agentur, die sich für Artenvielfalt und
               Naturschutz einsetzt. Die Wiese bietet Bienen, Schmetterlingen und anderen Insekten
               reichlich Nahrung. In der Totholzecke finden Käfer, Wildbienen und Igel Unterschlupf –
-              ein kleines Stück wilde Natur mitten im Garten. Dazu pflegen wir alte Obstsorten, die
-              man in modernen Gärten kaum noch findet.
+              ein kleines Stück wilde Natur mitten im Garten.
             </p>
             <p class="mt-4 leading-relaxed text-sage-800">
-              In unserem Gemüsegarten ziehen wir eigenes Gemüse und Kräuter – gedüngt mit dem
-              hauseigenen Kompost, der organische Abfälle in wertvollen Nährstoff verwandelt.
-              Damit dieser Kreislauf funktioniert, trennen wir konsequent unseren Müll und bitten
-              auch unsere Gäste um Mithilfe bei der Mülltrennung.
+              In unserem Garten wachsen verschiedene Obstsorten, Beeren und Gemüse. Wir ernten
+              alles selbst und verarbeiten vieles davon – ob als hausgemachte Marmelade, frische
+              Kräuter oder saisonales Obst zum Frühstück. Gedüngt wird mit dem hauseigenen Kompost,
+              der organische Abfälle in wertvollen Nährstoff verwandelt. Damit dieser Kreislauf
+              funktioniert, trennen wir konsequent unseren Müll und bitten auch unsere Gäste um
+              Mithilfe bei der Mülltrennung.
             </p>
           </div>
         </div>
