@@ -16,11 +16,11 @@ items:
     category: buchung
     sortOrder: 2
 
-  - question: 'Wie ist die Stornierungspolitik?'
+  - question: 'Kann ich meine Buchung stornieren?'
     answer: >-
-      Eine kostenlose Stornierung ist bis 7 Tage vor Anreise möglich.
-      Bei kurzfristigeren Absagen berechnen wir die erste Nacht.
-      Details finden Sie in unseren <a href="/agb/">AGB</a>.
+      Ja, eine Stornierung ist möglich. Die genauen Bedingungen
+      finden Sie in unseren <a href="/agb/">AGB</a> oder sprechen
+      Sie uns direkt an.
     category: buchung
     relatedPage: /agb/
     sortOrder: 3
