@@ -50,6 +50,11 @@ const {
       </div>
     </button>
 
+    <!-- Image caption -->
+    <p v-if="currentImage?.alt" class="mt-2 text-center text-sm text-sage-600">
+      {{ currentImage.alt }}
+    </p>
+
     <!-- Thumbnail strip -->
     <div
       class="mt-3 flex gap-2 overflow-x-auto pb-2"

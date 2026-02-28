@@ -127,6 +127,11 @@ const { direction } = useSwipe(imageContainerRef, {
         />
       </div>
 
+      <!-- Image caption -->
+      <p v-if="images[currentIndex]?.alt" class="mb-1 text-center text-sm text-white/80">
+        {{ images[currentIndex].alt }}
+      </p>
+
       <!-- Image counter -->
       <div class="mb-2 text-sm text-white/70" aria-live="polite">
         {{ currentIndex + 1 }} / {{ images.length }}
