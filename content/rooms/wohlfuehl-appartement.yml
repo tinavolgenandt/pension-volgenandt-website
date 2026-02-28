@@ -41,6 +41,10 @@ gallery:
     alt: 'Wasserkocher, Kühlschrank und Spüle im Zimmer'
   - src: /img/rooms/wohlfuehl-appartement-4.jpg
     alt: 'Privates Badezimmer mit Dusche'
+  - src: /img/rooms/wohlfuehl-appartement-balkon-1.webp
+    alt: 'Balkon mit Tisch und Blick zur Terrasse'
+  - src: /img/rooms/wohlfuehl-appartement-balkon-2.webp
+    alt: 'Balkon mit Vogelhaus und Gartenpanorama'
   - src: /img/rooms/zimmer-gemeinschaftskueche-1.jpg
     alt: 'Gemeinschaftsküche mit Herd und Ofen'
   - src: /img/rooms/zimmer-gemeinschaftskueche-2.jpg
