@@ -33,6 +33,11 @@ useHead({
   ],
 })
 
+const difficultyBadge: Record<string, { label: string; class: string }> = {
+  leicht: { label: 'Leicht', class: 'bg-sage-100 text-sage-700' },
+  mittel: { label: 'Mittel', class: 'bg-waldhonig-100 text-waldhonig-700' },
+  schwer: { label: 'Schwer', class: 'bg-charcoal-100 text-charcoal-700' },
+}
 </script>
 
 <template>
@@ -61,6 +66,55 @@ useHead({
         <p class="leading-relaxed text-sage-700">
           {{ activity.regionDescription }}
         </p>
+      </div>
+    </section>
+
+    <!-- Route recommendations -->
+    <section v-if="activity.routes && activity.routes.length > 0" class="px-6 py-12 md:py-16">
+      <div class="mx-auto max-w-4xl">
+        <h2 class="mb-8 font-serif text-2xl font-semibold text-sage-900">
+          Empfohlene Radtouren
+        </h2>
+        <div class="space-y-6">
+          <div
+            v-for="route in activity.routes"
+            :key="route.name"
+            class="rounded-lg border border-sage-200 bg-white p-6 shadow-sm"
+          >
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div class="flex-1">
+                <h3 class="flex items-center gap-2 font-serif text-lg font-semibold text-sage-900">
+                  <Icon name="ph:bicycle-duotone" class="size-6 text-sage-600" />
+                  {{ route.name }}
+                </h3>
+                <p class="mt-2 text-sm leading-relaxed text-sage-700">
+                  {{ route.highlight }}
+                </p>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-sm font-medium text-sage-600">
+                  {{ route.distance }}
+                </span>
+                <span
+                  :class="difficultyBadge[route.difficulty]?.class"
+                  class="rounded-full px-3 py-1 text-xs font-semibold"
+                >
+                  {{ difficultyBadge[route.difficulty]?.label }}
+                </span>
+              </div>
+            </div>
+            <a
+              v-if="route.externalUrl"
+              :href="route.externalUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-waldhonig-600 hover:text-waldhonig-700"
+            >
+              Route ansehen
+              <Icon name="ph:arrow-square-out" class="size-4" />
+            </a>
+          </div>
+        </div>
       </div>
     </section>
 

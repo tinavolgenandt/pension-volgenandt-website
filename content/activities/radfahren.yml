@@ -18,6 +18,32 @@ regionDescription: >-
   die sanfte Hügel und ländliche Idylle schätzen. E-Bike-Fahrer finden
   in der hügeligen Landschaft ideale Bedingungen – die Steigungen sind
   moderat, die Belohnung durch die Aussichten umso größer.
+routes:
+  - name: 'Unstrutradweg (Etappe 1: Quelle – Mühlhausen)'
+    distance: '28 km'
+    difficulty: leicht
+    highlight: 'Familienfreundliche Flusstour entlang der Unstrut von ihrer Quelle bei Kefferhausen durch das idyllische Reiser Tal bis nach Mühlhausen.'
+    externalUrl: 'https://www.outdooractive.com/de/route/radtour/unstrut-hainich-kreis/unstrutradweg-1.-etappe-quelle-muehlhausen/26165886/'
+  - name: 'Kanonenbahnradweg'
+    distance: '33 km'
+    difficulty: leicht
+    highlight: 'Ehemalige Bahntrasse von Dingelstädt bis Frieda mit fünf befahrbaren Eisenbahntunneln und imposanten Viadukten durch die Eichsfelder Landschaft.'
+    externalUrl: 'https://www.outdooractive.com/de/route/radtour/eichsfeld/kanonenbahnradweg-eichsfeld-thueringen/43161371/'
+  - name: 'Leine-Heide-Radweg (Etappe 1: Leinefelde – Göttingen)'
+    distance: '55 km'
+    difficulty: leicht
+    highlight: 'Der Radfernweg beginnt an der Leinequelle in Leinefelde und führt durch Streuobstwiesen und malerische Ortschaften über Heilbad Heiligenstadt bis Göttingen.'
+    externalUrl: 'https://www.komoot.com/tour/31182019'
+  - name: 'Geschichtstour durchs Eichsfeld'
+    distance: '53 km'
+    difficulty: mittel
+    highlight: 'Kulturelle Rundtour vorbei an der Leinequelle, dem Bärenpark Worbis, dem Grenzlandmuseum Teistungen und der Fachwerkstadt Duderstadt.'
+    externalUrl: 'https://www.outdooractive.com/de/route/radtour/eichsfeld/geschichtstour-durchs-eichsfeld/218944224/'
+  - name: 'Eichsfeld-Fünfer Radrundweg'
+    distance: '74 km'
+    difficulty: mittel
+    highlight: 'Sportliche Radrundtour, die die fünf Eichsfeld-Städte Leinefelde, Dingelstädt, Heiligenstadt, Duderstadt und Worbis verbindet.'
+    externalUrl: 'https://www.outdooractive.com/de/route/radtour/eichsfeld/eichsfeld-fuenfer-radrundweg/173321477/'
 externalPortals:
   - name: 'komoot'
     url: 'https://www.komoot.com/guide/1420/cycling-in-landkreis-eichsfeld'
