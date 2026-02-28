@@ -67,7 +67,7 @@ extras:
     price: 15
     unit: 'pro Person / Nacht'
   - name: 'Hund'
-    price: 10
+    price: 5
     unit: 'pro Nacht'
   - name: 'BBQ-Set'
     price: 10
