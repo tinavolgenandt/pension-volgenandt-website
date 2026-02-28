@@ -137,6 +137,12 @@ export default defineNuxtConfig({
         // Phase 4 activity pages
         '/aktivitaeten/wandern/',
         '/aktivitaeten/radfahren/',
+        // News pages
+        '/aktuelles/',
+        '/aktuelles/landesgartenschau-2026/',
+        '/aktuelles/open-air-burg-scharfenstein-2026/',
+        '/aktuelles/neuer-radweg-unstrut-leine/',
+        '/aktuelles/baerenpark-festival-2026/',
       ],
       failOnError: false,
     },

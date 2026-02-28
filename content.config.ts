@@ -176,6 +176,30 @@ const activitySchema = z.object({
     .default([]),
 })
 
+// News article schema
+const newsSchema = z.object({
+  title: z.string(),
+  slug: z.string(),
+  seoTitle: z.string().max(60),
+  seoDescription: z.string().max(155),
+  heroImage: z.string(),
+  heroImageAlt: z.string(),
+  publishedDate: z.string(),
+  category: z.enum(['veranstaltung', 'region', 'pension']),
+  excerpt: z.string(),
+  intro: z.string(),
+  content: z.string(),
+  externalLinks: z
+    .array(
+      z.object({
+        label: z.string(),
+        url: z.string().url(),
+      }),
+    )
+    .default([]),
+  sortOrder: z.number().default(0),
+})
+
 // FAQ item schema
 const faqItemSchema = z.object({
   question: z.string(),
@@ -215,6 +239,11 @@ export default defineContentConfig({
       type: 'data',
       source: 'activities/*.yml',
       schema: activitySchema,
+    }),
+    news: defineCollection({
+      type: 'data',
+      source: 'news/*.yml',
+      schema: newsSchema,
     }),
     faq: defineCollection({
       type: 'data',

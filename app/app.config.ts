@@ -25,6 +25,7 @@ export default defineAppConfig({
     { label: 'Zimmer', to: '/zimmer' },
     { label: 'Für Familien', to: '/familie' },
     { label: 'Aktivitäten', to: '/aktivitaeten' },
+    { label: 'Aktuelles', to: '/aktuelles' },
     { label: 'Nachhaltigkeit', to: '/nachhaltigkeit' },
     { label: 'Kontakt', to: '/kontakt' },
   ],
