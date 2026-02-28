@@ -138,7 +138,7 @@ const familyFeatures = [
           <li class="flex items-start gap-3">
             <Icon name="ph:check-circle-duotone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
             <span class="leading-relaxed text-sage-800">
-              Für unsere kleinen Gäste bieten wir ein Kinderfrühstück mit allem, was schmeckt.
+              Beim Frühstück gehen wir gerne auf die Wünsche der Kleinen ein.
             </span>
           </li>
           <li class="flex items-start gap-3">
