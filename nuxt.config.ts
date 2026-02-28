@@ -126,6 +126,7 @@ export default defineNuxtConfig({
         '/ausflugsziele/burg-bodenstein/',
         '/ausflugsziele/burg-hanstein/',
         '/ausflugsziele/skywalk-sonnenstein/',
+        '/ausflugsziele/burg-scharfenstein/',
         '/ausflugsziele/baumkronenpfad-hainich/',
         // Phase 4 activity pages
         '/aktivitaeten/wandern/',

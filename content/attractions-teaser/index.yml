@@ -26,6 +26,15 @@ items:
     featured: false
     category: kultur
 
+  - name: 'Burg Scharfenstein – die Whisky-Burg'
+    slug: burg-scharfenstein
+    shortDescription: 'Whiskywelt mit Nine Springs Single Malt und Panoramablick'
+    image: ''
+    imageAlt: ''
+    distanceKm: 10
+    featured: true
+    category: kultur
+
   - name: 'Baumkronenpfad Hainich'
     slug: baumkronenpfad-hainich
     shortDescription: 'Wandeln Sie in den Baumkronen des UNESCO-Weltnaturerbes'
