@@ -127,7 +127,12 @@ export default defineNuxtConfig({
         '/ausflugsziele/burg-hanstein/',
         '/ausflugsziele/skywalk-sonnenstein/',
         '/ausflugsziele/burg-scharfenstein/',
+        '/ausflugsziele/grenzlandmuseum/',
+        '/ausflugsziele/vitalpark-heiligenstadt/',
+        '/ausflugsziele/seeburger-see/',
         '/ausflugsziele/baumkronenpfad-hainich/',
+        '/ausflugsziele/wartburg/',
+        '/ausflugsziele/harz/',
         // Phase 4 activity pages
         '/aktivitaeten/wandern/',
         '/aktivitaeten/radfahren/',

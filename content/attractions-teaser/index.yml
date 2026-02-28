@@ -35,11 +35,56 @@ items:
     featured: true
     category: kultur
 
+  - name: 'Grenzlandmuseum Eichsfeld'
+    slug: grenzlandmuseum
+    shortDescription: 'Geschichte der innerdeutschen Teilung am Originalschauplatz'
+    image: ''
+    imageAlt: ''
+    distanceKm: 16
+    featured: false
+    category: kultur
+
+  - name: 'Vitalpark Heilbad Heiligenstadt'
+    slug: vitalpark-heiligenstadt
+    shortDescription: 'Thermalbäder, Saunawelt und Wellness im Kurort'
+    image: ''
+    imageAlt: ''
+    distanceKm: 15
+    featured: false
+    category: natur
+
+  - name: 'Seeburger See'
+    slug: seeburger-see
+    shortDescription: '„Das Auge des Eichsfelds" – Baden, Bootfahren und Natur'
+    image: ''
+    imageAlt: ''
+    distanceKm: 25
+    featured: false
+    category: natur
+
   - name: 'Baumkronenpfad Hainich'
     slug: baumkronenpfad-hainich
     shortDescription: 'Wandeln Sie in den Baumkronen des UNESCO-Weltnaturerbes'
     image: /img/attractions/baumkronenpfad.webp
     imageAlt: 'Baumkronenpfad im Nationalpark Hainich'
     distanceKm: 54
+    featured: false
+    category: natur
+
+  - name: 'Wartburg'
+    slug: wartburg
+    shortDescription: 'UNESCO-Weltkulturerbe – hier übersetzte Luther das Neue Testament'
+    image: ''
+    imageAlt: ''
+    distanceKm: 55
+    featured: false
+    category: kultur
+
+  - name: 'Harz'
+    slug: harz
+    shortDescription: 'Brocken, Brockenbahn und Wanderwege als Tagesausflug'
+    image: ''
+    imageAlt: ''
+    distanceKm: 40
     featured: false
     category: natur
