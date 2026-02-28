@@ -47,7 +47,7 @@ function occupancyLabel(occupancy: number): string {
         <span class="text-sm text-sage-500">pro Nacht</span>
       </div>
       <p class="mt-1 text-sm text-sage-600">
-        für {{ occupancyLabel(maxGuests) }}
+        für {{ occupancyLabel(allRates[0].occupancy) }}
       </p>
     </div>
 
