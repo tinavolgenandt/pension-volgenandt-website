@@ -69,6 +69,10 @@ extras:
     description: 'Brötchen, regionale Wurstspezialitäten, hausgemachte Marmelade, saisonales Obst, frischer Saft & Kaffee oder Tee'
     price: 15
     unit: 'pro Person / Nacht'
+  - name: 'Aufbettung'
+    description: 'Zusätzlicher Schlafplatz auf dem Schlafsofa'
+    price: 10
+    unit: 'pro Person / Nacht'
   - name: 'Grill-Set'
     description: 'Inkl. Grillbesteck und -pfannen'
     price: 10

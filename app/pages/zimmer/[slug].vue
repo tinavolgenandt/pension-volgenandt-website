@@ -187,7 +187,7 @@ useSchemaOrg([
       </div>
 
       <!-- 4. Price Table -->
-      <RoomsPriceTable :pricing="room.pricing" />
+      <RoomsPriceTable :pricing="room.pricing" :max-guests="room.maxGuests" />
 
       <!-- 5. Amenities -->
       <RoomsAmenities

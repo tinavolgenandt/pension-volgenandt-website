@@ -12,6 +12,7 @@ interface PricingPeriod {
 
 interface Props {
   pricing: PricingPeriod[]
+  maxGuests: number
 }
 
 const props = defineProps<Props>()
@@ -82,6 +83,8 @@ function getRate(period: PricingPeriod, occupancy: number): number | null {
     </div>
 
     <!-- PAngV compliance notice -->
-    <p class="mt-3 text-xs text-sage-500">Alle Preise inkl. MwSt.</p>
+    <p class="mt-3 text-xs text-sage-500">
+      Preise gelten für {{ maxGuests === 1 ? '1 Person' : `${maxGuests} Personen` }}. Alle Preise inkl. MwSt.
+    </p>
   </div>
 </template>

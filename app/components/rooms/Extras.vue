@@ -16,6 +16,7 @@ const extraIcons: Record<string, string> = {
   Frühstück: 'lucide:egg-fried',
   'Genießer-Frühstück': 'lucide:croissant',
   Hund: 'lucide:dog',
+  Aufbettung: 'lucide:bed-single',
   'Grill-Set': 'lucide:flame',
 }
 
