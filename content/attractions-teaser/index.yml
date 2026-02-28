@@ -53,14 +53,14 @@ items:
     featured: false
     category: kultur
 
-  - name: 'Vitalpark Heilbad Heiligenstadt'
+  - name: 'Heilbad Heiligenstadt & Vitalpark'
     slug: vitalpark-heiligenstadt
-    shortDescription: 'Thermalbäder, Saunawelt und Wellness im Kurort'
+    shortDescription: 'Historische Kurstadt mit Altstadt, Kurpark und Therme'
     image: ''
     imageAlt: ''
     distanceKm: 15
     featured: false
-    category: natur
+    category: kultur
 
   - name: 'Seeburger See'
     slug: seeburger-see

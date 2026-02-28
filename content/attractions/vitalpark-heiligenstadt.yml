@@ -1,41 +1,58 @@
-name: 'Vitalpark Heilbad Heiligenstadt'
+name: 'Heilbad Heiligenstadt & Vitalpark'
 slug: vitalpark-heiligenstadt
-seoTitle: 'Vitalpark Heiligenstadt – Therme & Sauna | Pension im Eichsfeld'
-seoDescription: 'Der Vitalpark in Heilbad Heiligenstadt bietet Thermalbäder, Saunawelt und Wellness – nur 15 km von unserer Pension im Eichsfeld.'
+seoTitle: 'Heilbad Heiligenstadt & Vitalpark | Pension im Eichsfeld'
+seoDescription: 'Heilbad Heiligenstadt – die über 1.000 Jahre alte Kreisstadt des Eichsfelds mit historischer Altstadt, Kurpark, Literaturmuseum und Vitalpark. Nur 15 km von unserer Pension.'
 heroImage: ''
 heroImageAlt: ''
 distanceKm: 15
 drivingMinutes: 14
-category: natur
-shortDescription: 'Thermalbäder, Saunawelt und Wellness im Kurort'
+category: kultur
+shortDescription: 'Historische Kurstadt mit Altstadt, Kurpark und Therme'
 intro: >-
-  Der Vitalpark in Heilbad Heiligenstadt vereint Thermalbäder,
-  acht Saunen und ein Fitnesscenter unter einem Dach. Nach einem
-  aktiven Tag im Eichsfeld der ideale Ort zum Entspannen –
-  nur 15 Minuten von unserer Pension entfernt.
+  Heilbad Heiligenstadt ist die über 1.000 Jahre alte Kreisstadt
+  des Eichsfelds und verbindet historischen Charme mit modernem
+  Wellness. Die „Stadt der zehn Türme" lädt zum Bummeln durch
+  Fachwerkhäuser ein, und im Vitalpark können Sie den Tag
+  entspannt ausklingen lassen – nur 15 Minuten von unserer Pension.
 content: >-
-  Die Badewelt bietet auf 1.000 m² Wasserfläche fünf
-  verschiedene Becken, darunter Thermalwasser und ein
-  Freibad. Die Saunawelt umfasst acht Saunen und Dampfbäder –
-  von der Erdsauna für Einsteiger (50 °C) bis zur klassischen
-  finnischen Sauna. Dazu kommen ein Rasul (türkische
-  Heilerdeanwendung), ein Saunagarten und eine Turmbar.
+  Die historische Altstadt begeistert mit drei gotischen Kirchen –
+  St. Marien mit ihren markanten Doppeltürmen, der Bergkirche
+  St. Martin und St. Ägidien. Entlang der Wilhelmstraße,
+  der rund einen Kilometer langen Fußgängerzone, reihen sich
+  kleine Cafés, Restaurants und Geschäfte aneinander. Der
+  barocke Klostergarten im Herzen der Altstadt ist eine
+  grüne Oase zum Verweilen.
 
 
-  Neben dem Vitalpark lohnt sich auch ein Bummel durch die
-  historische Altstadt von Heilbad Heiligenstadt. Der Kurort
-  ist über 1.000 Jahre alt und bekannt für seine Kirchtürme,
-  Fachwerkhäuser und den gepflegten Kurpark. Der Iberg mit
-  seiner Warte aus dem 14. Jahrhundert bietet einen herrlichen
-  Ausblick über die Stadt.
+  Im Literaturmuseum „Theodor Storm" erfahren Sie, wie der
+  berühmte Dichter von 1856 bis 1864 in Heiligenstadt lebte
+  und hier einige seiner bekanntesten Novellen schrieb. Das
+  Eichsfeldmuseum im barocken Jesuitenkolleg erzählt auf drei
+  Etagen die Geschichte der Region. Auch Heinrich Heine hat
+  eine Verbindung zur Stadt – er wurde hier 1825 getauft.
 
 
-  Eintrittspreise beginnen ab 6,50 EUR für eine Stunde
-  Badewelt, die Tageskarte Saunawelt kostet 21 EUR.
+  Der Heinrich-Heine-Kurpark ist eine Oase der Ruhe mit
+  Kneipp-Becken, Solebrunnen und einem Teich mit Fontäne.
+  Am Geislede-Wasserfall, der Theodor Storm zu seinem
+  Märchen „Die Regentrude" inspirierte, steht eine lebensgroße
+  Holzskulptur der Sagengestalt. Von Mai bis September finden
+  sonntags kostenlose Kurkonzerte in der Konzertmuschel statt.
+
+
+  Der Vitalpark vereint Thermalbäder, acht Saunen und ein
+  Fitnesscenter unter einem Dach. Die Badewelt bietet auf
+  1.000 m² Wasserfläche fünf verschiedene Becken, die
+  Saunawelt reicht von der Erdsauna für Einsteiger bis zur
+  klassischen finnischen Sauna. Dazu kommen ein Rasul,
+  ein Saunagarten und eine Turmbar.
 hostTip: >-
-  Perfekt für einen Regentag oder nach einer langen Wanderung.
-  Die Erdsauna ist besonders empfehlenswert für Sauna-Einsteiger.
-bestTimeToVisit: 'Ganzjährig, besonders schön im Winter'
+  Verbinden Sie den Vitalpark mit einem Stadtbummel –
+  vormittags durch die Altstadt schlendern und nachmittags
+  in der Therme entspannen. Die Palmsonntagsprozession
+  (UNESCO-Kulturerbe) ist ein ganz besonderes Erlebnis,
+  falls Sie über Ostern bei uns sind.
+bestTimeToVisit: 'Ganzjährig'
 website: 'https://www.vitalpark-heiligenstadt.de'
 coordinates:
   lat: 51.3844
