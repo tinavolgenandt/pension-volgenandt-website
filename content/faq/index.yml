@@ -42,12 +42,12 @@ items:
     category: ausstattung
     sortOrder: 5
 
-  - question: 'Sind Hunde willkommen?'
+  - question: 'Sind Hunde erlaubt?'
     answer: >-
-      Ja, in unserer Ferienwohnung Emils Kuhwiese und im
-      Balkonzimmer sind Hunde herzlich willkommen! Wir berechnen
-      5 EUR pro Nacht. Unser großer Garten bietet viel Auslauf,
-      und die Umgebung ist ideal für Spaziergänge mit Hund.
+      Ja, in bestimmten Zimmern sind Hunde erlaubt. Bitte geben
+      Sie bei der Buchung Bescheid, damit wir das passende Zimmer
+      für Sie bereithalten. Es fällt ein Aufpreis von 5 EUR pro
+      Nacht an.
     category: ausstattung
     sortOrder: 6
 
