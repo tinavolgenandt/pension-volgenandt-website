@@ -53,9 +53,11 @@ items:
 
   - question: 'Ist die Pension familienfreundlich?'
     answer: >-
-      Auf jeden Fall! Wir haben einen großen Garten mit Spielplatz,
-      Kinderfahrzeuge, Kinderbetten und Hochstühle. Mehr dazu auf
-      unserer <a href="/familie/">Familienseite</a>.
+      Auf jeden Fall! Wir haben einen großen Garten mit Sandkasten
+      und Kinderfahrzeugen wie Bobbycar, Dreirad und Roller.
+      Kinderbetten und Hochstühle stellen wir auf Anfrage gerne
+      zur Verfügung. Mehr dazu auf unserer
+      <a href="/familie/">Familienseite</a>.
     category: ausstattung
     relatedPage: /familie/
     sortOrder: 7
