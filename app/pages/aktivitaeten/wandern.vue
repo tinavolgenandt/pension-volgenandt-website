@@ -48,7 +48,7 @@ const difficultyBadge: Record<string, { label: string; class: string }> = {
       :image="activity.heroImage"
       :image-alt="activity.heroImageAlt"
       title="Wandern im Eichsfeld"
-      subtitle="Wege direkt vor der Haustür"
+      subtitle="Wege in der Umgebung entdecken"
     />
 
     <!-- Intro -->

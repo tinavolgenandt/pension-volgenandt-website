@@ -56,7 +56,7 @@ const familyFeatures = [
   {
     icon: 'ph:mountains-duotone',
     title: 'Natur erleben',
-    description: 'Wanderwege direkt vor der Tür',
+    description: 'Wanderwege & Radtouren in der Umgebung',
   },
 ]
 </script>
@@ -151,8 +151,8 @@ const familyFeatures = [
           <li class="flex items-start gap-3">
             <Icon name="ph:check-circle-duotone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
             <span class="leading-relaxed text-sage-800">
-              Wanderwege und Radtouren starten direkt vor unserer Tür – auch für kleine Beine
-              geeignet.
+              Wanderwege und Radtouren in der Umgebung – per Auto oder Leihrad gut erreichbar,
+              auch für kleine Beine geeignet.
             </span>
           </li>
         </ul>
