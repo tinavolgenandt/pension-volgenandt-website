@@ -123,6 +123,7 @@ export default defineNuxtConfig({
         // Phase 4 attraction pages
         '/ausflugsziele/',
         '/ausflugsziele/baerenpark-worbis/',
+        '/ausflugsziele/eiscafe-san-remo/',
         '/ausflugsziele/burg-bodenstein/',
         '/ausflugsziele/burg-hanstein/',
         '/ausflugsziele/skywalk-sonnenstein/',

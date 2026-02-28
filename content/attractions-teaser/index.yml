@@ -8,6 +8,15 @@ items:
     featured: true
     category: natur
 
+  - name: 'Eiscafé San Remo'
+    slug: eiscafe-san-remo
+    shortDescription: 'Hausgemachtes Eis, Kaffee und Kuchen im Herzen von Worbis'
+    image: ''
+    imageAlt: ''
+    distanceKm: 9
+    featured: false
+    category: kultur
+
   - name: 'Burg Hanstein'
     slug: burg-hanstein
     shortDescription: 'Eine der größten Burgruinen Mitteldeutschlands'
