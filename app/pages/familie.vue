@@ -51,7 +51,7 @@ const familyFeatures = [
   {
     icon: 'ph:dog-duotone',
     title: 'Haustiere willkommen',
-    description: 'Hunde sind bei uns gerne gesehen',
+    description: 'Hunde willkommen in der Ferienwohnung Emils Kuhwiese & im Balkonzimmer',
   },
   {
     icon: 'ph:mountains-duotone',
