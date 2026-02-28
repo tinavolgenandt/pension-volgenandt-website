@@ -208,7 +208,7 @@ const sustainabilityFeatures = [
             </p>
             <p class="mt-4 leading-relaxed text-sage-800">
               Was nicht aus dem eigenen Garten kommt, beziehen wir aus der Region: Wurstspezialitäten
-              vom Eichsfelder Metzger, frische Brötchen vom Bäcker um die Ecke. Gedüngt wird mit
+              vom Eichsfelder Metzger und andere Zutaten von regionalen Erzeugern. Gedüngt wird mit
               dem hauseigenen Kompost, der organische Abfälle in wertvollen Nährstoff verwandelt.
             </p>
             <p class="mt-4 leading-relaxed text-sage-800">
