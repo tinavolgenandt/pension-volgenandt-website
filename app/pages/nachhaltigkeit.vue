@@ -38,8 +38,8 @@ const sustainabilityFeatures = [
   },
   {
     icon: 'ph:recycle-duotone',
-    title: 'Kompostierung',
-    description: 'Organische Abfälle werden kompostiert',
+    title: 'Kompost & Gemüsegarten',
+    description: 'Eigener Kreislauf mit Mülltrennung',
   },
   {
     icon: 'ph:drop-duotone',
@@ -54,7 +54,7 @@ const sustainabilityFeatures = [
   {
     icon: 'ph:butterfly-duotone',
     title: 'Insektenschutz',
-    description: 'Blühwiesen und Nisthilfen',
+    description: 'Blühwiese und Totholzecke',
   },
   {
     icon: 'ph:tree-duotone',
@@ -142,13 +142,24 @@ const sustainabilityFeatures = [
               Lebensraum für Bienen und Schmetterlinge
             </h2>
             <p class="mt-4 leading-relaxed text-sage-800">
-              In unserem Garten blühen einheimische Wildblumen, und wir pflegen alte Obstsorten, die
-              man in modernen Gärten kaum noch findet. Nisthilfen für Insekten und Vögel gehören
-              ebenso dazu.
+              Unsere Blühwiese wurde von
+              <a
+                href="https://www.immerbunt.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-waldhonig-600 underline hover:text-waldhonig-700"
+              >ImmerBunt</a>
+              angelegt – Deutschlands erster Blühwiesen-Agentur, die sich für Artenvielfalt und
+              Naturschutz einsetzt. Die Wiese bietet Bienen, Schmetterlingen und anderen Insekten
+              reichlich Nahrung. In der Totholzecke finden Käfer, Wildbienen und Igel Unterschlupf –
+              ein kleines Stück wilde Natur mitten im Garten. Dazu pflegen wir alte Obstsorten, die
+              man in modernen Gärten kaum noch findet.
             </p>
             <p class="mt-4 leading-relaxed text-sage-800">
-              Unser Kompost verwertet organische Abfälle und gibt die Nährstoffe als natürlichen
-              Dünger zurück an den Garten.
+              In unserem Gemüsegarten ziehen wir eigenes Gemüse und Kräuter – gedüngt mit dem
+              hauseigenen Kompost, der organische Abfälle in wertvollen Nährstoff verwandelt.
+              Damit dieser Kreislauf funktioniert, trennen wir konsequent unseren Müll und bitten
+              auch unsere Gäste um Mithilfe bei der Mülltrennung.
             </p>
           </div>
         </div>
