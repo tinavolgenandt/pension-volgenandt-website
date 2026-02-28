@@ -1,35 +1,33 @@
-name: 'Heilbad Heiligenstadt & Vitalpark'
+name: 'Heilbad Heiligenstadt'
 slug: vitalpark-heiligenstadt
-seoTitle: 'Heilbad Heiligenstadt & Vitalpark | Pension im Eichsfeld'
+seoTitle: 'Heilbad Heiligenstadt – Altstadt, Kurpark & Vitalpark | Pension im Eichsfeld'
 seoDescription: 'Heilbad Heiligenstadt – die über 1.000 Jahre alte Kreisstadt des Eichsfelds mit historischer Altstadt, Kurpark, Literaturmuseum und Vitalpark. Nur 15 km von unserer Pension.'
 heroImage: ''
 heroImageAlt: ''
 distanceKm: 15
 drivingMinutes: 14
 category: kultur
-shortDescription: 'Historische Kurstadt mit Altstadt, Kurpark und Therme'
+shortDescription: 'Über 1.000 Jahre alte Kreisstadt mit Altstadt, Kurpark und Therme'
 intro: >-
-  Heilbad Heiligenstadt ist die über 1.000 Jahre alte Kreisstadt
-  des Eichsfelds und verbindet historischen Charme mit modernem
-  Wellness. Die „Stadt der zehn Türme" lädt zum Bummeln durch
-  Fachwerkhäuser ein, und im Vitalpark können Sie den Tag
-  entspannt ausklingen lassen – nur 15 Minuten von unserer Pension.
+  Heilbad Heiligenstadt, die Kreisstadt des Eichsfelds, wird
+  auch „Stadt der zehn Türme" genannt. Fachwerkhäuser, drei
+  gotische Kirchen und eine gemütliche Fußgängerzone laden
+  zum Entdecken ein – nur 15 Minuten von unserer Pension.
 content: >-
-  Die historische Altstadt begeistert mit drei gotischen Kirchen –
-  St. Marien mit ihren markanten Doppeltürmen, der Bergkirche
-  St. Martin und St. Ägidien. Entlang der Wilhelmstraße,
-  der rund einen Kilometer langen Fußgängerzone, reihen sich
-  kleine Cafés, Restaurants und Geschäfte aneinander. Der
-  barocke Klostergarten im Herzen der Altstadt ist eine
-  grüne Oase zum Verweilen.
+  Entlang der Wilhelmstraße, der rund einen Kilometer langen
+  Fußgängerzone, reihen sich kleine Cafés, Restaurants und
+  Geschäfte aneinander. Die drei gotischen Kirchen prägen
+  das Stadtbild: St. Marien mit ihren markanten Doppeltürmen,
+  die Bergkirche St. Martin und St. Ägidien. Der barocke
+  Klostergarten im Herzen der Altstadt ist eine grüne Oase
+  zum Verweilen.
 
 
   Im Literaturmuseum „Theodor Storm" erfahren Sie, wie der
   berühmte Dichter von 1856 bis 1864 in Heiligenstadt lebte
   und hier einige seiner bekanntesten Novellen schrieb. Das
-  Eichsfeldmuseum im barocken Jesuitenkolleg erzählt auf drei
-  Etagen die Geschichte der Region. Auch Heinrich Heine hat
-  eine Verbindung zur Stadt – er wurde hier 1825 getauft.
+  Eichsfeldmuseum im barocken Jesuitenkolleg erzählt auf
+  drei Etagen die Geschichte der Region.
 
 
   Der Heinrich-Heine-Kurpark ist eine Oase der Ruhe mit
@@ -40,20 +38,20 @@ content: >-
   sonntags kostenlose Kurkonzerte in der Konzertmuschel statt.
 
 
-  Der Vitalpark vereint Thermalbäder, acht Saunen und ein
-  Fitnesscenter unter einem Dach. Die Badewelt bietet auf
-  1.000 m² Wasserfläche fünf verschiedene Becken, die
-  Saunawelt reicht von der Erdsauna für Einsteiger bis zur
-  klassischen finnischen Sauna. Dazu kommen ein Rasul,
-  ein Saunagarten und eine Turmbar.
+  Ideal lässt sich der Stadtbummel mit einem Besuch im
+  Vitalpark verbinden: Thermalbäder, acht Saunen von der
+  Erdsauna bis zur finnischen Sauna, ein Rasul, Saunagarten
+  und Turmbar – perfekt zum Entspannen nach einem aktiven Tag.
 hostTip: >-
-  Verbinden Sie den Vitalpark mit einem Stadtbummel –
-  vormittags durch die Altstadt schlendern und nachmittags
-  in der Therme entspannen. Die Palmsonntagsprozession
-  (UNESCO-Kulturerbe) ist ein ganz besonderes Erlebnis,
-  falls Sie über Ostern bei uns sind.
+  Unser Tipp: Vormittags durch die Altstadt bummeln und
+  nachmittags im Vitalpark entspannen. Falls Sie über Ostern
+  bei uns sind, erleben Sie die Palmsonntagsprozession –
+  ein UNESCO-Kulturerbe und ganz besonderes Ereignis.
 bestTimeToVisit: 'Ganzjährig'
-website: 'https://www.vitalpark-heiligenstadt.de'
+website: 'https://www.heilbad-heiligenstadt.de'
+additionalWebsites:
+  - label: 'Vitalpark (Therme & Sauna)'
+    url: 'https://www.vitalpark-heiligenstadt.de'
 coordinates:
   lat: 51.3844
   lng: 10.1488

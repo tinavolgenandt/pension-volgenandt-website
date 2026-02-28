@@ -51,7 +51,7 @@ const contentParagraphs = computed(() => {
 // Practical info items (only show if data exists)
 const practicalInfo = computed(() => {
   if (!attraction.value) return []
-  const items: Array<{ icon: string; label: string; value: string }> = []
+  const items: Array<{ icon: string; label: string; value: string; isLink?: boolean }> = []
   if (attraction.value.bestTimeToVisit) {
     items.push({
       icon: 'ph:sun',
@@ -60,7 +60,12 @@ const practicalInfo = computed(() => {
     })
   }
   if (attraction.value.website) {
-    items.push({ icon: 'ph:globe', label: 'Website', value: attraction.value.website })
+    items.push({ icon: 'ph:globe', label: 'Website', value: attraction.value.website, isLink: true })
+  }
+  if (attraction.value.additionalWebsites) {
+    for (const site of attraction.value.additionalWebsites) {
+      items.push({ icon: 'ph:globe', label: site.label, value: site.url, isLink: true })
+    }
   }
   return items
 })
@@ -119,7 +124,7 @@ const practicalInfo = computed(() => {
                 <dt class="text-sm font-semibold text-sage-800">{{ info.label }}</dt>
                 <dd class="text-sm text-sage-700">
                   <a
-                    v-if="info.label === 'Website'"
+                    v-if="info.isLink"
                     :href="info.value"
                     target="_blank"
                     rel="noopener noreferrer"

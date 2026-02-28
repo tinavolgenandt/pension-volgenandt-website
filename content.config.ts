@@ -122,6 +122,14 @@ const attractionSchema = z.object({
   hostTip: z.string(),
   bestTimeToVisit: z.string().optional(),
   website: z.string().url().optional(),
+  additionalWebsites: z
+    .array(
+      z.object({
+        label: z.string(),
+        url: z.string().url(),
+      }),
+    )
+    .optional(),
   coordinates: z.object({
     lat: z.number(),
     lng: z.number(),

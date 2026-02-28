@@ -53,9 +53,9 @@ items:
     featured: false
     category: kultur
 
-  - name: 'Heilbad Heiligenstadt & Vitalpark'
+  - name: 'Heilbad Heiligenstadt'
     slug: vitalpark-heiligenstadt
-    shortDescription: 'Historische Kurstadt mit Altstadt, Kurpark und Therme'
+    shortDescription: 'Über 1.000 Jahre alte Kreisstadt mit Altstadt, Kurpark und Therme'
     image: ''
     imageAlt: ''
     distanceKm: 15
