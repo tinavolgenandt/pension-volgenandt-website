@@ -19,24 +19,8 @@ regionDescription: >-
   während die Flusstäler von Leine und Unstrut zu entspannten Wanderungen
   einladen. Die Region gehört zu den am dünnsten besiedelten Gebieten
   Deutschlands – perfekt für alle, die Ruhe in der Natur suchen.
-routes:
-  - name: 'Eichsfelder Burgenweg'
-    distance: '14 km'
-    difficulty: mittel
-    highlight: 'Verbindet Burg Bodenstein und Burg Hanstein durch herrliche Laubwälder'
-    externalUrl: 'https://www.komoot.de/tour/225137428'
-  - name: 'Rund um den Ohmberg'
-    distance: '9 km'
-    difficulty: leicht
-    highlight: 'Aussichtsreicher Rundweg mit Blick über das gesamte Eichsfeld'
-    externalUrl: 'https://www.komoot.de/tour/243891265'
-  - name: 'Naturpfad Dünwald'
-    distance: '18 km'
-    difficulty: schwer
-    highlight: 'Durch den größten zusammenhängenden Wald des Eichsfelds mit seltener Flora'
-    externalUrl: 'https://www.komoot.de/tour/259712043'
 externalPortals:
   - name: 'komoot'
-    url: 'https://www.komoot.de/guide/1275/wandern-im-eichsfeld'
+    url: 'https://www.komoot.com/guide/1417/hiking-in-landkreis-eichsfeld'
   - name: 'outdooractive'
-    url: 'https://www.outdooractive.com/de/wanderungen/eichsfeld/wanderungen-im-eichsfeld/1472841/'
+    url: 'https://www.outdooractive.com/de/wanderwege/eichsfeld/wandern-in-eichsfeld/19537383/'

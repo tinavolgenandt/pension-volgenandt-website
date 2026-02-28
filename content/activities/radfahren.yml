@@ -18,24 +18,8 @@ regionDescription: >-
   die sanfte Hügel und ländliche Idylle schätzen. E-Bike-Fahrer finden
   in der hügeligen Landschaft ideale Bedingungen – die Steigungen sind
   moderat, die Belohnung durch die Aussichten umso größer.
-routes:
-  - name: 'Leine-Radweg (Etappe Leinefelde – Heiligenstadt)'
-    distance: '28 km'
-    difficulty: leicht
-    highlight: 'Flache Strecke entlang der Leine mit Einkehrmöglichkeiten in historischen Orten'
-    externalUrl: 'https://www.komoot.de/tour/148562739'
-  - name: 'Eichsfeld-Rundtour über Worbis'
-    distance: '35 km'
-    difficulty: mittel
-    highlight: 'Hügelige Rundtour durch typische Eichsfelder Dörfer mit Besuch im Bärenpark'
-    externalUrl: 'https://www.komoot.de/tour/287451890'
-  - name: 'Unstrut-Radweg (Abschnitt Dingelstädt)'
-    distance: '22 km'
-    difficulty: leicht
-    highlight: 'Gemütliche Tour entlang der Unstrut durch das südliche Eichsfeld'
-    externalUrl: 'https://www.komoot.de/tour/195823641'
 externalPortals:
   - name: 'komoot'
-    url: 'https://www.komoot.de/guide/1276/radfahren-im-eichsfeld'
+    url: 'https://www.komoot.com/guide/1420/cycling-in-landkreis-eichsfeld'
   - name: 'outdooractive'
-    url: 'https://www.outdooractive.com/de/radtouren/eichsfeld/radtouren-im-eichsfeld/1472842/'
+    url: 'https://www.outdooractive.com/de/radtouren/eichsfeld/radtouren-in-eichsfeld/1429878/'

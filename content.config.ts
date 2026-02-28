@@ -159,8 +159,7 @@ const activitySchema = z.object({
         externalUrl: z.string().url().optional(),
       }),
     )
-    .min(3)
-    .max(5),
+    .optional(),
   externalPortals: z
     .array(
       z.object({
