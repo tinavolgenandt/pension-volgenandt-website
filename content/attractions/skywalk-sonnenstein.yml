@@ -2,8 +2,8 @@ name: 'Skywalk Sonnenstein'
 slug: skywalk-sonnenstein
 seoTitle: 'Skywalk Sonnenstein | Pension nahe Skywalk'
 seoDescription: 'Erleben Sie den Skywalk Sonnenstein bei Holungen – eine spektakuläre Aussichtsplattform. Nur 14 km von unserer Pension im Eichsfeld.'
-heroImage: /img/attractions/skywalk-sonnenstein.webp
-heroImageAlt: 'Skywalk Aussichtsplattform am Sonnenstein bei Holungen'
+heroImage: ''
+heroImageAlt: ''
 distanceKm: 14
 drivingMinutes: 16
 category: natur
