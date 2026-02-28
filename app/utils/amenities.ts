@@ -20,6 +20,6 @@ export const amenityMap: Record<string, AmenityInfo> = {
   bettwaesche: { icon: 'lucide:bed', label: 'Bettwäsche' },
   handtuecher: { icon: 'lucide:hand', label: 'Handtücher' },
   foehn: { icon: 'lucide:wind', label: 'Föhn' },
-  schreibtisch: { icon: 'lucide:lamp-desk', label: 'Schreibtisch' },
+  tisch: { icon: 'lucide:lamp-desk', label: 'Kleiner Tisch' },
   heizung: { icon: 'lucide:heater', label: 'Heizung' },
 }

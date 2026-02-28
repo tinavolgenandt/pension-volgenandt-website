@@ -17,7 +17,7 @@ const amenityEnum = z.enum([
   'bettwaesche',
   'handtuecher',
   'foehn',
-  'schreibtisch',
+  'tisch',
   'heizung',
 ])
 

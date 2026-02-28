@@ -9,8 +9,8 @@ shortDescription: >-
 description: >-
   Unser Einzelzimmer ist der ideale Rückzugsort für
   Alleinreisende und Geschäftsreisende. Sie finden
-  ein bequemes Einzelbett, einen Schreibtisch
-  zum Arbeiten und ein eigenes Badezimmer mit Dusche.
+  ein bequemes Einzelbett und ein eigenes Badezimmer
+  mit Dusche.
   WLAN und Fernseher sorgen für Komfort und Unterhaltung.
   Trotz seiner kompakten Größe bietet das Zimmer alles,
   was Sie für einen angenehmen Aufenthalt brauchen.
@@ -44,7 +44,6 @@ gallery:
 amenities:
   - wifi
   - tv
-  - schreibtisch
   - parkplatz
   - bettwaesche
   - handtuecher
@@ -54,8 +53,8 @@ amenities:
 
 highlights:
   - 'Ideal für Alleinreisende'
-  - 'Schreibtisch zum Arbeiten'
   - 'Eigenes Badezimmer'
+  - 'Kompakt & komfortabel'
 
 extras:
   - name: 'Frühstück'

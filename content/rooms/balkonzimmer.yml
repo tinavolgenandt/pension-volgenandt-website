@@ -9,7 +9,7 @@ shortDescription: >-
 description: >-
   Das Balkonzimmer verbindet gemütliche Atmosphäre mit
   dem besonderen Extra eines eigenen Balkons. Sie finden
-  ein bequemes Doppelbett, einen Schreibtisch
+  ein bequemes Doppelbett, einen kleinen Tisch
   und ein eigenes Badezimmer mit Dusche. Morgens können
   Sie Ihren Kaffee auf dem Balkon genießen und den Blick
   über den Innenhof schweifen lassen. WLAN und Fernseher
@@ -51,7 +51,7 @@ amenities:
   - wifi
   - tv
   - balkon
-  - schreibtisch
+  - tisch
   - parkplatz
   - bettwaesche
   - handtuecher
@@ -62,7 +62,7 @@ amenities:
 highlights:
   - 'Eigener Balkon mit Blick in den Innenhof'
   - 'Ruhige Lage'
-  - 'Schreibtisch zum Arbeiten'
+  - 'Eigener Balkon zum Innenhof'
 
 extras:
   - name: 'Frühstück'
