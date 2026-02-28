@@ -66,9 +66,6 @@ extras:
     description: 'Brötchen, regionale Wurstspezialitäten, hausgemachte Marmelade, saisonales Obst, frischer Saft & Kaffee oder Tee'
     price: 15
     unit: 'pro Person / Nacht'
-  - name: 'Hund'
-    price: 5
-    unit: 'pro Nacht'
   - name: 'BBQ-Set'
     price: 10
     unit: 'pro Nutzung'
