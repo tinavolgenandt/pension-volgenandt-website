@@ -52,12 +52,6 @@ const contentParagraphs = computed(() => {
 const practicalInfo = computed(() => {
   if (!attraction.value) return []
   const items: Array<{ icon: string; label: string; value: string }> = []
-  if (attraction.value.openingHours) {
-    items.push({ icon: 'ph:clock', label: 'Öffnungszeiten', value: attraction.value.openingHours })
-  }
-  if (attraction.value.entryPrice) {
-    items.push({ icon: 'ph:ticket', label: 'Eintritt', value: attraction.value.entryPrice })
-  }
   if (attraction.value.bestTimeToVisit) {
     items.push({
       icon: 'ph:sun',
