@@ -144,7 +144,7 @@ const familyFeatures = [
           <li class="flex items-start gap-3">
             <Icon name="ph:check-circle-duotone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
             <span class="leading-relaxed text-sage-800">
-              Der Bärenpark Worbis ist nur 12 km entfernt – ein tolles Erlebnis für die ganze
+              Der Bärenpark Worbis ist nur 6 km entfernt – ein tolles Erlebnis für die ganze
               Familie.
             </span>
           </li>

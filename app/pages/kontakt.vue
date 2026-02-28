@@ -161,7 +161,7 @@ useSchemaOrg([
                 Mit der Bahn
               </h3>
               <p class="mt-2 leading-relaxed text-sage-700">
-                Vom Bahnhof Leinefelde sind es 8 km bis zu unserer Pension. Gerne holen wir Sie nach
+                Vom Bahnhof Leinefelde sind es 4 km bis zu unserer Pension. Gerne holen wir Sie nach
                 Absprache vom Bahnhof ab – rufen Sie uns einfach vorher an.
               </p>
             </div>

@@ -64,15 +64,15 @@ items:
     answer: >-
       Von der A38 nehmen Sie die Ausfahrt Leinefelde und folgen der
       Beschilderung Richtung Breitenbach. Die Fahrt vom Autobahnkreuz
-      dauert etwa 10 Minuten. Vom Bahnhof Leinefelde sind es 8 km –
+      dauert etwa 10 Minuten. Vom Bahnhof Leinefelde sind es 4 km –
       wir holen Sie gerne ab!
     category: anreise
     sortOrder: 8
 
   - question: 'Was kann man in der Umgebung unternehmen?'
     answer: >-
-      Das Eichsfeld bietet vieles: den Bärenpark Worbis (12 km),
-      Burg Hanstein (18 km), den Baumkronenpfad Hainich (45 km)
+      Das Eichsfeld bietet vieles: den Bärenpark Worbis (6 km),
+      Burg Hanstein (40 km), den Baumkronenpfad Hainich (54 km)
       und herrliche Wanderwege direkt vor der Tür. Alle Ausflugsziele
       finden Sie auf unserer <a href="/ausflugsziele/">Ausflugsseite</a>.
     category: umgebung
