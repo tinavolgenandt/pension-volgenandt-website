@@ -76,7 +76,8 @@ extras:
   - name: 'Hund'
     price: 5
     unit: 'pro Nacht'
-  - name: 'BBQ-Set'
+  - name: 'Grill-Set'
+    description: 'Inkl. Grillbesteck und -pfannen'
     price: 10
     unit: 'pro Nutzung'
 

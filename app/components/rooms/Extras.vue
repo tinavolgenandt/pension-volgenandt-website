@@ -16,7 +16,7 @@ const extraIcons: Record<string, string> = {
   Frühstück: 'lucide:egg-fried',
   'Genießer-Frühstück': 'lucide:croissant',
   Hund: 'lucide:dog',
-  'BBQ-Set': 'lucide:flame',
+  'Grill-Set': 'lucide:flame',
 }
 
 function getExtraIcon(name: string): string {
