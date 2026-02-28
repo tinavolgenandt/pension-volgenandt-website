@@ -32,11 +32,8 @@ const {
 <template>
   <div class="room-gallery">
     <!-- Hero image area -->
-    <button
-      type="button"
-      class="relative block w-full cursor-pointer overflow-hidden rounded-xl focus-visible:ring-2 focus-visible:ring-waldhonig-500 focus-visible:ring-offset-2"
-      :aria-label="`Bild vergrößern: ${currentImage?.alt}`"
-      @click="openLightbox(currentIndex)"
+    <div
+      class="relative overflow-hidden rounded-xl"
     >
       <div class="aspect-[3/2] bg-sage-100">
         <NuxtImg
@@ -48,7 +45,39 @@ const {
           class="h-full w-full object-cover"
         />
       </div>
-    </button>
+
+      <!-- Previous arrow -->
+      <button
+        v-if="hasPrev"
+        type="button"
+        class="absolute top-1/2 left-2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/70 text-sage-800 shadow transition-colors hover:bg-white focus-visible:ring-2 focus-visible:ring-waldhonig-500"
+        aria-label="Vorheriges Bild"
+        @click="prev"
+      >
+        <Icon name="lucide:chevron-left" :size="22" aria-hidden="true" />
+      </button>
+
+      <!-- Next arrow -->
+      <button
+        v-if="hasNext"
+        type="button"
+        class="absolute top-1/2 right-2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/70 text-sage-800 shadow transition-colors hover:bg-white focus-visible:ring-2 focus-visible:ring-waldhonig-500"
+        aria-label="Nächstes Bild"
+        @click="next"
+      >
+        <Icon name="lucide:chevron-right" :size="22" aria-hidden="true" />
+      </button>
+
+      <!-- Fullscreen button -->
+      <button
+        type="button"
+        class="absolute top-2 right-2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/70 text-sage-800 shadow transition-colors hover:bg-white focus-visible:ring-2 focus-visible:ring-waldhonig-500"
+        aria-label="Vollbild öffnen"
+        @click="openLightbox(currentIndex)"
+      >
+        <Icon name="lucide:maximize" :size="18" aria-hidden="true" />
+      </button>
+    </div>
 
     <!-- Image caption -->
     <p v-if="currentImage?.alt" class="mt-2 text-center text-sm text-sage-600">
@@ -74,7 +103,7 @@ const {
         ]"
         :aria-label="`Bild ${index + 1}: ${image.alt}`"
         :aria-current="index === currentIndex ? 'true' : undefined"
-        @click="openLightbox(index)"
+        @click="goTo(index)"
       >
         <NuxtImg
           :src="image.src"
