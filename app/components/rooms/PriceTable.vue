@@ -48,7 +48,6 @@ function getRate(period: PricingPeriod, occupancy: number): number | null {
       <table class="w-full text-left">
         <thead>
           <tr class="border-b-2 border-sage-200">
-            <th class="pr-6 pb-3 text-sm font-semibold text-charcoal-800">Zeitraum</th>
             <th
               v-for="occupancy in occupancyColumns"
               :key="occupancy"
@@ -60,12 +59,6 @@ function getRate(period: PricingPeriod, occupancy: number): number | null {
         </thead>
         <tbody>
           <tr v-for="period in pricing" :key="period.label" class="border-b border-sage-200">
-            <td class="py-4 pr-6">
-              <span class="font-semibold text-sage-800">{{ period.label }}</span>
-              <span v-if="period.dateRange" class="mt-0.5 block text-xs text-sage-500">
-                {{ period.dateRange }}
-              </span>
-            </td>
             <td v-for="occupancy in occupancyColumns" :key="occupancy" class="py-4 pr-6">
               <template v-if="getRate(period, occupancy) !== null">
                 <span class="font-semibold text-sage-800"
