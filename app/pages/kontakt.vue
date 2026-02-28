@@ -70,21 +70,7 @@ useSchemaOrg([
           </p>
 
           <div class="mt-8 space-y-6">
-            <!-- Phone -->
-            <div class="flex items-start gap-4">
-              <Icon name="ph:phone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
-              <div>
-                <p class="font-semibold text-sage-900">Telefon</p>
-                <a
-                  :href="`tel:${appConfig.contact.phone}`"
-                  class="text-lg text-sage-700 transition-colors hover:text-sage-900"
-                >
-                  {{ appConfig.contact.phoneDisplay }}
-                </a>
-              </div>
-            </div>
-
-            <!-- Mobile -->
+            <!-- Mobile (preferred) -->
             <div class="flex items-start gap-4">
               <Icon name="ph:device-mobile" class="mt-0.5 size-6 shrink-0 text-sage-600" />
               <div>
@@ -94,6 +80,20 @@ useSchemaOrg([
                   class="text-lg text-sage-700 transition-colors hover:text-sage-900"
                 >
                   {{ appConfig.contact.mobileDisplay }}
+                </a>
+              </div>
+            </div>
+
+            <!-- Landline -->
+            <div class="flex items-start gap-4">
+              <Icon name="ph:phone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
+              <div>
+                <p class="font-semibold text-sage-900">Festnetz</p>
+                <a
+                  :href="`tel:${appConfig.contact.landline}`"
+                  class="text-lg text-sage-700 transition-colors hover:text-sage-900"
+                >
+                  {{ appConfig.contact.landlineDisplay }}
                 </a>
               </div>
             </div>

@@ -5,6 +5,8 @@ export default defineAppConfig({
   contact: {
     phone: '+49 160 97719112',
     phoneDisplay: '0160 97719112',
+    landline: '+49 3605 542772',
+    landlineDisplay: '03605 542772',
     mobile: '+49 160 97719112',
     mobileDisplay: '0160 97719112',
     email: 'kontakt@pension-volgenandt.de',
