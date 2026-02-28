@@ -53,6 +53,15 @@ items:
     featured: false
     category: kultur
 
+  - name: 'Skywalk Sonnenstein'
+    slug: skywalk-sonnenstein
+    shortDescription: 'Spektakuläre Aussichtsplattform mit Panoramablick'
+    image: ''
+    imageAlt: ''
+    distanceKm: 14
+    featured: false
+    category: natur
+
   - name: 'Heilbad Heiligenstadt & Vitalpark'
     slug: vitalpark-heiligenstadt
     shortDescription: 'Über 1.000 Jahre alte Kreisstadt mit Altstadt, Kurpark und Therme'

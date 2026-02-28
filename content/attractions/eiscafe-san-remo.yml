@@ -17,12 +17,12 @@ content: >-
   In der Einkaufspassage an der Langen Straße gelegen, bietet das
   Eiscafé San Remo eine große Auswahl an selbst hergestelltem Eis
   in der Waffel oder im Becher. Neben den klassischen Eissorten
-  überraschen kreative Spezialitäten wie der Spargeleisteller.
+  überraschen kreative Spezialitäten wie der Spaghettieisteller.
 
 
   Dazu gibt es Kaffee und Kuchen, Joghurt-Kreationen, Waffeln
-  und kleine warme Gerichte. Die Preise sind sehr günstig,
-  die Atmosphäre gemütlich und der Service freundlich –
+  und kleine warme Gerichte. Die Atmosphäre ist gemütlich
+  und der Service freundlich –
   kein Wunder, dass das Café bei Google 4,7 von 5 Sternen hat.
 
 
@@ -34,9 +34,12 @@ hostTip: >-
   wird vor Ort frisch hergestellt. Kombinieren Sie den Besuch mit
   dem Bärenpark Worbis, der nur wenige Minuten zu Fuß entfernt ist.
 bestTimeToVisit: 'Frühling bis Herbst, besonders an warmen Tagen'
-website: 'https://sanremo-worbis.de'
+website: 'https://www.google.com/maps/search/Eiscafé+San+Remo+Worbis'
+additionalWebsites:
+  - label: 'Instagram'
+    url: 'https://www.instagram.com/eiscafe.san.remo/'
 coordinates:
-  lat: 51.4214
-  lng: 10.3613
+  lat: 51.4088
+  lng: 10.2128
 gallery: []
 sortOrder: 2
