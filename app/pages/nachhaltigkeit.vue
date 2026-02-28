@@ -156,9 +156,8 @@ const sustainabilityFeatures = [
         Regional genießen
       </h2>
       <p class="text-center text-lg leading-relaxed text-sage-800">
-        Bei unserem Frühstück setzen wir auf Zutaten von Erzeugern aus der Region. Frische Brötchen
-        vom Bäcker nebenan, Marmelade aus eigener Herstellung und Eier von glücklichen Hühnern – so
-        schmeckt das Eichsfeld.
+        Bei unserem Frühstück setzen wir auf Zutaten aus der Region. Hausgemachte Marmelade,
+        regionale Wurstspezialitäten und saisonales Obst – so schmeckt das Eichsfeld.
       </p>
     </section>
 
