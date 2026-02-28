@@ -120,8 +120,8 @@ const sustainabilityFeatures = [
           </p>
         </div>
         <NuxtImg
-          src="/img/content/nachhaltigkeit-solar.webp"
-          alt="Photovoltaikanlage auf dem Dach der Pension Volgenandt"
+          src="/img/content/photovoltaik-anlage.webp"
+          alt="Photovoltaikanlage auf dem Dach der Pension mit grünem Garten"
           class="rounded-lg"
           loading="lazy"
           sizes="(max-width: 768px) 100vw, 50vw"
@@ -181,8 +181,8 @@ const sustainabilityFeatures = [
           </p>
         </div>
         <NuxtImg
-          src="/img/content/nachhaltigkeit-garten.webp"
-          alt="Naturnaher Garten mit Blühwiese an der Pension"
+          src="/img/content/garten-schmetterling-flieder.webp"
+          alt="Tagpfauenauge auf Sommerflieder im Garten der Pension"
           class="rounded-lg"
           loading="lazy"
           sizes="(max-width: 768px) 100vw, 50vw"
@@ -194,9 +194,13 @@ const sustainabilityFeatures = [
     <section class="bg-sage-50 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-5xl">
         <div class="grid items-center gap-8 md:grid-cols-2">
-          <div class="flex items-center justify-center rounded-lg bg-sage-100 p-12">
-            <Icon name="ph:bowl-food-duotone" class="size-32 text-sage-400" />
-          </div>
+          <NuxtImg
+            src="/img/content/garten-apfelbaeume.webp"
+            alt="Apfelbäume mit reifen Früchten im Garten der Pension"
+            class="rounded-lg"
+            loading="lazy"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
           <div>
             <h2 class="font-serif text-2xl font-bold text-sage-900">
               Vom Garten auf den Tisch
@@ -220,7 +224,56 @@ const sustainabilityFeatures = [
       </div>
     </section>
 
-    <!-- 8. Soft CTA -->
+    <!-- 8. Garten-Impressionen -->
+    <section class="mx-auto max-w-5xl px-6 py-12 md:py-16">
+      <h2 class="mb-8 text-center font-serif text-2xl font-semibold text-sage-900">
+        Unser Garten im Wandel der Jahreszeiten
+      </h2>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <figure>
+          <NuxtImg
+            src="/img/content/garten-krokusse-fruehling.webp"
+            alt="Lila Krokusse im Frühling"
+            class="aspect-square rounded-lg object-cover"
+            loading="lazy"
+            sizes="(max-width: 640px) 50vw, 25vw"
+          />
+          <figcaption class="mt-2 text-center text-sm text-sage-600">Frühling</figcaption>
+        </figure>
+        <figure>
+          <NuxtImg
+            src="/img/content/garten-bluehwiese-fruehsommer.webp"
+            alt="Blühwiese mit Margeriten im Frühsommer"
+            class="aspect-square rounded-lg object-cover"
+            loading="lazy"
+            sizes="(max-width: 640px) 50vw, 25vw"
+          />
+          <figcaption class="mt-2 text-center text-sm text-sage-600">Blühwiese</figcaption>
+        </figure>
+        <figure>
+          <NuxtImg
+            src="/img/content/garten-kirschen.webp"
+            alt="Reife Kirschen am Baum im Garten"
+            class="aspect-square rounded-lg object-cover"
+            loading="lazy"
+            sizes="(max-width: 640px) 50vw, 25vw"
+          />
+          <figcaption class="mt-2 text-center text-sm text-sage-600">Kirschernte</figcaption>
+        </figure>
+        <figure>
+          <NuxtImg
+            src="/img/content/garten-zwiebeln-eigenanbau.webp"
+            alt="Selbst angebaute Zwiebeln zum Trocknen aufgehängt"
+            class="aspect-square rounded-lg object-cover"
+            loading="lazy"
+            sizes="(max-width: 640px) 50vw, 25vw"
+          />
+          <figcaption class="mt-2 text-center text-sm text-sage-600">Eigenanbau</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 9. Soft CTA -->
     <ContentSoftCta text="Haben Sie Fragen zu unseren Nachhaltigkeitsmaßnahmen?" />
 
     <!-- 9. Booking CTA -->
