@@ -59,7 +59,7 @@ highlights:
 
 extras:
   - name: 'Frühstück'
-    description: 'Reichhaltiges Frühstücksbuffet'
+    description: 'Brötchen, Brotbelag, hausgemachte Marmelade & Kaffee oder Tee'
     price: 10
     unit: 'pro Person / Nacht'
   - name: 'Genießer-Frühstück'

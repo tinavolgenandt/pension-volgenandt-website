@@ -34,10 +34,11 @@ items:
 
   - question: 'Bieten Sie Frühstück an?'
     answer: >-
-      Ja! Wir bieten ein reichhaltiges Frühstück für 10 EUR
-      pro Person und ein Genießer-Frühstück mit regionalen
-      Spezialitäten für 15 EUR pro Person. Bitte geben Sie
-      bei der Buchung Bescheid.
+      Ja! Unser Frühstück mit Brötchen, Brotbelag, hausgemachter
+      Marmelade und Kaffee oder Tee gibt es für 10 EUR pro Person.
+      Außerdem bieten wir ein Genießer-Frühstück mit regionalen
+      Spezialitäten für 15 EUR pro Person. Bitte geben Sie bei
+      der Buchung Bescheid.
     category: ausstattung
     sortOrder: 5
 
