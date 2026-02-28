@@ -74,6 +74,7 @@ extras:
     price: 15
     unit: 'pro Person / Nacht'
   - name: 'Hund'
+    description: 'Ihr Vierbeiner ist bei uns herzlich willkommen – unser großer Garten bietet viel Platz zum Toben und Schnüffeln.'
     price: 5
     unit: 'pro Nacht'
   - name: 'Grill-Set'
