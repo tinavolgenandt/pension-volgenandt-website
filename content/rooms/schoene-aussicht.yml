@@ -26,6 +26,10 @@ pricing:
     rates:
       - occupancy: 4
         pricePerNight: 126
+      - occupancy: 5
+        pricePerNight: 136
+      - occupancy: 6
+        pricePerNight: 146
 
 startingPrice: 126
 

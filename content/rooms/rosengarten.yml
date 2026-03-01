@@ -21,7 +21,7 @@ description: >-
 beds24PropertyId: 261258
 beds24RoomId: 549252
 
-maxGuests: 2
+maxGuests: 3
 beds: '2 Einzelbetten (auf Wunsch zusammenstellbar)'
 
 pricing:
@@ -29,6 +29,8 @@ pricing:
     rates:
       - occupancy: 2
         pricePerNight: 58
+      - occupancy: 3
+        pricePerNight: 68
 
 startingPrice: 58
 

@@ -21,7 +21,7 @@ description: >-
 beds24PropertyId: 261258
 beds24RoomId: 549319
 
-maxGuests: 2
+maxGuests: 3
 beds: '1 Doppelbett, 1 Schlafsofa'
 
 pricing:
@@ -29,6 +29,8 @@ pricing:
     rates:
       - occupancy: 2
         pricePerNight: 65
+      - occupancy: 3
+        pricePerNight: 75
 
 startingPrice: 65
 
