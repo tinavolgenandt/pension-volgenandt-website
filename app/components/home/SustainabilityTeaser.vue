@@ -20,19 +20,29 @@ const proofPoints = [
 
 <template>
   <section class="bg-sage-50 py-20 md:py-24">
-    <div class="mx-auto max-w-4xl px-6">
-      <!-- Statement first -->
-      <h2 class="text-center font-serif text-3xl font-bold text-sage-900 md:text-4xl">
-        Nat&uuml;rlich nachhaltig
-      </h2>
-      <p class="mx-auto mt-4 max-w-2xl text-center text-lg text-sage-700">
-        Nachhaltigkeit ist bei uns kein Trend, sondern gelebter Alltag. Unser Zuhause im Eichsfeld
-        pflegen wir mit derselben Sorgfalt wie Ihren Aufenthalt.
-      </p>
+    <div class="mx-auto max-w-5xl px-6">
+      <div class="grid items-center gap-10 md:grid-cols-2">
+        <!-- Left: Image -->
+        <NuxtImg
+          src="/img/content/garten-sonnenhut-blumen.webp"
+          alt="Gelber Sonnenhut und bunte Blumen im Garten der Pension"
+          class="rounded-lg"
+          loading="lazy"
+          sizes="(max-width: 768px) 100vw, 50vw"
+        />
 
-      <!-- Icon proof points -->
-      <!-- Mobile: stacked rows; Desktop: 3-column grid centered -->
-      <div class="mt-12 flex flex-col gap-6 md:grid md:grid-cols-3 md:gap-8 md:text-center">
+        <!-- Right: Text + proof points -->
+        <div>
+          <h2 class="font-serif text-3xl font-bold text-sage-900 md:text-4xl">
+            Nat&uuml;rlich nachhaltig
+          </h2>
+          <p class="mt-4 text-lg text-sage-700">
+            Nachhaltigkeit ist bei uns kein Trend, sondern gelebter Alltag. Unser Zuhause im
+            Eichsfeld pflegen wir mit derselben Sorgfalt wie Ihren Aufenthalt.
+          </p>
+
+          <!-- Icon proof points -->
+          <div class="mt-8 flex flex-col gap-6">
         <UiScrollReveal
           v-for="(point, index) in proofPoints"
           :key="point.title"
@@ -50,16 +60,18 @@ const proofPoints = [
             </div>
           </div>
         </UiScrollReveal>
-      </div>
+          </div>
 
-      <!-- CTA text link -->
-      <div class="mt-8 text-center">
-        <NuxtLink
-          to="/nachhaltigkeit/"
-          class="inline-flex items-center gap-1 font-sans font-semibold text-sage-600 transition-colors hover:text-sage-700 hover:underline"
-        >
-          Mehr &uuml;ber unsere Nachhaltigkeit erfahren &rarr;
-        </NuxtLink>
+          <!-- CTA text link -->
+          <div class="mt-8">
+            <NuxtLink
+              to="/nachhaltigkeit/"
+              class="inline-flex items-center gap-1 font-sans font-semibold text-sage-600 transition-colors hover:text-sage-700 hover:underline"
+            >
+              Mehr &uuml;ber unsere Nachhaltigkeit erfahren &rarr;
+            </NuxtLink>
+          </div>
+        </div>
       </div>
     </div>
   </section>

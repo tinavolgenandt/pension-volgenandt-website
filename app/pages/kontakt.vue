@@ -137,7 +137,37 @@ useSchemaOrg([
       </div>
     </section>
 
-    <!-- Section 2: Driving directions + Map -->
+    <!-- Section 2: Visual divider with garden + building -->
+    <section class="px-6 py-12 md:py-16">
+      <div class="mx-auto grid max-w-5xl gap-6 sm:grid-cols-2">
+        <figure>
+          <NuxtImg
+            src="/img/content/sitzecke-hortensien.webp"
+            alt="Gemütliche Sitzecke mit Hortensien im Garten"
+            class="aspect-[4/3] w-full rounded-lg object-cover"
+            loading="lazy"
+            sizes="(max-width: 640px) 100vw, 50vw"
+          />
+          <figcaption class="mt-2 text-center text-sm text-sage-600">
+            Unser Garten lädt zum Verweilen ein
+          </figcaption>
+        </figure>
+        <figure>
+          <NuxtImg
+            src="/img/homepage/gebaeude-innenhof.webp"
+            alt="Pension Volgenandt – Gebäude und Innenhof"
+            class="aspect-[4/3] w-full rounded-lg object-cover"
+            loading="lazy"
+            sizes="(max-width: 640px) 100vw, 50vw"
+          />
+          <figcaption class="mt-2 text-center text-sm text-sage-600">
+            So empfängt Sie unsere Pension
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Section 3: Driving directions + Map -->
     <section class="bg-sage-50 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-5xl">
         <h2 class="mb-8 text-center font-serif text-2xl font-semibold text-sage-900">Anfahrt</h2>
@@ -193,7 +223,7 @@ useSchemaOrg([
       </div>
     </section>
 
-    <!-- Section 3: FAQ accordion -->
+    <!-- Section 4: FAQ accordion -->
     <section class="px-6 py-12 md:py-16">
       <div class="mx-auto max-w-3xl">
         <h2 class="mb-8 text-center font-serif text-2xl font-semibold text-sage-900">

@@ -37,8 +37,8 @@ defineOptions({
         <!-- Lifestyle image -->
         <div class="order-first md:order-last">
           <NuxtImg
-            src="/img/welcome/lifestyle.webp"
-            alt="Blick auf den Garten der Pension Volgenandt mit grüner Wiese und Bäumen"
+            src="/img/content/gastgeber-portrait.webp"
+            alt="Simone und Ralf Volgenandt – Ihre Gastgeber in Breitenbach"
             class="w-full rounded-lg object-cover shadow-sm"
             loading="lazy"
             sizes="sm:100vw md:50vw"

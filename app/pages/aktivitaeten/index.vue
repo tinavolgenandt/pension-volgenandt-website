@@ -161,7 +161,36 @@ const activityCards = [
       </div>
     </section>
 
-    <!-- 5. Booking CTA -->
+    <!-- 5. Auch im Winter -->
+    <section class="bg-sage-50 px-6 py-12 md:py-16">
+      <div class="mx-auto max-w-5xl">
+        <div class="grid items-center gap-8 md:grid-cols-2">
+          <NuxtImg
+            src="/img/content/landschaft-winter.webp"
+            alt="Winterlandschaft im Eichsfeld mit verschneiten Feldern"
+            class="rounded-lg"
+            loading="lazy"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+          <div>
+            <h2 class="font-serif text-2xl font-bold text-sage-900">
+              Auch im Winter reizvoll
+            </h2>
+            <p class="mt-4 leading-relaxed text-sage-800">
+              Das Eichsfeld ist zu jeder Jahreszeit einen Besuch wert. Im Winter verwandelt sich
+              die Landschaft in ein stilles Winterwunderland – ideal für Spaziergänge durch
+              verschneite Felder und gemütliche Abende in unserer Pension.
+            </p>
+            <p class="mt-4 leading-relaxed text-sage-800">
+              Die Burgen und Museen der Region sind auch in der kalten Jahreszeit geöffnet, und
+              die Eichsfelder Küche wärmt von innen.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Booking CTA -->
     <ContentBookingCta text="Planen Sie Ihren aktiven Urlaub im Eichsfeld" />
   </div>
 </template>
