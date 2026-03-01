@@ -46,7 +46,7 @@ const roomSchema = z.object({
   // Identity
   name: z.string(),
   slug: z.string(),
-  type: z.enum(['ferienwohnung', 'doppelzimmer', 'einzelzimmer']),
+  type: z.enum(['ferienwohnung', 'doppelzimmer', 'zweibettzimmer', 'einzelzimmer']),
   category: z.string(),
   shortDescription: z.string(),
   description: z.string(),

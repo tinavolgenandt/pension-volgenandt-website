@@ -38,6 +38,7 @@ const groupedRooms = computed(() => {
 const categoryHeadings: Record<string, string> = {
   Ferienwohnung: 'Ferienwohnungen',
   Doppelzimmer: 'Doppelzimmer',
+  Zweibettzimmer: 'Zweibettzimmer',
   Einzelzimmer: 'Einzelzimmer',
 }
 </script>

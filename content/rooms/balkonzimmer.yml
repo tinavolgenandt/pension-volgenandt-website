@@ -1,19 +1,20 @@
 name: 'Balkonzimmer'
 slug: balkonzimmer
-type: doppelzimmer
-category: 'Doppelzimmer'
+type: zweibettzimmer
+category: 'Zweibettzimmer'
 shortDescription: >-
-  Gemütliches Doppelzimmer mit eigenem Balkon und Blick
+  Gemütliches Zweibettzimmer mit eigenem Balkon und Blick
   in den Innenhof. Der perfekte Rückzugsort für Paare
   und Alleinreisende.
 description: >-
   Das Balkonzimmer verbindet gemütliche Atmosphäre mit
-  dem besonderen Extra eines eigenen Balkons. Sie finden
-  ein bequemes Doppelbett, einen kleinen Tisch
-  und ein eigenes Badezimmer mit Dusche. Morgens können
-  Sie Ihren Kaffee auf dem Balkon genießen und den Blick
-  über den Innenhof schweifen lassen. WLAN und Fernseher
-  sorgen für Unterhaltung am Abend. Die voll ausgestattete
+  dem besonderen Extra eines eigenen Balkons. Zwei
+  Einzelbetten, die auf Wunsch gerne zusammengestellt
+  werden, ein kleiner Tisch und ein eigenes Badezimmer
+  mit Dusche erwarten Sie. Morgens können Sie Ihren
+  Kaffee auf dem Balkon genießen und den Blick über den
+  Innenhof schweifen lassen. WLAN und Fernseher sorgen
+  für Unterhaltung am Abend. Die voll ausgestattete
   Gemeinschaftsküche und die Terrasse dürfen gerne genutzt
   werden – wir bitten um Rücksichtnahme auf andere Gäste.
 
@@ -35,7 +36,7 @@ heroImage: /img/rooms/balkonzimmer-balkon-1.jpg
 heroImageAlt: 'Balkonzimmer – Balkon mit Blumenkasten und Aussicht'
 gallery:
   - src: /img/rooms/balkonzimmer-zimmer.jpg
-    alt: 'Doppelbett mit gemütlicher Einrichtung'
+    alt: 'Zwei Einzelbetten mit gemütlicher Einrichtung'
   - src: /img/rooms/balkonzimmer-balkon-2.jpg
     alt: 'Blick vom Balkon in den Innenhof'
   - src: /img/rooms/balkonzimmer-bad-dusche.jpg

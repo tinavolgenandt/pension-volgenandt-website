@@ -1,22 +1,23 @@
 name: 'Rosengarten'
 slug: rosengarten
-type: doppelzimmer
-category: 'Doppelzimmer'
+type: zweibettzimmer
+category: 'Zweibettzimmer'
 shortDescription: >-
-  Charmantes Doppelzimmer mit Blick auf den Rosengarten.
+  Charmantes Zweibettzimmer mit Blick auf den Rosengarten.
   Gemütlich eingerichtet und ideal für einen erholsamen
   Aufenthalt zu zweit.
 description: >-
   Das Zimmer Rosengarten verdankt seinen Namen dem
   wunderschönen Blick auf unseren gepflegten Rosengarten.
-  Es erwartet Sie ein gemütliches Doppelbett,
-  ein eigenes Badezimmer mit Dusche und eine geschmackvolle
-  Einrichtung im ländlichen Stil. WLAN und Fernseher
-  stehen Ihnen selbstverständlich zur Verfügung. Lassen
-  Sie sich vom Duft der Rosen in den Schlaf wiegen.
-  Unsere voll ausgestattete Gemeinschaftsküche und die
-  Terrasse dürfen gerne genutzt werden – wir bitten um
-  Rücksichtnahme auf andere Gäste.
+  Zwei Einzelbetten, die auf Wunsch gerne zusammengestellt
+  werden, ein eigenes Badezimmer mit Dusche und eine
+  geschmackvolle Einrichtung im ländlichen Stil erwarten
+  Sie. WLAN und Fernseher stehen Ihnen selbstverständlich
+  zur Verfügung. Lassen Sie sich vom Duft der Rosen in
+  den Schlaf wiegen. Unsere voll ausgestattete
+  Gemeinschaftsküche und die Terrasse dürfen gerne
+  genutzt werden – wir bitten um Rücksichtnahme auf
+  andere Gäste.
 
 beds24PropertyId: 261258
 beds24RoomId: 549252
@@ -35,10 +36,10 @@ pricing:
 startingPrice: 58
 
 heroImage: /img/rooms/rosengarten-hero.jpg
-heroImageAlt: 'Zimmer Rosengarten – Doppelbett mit Fensterblick'
+heroImageAlt: 'Zimmer Rosengarten – Einzelbetten mit Fensterblick'
 gallery:
   - src: /img/rooms/rosengarten-1.jpg
-    alt: 'Rosengarten – Zimmeransicht mit Doppelbett und Sessel'
+    alt: 'Rosengarten – Zimmeransicht mit Einzelbetten und Sessel'
   - src: /img/rooms/rosengarten-bad.jpg
     alt: 'Privates Badezimmer mit Dusche'
   - src: /img/rooms/rosengarten-2.webp
