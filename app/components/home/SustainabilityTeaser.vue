@@ -28,7 +28,7 @@ const proofPoints = [
           alt="Gelber Sonnenhut und bunte Blumen im Garten der Pension"
           class="rounded-lg"
           loading="lazy"
-          sizes="(max-width: 768px) 100vw, 50vw"
+          sizes="100vw md:50vw"
         />
 
         <!-- Right: Text + proof points -->

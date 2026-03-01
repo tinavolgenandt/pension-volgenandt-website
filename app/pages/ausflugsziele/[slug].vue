@@ -156,7 +156,7 @@ const practicalInfo = computed(() => {
             :alt="image.alt"
             class="rounded-lg object-cover"
             loading="lazy"
-            sizes="(max-width: 640px) 100vw, 50vw"
+            sizes="100vw sm:50vw"
           />
         </div>
       </section>

@@ -95,7 +95,7 @@ const activityCards = [
                 :alt="attraction.heroImageAlt"
                 class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 loading="lazy"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                sizes="100vw sm:50vw lg:33vw"
               />
             </div>
             <div v-else class="flex aspect-[16/10] items-center justify-center bg-sage-100">
@@ -170,7 +170,7 @@ const activityCards = [
             alt="Winterlandschaft im Eichsfeld mit verschneiten Feldern"
             class="rounded-lg"
             loading="lazy"
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes="100vw md:50vw"
           />
           <div>
             <h2 class="font-serif text-2xl font-bold text-sage-900">Auch im Winter reizvoll</h2>

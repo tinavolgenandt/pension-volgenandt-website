@@ -29,7 +29,7 @@ const categoryBadge: Record<string, { label: string; class: string }> = {
         :alt="heroImageAlt"
         class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         loading="lazy"
-        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        sizes="100vw sm:50vw lg:33vw"
       />
       <span
         :class="categoryBadge[category]?.class"

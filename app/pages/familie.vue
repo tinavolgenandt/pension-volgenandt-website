@@ -101,7 +101,7 @@ const familyFeatures = [
           alt="Großer Garten mit Spielplatz an der Pension Volgenandt"
           class="rounded-lg"
           loading="lazy"
-          sizes="(max-width: 768px) 100vw, 50vw"
+          sizes="100vw md:50vw"
         />
         <div>
           <h2 class="font-serif text-2xl font-bold text-sage-900">
@@ -144,7 +144,7 @@ const familyFeatures = [
             alt="Überdachte Terrasse mit Grill und Sitzgruppe"
             class="rounded-lg"
             loading="lazy"
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes="100vw md:50vw"
           />
         </div>
       </div>
@@ -158,7 +158,7 @@ const familyFeatures = [
           alt="Genießer-Frühstück mit regionalen Spezialitäten"
           class="rounded-lg"
           loading="lazy"
-          sizes="(max-width: 768px) 100vw, 50vw"
+          sizes="100vw md:50vw"
         />
         <div>
           <h2 class="font-serif text-2xl font-bold text-sage-900">

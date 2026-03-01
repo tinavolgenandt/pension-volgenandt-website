@@ -146,7 +146,7 @@ useSchemaOrg([
             alt="Gemütliche Sitzecke mit Hortensien im Garten"
             class="aspect-[4/3] w-full rounded-lg object-cover"
             loading="lazy"
-            sizes="(max-width: 640px) 100vw, 50vw"
+            sizes="100vw sm:50vw"
           />
           <figcaption class="mt-2 text-center text-sm text-sage-600">
             Unser Garten lädt zum Verweilen ein
@@ -158,7 +158,7 @@ useSchemaOrg([
             alt="Pension Volgenandt – Gebäude und Innenhof"
             class="aspect-[4/3] w-full rounded-lg object-cover"
             loading="lazy"
-            sizes="(max-width: 640px) 100vw, 50vw"
+            sizes="100vw sm:50vw"
           />
           <figcaption class="mt-2 text-center text-sm text-sage-600">
             So empfängt Sie unsere Pension
