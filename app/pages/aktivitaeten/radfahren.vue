@@ -72,9 +72,7 @@ const difficultyBadge: Record<string, { label: string; class: string }> = {
     <!-- Route recommendations -->
     <section v-if="activity.routes && activity.routes.length > 0" class="px-6 py-12 md:py-16">
       <div class="mx-auto max-w-4xl">
-        <h2 class="mb-8 font-serif text-2xl font-semibold text-sage-900">
-          Empfohlene Radtouren
-        </h2>
+        <h2 class="mb-8 font-serif text-2xl font-semibold text-sage-900">Empfohlene Radtouren</h2>
         <div class="space-y-6">
           <div
             v-for="route in activity.routes"

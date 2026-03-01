@@ -46,14 +46,17 @@ function occupancyLabel(occupancy: number): string {
         <span class="text-2xl font-bold text-sage-800">{{ allRates[0].pricePerNight }} EUR</span>
         <span class="text-sm text-sage-500">pro Nacht</span>
       </div>
-      <p class="mt-1 text-sm text-sage-600">
-        für {{ occupancyLabel(allRates[0].occupancy) }}
-      </p>
+      <p class="mt-1 text-sm text-sage-600">für {{ occupancyLabel(allRates[0].occupancy) }}</p>
     </div>
 
     <!-- Multi-rate table for rooms with multiple occupancy levels -->
     <div v-else class="overflow-x-auto">
-      <div class="grid gap-3" :class="allRates.length <= 3 ? `grid-cols-${allRates.length}` : 'grid-cols-2 sm:grid-cols-3'">
+      <div
+        class="grid gap-3"
+        :class="
+          allRates.length <= 3 ? `grid-cols-${allRates.length}` : 'grid-cols-2 sm:grid-cols-3'
+        "
+      >
         <div
           v-for="rate in allRates"
           :key="rate.occupancy"
@@ -69,8 +72,6 @@ function occupancyLabel(occupancy: number): string {
     </div>
 
     <!-- PAngV compliance notice -->
-    <p class="mt-3 text-xs text-sage-500">
-      Alle Preise inkl. MwSt.
-    </p>
+    <p class="mt-3 text-xs text-sage-500">Alle Preise inkl. MwSt.</p>
   </div>
 </template>

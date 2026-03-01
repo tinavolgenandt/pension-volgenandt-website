@@ -43,23 +43,25 @@ const proofPoints = [
 
           <!-- Icon proof points -->
           <div class="mt-8 flex flex-col gap-6">
-        <UiScrollReveal
-          v-for="(point, index) in proofPoints"
-          :key="point.title"
-          :delay="index * 150"
-        >
-          <div class="flex items-center gap-4 md:flex-col md:items-center md:gap-3">
-            <!-- Icon circle -->
-            <div class="flex size-16 shrink-0 items-center justify-center rounded-full bg-sage-100">
-              <Icon :name="point.icon" class="size-8 text-sage-600" />
-            </div>
-            <!-- Text -->
-            <div>
-              <h3 class="text-lg font-semibold text-sage-900">{{ point.title }}</h3>
-              <p class="mt-1 text-sage-700">{{ point.subtitle }}</p>
-            </div>
-          </div>
-        </UiScrollReveal>
+            <UiScrollReveal
+              v-for="(point, index) in proofPoints"
+              :key="point.title"
+              :delay="index * 150"
+            >
+              <div class="flex items-center gap-4 md:flex-col md:items-center md:gap-3">
+                <!-- Icon circle -->
+                <div
+                  class="flex size-16 shrink-0 items-center justify-center rounded-full bg-sage-100"
+                >
+                  <Icon :name="point.icon" class="size-8 text-sage-600" />
+                </div>
+                <!-- Text -->
+                <div>
+                  <h3 class="text-lg font-semibold text-sage-900">{{ point.title }}</h3>
+                  <p class="mt-1 text-sage-700">{{ point.subtitle }}</p>
+                </div>
+              </div>
+            </UiScrollReveal>
           </div>
 
           <!-- CTA text link -->

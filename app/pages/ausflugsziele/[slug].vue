@@ -60,7 +60,12 @@ const practicalInfo = computed(() => {
     })
   }
   if (attraction.value.website) {
-    items.push({ icon: 'ph:globe', label: 'Website', value: attraction.value.website, isLink: true })
+    items.push({
+      icon: 'ph:globe',
+      label: 'Website',
+      value: attraction.value.website,
+      isLink: true,
+    })
   }
   if (attraction.value.additionalWebsites) {
     for (const site of attraction.value.additionalWebsites) {

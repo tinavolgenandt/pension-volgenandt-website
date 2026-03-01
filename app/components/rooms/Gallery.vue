@@ -32,9 +32,7 @@ const {
 <template>
   <div class="room-gallery">
     <!-- Hero image area -->
-    <div
-      class="relative overflow-hidden rounded-xl"
-    >
+    <div class="relative overflow-hidden rounded-xl">
       <div class="aspect-[3/2] bg-sage-100">
         <NuxtImg
           v-if="currentImage"

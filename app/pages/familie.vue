@@ -165,9 +165,9 @@ const familyFeatures = [
             Frühstück für die ganze Familie
           </h2>
           <p class="mt-4 leading-relaxed text-sage-800">
-            Ein guter Tag beginnt mit einem guten Frühstück. Unser Genießer-Frühstück mit
-            regionalen Wurstspezialitäten, hausgemachter Marmelade und saisonalem Obst aus dem
-            eigenen Garten lässt keine Wünsche offen.
+            Ein guter Tag beginnt mit einem guten Frühstück. Unser Genießer-Frühstück mit regionalen
+            Wurstspezialitäten, hausgemachter Marmelade und saisonalem Obst aus dem eigenen Garten
+            lässt keine Wünsche offen.
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
             Beim Frühstück gehen wir gerne auf die Wünsche der Kleinen ein – sprechen Sie uns
@@ -207,8 +207,8 @@ const familyFeatures = [
           <li class="flex items-start gap-3">
             <Icon name="ph:check-circle-duotone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
             <span class="leading-relaxed text-sage-800">
-              Wanderwege und Radtouren in der Umgebung – per Auto oder Leihrad gut erreichbar,
-              auch für kleine Beine geeignet.
+              Wanderwege und Radtouren in der Umgebung – per Auto oder Leihrad gut erreichbar, auch
+              für kleine Beine geeignet.
             </span>
           </li>
         </ul>

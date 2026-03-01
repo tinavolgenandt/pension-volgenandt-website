@@ -86,11 +86,11 @@ const sustainabilityFeatures = [
     <!-- 2. Personal intro -->
     <section class="mx-auto max-w-3xl px-6 py-12 md:py-16">
       <p class="text-lg leading-relaxed text-sage-800">
-        Nachhaltigkeit ist für uns kein Trend, sondern eine Selbstverständlichkeit. Wir leben
-        mitten in der Natur und möchten, dass das auch in Zukunft so bleibt. Deshalb ruht unsere
-        Nachhaltigkeit auf vier Säulen: eigene Energieerzeugung, eine unabhängige
-        Wasserversorgung, aktiver Schutz der Artenvielfalt und ein geschlossener Kreislauf vom
-        Garten bis auf den Frühstückstisch.
+        Nachhaltigkeit ist für uns kein Trend, sondern eine Selbstverständlichkeit. Wir leben mitten
+        in der Natur und möchten, dass das auch in Zukunft so bleibt. Deshalb ruht unsere
+        Nachhaltigkeit auf vier Säulen: eigene Energieerzeugung, eine unabhängige Wasserversorgung,
+        aktiver Schutz der Artenvielfalt und ein geschlossener Kreislauf vom Garten bis auf den
+        Frühstückstisch.
       </p>
     </section>
 
@@ -160,9 +160,7 @@ const sustainabilityFeatures = [
     <section class="mx-auto max-w-5xl px-6 py-12 md:py-16">
       <div class="grid items-center gap-8 md:grid-cols-2">
         <div>
-          <h2 class="font-serif text-2xl font-bold text-sage-900">
-            Artenvielfalt vor der Haustür
-          </h2>
+          <h2 class="font-serif text-2xl font-bold text-sage-900">Artenvielfalt vor der Haustür</h2>
           <p class="mt-4 leading-relaxed text-sage-800">
             Unsere Blühwiese wurde von
             <a
@@ -170,14 +168,15 @@ const sustainabilityFeatures = [
               target="_blank"
               rel="noopener noreferrer"
               class="text-waldhonig-600 underline hover:text-waldhonig-700"
-            >ImmerBunt</a>
+              >ImmerBunt</a
+            >
             angelegt – Deutschlands erster Blühwiesen-Agentur. Die Wiese bietet Bienen,
             Schmetterlingen und anderen Insekten reichlich Nahrung.
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
             In der Totholzecke finden Käfer, Wildbienen und Igel Unterschlupf – ein bewusst
-            belassenes Stück wilde Natur. Zusammen mit einheimischen Wildblumen und alten
-            Obstsorten entsteht ein vielfältiger Lebensraum direkt vor unserer Haustür.
+            belassenes Stück wilde Natur. Zusammen mit einheimischen Wildblumen und alten Obstsorten
+            entsteht ein vielfältiger Lebensraum direkt vor unserer Haustür.
           </p>
         </div>
         <NuxtImg
@@ -202,18 +201,17 @@ const sustainabilityFeatures = [
             sizes="(max-width: 768px) 100vw, 50vw"
           />
           <div>
-            <h2 class="font-serif text-2xl font-bold text-sage-900">
-              Vom Garten auf den Tisch
-            </h2>
+            <h2 class="font-serif text-2xl font-bold text-sage-900">Vom Garten auf den Tisch</h2>
             <p class="mt-4 leading-relaxed text-sage-800">
-              In unserem Garten wachsen verschiedene Obstsorten, Beeren und Gemüse. Wir ernten
-              alles selbst und verarbeiten vieles davon – ob als hausgemachte Marmelade, frische
-              Kräuter oder saisonales Obst zum Frühstück.
+              In unserem Garten wachsen verschiedene Obstsorten, Beeren und Gemüse. Wir ernten alles
+              selbst und verarbeiten vieles davon – ob als hausgemachte Marmelade, frische Kräuter
+              oder saisonales Obst zum Frühstück.
             </p>
             <p class="mt-4 leading-relaxed text-sage-800">
-              Was nicht aus dem eigenen Garten kommt, beziehen wir aus der Region: Wurstspezialitäten
-              vom Eichsfelder Metzger und andere Zutaten von regionalen Erzeugern. Gedüngt wird mit
-              dem hauseigenen Kompost, der organische Abfälle in wertvollen Nährstoff verwandelt.
+              Was nicht aus dem eigenen Garten kommt, beziehen wir aus der Region:
+              Wurstspezialitäten vom Eichsfelder Metzger und andere Zutaten von regionalen
+              Erzeugern. Gedüngt wird mit dem hauseigenen Kompost, der organische Abfälle in
+              wertvollen Nährstoff verwandelt.
             </p>
             <p class="mt-4 leading-relaxed text-sage-800">
               Damit dieser Kreislauf funktioniert, trennen wir konsequent unseren Müll und bitten
