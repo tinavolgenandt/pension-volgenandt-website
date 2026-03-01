@@ -43,10 +43,10 @@ function occupancyLabel(occupancy: number): string {
     <!-- Simple display for single rate -->
     <div v-if="isSimple" class="rounded-lg border border-sage-200 bg-sage-50 px-5 py-4 text-center">
       <div class="flex items-baseline justify-center gap-2">
-        <span class="text-2xl font-bold text-sage-800">{{ allRates[0].pricePerNight }} EUR</span>
+        <span class="text-2xl font-bold text-sage-800">{{ allRates[0]?.pricePerNight }} EUR</span>
         <span class="text-sm text-sage-500">pro Nacht</span>
       </div>
-      <p class="mt-1 text-sm text-sage-600">für {{ occupancyLabel(allRates[0].occupancy) }}</p>
+      <p class="mt-1 text-sm text-sage-600">für {{ occupancyLabel(allRates[0]?.occupancy ?? 1) }}</p>
     </div>
 
     <!-- Multi-rate table for rooms with multiple occupancy levels -->

@@ -129,7 +129,7 @@ const { direction } = useSwipe(imageContainerRef, {
 
       <!-- Image caption -->
       <p v-if="images[currentIndex]?.alt" class="mb-1 text-center text-sm text-white/80">
-        {{ images[currentIndex].alt }}
+        {{ images[currentIndex]?.alt }}
       </p>
 
       <!-- Image counter -->

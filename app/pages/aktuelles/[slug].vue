@@ -100,7 +100,7 @@ function formatDate(dateStr: string) {
       </section>
 
       <!-- External links -->
-      <section v-if="article.externalLinks.length > 0" class="mb-10">
+      <section v-if="article.externalLinks?.length" class="mb-10">
         <h2 class="mb-4 font-serif text-xl font-semibold text-sage-900">Weiterführende Links</h2>
         <div class="rounded-lg border border-sage-200 bg-sage-50 p-6">
           <ul class="space-y-3">
