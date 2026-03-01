@@ -15,13 +15,6 @@ useSeoMeta({
         Allgemeine Geschäftsbedingungen (AGB)
       </h1>
       <p class="mb-4 text-sage-600">{{ config.siteName }}</p>
-      <p
-        class="mb-8 rounded-lg border border-waldhonig-200 bg-waldhonig-50 p-4 text-sm text-waldhonig-800"
-      >
-        <strong>Hinweis:</strong> Diese AGB sind ein Entwurf und müssen vor Veröffentlichung vom
-        Betreiber geprüft und freigegeben werden.
-      </p>
-
       <!-- 1. Geltungsbereich -->
       <section>
         <h2 class="mt-8 mb-4 font-serif text-xl font-semibold text-sage-800">1. Geltungsbereich</h2>

@@ -20,7 +20,7 @@ useSchemaOrg([
     url: 'https://www.pension-volgenandt.de',
     logo: 'https://www.pension-volgenandt.de/img/logo.webp',
     image: 'https://www.pension-volgenandt.de/img/hero/hero-poster.webp',
-    telephone: '+49 3605 542772',
+    telephone: '+49 3605 542775',
     email: 'kontakt@pension-volgenandt.de',
     address: {
       '@type': 'PostalAddress',

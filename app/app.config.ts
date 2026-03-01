@@ -5,8 +5,8 @@ export default defineAppConfig({
   contact: {
     phone: '+49 160 97719112',
     phoneDisplay: '0160 97719112',
-    landline: '+49 3605 542772',
-    landlineDisplay: '03605 542772',
+    landline: '+49 3605 542775',
+    landlineDisplay: '03605 542775',
     mobile: '+49 160 97719112',
     mobileDisplay: '0160 97719112',
     email: 'kontakt@pension-volgenandt.de',
@@ -17,7 +17,7 @@ export default defineAppConfig({
     },
   },
   legal: {
-    ownerName: '[INHABER_NAME]',
+    ownerName: 'Stefan Volgenandt',
     taxId: '[STEUERNUMMER_ODER_UST_IDNR]',
     authority: '',
   },

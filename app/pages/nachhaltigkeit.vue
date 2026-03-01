@@ -175,7 +175,7 @@ const sustainabilityFeatures = [
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
             In der Totholzecke finden Käfer, Wildbienen und Igel Unterschlupf – ein bewusst
-            belassenes Stück wilde Natur. Zusammen mit einheimischen Wildblumen und alten Obstsorten
+            belassenes Stück wilde Natur. Zusammen mit einheimischen Wildblumen und alten Obstarten
             entsteht ein vielfältiger Lebensraum direkt vor unserer Haustür.
           </p>
         </div>
@@ -203,7 +203,7 @@ const sustainabilityFeatures = [
           <div>
             <h2 class="font-serif text-2xl font-bold text-sage-900">Vom Garten auf den Tisch</h2>
             <p class="mt-4 leading-relaxed text-sage-800">
-              In unserem Garten wachsen verschiedene Obstsorten, Beeren und Gemüse. Wir ernten alles
+              In unserem Garten wachsen verschiedene Obstarten, Beeren und Gemüse. Wir ernten alles
               selbst und verarbeiten vieles davon – ob als hausgemachte Marmelade, frische Kräuter
               oder saisonales Obst zum Frühstück.
             </p>

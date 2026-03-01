@@ -43,8 +43,8 @@ defineOptions({
             class="w-full rounded-lg object-cover shadow-sm"
             loading="lazy"
             sizes="sm:100vw md:50vw"
-            width="640"
-            height="480"
+            width="800"
+            height="985"
           />
         </div>
       </div>
