@@ -32,7 +32,7 @@ const proofPoints = [
         />
 
         <!-- Right: Text + proof points -->
-        <div>
+        <div class="flex flex-col justify-center">
           <h2 class="font-serif text-3xl font-bold text-sage-900 md:text-4xl">
             Nat&uuml;rlich nachhaltig
           </h2>
@@ -42,7 +42,7 @@ const proofPoints = [
           </p>
 
           <!-- Icon proof points -->
-          <div class="mt-8 flex flex-col gap-6">
+          <div class="mt-8 flex flex-col gap-6 md:flex-row md:justify-center">
             <UiScrollReveal
               v-for="(point, index) in proofPoints"
               :key="point.title"
@@ -56,7 +56,7 @@ const proofPoints = [
                   <Icon :name="point.icon" class="size-8 text-sage-600" />
                 </div>
                 <!-- Text -->
-                <div>
+                <div class="md:text-center">
                   <h3 class="text-lg font-semibold text-sage-900">{{ point.title }}</h3>
                   <p class="mt-1 text-sage-700">{{ point.subtitle }}</p>
                 </div>
