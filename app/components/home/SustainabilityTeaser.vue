@@ -32,7 +32,7 @@ const proofPoints = [
         />
 
         <!-- Right: Text + proof points -->
-        <div class="flex flex-col justify-center">
+        <div class="flex flex-col justify-center md:items-center md:text-center">
           <h2 class="font-serif text-3xl font-bold text-sage-900 md:text-4xl">
             Nat&uuml;rlich nachhaltig
           </h2>
