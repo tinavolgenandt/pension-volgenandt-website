@@ -39,10 +39,9 @@ export default defineNuxtConfig({
     // Auto-discovers all prerendered routes
   },
 
-  // Robots configuration (robotsTxt disabled for GitHub Pages subpath compatibility)
+  // Robots configuration
   robots: {
     groups: [{ userAgent: '*', allow: '/' }],
-    robotsTxt: false,
   },
 
   // Link checker: warn only during incremental build (pages added across phases)

@@ -36,7 +36,7 @@ jobs:
       - name: Build with github_pages preset
         run: pnpm nuxt build --preset github_pages
         env:
-          NUXT_APP_BASE_URL: /pension-volgenandt-website/
+          NUXT_APP_BASE_URL: /
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
