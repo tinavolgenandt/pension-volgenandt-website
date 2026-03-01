@@ -108,6 +108,8 @@ const bookingUrl = computed(() => {
     <div v-if="!compact" class="flex gap-2 px-5 pb-5">
       <NuxtLink
         :to="`/zimmer/${slug}`"
+        aria-hidden="true"
+        tabindex="-1"
         class="flex-1 rounded-lg border border-sage-200 px-4 py-2.5 text-center text-sm font-semibold text-sage-700 transition-colors duration-200 hover:bg-sage-50"
       >
         Details ansehen

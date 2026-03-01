@@ -117,16 +117,20 @@ watch(emblaApi, (api) => {
 
         <!-- Dot indicators -->
         <ClientOnly>
-          <div class="mt-6 flex items-center justify-center gap-2">
+          <div class="mt-6 flex items-center justify-center">
             <button
               v-for="(_, index) in scrollSnaps"
               :key="index"
               type="button"
-              class="size-2.5 rounded-full transition-colors"
-              :class="index === selectedIndex ? 'bg-sage-700' : 'bg-sage-300'"
+              class="flex size-12 items-center justify-center"
               :aria-label="`Zitat ${index + 1} von ${scrollSnaps.length}`"
               @click="scrollTo(index)"
-            />
+            >
+              <span
+                class="block size-2.5 rounded-full transition-colors"
+                :class="index === selectedIndex ? 'bg-sage-700' : 'bg-sage-300'"
+              />
+            </button>
           </div>
         </ClientOnly>
       </div>
