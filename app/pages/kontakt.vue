@@ -70,21 +70,7 @@ useSchemaOrg([
           </p>
 
           <div class="mt-8 space-y-6">
-            <!-- Phone -->
-            <div class="flex items-start gap-4">
-              <Icon name="ph:phone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
-              <div>
-                <p class="font-semibold text-sage-900">Telefon</p>
-                <a
-                  :href="`tel:${appConfig.contact.phone}`"
-                  class="text-lg text-sage-700 transition-colors hover:text-sage-900"
-                >
-                  {{ appConfig.contact.phoneDisplay }}
-                </a>
-              </div>
-            </div>
-
-            <!-- Mobile -->
+            <!-- Mobile (preferred) -->
             <div class="flex items-start gap-4">
               <Icon name="ph:device-mobile" class="mt-0.5 size-6 shrink-0 text-sage-600" />
               <div>
@@ -94,6 +80,20 @@ useSchemaOrg([
                   class="text-lg text-sage-700 transition-colors hover:text-sage-900"
                 >
                   {{ appConfig.contact.mobileDisplay }}
+                </a>
+              </div>
+            </div>
+
+            <!-- Landline -->
+            <div class="flex items-start gap-4">
+              <Icon name="ph:phone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
+              <div>
+                <p class="font-semibold text-sage-900">Festnetz</p>
+                <a
+                  :href="`tel:${appConfig.contact.landline}`"
+                  class="text-lg text-sage-700 transition-colors hover:text-sage-900"
+                >
+                  {{ appConfig.contact.landlineDisplay }}
                 </a>
               </div>
             </div>
@@ -137,7 +137,37 @@ useSchemaOrg([
       </div>
     </section>
 
-    <!-- Section 2: Driving directions + Map -->
+    <!-- Section 2: Visual divider with garden + building -->
+    <section class="px-6 py-12 md:py-16">
+      <div class="mx-auto grid max-w-5xl gap-6 sm:grid-cols-2">
+        <figure>
+          <NuxtImg
+            src="/img/content/sitzecke-hortensien.webp"
+            alt="Gemütliche Sitzecke mit Hortensien im Garten"
+            class="aspect-[4/3] w-full rounded-lg object-cover"
+            loading="lazy"
+            sizes="(max-width: 640px) 100vw, 50vw"
+          />
+          <figcaption class="mt-2 text-center text-sm text-sage-600">
+            Unser Garten lädt zum Verweilen ein
+          </figcaption>
+        </figure>
+        <figure>
+          <NuxtImg
+            src="/img/homepage/gebaeude-innenhof.webp"
+            alt="Pension Volgenandt – Gebäude und Innenhof"
+            class="aspect-[4/3] w-full rounded-lg object-cover"
+            loading="lazy"
+            sizes="(max-width: 640px) 100vw, 50vw"
+          />
+          <figcaption class="mt-2 text-center text-sm text-sage-600">
+            So empfängt Sie unsere Pension
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Section 3: Driving directions + Map -->
     <section class="bg-sage-50 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-5xl">
         <h2 class="mb-8 text-center font-serif text-2xl font-semibold text-sage-900">Anfahrt</h2>
@@ -161,7 +191,7 @@ useSchemaOrg([
                 Mit der Bahn
               </h3>
               <p class="mt-2 leading-relaxed text-sage-700">
-                Vom Bahnhof Leinefelde sind es 8 km bis zu unserer Pension. Gerne holen wir Sie nach
+                Vom Bahnhof Leinefelde sind es 4 km bis zu unserer Pension. Gerne holen wir Sie nach
                 Absprache vom Bahnhof ab – rufen Sie uns einfach vorher an.
               </p>
             </div>
@@ -193,7 +223,7 @@ useSchemaOrg([
       </div>
     </section>
 
-    <!-- Section 3: FAQ accordion -->
+    <!-- Section 4: FAQ accordion -->
     <section class="px-6 py-12 md:py-16">
       <div class="mx-auto max-w-3xl">
         <h2 class="mb-8 text-center font-serif text-2xl font-semibold text-sage-900">

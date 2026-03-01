@@ -3,8 +3,8 @@ slug: emils-kuhwiese
 type: ferienwohnung
 category: 'Ferienwohnung'
 shortDescription: >-
-  Gemütliche Ferienwohnung mit Blick auf die grünen Wiesen
-  des Eichsfelds. Eigene Küche, Terrasse und ein zusätzliches
+  Gemütliche Ferienwohnung mit Blick in den Garten.
+  Eigene Küche, Terrasse und ein zusätzliches
   Schlafsofa – ideal für 2 Personen oder kleine Familien.
 description: >-
   Die Ferienwohnung Emil's Kuhwiese bietet Ihnen
@@ -55,22 +55,28 @@ amenities:
 
 highlights:
   - 'Eigene Küche für Selbstversorger'
-  - 'Terrasse mit Gartenblick'
+  - 'Eigene Terrasse mit Blick in den Garten'
   - 'Schlafsofa für kleine Kinder'
 
 extras:
   - name: 'Frühstück'
-    description: 'Reichhaltiges Frühstücksbuffet'
+    description: 'Brötchen, Brotbelag, hausgemachte Marmelade & Kaffee oder Tee'
     price: 10
     unit: 'pro Person / Nacht'
   - name: 'Genießer-Frühstück'
-    description: 'Erweitertes Frühstück mit regionalen Spezialitäten'
+    description: 'Brötchen, regionale Wurstspezialitäten, hausgemachte Marmelade, saisonales Obst, frischer Saft & Kaffee oder Tee'
     price: 15
     unit: 'pro Person / Nacht'
-  - name: 'Hund'
+  - name: 'Aufbettung'
+    description: 'Zusätzlicher Schlafplatz auf dem Schlafsofa'
     price: 10
+    unit: 'pro Person / Nacht'
+  - name: 'Hund'
+    description: 'Ihr Vierbeiner ist bei uns herzlich willkommen – unser großer Garten bietet viel Platz zum Toben und Schnüffeln.'
+    price: 5
     unit: 'pro Nacht'
-  - name: 'BBQ-Set'
+  - name: 'Grill-Set'
+    description: 'Inkl. Grillbesteck und -pfannen'
     price: 10
     unit: 'pro Nutzung'
 

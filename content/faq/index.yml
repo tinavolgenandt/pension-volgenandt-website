@@ -3,24 +3,24 @@ items:
     answer: >-
       Sie können direkt über unsere Website buchen, uns eine E-Mail an
       kontakt@pension-volgenandt.de schreiben oder telefonisch unter
-      +49 3605 542775 erreichen. Wir bestätigen Ihre Buchung
-      innerhalb von 24 Stunden.
+      +49 160 97719112 erreichen. Wir melden uns so schnell wie
+      möglich bei Ihnen.
     category: buchung
     sortOrder: 1
 
   - question: 'Wie sind die Check-in und Check-out Zeiten?'
     answer: >-
       Check-in ist ab 15:00 Uhr, Check-out bis 10:00 Uhr. Wenn Sie
-      früher ankommen oder später abreisen möchten, sprechen Sie
-      uns einfach an – wir finden fast immer eine Lösung.
+      andere Zeiten benötigen, sprechen Sie uns gerne an – wir
+      versuchen, eine Lösung zu finden.
     category: buchung
     sortOrder: 2
 
-  - question: 'Wie ist die Stornierungspolitik?'
+  - question: 'Kann ich meine Buchung stornieren?'
     answer: >-
-      Eine kostenlose Stornierung ist bis 7 Tage vor Anreise möglich.
-      Bei kurzfristigeren Absagen berechnen wir die erste Nacht.
-      Details finden Sie in unseren <a href="/agb/">AGB</a>.
+      Ja, eine Stornierung ist möglich. Die genauen Bedingungen
+      finden Sie in unseren <a href="/agb/">AGB</a> oder sprechen
+      Sie uns direkt an.
     category: buchung
     relatedPage: /agb/
     sortOrder: 3
@@ -34,26 +34,30 @@ items:
 
   - question: 'Bieten Sie Frühstück an?'
     answer: >-
-      Ja! Wir bieten ein reichhaltiges Frühstück für 10 EUR
-      pro Person und ein Genießer-Frühstück mit regionalen
-      Spezialitäten für 15 EUR pro Person. Bitte geben Sie
-      bei der Buchung Bescheid.
+      Ja! Unser Frühstück mit Brötchen, Brotbelag, hausgemachter
+      Marmelade & Kaffee oder Tee gibt es für 10 EUR pro Person.
+      Das Genießer-Frühstück für 15 EUR pro Person enthält
+      zusätzlich regionale Wurstspezialitäten, saisonales Obst
+      und frischen Saft. Bitte geben Sie bei der Buchung Bescheid.
     category: ausstattung
     sortOrder: 5
 
-  - question: 'Sind Hunde willkommen?'
+  - question: 'Sind Hunde erlaubt?'
     answer: >-
-      Ja, Hunde sind bei uns herzlich willkommen! Wir berechnen
-      5 EUR pro Nacht. Unser großer Garten bietet viel Auslauf,
-      und die Umgebung ist ideal für Spaziergänge mit Hund.
+      Ja, in bestimmten Zimmern sind Hunde erlaubt. Bitte geben
+      Sie bei der Buchung Bescheid, damit wir das passende Zimmer
+      für Sie bereithalten. Es fällt ein Aufpreis von 5 EUR pro
+      Nacht an.
     category: ausstattung
     sortOrder: 6
 
   - question: 'Ist die Pension familienfreundlich?'
     answer: >-
-      Auf jeden Fall! Wir haben einen großen Garten mit Spielplatz,
-      Kinderfahrzeuge, Kinderbetten und Hochstühle. Mehr dazu auf
-      unserer <a href="/familie/">Familienseite</a>.
+      Auf jeden Fall! Wir haben einen großen Garten mit Sandkasten
+      und Kinderfahrzeugen wie Bobbycar, Dreirad und Roller.
+      Kinderbetten und Hochstühle stellen wir auf Anfrage gerne
+      zur Verfügung. Mehr dazu auf unserer
+      <a href="/familie/">Familienseite</a>.
     category: ausstattung
     relatedPage: /familie/
     sortOrder: 7
@@ -62,16 +66,16 @@ items:
     answer: >-
       Von der A38 nehmen Sie die Ausfahrt Leinefelde und folgen der
       Beschilderung Richtung Breitenbach. Die Fahrt vom Autobahnkreuz
-      dauert etwa 10 Minuten. Vom Bahnhof Leinefelde sind es 8 km –
+      dauert etwa 10 Minuten. Vom Bahnhof Leinefelde sind es 4 km –
       wir holen Sie gerne ab!
     category: anreise
     sortOrder: 8
 
   - question: 'Was kann man in der Umgebung unternehmen?'
     answer: >-
-      Das Eichsfeld bietet vieles: den Bärenpark Worbis (12 km),
-      Burg Hanstein (18 km), den Baumkronenpfad Hainich (45 km)
-      und herrliche Wanderwege direkt vor der Tür. Alle Ausflugsziele
+      Das Eichsfeld bietet vieles: den Bärenpark Worbis (6 km),
+      Burg Hanstein (40 km), den Baumkronenpfad Hainich (54 km)
+      und herrliche Wanderwege in der Umgebung. Alle Ausflugsziele
       finden Sie auf unserer <a href="/ausflugsziele/">Ausflugsseite</a>.
     category: umgebung
     relatedPage: /ausflugsziele/

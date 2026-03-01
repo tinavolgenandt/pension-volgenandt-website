@@ -1,0 +1,59 @@
+name: 'Heilbad Heiligenstadt & Vitalpark'
+slug: vitalpark-heiligenstadt
+seoTitle: 'Heilbad Heiligenstadt – Altstadt, Kurpark & Vitalpark | Pension im Eichsfeld'
+seoDescription: 'Heilbad Heiligenstadt – die über 1.000 Jahre alte Kreisstadt des Eichsfelds mit historischer Altstadt, Kurpark, Literaturmuseum und Vitalpark. Nur 15 km von unserer Pension.'
+heroImage: ''
+heroImageAlt: ''
+distanceKm: 15
+drivingMinutes: 14
+category: kultur
+shortDescription: 'Über 1.000 Jahre alte Kreisstadt mit Altstadt, Kurpark und Therme'
+intro: >-
+  Heilbad Heiligenstadt, die Kreisstadt des Eichsfelds, wird
+  auch „Stadt der zehn Türme" genannt. Fachwerkhäuser, drei
+  gotische Kirchen und eine gemütliche Fußgängerzone laden
+  zum Entdecken ein – nur 15 Minuten von unserer Pension.
+content: >-
+  Entlang der Wilhelmstraße, der rund einen Kilometer langen
+  Fußgängerzone, reihen sich kleine Cafés, Restaurants und
+  Geschäfte aneinander. Die drei gotischen Kirchen prägen
+  das Stadtbild: St. Marien mit ihren markanten Doppeltürmen,
+  die Bergkirche St. Martin und St. Ägidien. Der barocke
+  Klostergarten im Herzen der Altstadt ist eine grüne Oase
+  zum Verweilen.
+
+
+  Im Literaturmuseum „Theodor Storm" erfahren Sie, wie der
+  berühmte Dichter von 1856 bis 1864 in Heiligenstadt lebte
+  und hier einige seiner bekanntesten Novellen schrieb. Das
+  Eichsfeldmuseum im barocken Jesuitenkolleg erzählt auf
+  drei Etagen die Geschichte der Region.
+
+
+  Der Heinrich-Heine-Kurpark ist eine Oase der Ruhe mit
+  Kneipp-Becken, Solebrunnen und einem Teich mit Fontäne.
+  Am Geislede-Wasserfall, der Theodor Storm zu seinem
+  Märchen „Die Regentrude" inspirierte, steht eine lebensgroße
+  Holzskulptur der Sagengestalt. Von Mai bis September finden
+  sonntags kostenlose Kurkonzerte in der Konzertmuschel statt.
+
+
+  Ideal lässt sich der Stadtbummel mit einem Besuch im
+  Vitalpark verbinden: Thermalbäder, acht Saunen von der
+  Erdsauna bis zur finnischen Sauna, ein Rasul, Saunagarten
+  und Turmbar – perfekt zum Entspannen nach einem aktiven Tag.
+hostTip: >-
+  Unser Tipp: Vormittags durch die Altstadt bummeln und
+  nachmittags im Vitalpark entspannen. Falls Sie über Ostern
+  bei uns sind, erleben Sie die Palmsonntagsprozession –
+  ein UNESCO-Kulturerbe und ganz besonderes Ereignis.
+bestTimeToVisit: 'Ganzjährig'
+website: 'https://www.heilbad-heiligenstadt.de'
+additionalWebsites:
+  - label: 'Vitalpark (Therme & Sauna)'
+    url: 'https://www.vitalpark-heiligenstadt.de'
+coordinates:
+  lat: 51.3844
+  lng: 10.1488
+gallery: []
+sortOrder: 4

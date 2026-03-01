@@ -1,19 +1,19 @@
 name: 'Burg Bodenstein'
 slug: burg-bodenstein
 seoTitle: 'Burg Bodenstein | Pension nahe Burg Bodenstein'
-seoDescription: 'Entdecken Sie die mittelalterliche Burg Bodenstein im Eichsfeld – nur 20 km von unserer Pension. Panoramablick, Kapelle und Burgcafe.'
+seoDescription: 'Entdecken Sie die mittelalterliche Burg Bodenstein im Eichsfeld – nur 9 km von unserer Pension. Panoramablick, Kapelle und Burgcafé.'
 heroImage: /img/attractions/burg-bodenstein.webp
 heroImageAlt: 'Mittelalterliche Burg Bodenstein im Eichsfeld'
-distanceKm: 20
-drivingMinutes: 25
+distanceKm: 9
+drivingMinutes: 13
 category: kultur
-shortDescription: 'Mittelalterliche Höhenburg mit Panoramablick und Burgcafe'
+shortDescription: 'Mittelalterliche Höhenburg mit Panoramablick und Burgcafé'
 intro: >-
-  Die Burg Bodenstein thront majestätisch über dem Leinetal und gehört
+  Die Burg Bodenstein thront majestätisch auf einem Bergsporn des Ohmgebirges und gehört
   zu den am besten erhaltenen mittelalterlichen Burgen in Thüringen.
   Ein Besuch lohnt sich für Geschichtsinteressierte und Genießer gleichermaßen.
 content: >-
-  Etwa 20 Kilometer von unserer Pension entfernt erhebt sich die Burg Bodenstein
+  Etwa 9 Kilometer von unserer Pension entfernt erhebt sich die Burg Bodenstein
   auf einem Felssporn über dem Tal. Die über 900 Jahre alte Höhenburg
   beeindruckt mit ihrem mächtigen Bergfried, der romanischen Kapelle und
   dem weitläufigen Innenhof.
@@ -25,7 +25,7 @@ content: >-
   über das Eichsfeld genießen.
 
 
-  Das Burgcafe lädt mit hausgemachtem Kuchen und regionalen Spezialitäten
+  Das Burgcafé lädt mit hausgemachtem Kuchen und regionalen Spezialitäten
   zum Verweilen ein. Besonders empfehlenswert ist die Terrasse mit Blick
   ins Tal – ein herrlicher Ort für eine Kaffeepause nach der Besichtigung.
 
@@ -38,10 +38,9 @@ hostTip: >-
   Der Weg von Burg Bodenstein zur Burg Hanstein ist besonders schön
   und führt durch herrliche Laubwälder.
 bestTimeToVisit: 'Ganzjährig, besonders schön im Herbst'
-openingHours: 'Burggelände täglich zugänglich, Cafe Mi-So 11:00 - 17:00'
 website: 'https://www.burg-bodenstein.de'
 coordinates:
   lat: 51.4188
   lng: 10.1367
 gallery: []
-sortOrder: 2
+sortOrder: 7

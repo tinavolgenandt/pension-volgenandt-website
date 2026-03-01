@@ -24,7 +24,7 @@ beds: '2 Doppelbetten, 3 Schlafsofas'
 pricing:
   - label: 'Direktbuchung'
     rates:
-      - occupancy: 2
+      - occupancy: 4
         pricePerNight: 126
 
 startingPrice: 126
@@ -66,17 +66,19 @@ highlights:
 
 extras:
   - name: 'Frühstück'
-    description: 'Reichhaltiges Frühstücksbuffet'
+    description: 'Brötchen, Brotbelag, hausgemachte Marmelade & Kaffee oder Tee'
     price: 10
     unit: 'pro Person / Nacht'
   - name: 'Genießer-Frühstück'
-    description: 'Erweitertes Frühstück mit regionalen Spezialitäten'
+    description: 'Brötchen, regionale Wurstspezialitäten, hausgemachte Marmelade, saisonales Obst, frischer Saft & Kaffee oder Tee'
     price: 15
     unit: 'pro Person / Nacht'
-  - name: 'Hund'
+  - name: 'Aufbettung'
+    description: 'Zusätzlicher Schlafplatz auf dem Schlafsofa'
     price: 10
-    unit: 'pro Nacht'
-  - name: 'BBQ-Set'
+    unit: 'pro Person / Nacht'
+  - name: 'Grill-Set'
+    description: 'Inkl. Grillbesteck und -pfannen'
     price: 10
     unit: 'pro Nutzung'
 

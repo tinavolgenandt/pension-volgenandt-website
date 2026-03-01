@@ -1,30 +1,30 @@
 name: 'Skywalk Sonnenstein'
 slug: skywalk-sonnenstein
 seoTitle: 'Skywalk Sonnenstein | Pension nahe Skywalk'
-seoDescription: 'Erleben Sie den Skywalk Sonnenstein bei Sontra – eine spektakuläre Aussichtsplattform. Nur 25 km von unserer Pension im Eichsfeld.'
-heroImage: /img/attractions/skywalk-sonnenstein.webp
-heroImageAlt: 'Skywalk Aussichtsplattform am Sonnenstein bei Sontra'
-distanceKm: 25
-drivingMinutes: 30
+seoDescription: 'Erleben Sie den Skywalk Sonnenstein bei Holungen – eine spektakuläre Aussichtsplattform. Nur 14 km von unserer Pension im Eichsfeld.'
+heroImage: ''
+heroImageAlt: ''
+distanceKm: 14
+drivingMinutes: 16
 category: natur
 shortDescription: 'Spektakuläre Aussichtsplattform mit Panoramablick'
 intro: >-
-  Der Skywalk am Sonnenstein bei Sontra bietet ein unvergessliches
+  Der Skywalk am Sonnenstein bei Holungen bietet ein unvergessliches
   Naturerlebnis. Die frei schwebende Aussichtsplattform ragt über
   den Felsen hinaus und belohnt mutige Besucher mit einem atemberaubenden
-  Panorama.
+  Panorama über das Eichsfeld.
 content: >-
-  Etwa 25 Kilometer von unserer Pension entfernt erwartet Sie der
+  Etwa 14 Kilometer von unserer Pension entfernt erwartet Sie der
   Skywalk am Sonnenstein – eine der spektakulärsten Aussichtsplattformen
-  in Hessen. Die Stahlkonstruktion ragt mehrere Meter frei über den
+  im Eichsfeld. Die Stahlkonstruktion ragt mehrere Meter frei über den
   Felsrand hinaus und bietet einen einzigartigen Blick in die Tiefe
   und über die weite Landschaft.
 
 
-  Der Weg zum Skywalk führt durch den Geo-Naturpark Frau-Holle-Land
-  und ist bereits ein Erlebnis für sich. Entlang des Premiumwanderwegs
-  passieren Sie bizarre Felsformationen und dichten Mischwald, bevor
-  Sie die Plattform erreichen.
+  Der Weg zum Skywalk führt durch das Ohmgebirge am nördlichen Rand
+  des Eichsfelds und ist bereits ein Erlebnis für sich. Entlang des
+  Wanderwegs passieren Sie Felsformationen und dichten Mischwald,
+  bevor Sie die Plattform erreichen.
 
 
   Neben dem Skywalk lohnt sich auch ein Besuch des nahen Kalksteinbruchs,
@@ -40,9 +40,9 @@ hostTip: >-
   Premiumwanderweg P23. Die gesamte Runde dauert etwa 3 Stunden
   und bietet immer wieder überraschende Ausblicke.
 bestTimeToVisit: 'Frühling bis Herbst bei klarer Sicht'
-openingHours: 'Frei zugänglich'
+website: 'https://www.gemeinde-sonnenstein.de/sonnenstein-mit-skywalk.html'
 coordinates:
-  lat: 51.0453
-  lng: 9.9361
+  lat: 51.4973
+  lng: 10.3843
 gallery: []
-sortOrder: 4
+sortOrder: 8

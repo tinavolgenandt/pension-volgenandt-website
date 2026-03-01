@@ -1,0 +1,45 @@
+name: 'Eiscafé San Remo'
+slug: eiscafe-san-remo
+seoTitle: 'Eiscafé San Remo Worbis – hausgemachtes Eis | Eichsfeld'
+seoDescription: 'Das Eiscafé San Remo in Worbis bietet hausgemachtes Eis, Kaffee und Kuchen – nur 9 km von unserer Pension im Eichsfeld.'
+heroImage: ''
+heroImageAlt: ''
+distanceKm: 9
+drivingMinutes: 11
+category: kultur
+shortDescription: 'Hausgemachtes Eis, Kaffee und Kuchen im Herzen von Worbis'
+intro: >-
+  Das Eiscafé San Remo in der Worbiser Innenstadt ist bekannt für
+  seine hausgemachten Eissorten. Familie Grohmann stellt alle
+  Eisvariationen selbst her – ein Genuss für Groß und Klein,
+  besonders nach einem Besuch im nahen Bärenpark.
+content: >-
+  In der Einkaufspassage an der Langen Straße gelegen, bietet das
+  Eiscafé San Remo eine große Auswahl an selbst hergestelltem Eis
+  in der Waffel oder im Becher. Neben den klassischen Eissorten
+  überraschen kreative Spezialitäten wie der Spaghettieisteller.
+
+
+  Dazu gibt es Kaffee und Kuchen, Joghurt-Kreationen, Waffeln
+  und kleine warme Gerichte. Die Atmosphäre ist gemütlich
+  und der Service freundlich –
+  kein Wunder, dass das Café bei Google 4,7 von 5 Sternen hat.
+
+
+  Das San Remo eignet sich perfekt als Zwischenstopp bei einem
+  Bummel durch Worbis oder nach einem Besuch im Alternativen
+  Bärenpark, der nur wenige Gehminuten entfernt liegt.
+hostTip: >-
+  Probieren Sie unbedingt die hausgemachten Eissorten – jede einzelne
+  wird vor Ort frisch hergestellt. Kombinieren Sie den Besuch mit
+  dem Bärenpark Worbis, der nur wenige Minuten zu Fuß entfernt ist.
+bestTimeToVisit: 'Frühling bis Herbst, besonders an warmen Tagen'
+website: 'https://www.google.com/maps/search/Eiscafé+San+Remo+Worbis'
+additionalWebsites:
+  - label: 'Instagram'
+    url: 'https://www.instagram.com/eiscafe.san.remo/'
+coordinates:
+  lat: 51.4088
+  lng: 10.2128
+gallery: []
+sortOrder: 2

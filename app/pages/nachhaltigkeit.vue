@@ -9,9 +9,9 @@ useSeoMeta({
   title: 'Nachhaltigkeit',
   ogTitle: 'Nachhaltigkeit | Pension Volgenandt',
   description:
-    'Solarenergie, Kompostierung, Insektenschutz – nachhaltig urlauben in der Pension Volgenandt im Eichsfeld.',
+    'Solarenergie, eigener Brunnen, Blühwiese und Gemüsegarten – nachhaltig urlauben in der Pension Volgenandt im Eichsfeld.',
   ogDescription:
-    'Solarenergie, Kompostierung, Insektenschutz – nachhaltig urlauben in der Pension Volgenandt im Eichsfeld.',
+    'Solarenergie, eigener Brunnen, Blühwiese und Gemüsegarten – nachhaltig urlauben in der Pension Volgenandt im Eichsfeld.',
   ogImage: '/img/banners/nachhaltigkeit-banner.webp',
   ogType: 'website',
 })
@@ -31,30 +31,39 @@ useHead({
 })
 
 const sustainabilityFeatures = [
+  // Säule 1: Energie
   {
     icon: 'ph:sun-duotone',
     title: 'Solarenergie',
     description: 'Strom aus eigener Photovoltaikanlage',
   },
-  {
-    icon: 'ph:recycle-duotone',
-    title: 'Kompostierung',
-    description: 'Organische Abfälle werden kompostiert',
-  },
+  // Säule 2: Wasser
   {
     icon: 'ph:drop-duotone',
-    title: 'Eigene Kläranlage',
-    description: 'Biologische Abwasserbehandlung',
+    title: 'Eigener Brunnen',
+    description: 'Trinkwasser mit UV-Aufbereitung',
   },
+  {
+    icon: 'ph:waves-duotone',
+    title: 'Vollbiologische Kläranlage',
+    description: 'Natürliche Abwasserreinigung ohne Chemie',
+  },
+  // Säule 3: Artenvielfalt
   {
     icon: 'ph:butterfly-duotone',
-    title: 'Insektenschutz',
-    description: 'Blühwiesen und Nisthilfen',
+    title: 'Blühwiese & Totholzecke',
+    description: 'Lebensraum für Insekten und Kleintiere',
   },
+  // Säule 4: Kreislauf
   {
     icon: 'ph:tree-duotone',
-    title: 'Naturnaher Garten',
-    description: 'Einheimische Pflanzen und alte Obstsorten',
+    title: 'Eigener Garten',
+    description: 'Obst, Beeren und Gemüse aus eigenem Anbau',
+  },
+  {
+    icon: 'ph:recycle-duotone',
+    title: 'Kompost & Mülltrennung',
+    description: 'Geschlossener Kreislauf vom Garten bis zum Tisch',
   },
   {
     icon: 'ph:leaf-duotone',
@@ -77,12 +86,11 @@ const sustainabilityFeatures = [
     <!-- 2. Personal intro -->
     <section class="mx-auto max-w-3xl px-6 py-12 md:py-16">
       <p class="text-lg leading-relaxed text-sage-800">
-        Nachhaltigkeit ist für uns kein Trend, sondern eine Selbstverständlichkeit. Wir leben hier
-        mitten in der Natur und möchten, dass das auch in Zukunft so bleibt.
-      </p>
-      <p class="mt-4 text-lg leading-relaxed text-sage-800">
-        Deshalb investieren wir seit Jahren in umweltfreundliche Lösungen – von der eigenen
-        Solaranlage bis zum naturnahen Garten mit alten Obstsorten und Blühwiesen.
+        Nachhaltigkeit ist für uns kein Trend, sondern eine Selbstverständlichkeit. Wir leben mitten
+        in der Natur und möchten, dass das auch in Zukunft so bleibt. Deshalb ruht unsere
+        Nachhaltigkeit auf vier Säulen: eigene Energieerzeugung, eine unabhängige Wasserversorgung,
+        aktiver Schutz der Artenvielfalt und ein geschlossener Kreislauf vom Garten bis auf den
+        Frühstückstisch.
       </p>
     </section>
 
@@ -90,13 +98,13 @@ const sustainabilityFeatures = [
     <section class="bg-cream px-6 py-12 md:py-16">
       <div class="mx-auto max-w-5xl">
         <h2 class="mb-8 text-center font-serif text-2xl font-semibold text-sage-900">
-          Unsere Maßnahmen für die Umwelt
+          Unsere Nachhaltigkeitsstrategie auf einen Blick
         </h2>
         <ContentFeatureGrid :features="sustainabilityFeatures" />
       </div>
     </section>
 
-    <!-- 4. Narrative section with photo -->
+    <!-- 4. Säule 1: Energie -->
     <section class="mx-auto max-w-5xl px-6 py-12 md:py-16">
       <div class="grid items-center gap-8 md:grid-cols-2">
         <div>
@@ -112,8 +120,8 @@ const sustainabilityFeatures = [
           </p>
         </div>
         <NuxtImg
-          src="/img/content/nachhaltigkeit-solar.webp"
-          alt="Photovoltaikanlage auf dem Dach der Pension Volgenandt"
+          src="/img/content/photovoltaik-anlage.webp"
+          alt="Photovoltaikanlage auf dem Dach der Pension mit grünem Garten"
           class="rounded-lg"
           loading="lazy"
           sizes="(max-width: 768px) 100vw, 50vw"
@@ -121,51 +129,152 @@ const sustainabilityFeatures = [
       </div>
     </section>
 
-    <!-- 5. Second narrative block -->
+    <!-- 5. Säule 2: Wasser -->
     <section class="bg-sage-50 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-5xl">
         <div class="grid items-center gap-8 md:grid-cols-2">
-          <NuxtImg
-            src="/img/content/nachhaltigkeit-garten.webp"
-            alt="Naturnaher Garten mit Blühwiese an der Pension"
-            class="rounded-lg"
-            loading="lazy"
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
+          <div class="flex items-center justify-center rounded-lg bg-sage-100 p-12">
+            <Icon name="ph:drop-duotone" class="size-32 text-sage-400" />
+          </div>
           <div>
             <h2 class="font-serif text-2xl font-bold text-sage-900">
-              Lebensraum für Bienen und Schmetterlinge
+              Eigenes Wasser – vom Brunnen bis zur Kläranlage
             </h2>
             <p class="mt-4 leading-relaxed text-sage-800">
-              In unserem Garten blühen einheimische Wildblumen, und wir pflegen alte Obstsorten, die
-              man in modernen Gärten kaum noch findet. Nisthilfen für Insekten und Vögel gehören
-              ebenso dazu.
+              Unser Trinkwasser kommt aus einem eigenen Brunnen auf dem Gelände. Eine UV-Anlage
+              bereitet das Wasser auf – zuverlässig und ganz ohne chemische Zusätze. So genießen
+              unsere Gäste frisches, sauberes Wasser direkt aus der Natur.
             </p>
             <p class="mt-4 leading-relaxed text-sage-800">
-              Unser Kompost verwertet organische Abfälle, und die eigene biologische Kläranlage
-              sorgt dafür, dass unser Abwasser die Umgebung nicht belastet.
+              Auch das Abwasser bleibt in unserem Kreislauf: Unsere vollbiologische Kläranlage
+              reinigt es auf natürliche Weise. Mikroorganismen bauen organische Stoffe ab, ähnlich
+              wie in einem gesunden Gewässer. Nach der biologischen Reinigung wird das saubere
+              Wasser in den natürlichen Kreislauf zurückgeführt.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 6. Regional products highlight -->
-    <section class="mx-auto max-w-3xl px-6 py-12 md:py-16">
-      <h2 class="mb-6 text-center font-serif text-2xl font-semibold text-sage-900">
-        Regional genießen
-      </h2>
-      <p class="text-center text-lg leading-relaxed text-sage-800">
-        Bei unserem Frühstück setzen wir auf Zutaten von Erzeugern aus der Region. Frische Brötchen
-        vom Bäcker nebenan, Marmelade aus eigener Herstellung und Eier von glücklichen Hühnern – so
-        schmeckt das Eichsfeld.
-      </p>
+    <!-- 6. Säule 3: Artenvielfalt -->
+    <section class="mx-auto max-w-5xl px-6 py-12 md:py-16">
+      <div class="grid items-center gap-8 md:grid-cols-2">
+        <div>
+          <h2 class="font-serif text-2xl font-bold text-sage-900">Artenvielfalt vor der Haustür</h2>
+          <p class="mt-4 leading-relaxed text-sage-800">
+            Unsere Blühwiese wurde von
+            <a
+              href="https://www.immerbunt.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-waldhonig-600 underline hover:text-waldhonig-700"
+              >ImmerBunt</a
+            >
+            angelegt – Deutschlands erster Blühwiesen-Agentur. Die Wiese bietet Bienen,
+            Schmetterlingen und anderen Insekten reichlich Nahrung.
+          </p>
+          <p class="mt-4 leading-relaxed text-sage-800">
+            In der Totholzecke finden Käfer, Wildbienen und Igel Unterschlupf – ein bewusst
+            belassenes Stück wilde Natur. Zusammen mit einheimischen Wildblumen und alten Obstsorten
+            entsteht ein vielfältiger Lebensraum direkt vor unserer Haustür.
+          </p>
+        </div>
+        <NuxtImg
+          src="/img/content/garten-schmetterling-flieder.webp"
+          alt="Tagpfauenauge auf Sommerflieder im Garten der Pension"
+          class="rounded-lg"
+          loading="lazy"
+          sizes="(max-width: 768px) 100vw, 50vw"
+        />
+      </div>
     </section>
 
-    <!-- 7. Soft CTA -->
+    <!-- 7. Säule 4: Vom Garten auf den Tisch -->
+    <section class="bg-sage-50 px-6 py-12 md:py-16">
+      <div class="mx-auto max-w-5xl">
+        <div class="grid items-center gap-8 md:grid-cols-2">
+          <NuxtImg
+            src="/img/content/garten-apfelbaeume.webp"
+            alt="Apfelbäume mit reifen Früchten im Garten der Pension"
+            class="rounded-lg"
+            loading="lazy"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+          <div>
+            <h2 class="font-serif text-2xl font-bold text-sage-900">Vom Garten auf den Tisch</h2>
+            <p class="mt-4 leading-relaxed text-sage-800">
+              In unserem Garten wachsen verschiedene Obstsorten, Beeren und Gemüse. Wir ernten alles
+              selbst und verarbeiten vieles davon – ob als hausgemachte Marmelade, frische Kräuter
+              oder saisonales Obst zum Frühstück.
+            </p>
+            <p class="mt-4 leading-relaxed text-sage-800">
+              Was nicht aus dem eigenen Garten kommt, beziehen wir aus der Region:
+              Wurstspezialitäten vom Eichsfelder Metzger und andere Zutaten von regionalen
+              Erzeugern. Gedüngt wird mit dem hauseigenen Kompost, der organische Abfälle in
+              wertvollen Nährstoff verwandelt.
+            </p>
+            <p class="mt-4 leading-relaxed text-sage-800">
+              Damit dieser Kreislauf funktioniert, trennen wir konsequent unseren Müll und bitten
+              auch unsere Gäste um Mithilfe bei der Mülltrennung.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Garten-Impressionen -->
+    <section class="mx-auto max-w-5xl px-6 py-12 md:py-16">
+      <h2 class="mb-8 text-center font-serif text-2xl font-semibold text-sage-900">
+        Unser Garten im Wandel der Jahreszeiten
+      </h2>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <figure>
+          <NuxtImg
+            src="/img/content/garten-krokusse-fruehling.webp"
+            alt="Lila Krokusse im Frühling"
+            class="aspect-square rounded-lg object-cover"
+            loading="lazy"
+            sizes="(max-width: 640px) 50vw, 25vw"
+          />
+          <figcaption class="mt-2 text-center text-sm text-sage-600">Frühling</figcaption>
+        </figure>
+        <figure>
+          <NuxtImg
+            src="/img/content/garten-bluehwiese-fruehsommer.webp"
+            alt="Blühwiese mit Margeriten im Frühsommer"
+            class="aspect-square rounded-lg object-cover"
+            loading="lazy"
+            sizes="(max-width: 640px) 50vw, 25vw"
+          />
+          <figcaption class="mt-2 text-center text-sm text-sage-600">Blühwiese</figcaption>
+        </figure>
+        <figure>
+          <NuxtImg
+            src="/img/content/garten-kirschen.webp"
+            alt="Reife Kirschen am Baum im Garten"
+            class="aspect-square rounded-lg object-cover"
+            loading="lazy"
+            sizes="(max-width: 640px) 50vw, 25vw"
+          />
+          <figcaption class="mt-2 text-center text-sm text-sage-600">Kirschernte</figcaption>
+        </figure>
+        <figure>
+          <NuxtImg
+            src="/img/content/garten-zwiebeln-eigenanbau.webp"
+            alt="Selbst angebaute Zwiebeln zum Trocknen aufgehängt"
+            class="aspect-square rounded-lg object-cover"
+            loading="lazy"
+            sizes="(max-width: 640px) 50vw, 25vw"
+          />
+          <figcaption class="mt-2 text-center text-sm text-sage-600">Eigenanbau</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 9. Soft CTA -->
     <ContentSoftCta text="Haben Sie Fragen zu unseren Nachhaltigkeitsmaßnahmen?" />
 
-    <!-- 8. Booking CTA -->
+    <!-- 9. Booking CTA -->
     <ContentBookingCta text="Nachhaltig urlauben im Eichsfeld" />
   </div>
 </template>

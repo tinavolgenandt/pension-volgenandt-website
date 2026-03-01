@@ -9,13 +9,13 @@ shortDescription: >-
 description: >-
   Unser Einzelzimmer ist der ideale Rückzugsort für
   Alleinreisende und Geschäftsreisende. Sie finden
-  ein bequemes Einzelbett, einen Schreibtisch
-  zum Arbeiten und ein eigenes Badezimmer mit Dusche.
+  ein bequemes Einzelbett und ein eigenes Badezimmer
+  mit Dusche.
   WLAN und Fernseher sorgen für Komfort und Unterhaltung.
   Trotz seiner kompakten Größe bietet das Zimmer alles,
   was Sie für einen angenehmen Aufenthalt brauchen.
-  Die voll ausgestattete Gemeinschaftsküche und die Terrasse
-  stehen allen Gästen zur Verfügung – wir bitten um
+  Unsere voll ausgestattete Gemeinschaftsküche und die
+  Terrasse dürfen gerne genutzt werden – wir bitten um
   Rücksichtnahme auf andere Gäste.
 
 beds24PropertyId: 261258
@@ -44,32 +44,29 @@ gallery:
 amenities:
   - wifi
   - tv
-  - schreibtisch
   - parkplatz
   - bettwaesche
   - handtuecher
   - dusche
-  - foehn
+
   - heizung
 
 highlights:
   - 'Ideal für Alleinreisende'
-  - 'Schreibtisch zum Arbeiten'
   - 'Eigenes Badezimmer'
+  - 'Kompakt & komfortabel'
 
 extras:
   - name: 'Frühstück'
-    description: 'Reichhaltiges Frühstücksbuffet'
+    description: 'Brötchen, Brotbelag, hausgemachte Marmelade & Kaffee oder Tee'
     price: 10
     unit: 'pro Person / Nacht'
   - name: 'Genießer-Frühstück'
-    description: 'Erweitertes Frühstück mit regionalen Spezialitäten'
+    description: 'Brötchen, regionale Wurstspezialitäten, hausgemachte Marmelade, saisonales Obst, frischer Saft & Kaffee oder Tee'
     price: 15
     unit: 'pro Person / Nacht'
-  - name: 'Hund'
-    price: 10
-    unit: 'pro Nacht'
-  - name: 'BBQ-Set'
+  - name: 'Grill-Set'
+    description: 'Inkl. Grillbesteck und -pfannen'
     price: 10
     unit: 'pro Nutzung'
 

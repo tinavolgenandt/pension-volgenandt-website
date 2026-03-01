@@ -16,9 +16,10 @@ defineOptions({
 
           <div class="mt-6 space-y-4 text-lg leading-relaxed text-sage-700">
             <p>
-              Wir sind die Familie Volgenandt und freuen uns, Sie in unserem Zuhause im Eichsfeld
-              willkommen zu heißen. Unsere Pension liegt in Breitenbach, eingebettet in die sanfte
-              Hügellandschaft Thüringens – ein Ort, an dem die Zeit ein wenig langsamer vergeht.
+              Wir sind Simone &amp; Ralf Volgenandt und freuen uns, Sie in unserem Zuhause im
+              Eichsfeld willkommen zu heißen. Unsere Pension liegt etwa einen Kilometer außerhalb
+              von Breitenbach, eingebettet in die sanfte Hügellandschaft Thüringens – ein Ort, an
+              dem die Zeit ein wenig langsamer vergeht.
             </p>
             <p>
               Ob Sie die Burgen und Wanderwege der Region erkunden, den nahen Bärenpark besuchen
@@ -37,8 +38,8 @@ defineOptions({
         <!-- Lifestyle image -->
         <div class="order-first md:order-last">
           <NuxtImg
-            src="/img/welcome/lifestyle.webp"
-            alt="Blick auf den Garten der Pension Volgenandt mit grüner Wiese und Bäumen"
+            src="/img/content/gastgeber-portrait.webp"
+            alt="Simone und Ralf Volgenandt – Ihre Gastgeber in Breitenbach"
             class="w-full rounded-lg object-cover shadow-sm"
             loading="lazy"
             sizes="sm:100vw md:50vw"

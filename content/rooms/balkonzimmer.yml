@@ -9,19 +9,19 @@ shortDescription: >-
 description: >-
   Das Balkonzimmer verbindet gemütliche Atmosphäre mit
   dem besonderen Extra eines eigenen Balkons. Sie finden
-  ein bequemes Doppelbett, einen Schreibtisch
+  ein bequemes Doppelbett, einen kleinen Tisch
   und ein eigenes Badezimmer mit Dusche. Morgens können
   Sie Ihren Kaffee auf dem Balkon genießen und den Blick
   über den Innenhof schweifen lassen. WLAN und Fernseher
   sorgen für Unterhaltung am Abend. Die voll ausgestattete
-  Gemeinschaftsküche und die Terrasse stehen allen Gästen
-  zur Verfügung – wir bitten um Rücksichtnahme auf andere Gäste.
+  Gemeinschaftsküche und die Terrasse dürfen gerne genutzt
+  werden – wir bitten um Rücksichtnahme auf andere Gäste.
 
 beds24PropertyId: 261258
 beds24RoomId: 548066
 
 maxGuests: 2
-beds: '1 Doppelbett'
+beds: '2 Einzelbetten (auf Wunsch zusammenstellbar)'
 
 pricing:
   - label: 'Direktbuchung'
@@ -42,6 +42,16 @@ gallery:
     alt: 'Badezimmer mit Glasdusche'
   - src: /img/rooms/balkonzimmer-bad-wc.jpg
     alt: 'Badezimmer mit Waschbecken und Handtuchheizung'
+  - src: /img/rooms/balkonzimmer-zimmer-2.webp
+    alt: 'Schlafbereich mit Kiefernmöbeln und Spiegel'
+  - src: /img/rooms/balkonzimmer-bad-dusche-2.webp
+    alt: 'Glasdusche mit Handtuchstange'
+  - src: /img/rooms/balkonzimmer-bad-wc-2.webp
+    alt: 'Badezimmer mit Waschbecken, Handtuchheizung und Fenster'
+  - src: /img/rooms/balkonzimmer-balkon-3.webp
+    alt: 'Balkon mit Holzboden, Blumenkästen und Dachblick'
+  - src: /img/rooms/balkonzimmer-balkon-4.webp
+    alt: 'Blick vom Balkon auf Terrasse und Kräuterbeet'
   - src: /img/rooms/zimmer-gemeinschaftskueche-1.jpg
     alt: 'Gemeinschaftsküche mit Herd und Ofen'
   - src: /img/rooms/zimmer-gemeinschaftskueche-2.jpg
@@ -51,32 +61,34 @@ amenities:
   - wifi
   - tv
   - balkon
-  - schreibtisch
+  - tisch
   - parkplatz
   - bettwaesche
   - handtuecher
   - dusche
-  - foehn
+
   - heizung
 
 highlights:
   - 'Eigener Balkon mit Blick in den Innenhof'
   - 'Ruhige Lage'
-  - 'Schreibtisch zum Arbeiten'
+  - 'Eigener Balkon zum Innenhof'
 
 extras:
   - name: 'Frühstück'
-    description: 'Reichhaltiges Frühstücksbuffet'
+    description: 'Brötchen, Brotbelag, hausgemachte Marmelade & Kaffee oder Tee'
     price: 10
     unit: 'pro Person / Nacht'
   - name: 'Genießer-Frühstück'
-    description: 'Erweitertes Frühstück mit regionalen Spezialitäten'
+    description: 'Brötchen, regionale Wurstspezialitäten, hausgemachte Marmelade, saisonales Obst, frischer Saft & Kaffee oder Tee'
     price: 15
     unit: 'pro Person / Nacht'
   - name: 'Hund'
-    price: 10
+    description: 'Ihr Vierbeiner ist bei uns herzlich willkommen – unser großer Garten bietet viel Platz zum Toben und Schnüffeln.'
+    price: 5
     unit: 'pro Nacht'
-  - name: 'BBQ-Set'
+  - name: 'Grill-Set'
+    description: 'Inkl. Grillbesteck und -pfannen'
     price: 10
     unit: 'pro Nutzung'
 

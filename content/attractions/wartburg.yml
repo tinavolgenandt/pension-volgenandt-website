@@ -1,0 +1,45 @@
+name: 'Wartburg'
+slug: wartburg
+seoTitle: 'Wartburg bei Eisenach | Pension im Eichsfeld'
+seoDescription: 'Besuchen Sie die Wartburg – UNESCO-Weltkulturerbe bei Eisenach. Etwa 55 km von unserer Pension im Eichsfeld entfernt.'
+heroImage: ''
+heroImageAlt: ''
+distanceKm: 55
+drivingMinutes: 55
+category: kultur
+shortDescription: 'UNESCO-Weltkulturerbe – hier übersetzte Luther das Neue Testament'
+intro: >-
+  Die Wartburg bei Eisenach gehört zu den bekanntesten Burgen
+  Deutschlands und ist seit 1999 UNESCO-Weltkulturerbe. Hier
+  übersetzte Martin Luther in nur zehn Wochen das Neue Testament
+  ins Deutsche.
+content: >-
+  Etwa 55 Kilometer von unserer Pension entfernt thront die
+  Wartburg majestätisch auf einem Felsen über Eisenach. Die
+  über 900 Jahre alte Burg ist eng mit der deutschen Geschichte
+  verknüpft – von den Minnesängern um 1200 über die Heilige
+  Elisabeth bis hin zu Martin Luthers Bibelübersetzung 1521/22.
+
+
+  Besucher können die prachtvollen historischen Räume
+  besichtigen, darunter den berühmten Sängersaal, die
+  Elisabethkemenate mit goldenen Mosaiken und Luthers
+  Arbeitsstube. Die Kunstsammlung umfasst Werke von Lucas
+  Cranach dem Älteren und kostbare Möbel aus acht Jahrhunderten.
+
+
+  Der Südturm bietet einen herrlichen Panoramablick über den
+  Thüringer Wald. Das Burggelände mit den Innenhöfen ist frei
+  zugänglich, Museum und historische Räume können besichtigt
+  werden.
+hostTip: >-
+  Planen Sie den Besuch unter der Woche ein – am Wochenende
+  kann es sehr voll werden. Der 30-minütige Fußweg vom
+  Parkplatz durch den Wald ist bereits ein Erlebnis.
+bestTimeToVisit: 'Mai bis Oktober, unter der Woche weniger Besucher'
+website: 'https://www.wartburg.de'
+coordinates:
+  lat: 50.9662
+  lng: 10.3065
+gallery: []
+sortOrder: 10

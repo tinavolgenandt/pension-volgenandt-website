@@ -30,7 +30,7 @@ const { data: attractions } = await useAsyncData('attractions', () =>
 const activityCards = [
   {
     title: 'Wandern',
-    description: 'Wanderwege direkt vor der Haustür – von gemütlich bis anspruchsvoll.',
+    description: 'Wanderwege in der Umgebung – von gemütlich bis anspruchsvoll.',
     icon: 'ph:mountains-duotone',
     to: '/aktivitaeten/wandern/',
   },

@@ -4,16 +4,25 @@ items:
     shortDescription: 'Erleben Sie Braun- und Schwarzbären in naturnahen Gehegen'
     image: /img/attractions/baerenpark.webp
     imageAlt: 'Braunbär im Alternativen Bärenpark Worbis'
-    distanceKm: 12
+    distanceKm: 6
     featured: true
     category: natur
+
+  - name: 'Eiscafé San Remo'
+    slug: eiscafe-san-remo
+    shortDescription: 'Hausgemachtes Eis, Kaffee und Kuchen im Herzen von Worbis'
+    image: ''
+    imageAlt: ''
+    distanceKm: 9
+    featured: false
+    category: kultur
 
   - name: 'Burg Hanstein'
     slug: burg-hanstein
     shortDescription: 'Eine der größten Burgruinen Mitteldeutschlands'
     image: /img/attractions/burg-hanstein.webp
     imageAlt: 'Burgruine Hanstein im Eichsfeld'
-    distanceKm: 18
+    distanceKm: 40
     featured: false
     category: kultur
 
@@ -22,15 +31,78 @@ items:
     shortDescription: 'Mittelalterliche Höhenburg mit Familienhotel und Veranstaltungen'
     image: /img/attractions/burg-bodenstein.webp
     imageAlt: 'Burg Bodenstein im Eichsfeld'
+    distanceKm: 9
+    featured: false
+    category: kultur
+
+  - name: 'Burg Scharfenstein – die Whisky-Burg'
+    slug: burg-scharfenstein
+    shortDescription: 'Whiskywelt mit Nine Springs Single Malt und Panoramablick'
+    image: ''
+    imageAlt: ''
+    distanceKm: 10
+    featured: true
+    category: kultur
+
+  - name: 'Grenzlandmuseum Eichsfeld'
+    slug: grenzlandmuseum
+    shortDescription: 'Geschichte der innerdeutschen Teilung am Originalschauplatz'
+    image: ''
+    imageAlt: ''
+    distanceKm: 16
+    featured: false
+    category: kultur
+
+  - name: 'Skywalk Sonnenstein'
+    slug: skywalk-sonnenstein
+    shortDescription: 'Spektakuläre Aussichtsplattform mit Panoramablick'
+    image: ''
+    imageAlt: ''
+    distanceKm: 14
+    featured: false
+    category: natur
+
+  - name: 'Heilbad Heiligenstadt & Vitalpark'
+    slug: vitalpark-heiligenstadt
+    shortDescription: 'Über 1.000 Jahre alte Kreisstadt mit Altstadt, Kurpark und Therme'
+    image: ''
+    imageAlt: ''
     distanceKm: 15
     featured: false
     category: kultur
+
+  - name: 'Seeburger See'
+    slug: seeburger-see
+    shortDescription: '„Das Auge des Eichsfelds" – Baden, Bootfahren und Natur'
+    image: ''
+    imageAlt: ''
+    distanceKm: 25
+    featured: false
+    category: natur
 
   - name: 'Baumkronenpfad Hainich'
     slug: baumkronenpfad-hainich
     shortDescription: 'Wandeln Sie in den Baumkronen des UNESCO-Weltnaturerbes'
     image: /img/attractions/baumkronenpfad.webp
     imageAlt: 'Baumkronenpfad im Nationalpark Hainich'
-    distanceKm: 45
+    distanceKm: 54
+    featured: false
+    category: natur
+
+  - name: 'Wartburg'
+    slug: wartburg
+    shortDescription: 'UNESCO-Weltkulturerbe – hier übersetzte Luther das Neue Testament'
+    image: ''
+    imageAlt: ''
+    distanceKm: 55
+    featured: false
+    category: kultur
+
+  - name: 'Harz'
+    slug: harz
+    shortDescription: 'Brocken, Brockenbahn und Wanderwege als Tagesausflug'
+    image: ''
+    imageAlt: ''
+    distanceKm: 40
     featured: false
     category: natur

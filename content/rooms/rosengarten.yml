@@ -14,15 +14,15 @@ description: >-
   Einrichtung im ländlichen Stil. WLAN und Fernseher
   stehen Ihnen selbstverständlich zur Verfügung. Lassen
   Sie sich vom Duft der Rosen in den Schlaf wiegen.
-  Die voll ausgestattete Gemeinschaftsküche und die Terrasse
-  stehen allen Gästen zur Verfügung – wir bitten um
+  Unsere voll ausgestattete Gemeinschaftsküche und die
+  Terrasse dürfen gerne genutzt werden – wir bitten um
   Rücksichtnahme auf andere Gäste.
 
 beds24PropertyId: 261258
 beds24RoomId: 549252
 
 maxGuests: 2
-beds: '1 Doppelbett'
+beds: '2 Einzelbetten (auf Wunsch zusammenstellbar)'
 
 pricing:
   - label: 'Direktbuchung'
@@ -39,6 +39,12 @@ gallery:
     alt: 'Rosengarten – Zimmeransicht mit Doppelbett und Sessel'
   - src: /img/rooms/rosengarten-bad.jpg
     alt: 'Privates Badezimmer mit Dusche'
+  - src: /img/rooms/rosengarten-2.webp
+    alt: 'Doppelzimmer mit Einzelbetten und Blick ins Bad'
+  - src: /img/rooms/rosengarten-3.webp
+    alt: 'Zimmeransicht mit Fensterblick ins Grüne und Sessel'
+  - src: /img/rooms/rosengarten-bad-2.webp
+    alt: 'Badezimmer mit ebenerdiger Dusche und WC'
   - src: /img/rooms/zimmer-gemeinschaftskueche-1.jpg
     alt: 'Gemeinschaftsküche mit Herd und Ofen'
   - src: /img/rooms/zimmer-gemeinschaftskueche-2.jpg
@@ -52,7 +58,7 @@ amenities:
   - bettwaesche
   - handtuecher
   - dusche
-  - foehn
+
   - heizung
 
 highlights:
@@ -62,17 +68,19 @@ highlights:
 
 extras:
   - name: 'Frühstück'
-    description: 'Reichhaltiges Frühstücksbuffet'
+    description: 'Brötchen, Brotbelag, hausgemachte Marmelade & Kaffee oder Tee'
     price: 10
     unit: 'pro Person / Nacht'
   - name: 'Genießer-Frühstück'
-    description: 'Erweitertes Frühstück mit regionalen Spezialitäten'
+    description: 'Brötchen, regionale Wurstspezialitäten, hausgemachte Marmelade, saisonales Obst, frischer Saft & Kaffee oder Tee'
     price: 15
     unit: 'pro Person / Nacht'
-  - name: 'Hund'
+  - name: 'Aufbettung'
+    description: 'Zusätzlicher Schlafplatz auf dem Schlafsofa'
     price: 10
-    unit: 'pro Nacht'
-  - name: 'BBQ-Set'
+    unit: 'pro Person / Nacht'
+  - name: 'Grill-Set'
+    description: 'Inkl. Grillbesteck und -pfannen'
     price: 10
     unit: 'pro Nutzung'
 

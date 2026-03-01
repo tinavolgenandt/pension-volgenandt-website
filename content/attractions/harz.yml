@@ -1,0 +1,46 @@
+name: 'Harz'
+slug: harz
+seoTitle: 'Harz – Tagesausflug von der Pension im Eichsfeld'
+seoDescription: 'Der Harz mit dem Brocken ist nur 40 km von unserer Pension entfernt. Brockenbahn, Wanderwege und Tropfsteinhöhlen als Tagesausflug.'
+heroImage: ''
+heroImageAlt: ''
+distanceKm: 40
+drivingMinutes: 40
+category: natur
+shortDescription: 'Brocken, Brockenbahn und Wanderwege – Deutschlands nördlichstes Mittelgebirge'
+intro: >-
+  Der Harz liegt nur rund 40 Kilometer nördlich unserer Pension
+  und eignet sich hervorragend als Tagesausflug. Mit dem Brocken
+  (1.141 m), der historischen Brockenbahn und tausenden Kilometern
+  Wanderwegen bietet er Natur pur.
+content: >-
+  Über Bad Lauterberg oder Bad Sachsa erreichen Sie den
+  südlichen Harz in weniger als einer Stunde. Höhepunkt ist
+  der Brocken – mit 1.141 Metern die höchste Erhebung
+  Norddeutschlands. Hinauf gelangt man zu Fuß oder mit der
+  dampfbetriebenen Brockenbahn, einer der größten
+  Schmalspurbahnen Deutschlands.
+
+
+  Der Nationalpark Harz schützt auf 247 Quadratkilometern
+  eine einzigartige Berglandschaft mit Mooren, Fichtenwäldern
+  und seltenen Tierarten. Über 8.000 Kilometer markierte
+  Wanderwege führen durch die Region – von gemütlichen
+  Spaziergängen bis zu anspruchsvollen Gipfeltouren.
+
+
+  Für Regentage bieten die Tropfsteinhöhlen in Rübeland
+  und die Einhornhöhle bei Scharzfeld ein unterirdisches
+  Abenteuer. Historische Fachwerkstädte wie Wernigerode
+  und Quedlinburg laden zum Bummeln ein.
+hostTip: >-
+  Fahren Sie mit der Brockenbahn von Wernigerode zum Gipfel
+  und wandern Sie über den Goetheweg zurück – so erleben Sie
+  beides an einem Tag.
+bestTimeToVisit: 'Juni bis Oktober, auf dem Brocken warm anziehen'
+website: 'https://www.harzinfo.de'
+coordinates:
+  lat: 51.8000
+  lng: 10.6173
+gallery: []
+sortOrder: 11

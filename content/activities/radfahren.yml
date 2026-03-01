@@ -19,23 +19,33 @@ regionDescription: >-
   in der hügeligen Landschaft ideale Bedingungen – die Steigungen sind
   moderat, die Belohnung durch die Aussichten umso größer.
 routes:
-  - name: 'Leine-Radweg (Etappe Leinefelde – Heiligenstadt)'
+  - name: 'Unstrutradweg (Etappe 1: Quelle – Mühlhausen)'
     distance: '28 km'
     difficulty: leicht
-    highlight: 'Flache Strecke entlang der Leine mit Einkehrmöglichkeiten in historischen Orten'
-    externalUrl: 'https://www.komoot.de/tour/148562739'
-  - name: 'Eichsfeld-Rundtour über Worbis'
-    distance: '35 km'
-    difficulty: mittel
-    highlight: 'Hügelige Rundtour durch typische Eichsfelder Dörfer mit Besuch im Bärenpark'
-    externalUrl: 'https://www.komoot.de/tour/287451890'
-  - name: 'Unstrut-Radweg (Abschnitt Dingelstädt)'
-    distance: '22 km'
+    highlight: 'Familienfreundliche Flusstour entlang der Unstrut von ihrer Quelle bei Kefferhausen durch das idyllische Reiser Tal bis nach Mühlhausen.'
+    externalUrl: 'https://www.outdooractive.com/de/route/radtour/unstrut-hainich-kreis/unstrutradweg-1.-etappe-quelle-muehlhausen/26165886/'
+  - name: 'Kanonenbahnradweg'
+    distance: '33 km'
     difficulty: leicht
-    highlight: 'Gemütliche Tour entlang der Unstrut durch das südliche Eichsfeld'
-    externalUrl: 'https://www.komoot.de/tour/195823641'
+    highlight: 'Ehemalige Bahntrasse von Dingelstädt bis Frieda mit fünf befahrbaren Eisenbahntunneln und imposanten Viadukten durch die Eichsfelder Landschaft.'
+    externalUrl: 'https://www.outdooractive.com/de/route/radtour/eichsfeld/kanonenbahnradweg-eichsfeld-thueringen/43161371/'
+  - name: 'Leine-Heide-Radweg (Etappe 1: Leinefelde – Göttingen)'
+    distance: '55 km'
+    difficulty: leicht
+    highlight: 'Der Radfernweg beginnt an der Leinequelle in Leinefelde und führt durch Streuobstwiesen und malerische Ortschaften über Heilbad Heiligenstadt bis Göttingen.'
+    externalUrl: 'https://www.komoot.com/tour/31182019'
+  - name: 'Geschichtstour durchs Eichsfeld'
+    distance: '53 km'
+    difficulty: mittel
+    highlight: 'Kulturelle Rundtour vorbei an der Leinequelle, dem Bärenpark Worbis, dem Grenzlandmuseum Teistungen und der Fachwerkstadt Duderstadt.'
+    externalUrl: 'https://www.outdooractive.com/de/route/radtour/eichsfeld/geschichtstour-durchs-eichsfeld/218944224/'
+  - name: 'Eichsfeld-Fünfer Radrundweg'
+    distance: '74 km'
+    difficulty: mittel
+    highlight: 'Sportliche Radrundtour, die die fünf Eichsfeld-Städte Leinefelde, Dingelstädt, Heiligenstadt, Duderstadt und Worbis verbindet.'
+    externalUrl: 'https://www.outdooractive.com/de/route/radtour/eichsfeld/eichsfeld-fuenfer-radrundweg/173321477/'
 externalPortals:
   - name: 'komoot'
-    url: 'https://www.komoot.de/guide/1276/radfahren-im-eichsfeld'
+    url: 'https://www.komoot.com/guide/1420/cycling-in-landkreis-eichsfeld'
   - name: 'outdooractive'
-    url: 'https://www.outdooractive.com/de/radtouren/eichsfeld/radtouren-im-eichsfeld/1472842/'
+    url: 'https://www.outdooractive.com/de/radtouren/eichsfeld/radtouren-in-eichsfeld/19537382/'

@@ -1,12 +1,12 @@
 name: 'Wandern im Eichsfeld'
 slug: wandern
 seoTitle: 'Wandern im Eichsfeld'
-seoDescription: 'Entdecken Sie die schönsten Wanderwege im Eichsfeld direkt von unserer Pension. Routen, Tipps und Tourenvorschläge für jeden Anspruch.'
+seoDescription: 'Entdecken Sie die schönsten Wanderwege im Eichsfeld rund um unsere Pension. Routen, Tipps und Tourenvorschläge für jeden Anspruch.'
 heroImage: /img/activities/wandern.webp
 heroImageAlt: 'Wanderweg durch die hügelige Landschaft des Eichsfelds'
 intro: >-
-  Das Eichsfeld ist ein Paradies für Wanderer. Direkt von unserer
-  Haustür führen Wege in die sanfte Hügellandschaft mit weiten
+  Das Eichsfeld ist ein Paradies für Wanderer. In der Umgebung
+  unserer Pension führen Wege in die sanfte Hügellandschaft mit weiten
   Wiesen, dichten Wäldern und herrlichen Aussichtspunkten. Ob gemütlicher
   Spaziergang oder anspruchsvolle Tagestour – hier findet jeder
   seinen Lieblingsweg.
@@ -20,23 +20,33 @@ regionDescription: >-
   einladen. Die Region gehört zu den am dünnsten besiedelten Gebieten
   Deutschlands – perfekt für alle, die Ruhe in der Natur suchen.
 routes:
-  - name: 'Eichsfelder Burgenweg'
-    distance: '14 km'
-    difficulty: mittel
-    highlight: 'Verbindet Burg Bodenstein und Burg Hanstein durch herrliche Laubwälder'
-    externalUrl: 'https://www.komoot.de/tour/225137428'
-  - name: 'Rund um den Ohmberg'
-    distance: '9 km'
+  - name: 'TOP-Wanderweg Dün Panorama'
+    distance: '5 km'
     difficulty: leicht
-    highlight: 'Aussichtsreicher Rundweg mit Blick über das gesamte Eichsfeld'
-    externalUrl: 'https://www.komoot.de/tour/243891265'
-  - name: 'Naturpfad Dünwald'
-    distance: '18 km'
-    difficulty: schwer
-    highlight: 'Durch den größten zusammenhängenden Wald des Eichsfelds mit seltener Flora'
-    externalUrl: 'https://www.komoot.de/tour/259712043'
+    highlight: 'Kurze Familienwanderung mit herrlichem Panoramablick auf Heilbad Heiligenstadt vom Dünkreuz, rund 200 Meter über der Stadt.'
+    externalUrl: 'https://www.outdooractive.com/de/route/wanderung/eichsfeld/top-wanderweg-duen-panorama-eichsfeld-thueringen/59258222/'
+  - name: 'TOP-Wanderweg Dieteröder Klippen'
+    distance: '7,6 km'
+    difficulty: mittel
+    highlight: 'Abwechslungsreiche Rundwanderung zu einem der schönsten Aussichtspunkte im Naturpark mit Blick über das westliche Eichsfeld.'
+    externalUrl: 'https://www.outdooractive.com/de/route/wanderung/eichsfeld/top-wanderweg-dieteroeder-klippen/58675541/'
+  - name: 'TOP-Wanderweg Bodenstein'
+    distance: '9,8 km'
+    difficulty: mittel
+    highlight: 'Rundtour durch das Ohmgebirge zur imposanten Burg Bodenstein mit der Gelben Klippe und dem Aussichtspunkt Kanstein über dem Hahletal.'
+    externalUrl: 'https://www.outdooractive.com/de/route/wanderung/eichsfeld/top-wanderweg-bodenstein/802576105/'
+  - name: 'TOP-Wanderweg Scharfenstein'
+    distance: '11,9 km'
+    difficulty: mittel
+    highlight: 'Abwechslungsreiche Tour mit Burg Scharfenstein, dem Aussichtspunkt Herrenberg und der Kapelle Steinhagen mit weiten Blicken über das Eichsfeld.'
+    externalUrl: 'https://www.outdooractive.com/de/route/wanderung/eichsfeld/top-wanderweg-scharfenstein-eichsfeld-thueringen/51209181/'
+  - name: 'TOP-Wanderweg Erlebnis Iberg'
+    distance: '12,7 km'
+    difficulty: mittel
+    highlight: 'Zertifizierte „Traumtour" durch den Heiligenstädter Stadtwald mit der Ibergwarte aus dem 14. Jahrhundert und alten Buchenwäldern.'
+    externalUrl: 'https://www.outdooractive.com/de/route/wanderung/eichsfeld/top-wanderweg-erlebnis-iberg-eichsfeld-thueringen/38748828/'
 externalPortals:
   - name: 'komoot'
-    url: 'https://www.komoot.de/guide/1275/wandern-im-eichsfeld'
+    url: 'https://www.komoot.com/guide/1417/hiking-in-landkreis-eichsfeld'
   - name: 'outdooractive'
-    url: 'https://www.outdooractive.com/de/wanderungen/eichsfeld/wanderungen-im-eichsfeld/1472841/'
+    url: 'https://www.outdooractive.com/de/wanderwege/eichsfeld/wandern-in-eichsfeld/19537383/'

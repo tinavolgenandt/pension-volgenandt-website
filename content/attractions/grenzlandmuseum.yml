@@ -1,0 +1,45 @@
+name: 'Grenzlandmuseum Eichsfeld'
+slug: grenzlandmuseum
+seoTitle: 'Grenzlandmuseum Eichsfeld | Pension nahe Teistungen'
+seoDescription: 'Das Grenzlandmuseum Eichsfeld in Teistungen zeigt die Geschichte der innerdeutschen Grenze – nur 16 km von unserer Pension.'
+heroImage: ''
+heroImageAlt: ''
+distanceKm: 16
+drivingMinutes: 20
+category: kultur
+shortDescription: 'Geschichte der innerdeutschen Teilung am Originalschauplatz'
+intro: >-
+  Das Grenzlandmuseum Eichsfeld in Teistungen befindet sich am
+  ehemaligen Grenzübergang zwischen Ost und West. Die Ausstellung
+  und der 6 km lange Grenzlandweg mit originalen Grenzanlagen
+  machen die deutsch-deutsche Teilung greifbar.
+content: >-
+  Nur 16 Kilometer von unserer Pension entfernt steht das
+  Grenzlandmuseum am ehemaligen Grenzübergang Duderstadt–Worbis,
+  der 1973 für den kleinen Grenzverkehr geöffnet wurde. Die
+  multimediale Ausstellung erzählt von Flucht, Vertreibung und
+  dem Alltag im Grenzgebiet bis zur Öffnung 1989.
+
+
+  Herzstück ist der Grenzlandweg – ein 6 Kilometer langer
+  Rundweg mit 24 Stationen und originalen Grenzanlagen:
+  Wachtürme, Signalzäune, Fahrzeugsperren und ein begehbarer
+  Beobachtungsbunker. Der ehemalige Todesstreifen ist heute
+  Teil des Grünen Bandes, eines einzigartigen Naturstreifens
+  entlang der einstigen Grenze.
+
+
+  Führungen werden auf Deutsch, Englisch, Französisch und
+  Spanisch angeboten. Samstags um 14 Uhr findet eine
+  öffentliche Führung über den Grenzlandweg statt.
+hostTip: >-
+  Planen Sie mindestens 3 Stunden ein – die Ausstellung und
+  der Grenzlandweg zusammen sind besonders eindrücklich.
+  Festes Schuhwerk für den Außenrundgang empfohlen.
+bestTimeToVisit: 'Ganzjährig, bei trockenem Wetter für den Grenzlandweg'
+website: 'https://www.grenzlandmuseum.de'
+coordinates:
+  lat: 51.4700
+  lng: 10.2700
+gallery: []
+sortOrder: 6

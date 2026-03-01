@@ -51,12 +51,12 @@ const familyFeatures = [
   {
     icon: 'ph:dog-duotone',
     title: 'Haustiere willkommen',
-    description: 'Hunde sind bei uns gerne gesehen',
+    description: 'Hunde willkommen in der Ferienwohnung Emils Kuhwiese & im Balkonzimmer',
   },
   {
     icon: 'ph:mountains-duotone',
     title: 'Natur erleben',
-    description: 'Wanderwege direkt vor der Tür',
+    description: 'Wanderwege & Radtouren in der Umgebung',
   },
 ]
 </script>
@@ -121,7 +121,63 @@ const familyFeatures = [
       </div>
     </section>
 
-    <!-- 5. Additional family info -->
+    <!-- 5. Terrasse & Grillen -->
+    <section class="bg-sage-50 px-6 py-12 md:py-16">
+      <div class="mx-auto max-w-5xl">
+        <div class="grid items-center gap-8 md:grid-cols-2">
+          <div>
+            <h2 class="font-serif text-2xl font-bold text-sage-900">
+              Sommerabende auf der Terrasse
+            </h2>
+            <p class="mt-4 leading-relaxed text-sage-800">
+              Unsere überdachte Terrasse mit Grill lädt zu gemütlichen Familienabenden ein. Während
+              die Kinder im Garten spielen, können Sie den Grill anwerfen und den Blick ins Grüne
+              genießen.
+            </p>
+            <p class="mt-4 leading-relaxed text-sage-800">
+              Ein Grill-Set mit Besteck und Pfannen können Sie bei uns dazubuchen – Grillkohle
+              bringen Sie einfach selbst mit.
+            </p>
+          </div>
+          <NuxtImg
+            src="/img/content/terrasse-grill.webp"
+            alt="Überdachte Terrasse mit Grill und Sitzgruppe"
+            class="rounded-lg"
+            loading="lazy"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Frühstück -->
+    <section class="mx-auto max-w-5xl px-6 py-12 md:py-16">
+      <div class="grid items-center gap-8 md:grid-cols-2">
+        <NuxtImg
+          src="/img/content/fruehstueck-platte.webp"
+          alt="Genießer-Frühstück mit regionalen Spezialitäten"
+          class="rounded-lg"
+          loading="lazy"
+          sizes="(max-width: 768px) 100vw, 50vw"
+        />
+        <div>
+          <h2 class="font-serif text-2xl font-bold text-sage-900">
+            Frühstück für die ganze Familie
+          </h2>
+          <p class="mt-4 leading-relaxed text-sage-800">
+            Ein guter Tag beginnt mit einem guten Frühstück. Unser Genießer-Frühstück mit regionalen
+            Wurstspezialitäten, hausgemachter Marmelade und saisonalem Obst aus dem eigenen Garten
+            lässt keine Wünsche offen.
+          </p>
+          <p class="mt-4 leading-relaxed text-sage-800">
+            Beim Frühstück gehen wir gerne auf die Wünsche der Kleinen ein – sprechen Sie uns
+            einfach an.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Additional family info -->
     <section class="bg-sage-50 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-3xl">
         <h2 class="mb-6 text-center font-serif text-2xl font-semibold text-sage-900">
@@ -138,31 +194,31 @@ const familyFeatures = [
           <li class="flex items-start gap-3">
             <Icon name="ph:check-circle-duotone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
             <span class="leading-relaxed text-sage-800">
-              Für unsere kleinen Gäste bieten wir ein Kinderfrühstück mit allem, was schmeckt.
+              Beim Frühstück gehen wir gerne auf die Wünsche der Kleinen ein.
             </span>
           </li>
           <li class="flex items-start gap-3">
             <Icon name="ph:check-circle-duotone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
             <span class="leading-relaxed text-sage-800">
-              Der Bärenpark Worbis ist nur 12 km entfernt – ein tolles Erlebnis für die ganze
+              Der Bärenpark Worbis ist nur 6 km entfernt – ein tolles Erlebnis für die ganze
               Familie.
             </span>
           </li>
           <li class="flex items-start gap-3">
             <Icon name="ph:check-circle-duotone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
             <span class="leading-relaxed text-sage-800">
-              Wanderwege und Radtouren starten direkt vor unserer Tür – auch für kleine Beine
-              geeignet.
+              Wanderwege und Radtouren in der Umgebung – per Auto oder Leihrad gut erreichbar, auch
+              für kleine Beine geeignet.
             </span>
           </li>
         </ul>
       </div>
     </section>
 
-    <!-- 6. Soft CTA -->
+    <!-- 8. Soft CTA -->
     <ContentSoftCta text="Haben Sie Fragen zu unserem Familienangebot? Wir beraten Sie gerne." />
 
-    <!-- 7. Booking CTA -->
+    <!-- 9. Booking CTA -->
     <ContentBookingCta text="Planen Sie Ihren Familienurlaub im Eichsfeld" />
   </div>
 </template>

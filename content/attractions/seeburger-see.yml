@@ -1,0 +1,43 @@
+name: 'Seeburger See'
+slug: seeburger-see
+seoTitle: 'Seeburger See – das Auge des Eichsfelds | Pension im Eichsfeld'
+seoDescription: 'Der Seeburger See – das Auge des Eichsfelds – liegt nur 25 km von unserer Pension. Baden, Bootfahren und Natur erleben.'
+heroImage: ''
+heroImageAlt: ''
+distanceKm: 25
+drivingMinutes: 30
+category: natur
+shortDescription: '„Das Auge des Eichsfelds" – Baden, Bootfahren und Natur'
+intro: >-
+  Der Seeburger See wird liebevoll „das Auge des Eichsfelds"
+  genannt. Mit rund 88 Hektar ist er der größte natürliche See in
+  Südniedersachsen und ein beliebtes Ausflugsziel für Familien
+  und Naturliebhaber.
+content: >-
+  Nur rund 25 Kilometer von unserer Pension entfernt liegt der
+  Seeburger See im niedersächsischen Eichsfeld. Das Naturschwimmbad ist von April bis Oktober
+  geöffnet und bietet einen Sandstrand zum Baden und Entspannen.
+  Ruder- und Tretboote können vor Ort ausgeliehen werden.
+
+
+  Seit 1976 steht der See unter Naturschutz und ist ein
+  wichtiger Lebensraum für Wasservögel. Besonders im Frühjahr
+  und Herbst lohnt sich der Besuch für Vogelbeobachtung.
+  Ein Rundweg führt am Ufer entlang und eignet sich für
+  gemütliche Spaziergänge und Radtouren.
+
+
+  Drei Restaurants direkt am See sorgen für die Verpflegung.
+  Wer länger bleiben möchte, findet auch einen Campingplatz
+  und einen Minigolfplatz.
+hostTip: >-
+  An einem warmen Sommertag ideal zum Baden. Nehmen Sie ein
+  Tretboot und erkunden Sie den See vom Wasser aus – besonders
+  schön in der Abendsonne.
+bestTimeToVisit: 'Mai bis September zum Baden, Frühling und Herbst zur Vogelbeobachtung'
+website: 'https://www.google.com/maps/search/Seeburger+See'
+coordinates:
+  lat: 51.5590
+  lng: 10.1587
+gallery: []
+sortOrder: 12

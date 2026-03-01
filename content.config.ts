@@ -17,7 +17,7 @@ const amenityEnum = z.enum([
   'bettwaesche',
   'handtuecher',
   'foehn',
-  'schreibtisch',
+  'tisch',
   'heizung',
 ])
 
@@ -121,9 +121,15 @@ const attractionSchema = z.object({
   content: z.string(),
   hostTip: z.string(),
   bestTimeToVisit: z.string().optional(),
-  openingHours: z.string().optional(),
-  entryPrice: z.string().optional(),
   website: z.string().url().optional(),
+  additionalWebsites: z
+    .array(
+      z.object({
+        label: z.string(),
+        url: z.string().url(),
+      }),
+    )
+    .optional(),
   coordinates: z.object({
     lat: z.number(),
     lng: z.number(),
@@ -159,8 +165,7 @@ const activitySchema = z.object({
         externalUrl: z.string().url().optional(),
       }),
     )
-    .min(3)
-    .max(5),
+    .optional(),
   externalPortals: z
     .array(
       z.object({
@@ -169,6 +174,30 @@ const activitySchema = z.object({
       }),
     )
     .default([]),
+})
+
+// News article schema
+const newsSchema = z.object({
+  title: z.string(),
+  slug: z.string(),
+  seoTitle: z.string().max(60),
+  seoDescription: z.string().max(155),
+  heroImage: z.string(),
+  heroImageAlt: z.string(),
+  publishedDate: z.string(),
+  category: z.enum(['veranstaltung', 'region', 'pension']),
+  excerpt: z.string(),
+  intro: z.string(),
+  content: z.string(),
+  externalLinks: z
+    .array(
+      z.object({
+        label: z.string(),
+        url: z.string().url(),
+      }),
+    )
+    .default([]),
+  sortOrder: z.number().default(0),
 })
 
 // FAQ item schema
@@ -210,6 +239,11 @@ export default defineContentConfig({
       type: 'data',
       source: 'activities/*.yml',
       schema: activitySchema,
+    }),
+    news: defineCollection({
+      type: 'data',
+      source: 'news/*.yml',
+      schema: newsSchema,
     }),
     faq: defineCollection({
       type: 'data',

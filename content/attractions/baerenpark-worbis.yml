@@ -1,11 +1,11 @@
 name: 'Alternativer Bärenpark Worbis'
 slug: baerenpark-worbis
 seoTitle: 'Bärenpark Worbis | Pension nahe Bärenpark'
-seoDescription: 'Besuchen Sie den Alternativen Bärenpark Worbis – nur 12 km von unserer Pension. Tipps, Öffnungszeiten und Unterkunft im Eichsfeld.'
+seoDescription: 'Besuchen Sie den Alternativen Bärenpark Worbis – nur 6 km von unserer Pension. Tipps und Unterkunft im Eichsfeld.'
 heroImage: /img/attractions/baerenpark-worbis.webp
 heroImageAlt: 'Braunbär im Alternativen Bärenpark Worbis'
-distanceKm: 12
-drivingMinutes: 15
+distanceKm: 6
+drivingMinutes: 9
 category: natur
 shortDescription: 'Braun- und Schwarzbären in naturnahen Gehegen erleben'
 intro: >-
@@ -13,7 +13,7 @@ intro: >-
   in unserer Nähe. Hier leben Bären und Wölfe, die aus schlechter Haltung
   gerettet wurden, in großen naturnahen Gehegen.
 content: >-
-  Nur 12 Kilometer von unserer Pension entfernt liegt der Alternative
+  Nur 6 Kilometer von unserer Pension entfernt liegt der Alternative
   Bärenpark in Worbis. Auf einer Fläche von 4 Hektar leben hier
   Braunbären, Schwarzbären und Wölfe in artgerechten Gehegen.
 
@@ -24,8 +24,8 @@ content: >-
   gesamten Park, vorbei an Beobachtungspunkten und Informationstafeln.
 
 
-  Für Familien mit Kindern gibt es einen großen Abenteuerspielplatz
-  und ein Streichelgehege. Im Parkrestaurant können Sie sich bei
+  Für Familien mit Kindern gibt es ein Streichelgehege
+  und einen Abenteuerspielplatz. Im Parkrestaurant können Sie sich bei
   regionaler Küche stärken.
 
 
@@ -36,9 +36,7 @@ hostTip: >-
   Kommen Sie am besten morgens, wenn die Bären am aktivsten sind.
   Der Rundweg dauert etwa 1-2 Stunden. Nehmen Sie festes Schuhwerk
   mit – der Weg führt durch hügelige Waldlandschaft.
-bestTimeToVisit: 'Frühling bis Herbst, morgens'
-openingHours: 'Täglich 10:00 - 18:00 (März-Oktober), 10:00 - 16:00 (November-Februar)'
-entryPrice: 'Erwachsene 11 EUR, Kinder (4-14) 6 EUR'
+bestTimeToVisit: 'Frühling bis Herbst'
 website: 'https://www.baer.de'
 coordinates:
   lat: 51.3891
