@@ -20,6 +20,14 @@ const { data: otherRooms } = await useAsyncData(`other-rooms-${slug}`, () =>
   queryCollection('rooms').where('slug', '<>', slug).order('sortOrder', 'ASC').all(),
 )
 
+// Type labels for badge display
+const typeLabel: Record<string, string> = {
+  ferienwohnung: 'Ferienwohnung',
+  doppelzimmer: 'Doppelzimmer',
+  zweibettzimmer: 'Zweibettzimmer',
+  einzelzimmer: 'Einzelzimmer',
+}
+
 // Booking consent check (SSG-safe, same pattern as MapConsent)
 const { isAllowed } = useCookieConsent()
 const isClient = import.meta.client
@@ -125,7 +133,7 @@ useSchemaOrg([
         <span
           class="mb-2 inline-block rounded-full bg-sage-100 px-3 py-1 text-xs font-medium tracking-wide text-sage-600"
         >
-          {{ room.category }}
+          {{ typeLabel[room.type] || room.category }}
         </span>
         <h1 class="font-serif text-3xl font-bold text-sage-800 sm:text-4xl">
           {{ room.name }}

@@ -37,8 +37,7 @@ const groupedRooms = computed(() => {
 // Category heading labels (plural forms for section headings)
 const categoryHeadings: Record<string, string> = {
   Ferienwohnung: 'Ferienwohnungen',
-  Doppelzimmer: 'Doppelzimmer',
-  Zweibettzimmer: 'Zweibettzimmer',
+  Doppelzimmer: 'Doppel- & Zweibettzimmer',
   Einzelzimmer: 'Einzelzimmer',
 }
 </script>
