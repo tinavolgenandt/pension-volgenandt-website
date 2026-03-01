@@ -91,13 +91,13 @@ const bookingUrl = computed(() => {
 
         <!-- Starting price -->
         <p :class="compact ? 'mt-2 text-sm' : 'mt-4'">
-          <span class="font-normal text-sage-500" :class="compact ? 'text-xs' : 'text-sm'"
+          <span class="font-normal text-sage-600" :class="compact ? 'text-xs' : 'text-sm'"
             >ab
           </span>
           <span class="font-semibold text-waldhonig-600" :class="compact ? 'text-sm' : 'text-lg'">
             {{ startingPrice }} EUR
           </span>
-          <span class="font-normal text-sage-500" :class="compact ? 'text-xs' : 'text-sm'">
+          <span class="font-normal text-sage-600" :class="compact ? 'text-xs' : 'text-sm'">
             / Nacht inkl. MwSt.
           </span>
         </p>

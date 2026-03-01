@@ -88,7 +88,7 @@ watch(emblaApi, (api) => {
                   <p class="mt-4 font-semibold text-sage-600">
                     {{ testimonial.name }}
                   </p>
-                  <p class="mt-1 text-xs text-sage-400">Google Bewertung</p>
+                  <p class="mt-1 text-xs text-sage-600">Google Bewertung</p>
                 </div>
               </div>
             </div>

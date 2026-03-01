@@ -139,9 +139,9 @@ useSchemaOrg([
           {{ room.name }}
         </h1>
         <p class="mt-2 text-lg">
-          <span class="text-sm text-sage-500">ab </span>
+          <span class="text-sm text-sage-600">ab </span>
           <span class="font-semibold text-waldhonig-600">{{ room.startingPrice }} EUR</span>
-          <span class="text-sm text-sage-500"> / Nacht inkl. MwSt.</span>
+          <span class="text-sm text-sage-600"> / Nacht inkl. MwSt.</span>
         </p>
         <!-- Direct booking link -->
         <a
