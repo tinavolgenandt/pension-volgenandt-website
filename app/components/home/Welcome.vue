@@ -35,8 +35,8 @@ defineOptions({
           </div>
         </div>
 
-        <!-- Lifestyle images -->
-        <div class="order-first flex flex-col gap-4 md:order-last">
+        <!-- Lifestyle image -->
+        <div class="order-first md:order-last">
           <NuxtImg
             src="/img/content/gastgeber-portrait.webp"
             alt="Simone und Ralf Volgenandt – Ihre Gastgeber in Breitenbach"
@@ -45,13 +45,6 @@ defineOptions({
             sizes="sm:100vw md:50vw"
             width="800"
             height="985"
-          />
-          <NuxtImg
-            src="/img/content/pension-eingang-sommer.jpg"
-            alt="Eingang der Pension Volgenandt im Sommer"
-            class="w-full rounded-lg object-cover shadow-sm"
-            loading="lazy"
-            sizes="sm:100vw md:50vw"
           />
         </div>
       </div>

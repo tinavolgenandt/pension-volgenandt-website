@@ -36,6 +36,22 @@ const photos = [
     src: '/img/content/landschaft-winter.webp',
     alt: 'Winterlandschaft im Eichsfeld mit verschneiten Feldern und Sonnenschein',
   },
+  {
+    src: '/img/garten/pension-eingang-sommer.jpg',
+    alt: 'Eingang der Pension Volgenandt im Sommer',
+  },
+  {
+    src: '/img/garten/einfahrt-sommer.jpg',
+    alt: 'Einfahrt zur Pension Volgenandt im Sommer',
+  },
+  {
+    src: '/img/garten/umgebung-wiese-sonnenuntergang.jpg',
+    alt: 'Wiese bei Sonnenuntergang in der Umgebung der Pension',
+  },
+  {
+    src: '/img/garten/gebaeude-eingang-parkplatz.jpg',
+    alt: 'Gebäude und Eingang mit Parkplatz der Pension Volgenandt',
+  },
 ]
 </script>
 
