@@ -57,8 +57,8 @@ const photos = [
         <!-- First photo spans 2 columns and 2 rows -->
         <div class="col-span-2 row-span-2 overflow-hidden rounded-lg">
           <NuxtImg
-            :src="photos[0].src"
-            :alt="photos[0].alt"
+            :src="photos[0]!.src"
+            :alt="photos[0]!.alt"
             class="aspect-[4/3] w-full h-full object-cover transition-transform duration-500 hover:scale-105"
             loading="lazy"
             sizes="sm:100vw md:50vw"
