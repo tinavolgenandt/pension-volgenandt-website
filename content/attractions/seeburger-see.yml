@@ -2,8 +2,8 @@ name: 'Seeburger See'
 slug: seeburger-see
 seoTitle: 'Seeburger See – das Auge des Eichsfelds | Pension im Eichsfeld'
 seoDescription: 'Der Seeburger See – das Auge des Eichsfelds – liegt nur 25 km von unserer Pension. Baden, Bootfahren und Natur erleben.'
-heroImage: ''
-heroImageAlt: ''
+heroImage: /img/attractions/seeburger-see-seerosen.jpg
+heroImageAlt: 'Seeburger See mit Seerosen und blauem Sommerhimmel – das Auge des Eichsfelds'
 distanceKm: 25
 drivingMinutes: 30
 category: natur
