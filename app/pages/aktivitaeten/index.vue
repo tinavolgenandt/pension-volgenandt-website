@@ -30,10 +30,11 @@ useHead({
   ],
 })
 
-// Fetch all attractions for the overview
-const { data: attractions } = await useAsyncData('aktivitaeten-all-attractions', () =>
+// Fetch attractions with photos only (no-photo ones tracked in .planning/missing-attraction-photos.md)
+const { data: attractionsRaw } = await useAsyncData('aktivitaeten-all-attractions', () =>
   queryCollection('attractions').order('sortOrder', 'ASC').all(),
 )
+const attractions = computed(() => attractionsRaw.value?.filter(a => a.heroImage) ?? [])
 
 const activityCards = [
   {
