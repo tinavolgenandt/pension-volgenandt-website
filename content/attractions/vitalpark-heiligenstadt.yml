@@ -2,8 +2,8 @@ name: 'Heilbad Heiligenstadt & Vitalpark'
 slug: vitalpark-heiligenstadt
 seoTitle: 'Heilbad Heiligenstadt – Altstadt, Kurpark & Vitalpark | Pension im Eichsfeld'
 seoDescription: 'Heilbad Heiligenstadt – die über 1.000 Jahre alte Kreisstadt des Eichsfelds mit historischer Altstadt, Kurpark, Literaturmuseum und Vitalpark. Nur 15 km von unserer Pension.'
-heroImage: ''
-heroImageAlt: ''
+heroImage: /img/attractions/vitalpark-heiligenstadt.jpg
+heroImageAlt: 'St.-Marien-Kirche mit Doppeltürmen und barockem Klostergarten in Heilbad Heiligenstadt'
 distanceKm: 15
 drivingMinutes: 14
 category: kultur
@@ -55,5 +55,7 @@ additionalWebsites:
 coordinates:
   lat: 51.3844
   lng: 10.1488
-gallery: []
+gallery:
+  - src: /img/attractions/heiligenstadt-altstadt.jpg
+    alt: 'Holzskulptur der Regentrude am Geislede-Wasserfall in Heiligenstadt'
 sortOrder: 4

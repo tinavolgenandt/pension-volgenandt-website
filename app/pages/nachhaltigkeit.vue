@@ -12,7 +12,7 @@ useSeoMeta({
     'Solarenergie, eigener Brunnen, Blühwiese und Gemüsegarten – nachhaltig urlauben in der Pension Volgenandt im Eichsfeld.',
   ogDescription:
     'Solarenergie, eigener Brunnen, Blühwiese und Gemüsegarten – nachhaltig urlauben in der Pension Volgenandt im Eichsfeld.',
-  ogImage: '/img/banners/nachhaltigkeit-banner.webp',
+  ogImage: '/img/content/garten-sonnenhut-blumen.webp',
   ogType: 'website',
 })
 
@@ -77,7 +77,7 @@ const sustainabilityFeatures = [
   <div>
     <!-- 1. Thin photo banner -->
     <ContentPageBanner
-      image="/img/banners/nachhaltigkeit-banner.webp"
+      image="/img/content/garten-sonnenhut-blumen.webp"
       image-alt="Blick über den grünen Garten der Pension"
       title="Nachhaltigkeit"
       subtitle="Verantwortung für Natur und Umgebung"
@@ -179,13 +179,22 @@ const sustainabilityFeatures = [
             entsteht ein vielfältiger Lebensraum direkt vor unserer Haustür.
           </p>
         </div>
-        <NuxtImg
-          src="/img/content/garten-schmetterling-flieder.webp"
-          alt="Tagpfauenauge auf Sommerflieder im Garten der Pension"
-          class="rounded-lg"
-          loading="lazy"
-          sizes="100vw md:50vw"
-        />
+        <div class="grid grid-cols-2 gap-3">
+          <NuxtImg
+            src="/img/content/garten-schmetterling-flieder.webp"
+            alt="Tagpfauenauge auf Sommerflieder im Garten der Pension"
+            class="rounded-lg aspect-square object-cover w-full"
+            loading="lazy"
+            sizes="50vw md:25vw"
+          />
+          <NuxtImg
+            src="/img/content/amphibien-gartenteich.jpg"
+            alt="Amphibien am Gartenteich der Pension Volgenandt"
+            class="rounded-lg aspect-square object-cover w-full"
+            loading="lazy"
+            sizes="50vw md:25vw"
+          />
+        </div>
       </div>
     </section>
 

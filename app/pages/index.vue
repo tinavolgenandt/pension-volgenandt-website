@@ -27,6 +27,10 @@ useHead({
     </UiScrollReveal>
 
     <UiScrollReveal>
+      <HomeGartenGallery />
+    </UiScrollReveal>
+
+    <UiScrollReveal>
       <HomeFeaturedRooms />
     </UiScrollReveal>
 
