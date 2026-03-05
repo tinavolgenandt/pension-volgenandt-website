@@ -142,14 +142,14 @@ useSchemaOrg([
       <div class="mx-auto grid max-w-5xl gap-6 sm:grid-cols-2">
         <figure>
           <NuxtImg
-            src="/img/content/sitzecke-hortensien.webp"
-            alt="Gemütliche Sitzecke mit Hortensien im Garten"
+            src="/img/content/gastgeber-portrait.webp"
+            alt="Simone und Ralf Volgenandt – Ihre Gastgeber in Breitenbach"
             class="aspect-[4/3] w-full rounded-lg object-cover"
             loading="lazy"
             sizes="100vw sm:50vw"
           />
           <figcaption class="mt-2 text-center text-sm text-sage-600">
-            Unser Garten lädt zum Verweilen ein
+            Simone &amp; Ralf Volgenandt – wir freuen uns auf Sie
           </figcaption>
         </figure>
         <figure>

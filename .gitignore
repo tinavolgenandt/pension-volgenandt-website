@@ -26,7 +26,20 @@ Thumbs.db
 .playwright-mcp/
 
 # Raw source uploads in public/img/ — device-named, not processed for web
-public/img/[A-Z]*/
+public/img/Bärenpark/
+public/img/Baumwipfelpfad/
+public/img/Brotmuseum/
+public/img/Draisine/
+public/img/Grundstück\ und\ direkte\ Umgebung/
+public/img/Heiligenstadt/
+public/img/Kyffhäuser/
+public/img/Langensalza/
+public/img/Luttergrund/
+public/img/Scharfenstein/
+public/img/Seeburger\ See/
+public/img/Sielmann\ Stiftung/
+public/img/Sonnenstein/
+public/img/Wartburg/
 public/img/DSC_*
 public/img/Amphibien.JPG
 public/img/Garten.JPG
