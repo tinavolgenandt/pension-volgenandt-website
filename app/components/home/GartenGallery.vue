@@ -32,6 +32,10 @@ const photos = [
     src: '/img/garten/pension-winter-schnee.jpg',
     alt: 'Pension Volgenandt im Winter mit tiefem Schnee und blauem Himmel',
   },
+  {
+    src: '/img/content/landschaft-winter.webp',
+    alt: 'Winterlandschaft im Eichsfeld mit verschneiten Feldern und Sonnenschein',
+  },
 ]
 </script>
 
