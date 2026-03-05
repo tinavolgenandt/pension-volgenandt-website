@@ -1,14 +1,6 @@
 <script setup lang="ts">
 const photos = [
   {
-    src: '/img/garten/garten-sonnenaufgang-einfahrt.jpg',
-    alt: 'Sonnenaufgang über dem Hof und Garten der Pension Volgenandt',
-  },
-  {
-    src: '/img/garten/umgebung-pension-kornfeld.jpg',
-    alt: 'Pension Volgenandt eingebettet in die Eichsfelder Kornfelder',
-  },
-  {
     src: '/img/garten/umgebung-wiese-pusteblumen.jpg',
     alt: 'Frühlingswiese mit Pusteblumen direkt neben der Pension',
   },
@@ -19,14 +11,6 @@ const photos = [
   {
     src: '/img/garten/garten-apfelbaum-blumen.jpg',
     alt: 'Apfelbaum mit reifen Früchten und Blumenbeeten im Pensionsgarten',
-  },
-  {
-    src: '/img/garten/garten-laube-herbst.jpg',
-    alt: 'Gartenlaube mit buntem Herbstgarten der Pension',
-  },
-  {
-    src: '/img/garten/umgebung-felder-abendsonne.jpg',
-    alt: 'Abendstimmung über den Feldern des Eichsfelds vom Garten aus',
   },
   {
     src: '/img/garten/pension-winter-schnee.jpg',
