@@ -2,7 +2,7 @@ items:
   - name: 'Alternativer Bärenpark Worbis'
     slug: baerenpark-worbis
     shortDescription: 'Erleben Sie Braun- und Schwarzbären in naturnahen Gehegen'
-    image: /img/attractions/baerenpark.webp
+    image: /img/attractions/baerenpark-worbis.jpg
     imageAlt: 'Braunbär im Alternativen Bärenpark Worbis'
     distanceKm: 6
     featured: true
@@ -11,8 +11,8 @@ items:
   - name: 'Eiscafé San Remo'
     slug: eiscafe-san-remo
     shortDescription: 'Hausgemachtes Eis, Kaffee und Kuchen im Herzen von Worbis'
-    image: ''
-    imageAlt: ''
+    image: /img/attractions/eiscafe-san-remo.jpg
+    imageAlt: 'Eiscafé San Remo in Worbis'
     distanceKm: 9
     featured: false
     category: kultur
@@ -20,7 +20,7 @@ items:
   - name: 'Burg Hanstein'
     slug: burg-hanstein
     shortDescription: 'Eine der größten Burgruinen Mitteldeutschlands'
-    image: /img/attractions/burg-hanstein.webp
+    image: /img/attractions/burg-hanstein.jpg
     imageAlt: 'Burgruine Hanstein im Eichsfeld'
     distanceKm: 40
     featured: false
@@ -29,8 +29,8 @@ items:
   - name: 'Burg Bodenstein'
     slug: burg-bodenstein
     shortDescription: 'Mittelalterliche Höhenburg mit Familienhotel und Veranstaltungen'
-    image: /img/attractions/burg-bodenstein.webp
-    imageAlt: 'Burg Bodenstein im Eichsfeld'
+    image: ''
+    imageAlt: ''
     distanceKm: 9
     featured: false
     category: kultur
@@ -38,8 +38,8 @@ items:
   - name: 'Burg Scharfenstein – die Whisky-Burg'
     slug: burg-scharfenstein
     shortDescription: 'Whiskywelt mit Nine Springs Single Malt und Panoramablick'
-    image: ''
-    imageAlt: ''
+    image: /img/attractions/burg-scharfenstein.jpg
+    imageAlt: 'Burg Scharfenstein im Eichsfeld'
     distanceKm: 10
     featured: true
     category: kultur
@@ -56,8 +56,8 @@ items:
   - name: 'Skywalk Sonnenstein'
     slug: skywalk-sonnenstein
     shortDescription: 'Spektakuläre Aussichtsplattform mit Panoramablick'
-    image: ''
-    imageAlt: ''
+    image: /img/attractions/skywalk-sonnenstein.jpg
+    imageAlt: 'Skywalk Sonnenstein mit Panoramablick'
     distanceKm: 14
     featured: false
     category: natur
@@ -65,8 +65,8 @@ items:
   - name: 'Heilbad Heiligenstadt & Vitalpark'
     slug: vitalpark-heiligenstadt
     shortDescription: 'Über 1.000 Jahre alte Kreisstadt mit Altstadt, Kurpark und Therme'
-    image: ''
-    imageAlt: ''
+    image: /img/attractions/vitalpark-heiligenstadt.jpg
+    imageAlt: 'Heiligenstadt Altstadt'
     distanceKm: 15
     featured: false
     category: kultur
@@ -74,8 +74,8 @@ items:
   - name: 'Seeburger See'
     slug: seeburger-see
     shortDescription: '„Das Auge des Eichsfelds" – Baden, Bootfahren und Natur'
-    image: ''
-    imageAlt: ''
+    image: /img/attractions/seeburger-see.jpg
+    imageAlt: 'Seeburger See im Eichsfeld'
     distanceKm: 25
     featured: false
     category: natur
@@ -83,7 +83,7 @@ items:
   - name: 'Baumkronenpfad Hainich'
     slug: baumkronenpfad-hainich
     shortDescription: 'Wandeln Sie in den Baumkronen des UNESCO-Weltnaturerbes'
-    image: /img/attractions/baumkronenpfad.webp
+    image: /img/attractions/baumkronenpfad-hainich.jpg
     imageAlt: 'Baumkronenpfad im Nationalpark Hainich'
     distanceKm: 54
     featured: false
@@ -92,8 +92,8 @@ items:
   - name: 'Wartburg'
     slug: wartburg
     shortDescription: 'UNESCO-Weltkulturerbe – hier übersetzte Luther das Neue Testament'
-    image: ''
-    imageAlt: ''
+    image: /img/attractions/wartburg.jpg
+    imageAlt: 'Wartburg bei Eisenach'
     distanceKm: 55
     featured: false
     category: kultur
