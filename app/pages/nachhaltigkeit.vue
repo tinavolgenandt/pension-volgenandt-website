@@ -179,13 +179,22 @@ const sustainabilityFeatures = [
             entsteht ein vielfältiger Lebensraum direkt vor unserer Haustür.
           </p>
         </div>
-        <NuxtImg
-          src="/img/content/garten-schmetterling-flieder.webp"
-          alt="Tagpfauenauge auf Sommerflieder im Garten der Pension"
-          class="rounded-lg"
-          loading="lazy"
-          sizes="100vw md:50vw"
-        />
+        <div class="grid grid-cols-2 gap-3">
+          <NuxtImg
+            src="/img/content/garten-schmetterling-flieder.webp"
+            alt="Tagpfauenauge auf Sommerflieder im Garten der Pension"
+            class="rounded-lg aspect-square object-cover w-full"
+            loading="lazy"
+            sizes="50vw md:25vw"
+          />
+          <NuxtImg
+            src="/img/content/amphibien-gartenteich.jpg"
+            alt="Amphibien am Gartenteich der Pension Volgenandt"
+            class="rounded-lg aspect-square object-cover w-full"
+            loading="lazy"
+            sizes="50vw md:25vw"
+          />
+        </div>
       </div>
     </section>
 
