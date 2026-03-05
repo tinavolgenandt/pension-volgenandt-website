@@ -17,14 +17,6 @@ const photos = [
     alt: 'Apfelbaum mit reifen Früchten und Blumenbeeten im Pensionsgarten',
   },
   {
-    src: '/img/garten/pension-winter-schnee.jpg',
-    alt: 'Pension Volgenandt im Winter mit tiefem Schnee und blauem Himmel',
-  },
-  {
-    src: '/img/content/landschaft-winter.webp',
-    alt: 'Winterlandschaft im Eichsfeld mit verschneiten Feldern und Sonnenschein',
-  },
-  {
     src: '/img/garten/pension-eingang-sommer.jpg',
     alt: 'Eingang der Pension Volgenandt im Sommer',
   },
@@ -35,6 +27,14 @@ const photos = [
   {
     src: '/img/garten/gebaeude-eingang-parkplatz.jpg',
     alt: 'Gebäude und Eingang mit Parkplatz der Pension Volgenandt',
+  },
+  {
+    src: '/img/garten/pension-winter-schnee.jpg',
+    alt: 'Pension Volgenandt im Winter mit tiefem Schnee und blauem Himmel',
+  },
+  {
+    src: '/img/content/landschaft-winter.webp',
+    alt: 'Winterlandschaft im Eichsfeld mit verschneiten Feldern und Sonnenschein',
   },
 ]
 </script>
