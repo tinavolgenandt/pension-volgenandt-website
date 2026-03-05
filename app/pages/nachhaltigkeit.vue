@@ -188,7 +188,7 @@ const sustainabilityFeatures = [
             sizes="50vw md:25vw"
           />
           <NuxtImg
-            src="/img/content/amphibien-gartenteich.jpg"
+            src="/img/content/amphibien-gartenteich.webp"
             alt="Amphibien am Gartenteich der Pension Volgenandt"
             class="rounded-lg aspect-square object-cover w-full"
             loading="lazy"

@@ -1,35 +1,35 @@
 <script setup lang="ts">
 const photos = [
   {
-    src: '/img/garten/einfahrt-sommer.jpg',
+    src: '/img/garten/einfahrt-sommer.webp',
     alt: 'Einfahrt zur Pension Volgenandt im Sommer',
   },
   {
-    src: '/img/garten/umgebung-wiese-pusteblumen.jpg',
+    src: '/img/garten/umgebung-wiese-pusteblumen.webp',
     alt: 'Frühlingswiese mit Pusteblumen direkt neben der Pension',
   },
   {
-    src: '/img/garten/garten-biotop-schilf.jpg',
+    src: '/img/garten/garten-biotop-schilf.webp',
     alt: 'Naturteich mit Schilf und Wildblumen im Garten der Pension',
   },
   {
-    src: '/img/garten/garten-apfelbaum-blumen.jpg',
+    src: '/img/garten/garten-apfelbaum-blumen.webp',
     alt: 'Apfelbaum mit reifen Früchten und Blumenbeeten im Pensionsgarten',
   },
   {
-    src: '/img/garten/pension-eingang-sommer.jpg',
+    src: '/img/garten/pension-eingang-sommer.webp',
     alt: 'Eingang der Pension Volgenandt im Sommer',
   },
   {
-    src: '/img/garten/umgebung-wiese-sonnenuntergang.jpg',
+    src: '/img/garten/umgebung-wiese-sonnenuntergang.webp',
     alt: 'Wiese bei Sonnenuntergang in der Umgebung der Pension',
   },
   {
-    src: '/img/garten/gebaeude-eingang-parkplatz.jpg',
+    src: '/img/garten/gebaeude-eingang-parkplatz.webp',
     alt: 'Gebäude und Eingang mit Parkplatz der Pension Volgenandt',
   },
   {
-    src: '/img/garten/pension-winter-schnee.jpg',
+    src: '/img/garten/pension-winter-schnee.webp',
     alt: 'Pension Volgenandt im Winter mit tiefem Schnee und blauem Himmel',
   },
   {
