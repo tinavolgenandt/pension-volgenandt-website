@@ -40,7 +40,7 @@ definePageMeta({
 
 const categoryBadge: Record<string, { label: string; class: string }> = {
   veranstaltung: { label: 'Veranstaltung', class: 'bg-waldhonig-500 text-white' },
-  region: { label: 'Region', class: 'bg-sage-500 text-white' },
+  region: { label: 'Region', class: 'bg-sage-700 text-white' },
   pension: { label: 'Pension', class: 'bg-charcoal-600 text-white' },
 }
 
@@ -61,7 +61,7 @@ function formatDate(dateStr: string) {
 
 <template>
   <div v-if="article">
-    <ContentPageBanner
+    <SharedPageBanner
       :image="article.heroImage"
       :image-alt="article.heroImageAlt"
       :title="article.title"
@@ -124,7 +124,7 @@ function formatDate(dateStr: string) {
       </section>
     </div>
 
-    <ContentSoftCta text="Haben Sie Fragen zu dieser Veranstaltung? Wir beraten Sie gerne." />
-    <ContentBookingCta text="Übernachten Sie bei uns im Eichsfeld" />
+    <SharedSoftCta text="Haben Sie Fragen zu dieser Veranstaltung? Wir beraten Sie gerne." />
+    <SharedBookingCta text="Übernachten Sie bei uns im Eichsfeld" />
   </div>
 </template>

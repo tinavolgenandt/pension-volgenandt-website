@@ -28,7 +28,7 @@ const { data: articles } = await useAsyncData('news', () =>
 
 <template>
   <div>
-    <ContentPageBanner
+    <SharedPageBanner
       image="/img/content/garten-bluehwiese-fruehsommer.webp"
       image-alt="Blühende Landschaft im Eichsfeld"
       title="Aktuelles"
@@ -60,7 +60,7 @@ const { data: articles } = await useAsyncData('news', () =>
       </div>
     </section>
 
-    <ContentBookingCta
+    <SharedBookingCta
       text="Planen Sie Ihren Aufenthalt im Eichsfeld"
       button-text="Zimmer ansehen"
     />

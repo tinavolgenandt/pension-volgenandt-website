@@ -51,7 +51,7 @@ useSchemaOrg([
 <template>
   <div>
     <!-- 1. Thin photo banner -->
-    <ContentPageBanner
+    <SharedPageBanner
       image="/img/homepage/gebaeude-innenhof.webp"
       image-alt="Eingangsbereich der Pension Volgenandt"
       title="Kontakt & Anfahrt"
@@ -234,7 +234,7 @@ useSchemaOrg([
     </section>
 
     <!-- Soft CTA + Booking CTA -->
-    <ContentSoftCta text="Noch eine Frage? Wir sind gerne für Sie da." />
-    <ContentBookingCta text="Finden Sie Ihr perfektes Zimmer" />
+    <SharedSoftCta text="Noch eine Frage? Wir sind gerne für Sie da." />
+    <SharedBookingCta text="Finden Sie Ihr perfektes Zimmer" />
   </div>
 </template>

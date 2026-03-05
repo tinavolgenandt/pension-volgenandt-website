@@ -57,7 +57,7 @@ const activityCards = [
 <template>
   <div>
     <!-- 1. Thin photo banner -->
-    <ContentPageBanner
+    <SharedPageBanner
       image="/img/homepage/aussicht-panorama.webp"
       image-alt="Wanderweg durch die Hügel des Eichsfelds"
       title="Aktivitäten"
@@ -104,7 +104,7 @@ const activityCards = [
             </div>
             <div class="p-5">
               <div class="mb-2">
-                <ContentDistanceBadge
+                <SharedDistanceBadge
                   :distance-km="attraction.distanceKm"
                   :driving-minutes="attraction.drivingMinutes"
                 />
@@ -163,6 +163,6 @@ const activityCards = [
     </section>
 
     <!-- 5. Booking CTA -->
-    <ContentBookingCta text="Planen Sie Ihren aktiven Urlaub im Eichsfeld" />
+    <SharedBookingCta text="Planen Sie Ihren aktiven Urlaub im Eichsfeld" />
   </div>
 </template>

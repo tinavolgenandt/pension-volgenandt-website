@@ -43,7 +43,7 @@ const difficultyBadge: Record<string, { label: string; class: string }> = {
 <template>
   <div v-if="activity">
     <!-- Banner -->
-    <ContentPageBanner
+    <SharedPageBanner
       :image="activity.heroImage"
       :image-alt="activity.heroImageAlt"
       title="Wandern im Eichsfeld"
@@ -147,10 +147,10 @@ const difficultyBadge: Record<string, { label: string; class: string }> = {
     </section>
 
     <!-- Soft CTA -->
-    <ContentSoftCta text="Brauchen Sie Wandertipps? Wir kennen die besten Wege." />
+    <SharedSoftCta text="Brauchen Sie Wandertipps? Wir kennen die besten Wege." />
 
     <!-- Booking CTA -->
-    <ContentBookingCta
+    <SharedBookingCta
       text="Nach der Wanderung in gemütliche Zimmer zurückkehren"
       button-text="Zimmer ansehen"
     />

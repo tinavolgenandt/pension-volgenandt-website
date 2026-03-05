@@ -11,7 +11,7 @@ defineProps<{
 }>()
 
 const categoryBadge: Record<string, { label: string; class: string }> = {
-  natur: { label: 'Natur', class: 'bg-sage-500 text-white' },
+  natur: { label: 'Natur', class: 'bg-sage-700 text-white' },
   kultur: { label: 'Kultur', class: 'bg-waldhonig-500 text-white' },
   aktivitaet: { label: 'Aktivität', class: 'bg-charcoal-600 text-white' },
 }
@@ -44,7 +44,7 @@ const categoryBadge: Record<string, { label: string; class: string }> = {
       <h3 class="font-serif text-lg font-semibold text-sage-900">
         {{ name }}
       </h3>
-      <ContentDistanceBadge
+      <SharedDistanceBadge
         :distance-km="distanceKm"
         :driving-minutes="drivingMinutes"
         class="mt-2"

@@ -72,6 +72,6 @@ function occupancyLabel(occupancy: number): string {
     </div>
 
     <!-- PAngV compliance notice -->
-    <p class="mt-3 text-xs text-sage-500">Alle Preise inkl. MwSt.</p>
+    <p class="mt-3 text-xs text-sage-600">Alle Preise inkl. MwSt.</p>
   </div>
 </template>

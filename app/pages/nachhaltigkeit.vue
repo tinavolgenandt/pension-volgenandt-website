@@ -76,7 +76,7 @@ const sustainabilityFeatures = [
 <template>
   <div>
     <!-- 1. Thin photo banner -->
-    <ContentPageBanner
+    <SharedPageBanner
       image="/img/content/garten-sonnenhut-blumen.webp"
       image-alt="Blick über den grünen Garten der Pension"
       title="Nachhaltigkeit"
@@ -100,7 +100,7 @@ const sustainabilityFeatures = [
         <h2 class="mb-8 text-center font-serif text-2xl font-semibold text-sage-900">
           Unsere Nachhaltigkeitsstrategie auf einen Blick
         </h2>
-        <ContentFeatureGrid :features="sustainabilityFeatures" />
+        <SharedFeatureGrid :features="sustainabilityFeatures" />
       </div>
     </section>
 
@@ -281,9 +281,9 @@ const sustainabilityFeatures = [
     </section>
 
     <!-- 9. Soft CTA -->
-    <ContentSoftCta text="Haben Sie Fragen zu unseren Nachhaltigkeitsmaßnahmen?" />
+    <SharedSoftCta text="Haben Sie Fragen zu unseren Nachhaltigkeitsmaßnahmen?" />
 
     <!-- 9. Booking CTA -->
-    <ContentBookingCta text="Nachhaltig urlauben im Eichsfeld" />
+    <SharedBookingCta text="Nachhaltig urlauben im Eichsfeld" />
   </div>
 </template>

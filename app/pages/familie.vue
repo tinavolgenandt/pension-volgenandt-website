@@ -64,7 +64,7 @@ const familyFeatures = [
 <template>
   <div>
     <!-- 1. Thin photo banner -->
-    <ContentPageBanner
+    <SharedPageBanner
       image="/img/content/terrasse-grill.webp"
       image-alt="Kinder spielen im Garten der Pension Volgenandt"
       title="Für Familien"
@@ -89,7 +89,7 @@ const familyFeatures = [
         <h2 class="mb-8 text-center font-serif text-2xl font-semibold text-sage-900">
           Das erwartet Ihre Familie
         </h2>
-        <ContentFeatureGrid :features="familyFeatures" />
+        <SharedFeatureGrid :features="familyFeatures" />
       </div>
     </section>
 
@@ -216,9 +216,9 @@ const familyFeatures = [
     </section>
 
     <!-- 8. Soft CTA -->
-    <ContentSoftCta text="Haben Sie Fragen zu unserem Familienangebot? Wir beraten Sie gerne." />
+    <SharedSoftCta text="Haben Sie Fragen zu unserem Familienangebot? Wir beraten Sie gerne." />
 
     <!-- 9. Booking CTA -->
-    <ContentBookingCta text="Planen Sie Ihren Familienurlaub im Eichsfeld" />
+    <SharedBookingCta text="Planen Sie Ihren Familienurlaub im Eichsfeld" />
   </div>
 </template>

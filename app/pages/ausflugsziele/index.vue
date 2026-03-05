@@ -46,7 +46,7 @@ const activityCards = [
 <template>
   <div>
     <!-- Banner -->
-    <ContentPageBanner
+    <SharedPageBanner
       image="/img/homepage/aussicht-panorama.webp"
       image-alt="Blick über das Eichsfeld"
       title="Ausflugsziele"
@@ -130,7 +130,7 @@ const activityCards = [
     </section>
 
     <!-- Booking CTA -->
-    <ContentBookingCta
+    <SharedBookingCta
       text="Nach einem erlebnisreichen Tag zurück in gemütliche Zimmer"
       button-text="Zimmer ansehen"
     />

@@ -11,7 +11,7 @@ defineProps<{
 
 const categoryBadge: Record<string, { label: string; class: string }> = {
   veranstaltung: { label: 'Veranstaltung', class: 'bg-waldhonig-500 text-white' },
-  region: { label: 'Region', class: 'bg-sage-500 text-white' },
+  region: { label: 'Region', class: 'bg-sage-700 text-white' },
   pension: { label: 'Pension', class: 'bg-charcoal-600 text-white' },
 }
 

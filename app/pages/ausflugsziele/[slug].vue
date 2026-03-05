@@ -79,7 +79,7 @@ const practicalInfo = computed(() => {
 <template>
   <div v-if="attraction">
     <!-- Banner -->
-    <ContentPageBanner
+    <SharedPageBanner
       :image="attraction.heroImage"
       :image-alt="attraction.heroImageAlt"
       :title="attraction.name"
@@ -87,7 +87,7 @@ const practicalInfo = computed(() => {
 
     <div class="mx-auto max-w-3xl px-6 py-12 md:py-16">
       <!-- Distance badge -->
-      <ContentDistanceBadge
+      <SharedDistanceBadge
         :distance-km="attraction.distanceKm"
         :driving-minutes="attraction.drivingMinutes"
         class="mb-8"
@@ -113,7 +113,7 @@ const practicalInfo = computed(() => {
 
       <!-- Host Tip -->
       <section class="mb-10">
-        <ContentHostTip :tip="attraction.hostTip" />
+        <SharedHostTip :tip="attraction.hostTip" />
       </section>
 
       <!-- Practical info -->
@@ -163,10 +163,10 @@ const practicalInfo = computed(() => {
     </div>
 
     <!-- Soft CTA -->
-    <ContentSoftCta text="Planen Sie Ihren Ausflug? Wir beraten Sie gerne." />
+    <SharedSoftCta text="Planen Sie Ihren Ausflug? Wir beraten Sie gerne." />
 
     <!-- Booking CTA -->
-    <ContentBookingCta
+    <SharedBookingCta
       text="Buchen Sie Ihre Unterkunft für den perfekten Tagesausflug"
       button-text="Zimmer ansehen"
     />
