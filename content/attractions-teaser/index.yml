@@ -8,6 +8,24 @@ items:
     featured: true
     category: natur
 
+  - name: 'Baumkronenpfad Hainich'
+    slug: baumkronenpfad-hainich
+    shortDescription: 'Wandeln Sie in den Baumkronen des UNESCO-Weltnaturerbes'
+    image: /img/attractions/baumkronenpfad-hainich.jpg
+    imageAlt: 'Baumkronenpfad im Nationalpark Hainich'
+    distanceKm: 54
+    featured: false
+    category: natur
+
+  - name: 'Burg Scharfenstein – die Whisky-Burg'
+    slug: burg-scharfenstein
+    shortDescription: 'Whiskywelt mit Nine Springs Single Malt und Panoramablick'
+    image: /img/attractions/burg-scharfenstein.jpg
+    imageAlt: 'Burg Scharfenstein im Eichsfeld'
+    distanceKm: 10
+    featured: false
+    category: kultur
+
   - name: 'Eiscafé San Remo'
     slug: eiscafe-san-remo
     shortDescription: 'Hausgemachtes Eis, Kaffee und Kuchen im Herzen von Worbis'
@@ -23,15 +41,6 @@ items:
     image: /img/attractions/burg-hanstein.jpg
     imageAlt: 'Burgruine Hanstein im Eichsfeld'
     distanceKm: 40
-    featured: false
-    category: kultur
-
-  - name: 'Burg Scharfenstein – die Whisky-Burg'
-    slug: burg-scharfenstein
-    shortDescription: 'Whiskywelt mit Nine Springs Single Malt und Panoramablick'
-    image: /img/attractions/burg-scharfenstein.jpg
-    imageAlt: 'Burg Scharfenstein im Eichsfeld'
-    distanceKm: 10
     featured: false
     category: kultur
 
@@ -59,15 +68,6 @@ items:
     image: /img/attractions/seeburger-see.jpg
     imageAlt: 'Seeburger See im Eichsfeld'
     distanceKm: 25
-    featured: false
-    category: natur
-
-  - name: 'Baumkronenpfad Hainich'
-    slug: baumkronenpfad-hainich
-    shortDescription: 'Wandeln Sie in den Baumkronen des UNESCO-Weltnaturerbes'
-    image: /img/attractions/baumkronenpfad-hainich.jpg
-    imageAlt: 'Baumkronenpfad im Nationalpark Hainich'
-    distanceKm: 54
     featured: false
     category: natur
 

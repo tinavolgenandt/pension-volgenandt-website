@@ -9,7 +9,7 @@ const featuredAttraction = computed(() =>
   items.value.find((a: { featured?: boolean }) => a.featured),
 )
 const otherAttractions = computed(() =>
-  items.value.filter((a: { featured?: boolean; image?: string }) => !a.featured && a.image).slice(0, 3),
+  items.value.filter((a: { featured?: boolean; image?: string }) => !a.featured && a.image).slice(0, 2),
 )
 </script>
 
