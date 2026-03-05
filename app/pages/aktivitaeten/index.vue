@@ -12,7 +12,7 @@ useSeoMeta({
     'Wandern, Radfahren, Burgen und Natur: Entdecken Sie die Aktivitäten rund um die Pension Volgenandt im Eichsfeld.',
   ogDescription:
     'Wandern, Radfahren, Burgen und Natur: Entdecken Sie die Aktivitäten rund um die Pension Volgenandt im Eichsfeld.',
-  ogImage: '/img/banners/aktivitaeten-banner.webp',
+  ogImage: '/img/homepage/aussicht-panorama.webp',
   ogType: 'website',
 })
 
@@ -57,7 +57,7 @@ const activityCards = [
   <div>
     <!-- 1. Thin photo banner -->
     <ContentPageBanner
-      image="/img/banners/aktivitaeten-banner.webp"
+      image="/img/homepage/aussicht-panorama.webp"
       image-alt="Wanderweg durch die Hügel des Eichsfelds"
       title="Aktivitäten"
       subtitle="Entdecken Sie das Eichsfeld"

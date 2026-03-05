@@ -12,7 +12,7 @@ useSeoMeta({
     'Kontaktieren Sie die Pension Volgenandt: Telefon, E-Mail oder Kontaktformular. Anfahrt von der A38 und Bahnhof Leinefelde.',
   ogDescription:
     'Kontaktieren Sie die Pension Volgenandt: Telefon, E-Mail oder Kontaktformular. Anfahrt von der A38 und Bahnhof Leinefelde.',
-  ogImage: '/img/banners/kontakt-banner.webp',
+  ogImage: '/img/homepage/gebaeude-innenhof.webp',
   ogType: 'website',
 })
 
@@ -52,7 +52,7 @@ useSchemaOrg([
   <div>
     <!-- 1. Thin photo banner -->
     <ContentPageBanner
-      image="/img/banners/kontakt-banner.webp"
+      image="/img/homepage/gebaeude-innenhof.webp"
       image-alt="Eingangsbereich der Pension Volgenandt"
       title="Kontakt & Anfahrt"
       subtitle="Wir freuen uns auf Sie"

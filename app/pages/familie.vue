@@ -12,7 +12,7 @@ useSeoMeta({
     'Familienurlaub im Eichsfeld: Spielplatz, Garten, Kinderfahrzeuge, Kinderbetten und mehr. Pension Volgenandt in Breitenbach.',
   ogDescription:
     'Familienurlaub im Eichsfeld: Spielplatz, Garten, Kinderfahrzeuge, Kinderbetten und mehr. Pension Volgenandt in Breitenbach.',
-  ogImage: '/img/banners/familie-banner.webp',
+  ogImage: '/img/content/terrasse-grill.webp',
   ogType: 'website',
 })
 
@@ -65,7 +65,7 @@ const familyFeatures = [
   <div>
     <!-- 1. Thin photo banner -->
     <ContentPageBanner
-      image="/img/banners/familie-banner.webp"
+      image="/img/content/terrasse-grill.webp"
       image-alt="Kinder spielen im Garten der Pension Volgenandt"
       title="Für Familien"
       subtitle="Bei uns sind die Kleinen die Größten"

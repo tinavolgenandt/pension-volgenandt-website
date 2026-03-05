@@ -12,7 +12,7 @@ useSeoMeta({
     'Solarenergie, eigener Brunnen, Blühwiese und Gemüsegarten – nachhaltig urlauben in der Pension Volgenandt im Eichsfeld.',
   ogDescription:
     'Solarenergie, eigener Brunnen, Blühwiese und Gemüsegarten – nachhaltig urlauben in der Pension Volgenandt im Eichsfeld.',
-  ogImage: '/img/banners/nachhaltigkeit-banner.webp',
+  ogImage: '/img/content/garten-sonnenhut-blumen.webp',
   ogType: 'website',
 })
 
@@ -77,7 +77,7 @@ const sustainabilityFeatures = [
   <div>
     <!-- 1. Thin photo banner -->
     <ContentPageBanner
-      image="/img/banners/nachhaltigkeit-banner.webp"
+      image="/img/content/garten-sonnenhut-blumen.webp"
       image-alt="Blick über den grünen Garten der Pension"
       title="Nachhaltigkeit"
       subtitle="Verantwortung für Natur und Umgebung"

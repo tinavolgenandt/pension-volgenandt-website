@@ -26,30 +26,12 @@ items:
     featured: false
     category: kultur
 
-  - name: 'Burg Bodenstein'
-    slug: burg-bodenstein
-    shortDescription: 'Mittelalterliche Höhenburg mit Familienhotel und Veranstaltungen'
-    image: ''
-    imageAlt: ''
-    distanceKm: 9
-    featured: false
-    category: kultur
-
   - name: 'Burg Scharfenstein – die Whisky-Burg'
     slug: burg-scharfenstein
     shortDescription: 'Whiskywelt mit Nine Springs Single Malt und Panoramablick'
     image: /img/attractions/burg-scharfenstein.jpg
     imageAlt: 'Burg Scharfenstein im Eichsfeld'
     distanceKm: 10
-    featured: true
-    category: kultur
-
-  - name: 'Grenzlandmuseum Eichsfeld'
-    slug: grenzlandmuseum
-    shortDescription: 'Geschichte der innerdeutschen Teilung am Originalschauplatz'
-    image: ''
-    imageAlt: ''
-    distanceKm: 16
     featured: false
     category: kultur
 
@@ -97,12 +79,3 @@ items:
     distanceKm: 55
     featured: false
     category: kultur
-
-  - name: 'Harz'
-    slug: harz
-    shortDescription: 'Brocken, Brockenbahn und Wanderwege als Tagesausflug'
-    image: ''
-    imageAlt: ''
-    distanceKm: 40
-    featured: false
-    category: natur

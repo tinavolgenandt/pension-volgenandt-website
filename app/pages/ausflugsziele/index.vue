@@ -10,7 +10,7 @@ useSeoMeta({
     'Bärenpark, Burgen und Natur: Entdecken Sie die besten Ausflugsziele rund um die Pension Volgenandt im Eichsfeld.',
   ogDescription:
     'Bärenpark, Burgen und Natur: Entdecken Sie die besten Ausflugsziele rund um die Pension Volgenandt im Eichsfeld.',
-  ogImage: '/img/banners/ausflugsziele-banner.webp',
+  ogImage: '/img/homepage/aussicht-panorama.webp',
   ogType: 'website',
 })
 
@@ -47,7 +47,7 @@ const activityCards = [
   <div>
     <!-- Banner -->
     <ContentPageBanner
-      image="/img/banners/ausflugsziele-banner.webp"
+      image="/img/homepage/aussicht-panorama.webp"
       image-alt="Blick über das Eichsfeld"
       title="Ausflugsziele"
       subtitle="Entdecken Sie das Eichsfeld"

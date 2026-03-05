@@ -10,7 +10,7 @@ useSeoMeta({
     'Neuigkeiten, Veranstaltungen und Tipps rund um die Pension Volgenandt und das Eichsfeld.',
   ogDescription:
     'Neuigkeiten, Veranstaltungen und Tipps rund um die Pension Volgenandt und das Eichsfeld.',
-  ogImage: '/img/banners/aktuelles-banner.webp',
+  ogImage: '/img/content/garten-bluehwiese-fruehsommer.webp',
   ogType: 'website',
 })
 
@@ -29,7 +29,7 @@ const { data: articles } = await useAsyncData('news', () =>
 <template>
   <div>
     <ContentPageBanner
-      image="/img/banners/aktuelles-banner.webp"
+      image="/img/content/garten-bluehwiese-fruehsommer.webp"
       image-alt="Blühende Landschaft im Eichsfeld"
       title="Aktuelles"
       subtitle="Neuigkeiten aus der Region"
