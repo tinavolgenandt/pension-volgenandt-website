@@ -1,6 +1,10 @@
 <script setup lang="ts">
 const photos = [
   {
+    src: '/img/garten/einfahrt-sommer.jpg',
+    alt: 'Einfahrt zur Pension Volgenandt im Sommer',
+  },
+  {
     src: '/img/garten/umgebung-wiese-pusteblumen.jpg',
     alt: 'Frühlingswiese mit Pusteblumen direkt neben der Pension',
   },
@@ -23,10 +27,6 @@ const photos = [
   {
     src: '/img/garten/pension-eingang-sommer.jpg',
     alt: 'Eingang der Pension Volgenandt im Sommer',
-  },
-  {
-    src: '/img/garten/einfahrt-sommer.jpg',
-    alt: 'Einfahrt zur Pension Volgenandt im Sommer',
   },
   {
     src: '/img/garten/umgebung-wiese-sonnenuntergang.jpg',
