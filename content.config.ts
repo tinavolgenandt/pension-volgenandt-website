@@ -51,6 +51,9 @@ const roomSchema = z.object({
   shortDescription: z.string(),
   description: z.string(),
 
+  // Availability restrictions
+  weekendOnly: z.boolean().default(false),
+
   // Beds24 integration (needed in Phase 5, define now)
   beds24PropertyId: z.number(),
   beds24RoomId: z.number().optional(),

@@ -37,6 +37,11 @@ const sustainabilityFeatures = [
     title: 'Solarenergie',
     description: 'Strom aus eigener Photovoltaikanlage',
   },
+  {
+    icon: 'ph:fire-duotone',
+    title: 'Holzpelletsheizung',
+    description: 'Klimaneutrale Wärme aus regionalem Holz',
+  },
   // Säule 2: Wasser
   {
     icon: 'ph:drop-duotone',
@@ -117,6 +122,11 @@ const sustainabilityFeatures = [
           <p class="mt-4 leading-relaxed text-sage-800">
             Auch beim Warmwasser setzen wir auf effiziente Technik und achten darauf, Ressourcen
             sparsam einzusetzen – ohne dass unsere Gäste auf Komfort verzichten müssen.
+          </p>
+          <p class="mt-4 leading-relaxed text-sage-800">
+            Für Wärme und Heizung nutzen wir eine moderne Holzpelletsanlage. Pellets aus
+            regionalen Holzresten verbrennen besonders sauber und gelten als klimaneutral –
+            das freigesetzte CO₂ wurde zuvor beim Baumwachstum gebunden.
           </p>
         </div>
         <NuxtImg

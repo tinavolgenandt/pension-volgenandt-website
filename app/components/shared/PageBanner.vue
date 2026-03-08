@@ -23,7 +23,7 @@ defineProps<{
 
     <!-- Text content -->
     <div class="relative z-10 flex h-full flex-col justify-end px-6 pb-6 md:px-12 lg:px-24">
-      <BreadcrumbNav class="mb-2" />
+      <UiBreadcrumbNav class="mb-2" />
       <h1 class="font-serif text-3xl font-bold text-white md:text-4xl">
         {{ title }}
       </h1>

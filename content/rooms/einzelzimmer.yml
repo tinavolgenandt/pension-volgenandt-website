@@ -18,6 +18,8 @@ description: >-
   Terrasse dürfen gerne genutzt werden – wir bitten um
   Rücksichtnahme auf andere Gäste.
 
+weekendOnly: true
+
 beds24PropertyId: 261258
 
 maxGuests: 1
