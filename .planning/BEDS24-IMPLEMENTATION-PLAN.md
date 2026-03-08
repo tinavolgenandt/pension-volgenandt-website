@@ -68,6 +68,10 @@ The current Beds24 setup splits what is physically one pension into 3 separate p
 - Update Beds24 booking link with new unit ID once created
 - **Also in Beds24:** Configure Check-in Tage = Freitag, Check-out Tage = Sonntag on the Einzelzimmer unit (see B2a)
 
+### A4. Holzpelletsanlage als Heizung
+- Add content to the website mentioning Holzpelletsanlage as the heating system (Heizung)
+- Relevant for: sustainability section, room features, or property description page
+
 ---
 
 ## Part B: Beds24 Admin Changes
@@ -573,7 +577,7 @@ Phase 7: Seasonal Pricing ────────────── all 6 rooms
 Phase 8: Booking Engine ──────────────── cancellation, deposit, voucher  ❌ NOT STARTED
 Phase 9: Airbnb ──────────────────────── channel connection              ❌ NOT STARTED
 
-Website: A1, A2, A3 ─────────────────── parallel                        ❌ NOT STARTED
+Website: A1, A2, A3, A4 ─────────────── parallel                        ✅ DONE
 ```
 
 ---
@@ -613,3 +617,22 @@ _Plan created: 2026-03-01_
 _Updated: 2026-03-01 - Unified around single-property strategy, fixed broken booking bug_
 _Updated: 2026-03-01 - All open questions resolved, invoice template from PDF, Booking.com research (Extranet required), WLAN/Steuernr/bank details added, 100% deposit confirmed_
 _Updated: 2026-03-01 - Phases 1-6 complete. Room images updated. Phase 7 seasonal pricing partially complete (Herbst/Winter done, Base Apr-Sep 2027 blocked by datepicker bug for 5 rooms)_
+_Updated: 2026-03-06 - Audit completed, outstanding items prioritised (see below)_
+
+---
+
+## Audit 2026-03-06: Offene Punkte nach Priorität
+
+### 🔴 Blockiert durch Inhaberin (Booking.com Extranet)
+- **B4:** Emil's Kuhwiese + Schöne Aussicht unter Property 261258 mit Booking.com verknüpfen (neue Zimmertypen im Extranet anlegen, Codes in Beds24 eintragen)
+- **B5:** Alte Properties 257613 + 257610 danach deaktivieren (erst nach letztem Checkout der alten Buchungen)
+
+### 🟡 Kann ohne Extranet erledigt werden
+1. **Phase 7 vervollständigen** — Basispreise Apr–Sep 2027 für 5 Zimmer nachpflegen (Balkonzimmer 55, Rosengarten 55, Wohlfühl-App 65, Emil's 70, Einzelzimmer 50). Datepicker-Bug: manuelle Eingabe nötig, kein Batch-Save.
+2. **Phase 8: Booking Engine** — Stornierungstext in Beds24 eintragen ("Kostenlos bis 7 Tage vor Anreise; 2–7 Tage: 50%; <2 Tage/No-Show: 100%") + Gutscheincode `DANKE5` = 5% Rabatt anlegen
+3. **B10: Verifizierung** — Booking-Page `booking2.php?propid=261258&lang=de` final prüfen: alle 6 Zimmer sichtbar, Buchen-Button direkt anklickbar, Preise korrekt
+4. **Website A2:** "für kleine Kinder" → "bspw. Kinder" in room YAMLs (Rosengarten, Wohlfühl, Emil's)
+5. **Website A3:** Einzelzimmer-Detailseite: Hinweis "Nur freitags bis sonntags buchbar" ergänzen
+
+### 🟢 Mittelfristig
+6. **Phase 9: Airbnb** — Channel Manager > Airbnb > autorisieren, 5 Zimmer mappen (Einzelzimmer wahrscheinlich auslassen), +20% Aufschlag verifizieren
