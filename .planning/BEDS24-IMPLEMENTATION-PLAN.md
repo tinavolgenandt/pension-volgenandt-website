@@ -618,14 +618,22 @@ _Updated: 2026-03-01 - Unified around single-property strategy, fixed broken boo
 _Updated: 2026-03-01 - All open questions resolved, invoice template from PDF, Booking.com research (Extranet required), WLAN/Steuernr/bank details added, 100% deposit confirmed_
 _Updated: 2026-03-01 - Phases 1-6 complete. Room images updated. Phase 7 seasonal pricing partially complete (Herbst/Winter done, Base Apr-Sep 2027 blocked by datepicker bug for 5 rooms)_
 _Updated: 2026-03-06 - Audit completed, outstanding items prioritised (see below)_
+_Updated: 2026-03-09 - B4+B5 done; all bookings migrated to property 261258, old properties deleted. Added B4b: Einzelzimmer on Booking.com (requires Extranet)_
 
 ---
 
 ## Audit 2026-03-06: Offene Punkte nach Priorität
 
 ### 🔴 Blockiert durch Inhaberin (Booking.com Extranet)
-- **B4:** Emil's Kuhwiese + Schöne Aussicht unter Property 261258 mit Booking.com verknüpfen (neue Zimmertypen im Extranet anlegen, Codes in Beds24 eintragen)
-- **B5:** Alte Properties 257613 + 257610 danach deaktivieren (erst nach letztem Checkout der alten Buchungen)
+- **B4:** ✅ DONE — Emil's Kuhwiese (656179 → 806576204) + Schöne Aussicht (656180 → 806576205) auf Booking.com gemappt und aktiv
+- **B5:** ✅ DONE — Alte Properties 257613 + 257610 gelöscht (Mar 2026)
+- **B4b — Einzelzimmer auf Booking.com anlegen:**
+  - Im Booking.com Extranet: Neuen Zimmertyp "Einzelzimmer" unter Hotel 8065762 anlegen
+  - Kapazität: 1 Erwachsener, 0 Kinder, 1 Bett
+  - Nach dem Anlegen: In Beds24 unter Channel Manager > Booking.com > "Codes abrufen" für Einzelzimmer (656178) ausführen
+  - Booking.com Room ID + Rate Plan ID in Beds24 eintragen und auf "Aktiviert" setzen
+  - Verfügbarkeit und Preise synchronisieren ("Aktualisieren" klicken)
+  - **Hinweis:** Einzelzimmer ist weekendOnly (Fr–So) — Mindestaufenthalt und Check-in/out-Tage müssen auch auf Booking.com korrekt konfiguriert sein
 
 ### 🟡 Kann ohne Extranet erledigt werden
 1. **Phase 7 vervollständigen** — Basispreise Apr–Sep 2027 für 5 Zimmer nachpflegen (Balkonzimmer 55, Rosengarten 55, Wohlfühl-App 65, Emil's 70, Einzelzimmer 50). Datepicker-Bug: manuelle Eingabe nötig, kein Batch-Save.

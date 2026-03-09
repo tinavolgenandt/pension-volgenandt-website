@@ -33,15 +33,17 @@ pricing:
 
 startingPrice: 50
 
-heroImage: /img/rooms/einzelzimmer-hero.jpg
-heroImageAlt: 'Einzelzimmer mit gemütlichem Bett'
+heroImage: /img/rooms/einzelzimmer-zimmer.webp
+heroImageAlt: 'Einzelzimmer mit Einzelbett und Schrank'
 gallery:
+  - src: /img/rooms/einzelzimmer-zimmer.webp
+    alt: 'Einzelzimmer mit Einzelbett und Fenster'
   - src: /img/rooms/zimmer-badezimmer.png
     alt: 'Privates Badezimmer mit Dusche'
-  - src: /img/rooms/zimmer-gemeinschaftskueche-1.jpg
-    alt: 'Gemeinschaftsküche mit Herd und Ofen'
-  - src: /img/rooms/zimmer-gemeinschaftskueche-2.jpg
-    alt: 'Gemeinschaftsküche mit Kühlschrank'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-1.webp
+    alt: 'Gemeinschaftsküche mit Frühstückstischen'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-2.webp
+    alt: 'Gemeinschaftsküche mit Herd und Kühlschrank'
 
 amenities:
   - wifi

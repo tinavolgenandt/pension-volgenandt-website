@@ -33,19 +33,19 @@ pricing:
 
 startingPrice: 126
 
-heroImage: /img/rooms/schoene-aussicht-hero.jpg
-heroImageAlt: 'Ferienwohnung Schöne Aussicht – Wohn- und Essbereich'
+heroImage: /img/rooms/schoene-aussicht-schlafzimmer.webp
+heroImageAlt: 'Ferienwohnung Schöne Aussicht – Schlafzimmer mit Doppelbett unter Dachschräge'
 gallery:
+  - src: /img/rooms/schoene-aussicht-wohnbereich.webp
+    alt: 'Wohnbereich mit Sofa und TV'
+  - src: /img/rooms/schoene-aussicht-bad.webp
+    alt: 'Badezimmer mit Dusche unter Dachschräge'
   - src: /img/rooms/schoene-aussicht-1.jpg
     alt: 'Wohnbereich mit gemütlicher Einrichtung'
-  - src: /img/rooms/schoene-aussicht-2.jpg
-    alt: 'Wohnbereich mit Schlafsofa'
   - src: /img/rooms/schoene-aussicht-3.jpg
     alt: 'Spieleecke für Kinder'
   - src: /img/rooms/schoene-aussicht-4.jpg
     alt: 'Schlafzimmer 2 mit Doppelbett'
-  - src: /img/rooms/schoene-aussicht-5.jpg
-    alt: 'Schlafzimmer 1 mit Kingsize-Bett'
   - src: /img/rooms/schoene-aussicht-6.jpg
     alt: 'Aussicht aus Schlafzimmer 1'
   - src: /img/rooms/schoene-aussicht-7.jpg
