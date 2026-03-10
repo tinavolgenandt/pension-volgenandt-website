@@ -47,10 +47,14 @@ gallery:
     alt: 'Balkon mit Holzboden, Blumenkästen und Dachblick'
   - src: /img/rooms/balkonzimmer-balkon-4.webp
     alt: 'Blick vom Balkon auf Terrasse und Kräuterbeet'
-  - src: /img/rooms/zimmer-gemeinschaftskueche-1.webp
+  - src: /img/rooms/balkonzimmer-zimmer-3.webp
+    alt: 'Schlafzimmer mit zwei Einzelbetten und Sonnenlicht'
+  - src: /img/rooms/balkonzimmer-bad-3.webp
+    alt: 'Badezimmer mit Handtuchheizung, WC und Dusche'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-3.webp
     alt: 'Gemeinschaftsküche mit Frühstückstischen'
-  - src: /img/rooms/zimmer-gemeinschaftskueche-2.webp
-    alt: 'Gemeinschaftsküche mit Herd und Kühlschrank'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-4.webp
+    alt: 'Gemeinschaftsküche mit Kochzeile und Essbereich'
 
 amenities:
   - wifi

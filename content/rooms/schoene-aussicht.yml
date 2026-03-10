@@ -36,8 +36,14 @@ startingPrice: 126
 heroImage: /img/rooms/schoene-aussicht-schlafzimmer.webp
 heroImageAlt: 'Ferienwohnung Schöne Aussicht – Schlafzimmer mit Doppelbett unter Dachschräge'
 gallery:
+  - src: /img/rooms/schoene-aussicht-schlafzimmer-2.webp
+    alt: 'Schöne Aussicht – Schlafzimmer mit Dachfenster und grüner Akzentwand'
+  - src: /img/rooms/schoene-aussicht-wohnbereich-2.webp
+    alt: 'Wohnbereich mit Sofa und Dachfenster'
   - src: /img/rooms/schoene-aussicht-wohnbereich.webp
     alt: 'Wohnbereich mit Sofa und TV'
+  - src: /img/rooms/schoene-aussicht-bad-2.webp
+    alt: 'Badezimmer mit Dusche unter Dachschräge und Dachfenster'
   - src: /img/rooms/schoene-aussicht-bad.webp
     alt: 'Badezimmer mit Dusche unter Dachschräge'
   - src: /img/rooms/schoene-aussicht-1.jpg

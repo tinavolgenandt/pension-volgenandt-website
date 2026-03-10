@@ -37,18 +37,24 @@ startingPrice: 65
 heroImage: /img/rooms/wohlfuehl-appartement-zimmer.webp
 heroImageAlt: 'Wohlfühl-Appartement – Schlaf- und Wohnbereich mit Doppelbett'
 gallery:
-  - src: /img/rooms/wohlfuehl-appartement-kueche.webp
+  - src: /img/rooms/wohlfuehl-appartement-zimmer-2.webp
+    alt: 'Wohlfühl-Appartement – Schlaf- und Wohnbereich mit TV'
+  - src: /img/rooms/wohlfuehl-appartement-kueche-2.webp
     alt: 'Küchenzeile mit Wasserkocher, Kühlschrank und Spüle'
+  - src: /img/rooms/wohlfuehl-appartement-kueche.webp
+    alt: 'Küchenbereich mit Blick zum Badezimmer'
+  - src: /img/rooms/wohlfuehl-appartement-bad-2.webp
+    alt: 'Privates Badezimmer mit Runddusche'
   - src: /img/rooms/wohlfuehl-appartement-bad.webp
-    alt: 'Privates Badezimmer mit Dusche'
+    alt: 'Badezimmer mit Dusche'
   - src: /img/rooms/wohlfuehl-appartement-balkon-1.webp
     alt: 'Balkon mit Tisch und Blick zur Terrasse'
   - src: /img/rooms/wohlfuehl-appartement-balkon-2.webp
     alt: 'Balkon mit Vogelhaus und Gartenpanorama'
-  - src: /img/rooms/zimmer-gemeinschaftskueche-1.webp
+  - src: /img/rooms/zimmer-gemeinschaftskueche-3.webp
     alt: 'Gemeinschaftsküche mit Frühstückstischen'
-  - src: /img/rooms/zimmer-gemeinschaftskueche-2.webp
-    alt: 'Gemeinschaftsküche mit Herd und Kühlschrank'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-4.webp
+    alt: 'Gemeinschaftsküche mit Kochzeile und Essbereich'
 
 amenities:
   - wifi

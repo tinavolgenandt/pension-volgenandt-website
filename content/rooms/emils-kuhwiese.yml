@@ -32,13 +32,21 @@ pricing:
 
 startingPrice: 73
 
-heroImage: /img/rooms/emils-kuhwiese-schlafzimmer.webp
-heroImageAlt: "Ferienwohnung Emil's Kuhwiese – Schlafzimmer mit Doppelbett"
+heroImage: /img/rooms/emils-kuhwiese-schlafzimmer-2.webp
+heroImageAlt: "Ferienwohnung Emil's Kuhwiese – Schlafzimmer mit Doppelbett und Akzentwand"
 gallery:
+  - src: /img/rooms/emils-kuhwiese-schlafzimmer.webp
+    alt: "Emil's Kuhwiese – Schlafzimmer mit Doppelbett"
+  - src: /img/rooms/emils-kuhwiese-wohnbereich-2.webp
+    alt: 'Wohnbereich mit Sofa, Pflanzenregal und Fenster'
   - src: /img/rooms/emils-kuhwiese-wohnbereich.webp
     alt: 'Wohnbereich mit Sofa und Couchtisch'
+  - src: /img/rooms/emils-kuhwiese-kueche-2.webp
+    alt: 'Vollausgestattete Küche mit Herd, Mikrowelle und Esstisch'
   - src: /img/rooms/emils-kuhwiese-kueche.webp
-    alt: 'Voll ausgestattete Küche mit Esstisch'
+    alt: 'Küche mit Esstisch'
+  - src: /img/rooms/emils-kuhwiese-bad-2.webp
+    alt: 'Geräumiges Badezimmer mit ebenerdiger Dusche'
   - src: /img/rooms/emils-kuhwiese-bad.webp
     alt: 'Helles Badezimmer mit ebenerdiger Dusche'
 

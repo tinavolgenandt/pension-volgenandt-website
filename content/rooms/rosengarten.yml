@@ -38,14 +38,20 @@ startingPrice: 58
 heroImage: /img/rooms/rosengarten-zimmer.webp
 heroImageAlt: 'Zimmer Rosengarten – Einzelbetten mit Sessel und Schrank'
 gallery:
+  - src: /img/rooms/rosengarten-zimmer-3.webp
+    alt: 'Rosengarten – Zimmerübersicht mit Sofaecke und Sitzbereich'
+  - src: /img/rooms/rosengarten-zimmer-4.webp
+    alt: 'Rosengarten – Beide Einzelbetten mit Fenster und tüırkisen Vorhängen'
   - src: /img/rooms/rosengarten-zimmer-2.webp
     alt: 'Rosengarten – Zimmeransicht mit beiden Einzelbetten und Fenster'
   - src: /img/rooms/rosengarten-bad.webp
     alt: 'Privates Badezimmer mit Eckdusche und WC'
-  - src: /img/rooms/zimmer-gemeinschaftskueche-1.webp
+  - src: /img/rooms/rosengarten-bad-3.webp
+    alt: 'Badezimmer mit Eckdusche, Waschtisch und Handtuchhalter'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-3.webp
     alt: 'Gemeinschaftsküche mit Frühstückstischen'
-  - src: /img/rooms/zimmer-gemeinschaftskueche-2.webp
-    alt: 'Gemeinschaftsküche mit Herd und Kühlschrank'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-4.webp
+    alt: 'Gemeinschaftsküche mit Kochzeile und Essbereich'
 
 amenities:
   - wifi
