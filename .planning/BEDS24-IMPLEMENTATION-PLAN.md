@@ -519,7 +519,7 @@ Bei Verstoessen: 100 EUR Vertragsstrafe. Sachschaeden zum Zeitwert.
 
 ---
 
-### Phase 7: Seasonal Pricing — PARTIALLY COMPLETE
+### Phase 7: Seasonal Pricing — COMPLETE (Oct 2027+ not yet set)
 
 | Saison | Zeitraum | Anpassung |
 |--------|----------|-----------|
@@ -573,7 +573,7 @@ Phase 3: Room Images ─────────────────── e
 Phase 4: Room Texts ──────────────────── descriptions  ✅ DONE
 Phase 5: Invoice ─────────────────────── (B13, B14)  ✅ DONE
 Phase 6: Auto Actions ────────────────── (B15-B20)   ✅ DONE
-Phase 7: Seasonal Pricing ────────────── all 6 rooms  ⚠️ PARTIAL (Herbst/Winter done, Base Apr-Sep 2027 needs fix for 5 rooms)
+Phase 7: Seasonal Pricing ────────────── all 6 rooms  ✅ DONE (Apr-Sep 2027 verified; Oct 2027+ not yet set)
 Phase 8: Booking Engine ──────────────── cancellation, deposit, voucher  ❌ NOT STARTED
 Phase 9: Airbnb ──────────────────────── channel connection              ❌ NOT STARTED
 
