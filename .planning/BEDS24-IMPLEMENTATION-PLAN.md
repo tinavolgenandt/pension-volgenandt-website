@@ -519,27 +519,26 @@ Bei Verstoessen: 100 EUR Vertragsstrafe. Sachschaeden zum Zeitwert.
 
 ---
 
-### Phase 7: Seasonal Pricing — COMPLETE (Oct 2027+ not yet set)
+### Phase 7: Seasonal Pricing — ~~GESTRICHEN~~ (Mar 2026)
 
-| Saison | Zeitraum | Anpassung |
-|--------|----------|-----------|
-| Fruehling/Sommer | Apr - Sep | Basispreis |
-| Herbst | Okt - Nov | -10% |
-| Winter | Dez - Maer | -20% |
+Saisonale Preisregeln (Herbst -10%, Winter -20%) werden **nicht** umgesetzt.
+Entscheidung: Nur Flatrate-Basispreise + Booking.com-Aufschlag.
 
-**Actual prices used** (based on real base prices, not plan's theoretical prices):
+**Ziel-Preisstruktur pro Zimmer (2 Regeln, keine Datumseinschränkungen):**
 
-| Zimmer | Basis | Herbst (-10%) | Winter (-20%) |
-|--------|-------|---------------|---------------|
-| Einzelzimmer (656178) | 50 | 45 | 40 |
-| Balkonzimmer (548066) | 55 | 50 | 44 |
-| Rosengarten (549252) | 55 | 50 | 44 |
-| Wohlfuehl-App. (549319) | 65 | 59 | 52 |
-| Emil's Kuhwiese (656179) | 70 | 63 | 56 |
-| Schoene Aussicht (656180) | 120 | 108 | 96 |
+| Zimmer | ID | Basispreis (Direkt) | Booking.com (+15%) |
+|--------|-----|--------------------|--------------------|
+| Einzelzimmer | 656178 | 50 € | ~58 € |
+| Balkonzimmer | 548066 | 55 € | ~63 € |
+| Rosengarten | 549252 | 55 € | ~63 € |
+| Wohlfühl-App. | 549319 | 65 € | ~75 € |
+| Emil's Kuhwiese | 656179 | 70 € | ~81 € |
+| Schöne Aussicht | 656180 | 120 € | ~138 € |
 
-**Done:** Winter Mar 2026, Herbst Oct-Nov 2026, Winter Dec 2026-Mar 2027 — all verified on booking page.
-**TODO:** Base prices Apr-Sep 2027 for 5 rooms (all except Schoene Aussicht). See BEDS24-PHASE1-COMPLETED.md for technical details on the datepicker issue blocking automated saves for this period.
+**TODO:** In Beds24 alle bestehenden Tagespreise (Herbst/Winter/Sommer-Perioden) löschen.
+Nur folgende 2 Regeln pro Zimmer behalten:
+1. Basispreis — Kanal: Direkt + Agent, Offerte 1, keine Datumseinschränkung
+2. +15% Aufschlag — Kanal: Booking.com, keine Datumseinschränkung
 
 ---
 
@@ -573,7 +572,7 @@ Phase 3: Room Images ─────────────────── e
 Phase 4: Room Texts ──────────────────── descriptions  ✅ DONE
 Phase 5: Invoice ─────────────────────── (B13, B14)  ✅ DONE
 Phase 6: Auto Actions ────────────────── (B15-B20)   ✅ DONE
-Phase 7: Seasonal Pricing ────────────── all 6 rooms  ✅ DONE (Apr-Sep 2027 verified; Oct 2027+ not yet set)
+Phase 7: Seasonal Pricing ────────────── GESTRICHEN   ~~saisonale Preise entfallen~~ → Flatrate + Booking.com only
 Phase 8: Booking Engine ──────────────── cancellation, deposit, voucher  ❌ NOT STARTED
 Phase 9: Airbnb ──────────────────────── channel connection              ❌ NOT STARTED
 
@@ -627,13 +626,7 @@ _Updated: 2026-03-09 - B4+B5 done; all bookings migrated to property 261258, old
 ### 🔴 Blockiert durch Inhaberin (Booking.com Extranet)
 - **B4:** ✅ DONE — Emil's Kuhwiese (656179 → 806576204) + Schöne Aussicht (656180 → 806576205) auf Booking.com gemappt und aktiv
 - **B5:** ✅ DONE — Alte Properties 257613 + 257610 gelöscht (Mar 2026)
-- **B4b — Einzelzimmer auf Booking.com anlegen:**
-  - Im Booking.com Extranet: Neuen Zimmertyp "Einzelzimmer" unter Hotel 8065762 anlegen
-  - Kapazität: 1 Erwachsener, 0 Kinder, 1 Bett
-  - Nach dem Anlegen: In Beds24 unter Channel Manager > Booking.com > "Codes abrufen" für Einzelzimmer (656178) ausführen
-  - Booking.com Room ID + Rate Plan ID in Beds24 eintragen und auf "Aktiviert" setzen
-  - Verfügbarkeit und Preise synchronisieren ("Aktualisieren" klicken)
-  - **Hinweis:** Einzelzimmer ist weekendOnly (Fr–So) — Mindestaufenthalt und Check-in/out-Tage müssen auch auf Booking.com korrekt konfiguriert sein
+- **B4b — Einzelzimmer auf Booking.com:** ~~GESTRICHEN~~ — Einzelzimmer wird bewusst nicht auf Booking.com veröffentlicht (nur Direktbuchung)
 
 ### 🟡 Kann ohne Extranet erledigt werden
 1. **Phase 7 vervollständigen** — Basispreise Apr–Sep 2027 für 5 Zimmer nachpflegen (Balkonzimmer 55, Rosengarten 55, Wohlfühl-App 65, Emil's 70, Einzelzimmer 50). Datepicker-Bug: manuelle Eingabe nötig, kein Batch-Save.
