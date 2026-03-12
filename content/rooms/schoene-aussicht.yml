@@ -48,14 +48,16 @@ gallery:
     alt: 'Badezimmer mit Dusche unter Dachschräge'
   - src: /img/rooms/schoene-aussicht-1.jpg
     alt: 'Wohnbereich mit gemütlicher Einrichtung'
-  - src: /img/rooms/schoene-aussicht-3.jpg
-    alt: 'Spieleecke für Kinder'
+  - src: /img/rooms/schoene-aussicht-kinderzimmer.webp
+    alt: 'Schöne Aussicht – Kinderzimmer mit Spielecke, Hochstuhl und Spielzeugregalen'
   - src: /img/rooms/schoene-aussicht-4.jpg
     alt: 'Schlafzimmer 2 mit Doppelbett'
   - src: /img/rooms/schoene-aussicht-6.jpg
     alt: 'Aussicht aus Schlafzimmer 1'
-  - src: /img/rooms/schoene-aussicht-7.jpg
-    alt: 'Essbereich mit Esstisch'
+  - src: /img/rooms/schoene-aussicht-wohnkueche.webp
+    alt: 'Schöne Aussicht – Offene Wohnküche mit Essbereich und Spielecke im Hintergrund'
+  - src: /img/rooms/schoene-aussicht-kueche.webp
+    alt: 'Schöne Aussicht – Küchenzeile mit Herd, Backofen, Mikrowelle und Spüle'
   - src: /img/rooms/schoene-aussicht-schlafzimmer-3.webp
     alt: 'Schöne Aussicht – Helles Schlafzimmer mit Doppelbett unter Dachschräge'
   - src: /img/rooms/schoene-aussicht-wohnbereich-3.webp
