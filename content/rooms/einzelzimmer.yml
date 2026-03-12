@@ -38,12 +38,14 @@ heroImageAlt: 'Einzelzimmer mit Einzelbett, Schrank und Fenster'
 gallery:
   - src: /img/rooms/einzelzimmer-zimmer.webp
     alt: 'Einzelzimmer – zweite Perspektive'
+  - src: /img/rooms/einzelzimmer-zimmer-3.webp
+    alt: 'Einzelzimmer mit Einzelbett, Holzschrank und hellem Fenster'
   - src: /img/rooms/zimmer-badezimmer.png
     alt: 'Privates Badezimmer mit Dusche'
-  - src: /img/rooms/zimmer-gemeinschaftskueche-3.webp
-    alt: 'Gemeinschaftsküche mit Frühstückstischen'
-  - src: /img/rooms/zimmer-gemeinschaftskueche-4.webp
-    alt: 'Gemeinschaftsküche mit Kochzeile und Essbereich'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-5.webp
+    alt: 'Gemeinschaftsküche mit Frühstückstischen und stimmungsvoller Beleuchtung'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-6.webp
+    alt: 'Gemeinschaftsküche mit Kochzeile, Essbereich und frischen Blumen'
 
 amenities:
   - wifi

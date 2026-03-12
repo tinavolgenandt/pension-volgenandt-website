@@ -56,6 +56,12 @@ gallery:
     alt: 'Aussicht aus Schlafzimmer 1'
   - src: /img/rooms/schoene-aussicht-7.jpg
     alt: 'Essbereich mit Esstisch'
+  - src: /img/rooms/schoene-aussicht-schlafzimmer-3.webp
+    alt: 'Schöne Aussicht – Helles Schlafzimmer mit Doppelbett unter Dachschräge'
+  - src: /img/rooms/schoene-aussicht-wohnbereich-3.webp
+    alt: 'Schöne Aussicht – Wohnbereich mit Sofa und Dachfenster'
+  - src: /img/rooms/schoene-aussicht-bad-3.webp
+    alt: 'Schöne Aussicht – Helles Badezimmer mit Dachfenster und Dusche'
 
 amenities:
   - wifi

@@ -51,10 +51,12 @@ gallery:
     alt: 'Balkon mit Tisch und Blick zur Terrasse'
   - src: /img/rooms/wohlfuehl-appartement-balkon-2.webp
     alt: 'Balkon mit Vogelhaus und Gartenpanorama'
-  - src: /img/rooms/zimmer-gemeinschaftskueche-3.webp
-    alt: 'Gemeinschaftsküche mit Frühstückstischen'
-  - src: /img/rooms/zimmer-gemeinschaftskueche-4.webp
-    alt: 'Gemeinschaftsküche mit Kochzeile und Essbereich'
+  - src: /img/rooms/wohlfuehl-appartement-zimmer-3.webp
+    alt: 'Wohlfühl-Appartement – Geräumiger Wohnschlafbereich mit Doppelbett und TV'
+  - src: /img/rooms/wohlfuehl-appartement-bad-3.webp
+    alt: 'Wohlfühl-Appartement – Badezimmer mit Runddusche und Waschtisch'
+  - src: /img/rooms/wohlfuehl-appartement-kueche-3.webp
+    alt: 'Wohlfühl-Appartement – Kleine Küchenzeile mit Wasserkocher und Kühlschrank'
 
 amenities:
   - wifi

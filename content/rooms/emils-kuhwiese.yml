@@ -49,6 +49,14 @@ gallery:
     alt: 'Geräumiges Badezimmer mit ebenerdiger Dusche'
   - src: /img/rooms/emils-kuhwiese-bad.webp
     alt: 'Helles Badezimmer mit ebenerdiger Dusche'
+  - src: /img/rooms/emils-kuhwiese-schlafzimmer-3.webp
+    alt: "Emil's Kuhwiese – Schlafzimmer mit Doppelbett und grüner Akzentwand"
+  - src: /img/rooms/emils-kuhwiese-wohnbereich-3.webp
+    alt: "Emil's Kuhwiese – Wohnbereich mit Sofa und Gartenblick"
+  - src: /img/rooms/emils-kuhwiese-kueche-3.webp
+    alt: "Emil's Kuhwiese – Küche mit Steintapete, Herd und Essbereich"
+  - src: /img/rooms/emils-kuhwiese-bad-3.webp
+    alt: "Emil's Kuhwiese – Helles Badezimmer mit ebenerdiger Dusche und WC"
 
 amenities:
   - wifi

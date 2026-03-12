@@ -51,10 +51,14 @@ gallery:
     alt: 'Schlafzimmer mit zwei Einzelbetten und Sonnenlicht'
   - src: /img/rooms/balkonzimmer-bad-3.webp
     alt: 'Badezimmer mit Handtuchheizung, WC und Dusche'
-  - src: /img/rooms/zimmer-gemeinschaftskueche-3.webp
-    alt: 'Gemeinschaftsküche mit Frühstückstischen'
-  - src: /img/rooms/zimmer-gemeinschaftskueche-4.webp
-    alt: 'Gemeinschaftsküche mit Kochzeile und Essbereich'
+  - src: /img/rooms/balkonzimmer-zimmer-4.webp
+    alt: 'Balkonzimmer – Zwei Einzelbetten mit Holzmöbeln und Sonnenlicht'
+  - src: /img/rooms/balkonzimmer-bad-4.webp
+    alt: 'Balkonzimmer – Badezimmer mit Handtuchheizung, Dusche und WC'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-5.webp
+    alt: 'Gemeinschaftsküche mit Frühstückstischen und stimmungsvoller Beleuchtung'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-6.webp
+    alt: 'Gemeinschaftsküche mit Kochzeile, Essbereich und frischen Blumen'
 
 amenities:
   - wifi
