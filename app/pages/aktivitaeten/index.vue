@@ -32,7 +32,7 @@ useHead({
 
 // Fetch attractions with photos only (no-photo ones tracked in .planning/missing-attraction-photos.md)
 const { data: attractionsRaw } = await useAsyncData('aktivitaeten-all-attractions', () =>
-  queryCollection('attractions').order('sortOrder', 'ASC').all(),
+  queryCollection('attractions').order('distanceKm', 'ASC').all(),
 )
 const attractions = computed(() => attractionsRaw.value?.filter(a => a.heroImage) ?? [])
 
