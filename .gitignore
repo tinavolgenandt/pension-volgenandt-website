@@ -25,6 +25,14 @@ Thumbs.db
 # Existing
 .playwright-mcp/
 
+# Beds24 sync scripts & screenshots
+sync_beds24_photos.mjs
+sync_beds24_photos_result.txt
+sync_booking.mjs
+sync_booking_result.txt
+sync_booking_screenshot*.png
+beds24_*.png
+
 # Unprocessed / device-named source uploads
 public/img/WhatsApp\ Image*
 public/img/Hanstein.jpeg
