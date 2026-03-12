@@ -1,0 +1,52 @@
+name: 'Draisinen-Erlebnis Eichsfeld'
+slug: draisine-eichsfeld
+seoTitle: 'Draisinen-Erlebnis Eichsfeld – Tunnelfahrt auf alten Gleisen | Pension im Eichsfeld'
+seoDescription: 'Mit der Draisine durch historische Bahntunnel im Eichsfeld – ein unvergessliches Erlebnis für die ganze Familie. Nur 20 km von der Pension Volgenandt.'
+heroImage: /img/attractions/draisine-tunnel.jpg
+heroImageAlt: 'Beleuchteter Bahntunnel mit alten Gleisen und Radweg – Draisinen-Strecke im Eichsfeld'
+distanceKm: 20
+drivingMinutes: 25
+category: natur
+shortDescription: 'Mit der Draisine durch historische Eisenbahntunnel auf stillgelegten Gleisen'
+intro: >-
+  Ein Fahrerlebnis der besonderen Art: Auf alten Eisenbahngleisen
+  durch das Eichsfeld pedalieren – vorbei an Wäldern, Wiesen und
+  durch beeindruckende Backsteingewölbe. Ideal für Familien,
+  Paare und Gruppen.
+content: >-
+  Auf stillgelegten Bahnstrecken des Eichsfelds lässt sich die
+  Landschaft aus einer ganz anderen Perspektive erleben: per
+  Draisine. Die umgebauten Fahrräder auf Schienen folgen dem
+  alten Gleisverlauf und führen durch die sanfte Hügellandschaft
+  der Region.
+
+
+  Highlight jeder Tour sind die historischen Backsteingewölbe –
+  alte Eisenbahntunnel, die heute beleuchtet und für Besucher
+  geöffnet sind. Das gedämpfte Licht, der kühle Fahrtwind und
+  die langen Tunnelröhren hinterlassen einen bleibenden Eindruck.
+
+
+  Die Draisinen fassen meist zwei bis vier Personen und sind
+  einfach zu bedienen – keine besondere Fitness oder Vorkenntnisse
+  erforderlich. Kinder können mitfahren und erleben eine
+  Reise wie aus einer anderen Zeit.
+
+
+  Die Strecken sind unterschiedlich lang und können nach
+  Kondition und Interesse gewählt werden. An den Startpunkten
+  gibt es in der Regel Parkplätze und kleine Gastronomie.
+hostTip: >-
+  Buchen Sie die Draisinen am besten im Voraus – besonders an
+  Wochenenden und in der Ferienzeit sind die begehrten Plätze
+  schnell vergriffen. Planen Sie etwas Extrazeit ein, um an
+  den Tunnelausgängen innezuhalten und die Aussicht zu genießen.
+bestTimeToVisit: 'Frühling bis Herbst'
+website: 'https://www.eichsfeld-tourismus.de'
+coordinates:
+  lat: 51.45
+  lng: 10.30
+gallery:
+  - src: /img/attractions/draisine-tunnel-2.jpg
+    alt: 'Blick durch den langen Backsteingewölbe-Tunnel der Draisinen-Strecke'
+sortOrder: 13

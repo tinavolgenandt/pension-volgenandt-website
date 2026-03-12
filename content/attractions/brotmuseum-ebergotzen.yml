@@ -1,0 +1,61 @@
+name: 'Europäisches Brotmuseum Ebergötzen'
+slug: brotmuseum-ebergotzen
+seoTitle: 'Europäisches Brotmuseum Ebergötzen – Kulturausflug ins Eichsfeld'
+seoDescription: 'Das Europäische Brotmuseum in Ebergötzen zeigt 10.000 Jahre Brotkultur auf historischem Gutshof mit Windmühle und Kräutergarten – 35 km von der Pension Volgenandt.'
+heroImage: /img/attractions/brotmuseum-windmuehle-kutsche.jpg
+heroImageAlt: 'Historische Windmühle und alte Kutsche auf dem Freigelände des Europäischen Brotmuseums Ebergötzen'
+distanceKm: 35
+drivingMinutes: 40
+category: kultur
+shortDescription: '10.000 Jahre Brotgeschichte auf einem historischen Gutshof mit Windmühle'
+intro: >-
+  Das Europäische Brotmuseum in Ebergötzen erzählt auf einem
+  weitläufigen historischen Gutshof die Geschichte des Brotes –
+  von der Steinzeit bis heute. Mit Windmühle, Kräutergarten
+  und lebendigen Ausstellungen ein Ausflug für die ganze Familie.
+content: >-
+  Mitten in der grünen Landschaft bei Göttingen, nicht weit vom
+  Eichsfeld entfernt, liegt das Europäische Brotmuseum Ebergötzen.
+  Auf dem alten Gutshof mit charakteristischem Schieferbau dreht
+  sich alles um das älteste Kulturnahrungsmittel der Menschheit.
+
+
+  In mehreren Ausstellungsgebäuden wird die Kulturgeschichte des
+  Brotes auf über 1.500 Quadratmetern lebendig: von der Ernte
+  des Getreides über das Mahlen in der historischen Windmühle
+  bis zum Backen im alten Backsteinofen. Authentische Exponate,
+  alte Küchengeräte, Waagen und Werkzeuge lassen vergangene
+  Zeiten wieder auferstehen.
+
+
+  Das weitläufige Freigelände lädt zum Schlendern ein: eine
+  funktionstüchtige Windmühle, alte Landmaschinen, eine historische
+  Kutsche und ein üppiger Kräutergarten, in dem Pflanzen rund
+  ums Brot gedeihen. Für Kinder gibt es Mitmach-Aktionen und
+  an Wochenenden oft Backvorführungen.
+
+
+  Das Museum liegt direkt am Leinepfad – ein Besuch lässt sich
+  gut mit einer Radtour oder einem Spaziergang am Fluss verbinden.
+hostTip: >-
+  Planen Sie mindestens zwei Stunden ein – das Freigelände ist
+  weitläufiger als erwartet. Besuchen Sie das Museum wenn möglich
+  an einem Wochenende: Dann laufen oft Backvorführungen, bei
+  denen frisch gebackenes Brot verkostet werden kann.
+bestTimeToVisit: 'April bis Oktober'
+website: 'https://www.brotmuseum.de'
+coordinates:
+  lat: 51.5388
+  lng: 9.9979
+gallery:
+  - src: /img/attractions/brotmuseum-eingang.jpg
+    alt: 'Historisches Hauptgebäude des Brotmuseums Ebergötzen mit Schieferfassade'
+  - src: /img/attractions/brotmuseum-aussengelaende-garten.jpg
+    alt: 'Weitläufiges Freigelände des Brotmuseums mit historischen Gebäuden und Grünflächen'
+  - src: /img/attractions/brotmuseum-ausstellung-kueche.jpg
+    alt: 'Innenausstellung mit historischen Küchengeräten, alten Waagen und Brotbackutensilien'
+  - src: /img/attractions/brotmuseum-gebaeude-garten.jpg
+    alt: 'Museumsgebäude umgeben von altem Baumbestand und Gartenanlage'
+  - src: /img/attractions/brotmuseum-eingang-2.jpg
+    alt: 'Eingangsbereich des Europäischen Brotmuseums Ebergötzen'
+sortOrder: 14

@@ -1,0 +1,54 @@
+name: 'Heinz Sielmann Stiftung – Gut Herbigshagen'
+slug: sielmann-stiftung
+seoTitle: 'Heinz Sielmann Stiftung Gut Herbigshagen – Natur erleben im Eichsfeld'
+seoDescription: 'Das Naturerlebnisgelände Gut Herbigshagen der Heinz Sielmann Stiftung bietet Wildtierbeobachtung, Wanderwege und weite Eichsfeld-Panoramen – nur 20 km von der Pension.'
+heroImage: /img/attractions/sielmann-stiftung-panorama.jpg
+heroImageAlt: 'Weites Eichsfeld-Panorama vom Gut Herbigshagen der Heinz Sielmann Stiftung – Felder, Wälder und Hügel unter blauem Himmel'
+distanceKm: 20
+drivingMinutes: 22
+category: natur
+shortDescription: 'Wildtiere beobachten und weite Eichsfeld-Panoramen genießen auf dem Naturerlebnisgelände'
+intro: >-
+  Das Naturerlebnisgelände Gut Herbigshagen der Heinz Sielmann
+  Stiftung liegt auf einem weitläufigen Höhenzug südlich von
+  Duderstadt. Von hier aus bietet sich ein atemberaubender
+  Panoramablick über das Eichsfeld – und die Möglichkeit,
+  freilebende Wildtiere aus nächster Nähe zu beobachten.
+content: >-
+  Heinz Sielmann, der legendäre Naturdokumentarfilmer, hat
+  Gut Herbigshagen zu einem lebendigen Naturerlebnis gemacht.
+  Auf dem weitläufigen Gelände leben Wisente, Przewalski-Pferde,
+  Konik-Pferde und verschiedene Rinderrassen auf großen
+  Weidenflächen – naturbelassen und ohne Gehege direkt einsehbar
+  von den Besucherwegen.
+
+
+  Der Aussichtshügel auf dem Gelände bietet einen der
+  schönsten Panoramablicke im gesamten Eichsfeld: Felder,
+  Wälder, Dörfer und die sanften Hügelketten der Region
+  breiten sich ringsum aus – an klaren Tagen bis weit in den
+  Harz und das thüringische Eichsfeld hinein.
+
+
+  Gut ausgebaute Wanderwege führen über das Gelände, vorbei
+  an Wildtieren, Streuobstwiesen und artenreichen Mähwiesen.
+  Informationstafeln erklären die Naturschutzarbeit der
+  Stiftung. Ein Besucherzentrum mit kleiner Ausstellung gibt
+  Einblick in das Leben und Werk von Heinz Sielmann.
+
+
+  Das Gelände ist ganzjährig zugänglich und eignet sich
+  besonders für ruhige Naturerlebnisse – ideal nach einem
+  aktiven Tag in der Umgebung.
+hostTip: >-
+  Kommen Sie früh morgens oder am späten Nachmittag – dann
+  sind die Wildtiere am aktivsten. Nehmen Sie ein Fernglas mit
+  und feste Schuhe für die Feldwege. Der Blick vom Aussichtshügel
+  bei Sonnenuntergang ist besonders beeindruckend.
+bestTimeToVisit: 'Ganzjährig, besonders schön im Frühling und Herbst'
+website: 'https://www.sielmann-stiftung.de'
+coordinates:
+  lat: 51.5167
+  lng: 10.2167
+gallery: []
+sortOrder: 15
