@@ -32,11 +32,11 @@ pricing:
 
 startingPrice: 58
 
-heroImage: /img/rooms/balkonzimmer-balkon-1.jpg
-heroImageAlt: 'Balkonzimmer – Balkon mit Blumenkasten und Aussicht'
+heroImage: /img/rooms/balkonzimmer-zimmer.webp
+heroImageAlt: 'Balkonzimmer – Zwei Einzelbetten mit Holzmöbeln und Sonnenlicht'
 gallery:
-  - src: /img/rooms/balkonzimmer-zimmer.webp
-    alt: 'Zwei Einzelbetten mit gemütlicher Einrichtung'
+  - src: /img/rooms/balkonzimmer-balkon-1.jpg
+    alt: 'Balkonzimmer – Balkon mit Blumenkasten und Aussicht'
   - src: /img/rooms/balkonzimmer-bad.webp
     alt: 'Badezimmer mit Handtuchheizung und Glasdusche'
   - src: /img/rooms/balkonzimmer-balkon-2.jpg
