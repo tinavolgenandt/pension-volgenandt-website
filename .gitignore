@@ -25,40 +25,12 @@ Thumbs.db
 # Existing
 .playwright-mcp/
 
-# Raw source uploads in public/img/ — device-named, not processed for web
-public/img/Bärenpark/
-public/img/Baumwipfelpfad/
-public/img/Brotmuseum/
-public/img/Draisine/
-public/img/Grundstück\ und\ direkte\ Umgebung/
-public/img/Heiligenstadt/
-public/img/Kyffhäuser/
-public/img/Langensalza/
-public/img/Luttergrund/
-public/img/Scharfenstein/
-public/img/Seeburger\ See/
-public/img/Sielmann\ Stiftung/
-public/img/Sonnenstein/
-public/img/Wartburg/
-public/img/DSC_*
-public/img/Amphibien.JPG
-public/img/Garten.JPG
-public/img/Gastgeber.JPG
-public/img/Hanstein.jpeg
-public/img/Landesgartenschau.JPG
-public/img/Winter.JPG
-public/img/Worbis.JPG
+# Unprocessed / device-named source uploads
 public/img/WhatsApp\ Image*
-public/img/jpg\ *
-public/img/garten-rasen-baeume-sommer.jpg
-public/img/garten-teich-seerosen-blumen.jpg
-public/img/gebaeude-eingang-parkplatz-schild.jpg
+public/img/Hanstein.jpeg
 public/img/hero-pension-einfahrt-sommer.jpg
 public/img/hero-pension-gebaeude-garten.jpg
+public/img/gebaeude-eingang-parkplatz-schild.jpg
 public/img/landschaft-aussicht-felder-fruehling.jpg
 public/img/landschaft-wiese-sonnenuntergang.jpg
 public/img/landschaft-winterzauber-schnee.jpg
-public/img/attractions/*.jpg
-public/img/garten/*.jpg
-public/img/content/amphibien-gartenteich.jpg
-public/img/content/pension-eingang-sommer.jpg
