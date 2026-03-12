@@ -143,9 +143,13 @@ const sustainabilityFeatures = [
     <section class="bg-sage-50 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-5xl">
         <div class="grid items-center gap-8 md:grid-cols-2">
-          <div class="flex items-center justify-center rounded-lg bg-sage-100 p-12">
-            <Icon name="ph:drop-duotone" class="size-32 text-sage-400" />
-          </div>
+          <NuxtImg
+            src="/img/content/nachhaltigkeit-brunnen-quelle.webp"
+            alt="Wasser sprudelt aus einem Naturstein – eigener Brunnen der Pension Volgenandt"
+            class="rounded-lg"
+            loading="lazy"
+            sizes="100vw md:50vw"
+          />
           <div>
             <h2 class="font-serif text-2xl font-bold text-sage-900">
               Eigenes Wasser – vom Brunnen bis zur Kläranlage
