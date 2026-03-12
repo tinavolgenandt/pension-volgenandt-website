@@ -65,8 +65,8 @@ const familyFeatures = [
   <div>
     <!-- 1. Thin photo banner -->
     <SharedPageBanner
-      image="/img/content/terrasse-grill.webp"
-      image-alt="Kinder spielen im Garten der Pension Volgenandt"
+      image="/img/garten/einfahrt-sommer.webp"
+      image-alt="Pension Volgenandt – Einfahrt mit Gartenblick im Sommer"
       title="Für Familien"
       subtitle="Bei uns sind die Kleinen die Größten"
     />

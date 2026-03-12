@@ -82,8 +82,8 @@ const sustainabilityFeatures = [
   <div>
     <!-- 1. Thin photo banner -->
     <SharedPageBanner
-      image="/img/content/garten-sonnenhut-blumen.webp"
-      image-alt="Blick über den grünen Garten der Pension"
+      image="/img/garten/einfahrt-sommer.webp"
+      image-alt="Pension Volgenandt – Einfahrt mit Gartenblick im Sommer"
       title="Nachhaltigkeit"
       subtitle="Verantwortung für Natur und Umgebung"
     />

@@ -52,8 +52,8 @@ useSchemaOrg([
   <div>
     <!-- 1. Thin photo banner -->
     <SharedPageBanner
-      image="/img/homepage/gebaeude-innenhof.webp"
-      image-alt="Eingangsbereich der Pension Volgenandt"
+      image="/img/garten/einfahrt-sommer.webp"
+      image-alt="Pension Volgenandt – Einfahrt mit Gartenblick im Sommer"
       title="Kontakt & Anfahrt"
       subtitle="Wir freuen uns auf Sie"
     />

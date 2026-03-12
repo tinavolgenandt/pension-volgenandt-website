@@ -58,8 +58,8 @@ const activityCards = [
   <div>
     <!-- 1. Thin photo banner -->
     <SharedPageBanner
-      image="/img/homepage/aussicht-panorama.webp"
-      image-alt="Wanderweg durch die Hügel des Eichsfelds"
+      image="/img/garten/einfahrt-sommer.webp"
+      image-alt="Pension Volgenandt – Einfahrt mit Gartenblick im Sommer"
       title="Aktivitäten"
       subtitle="Entdecken Sie das Eichsfeld"
     />

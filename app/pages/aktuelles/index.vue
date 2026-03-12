@@ -29,8 +29,8 @@ const { data: articles } = await useAsyncData('news', () =>
 <template>
   <div>
     <SharedPageBanner
-      image="/img/content/garten-bluehwiese-fruehsommer.webp"
-      image-alt="Blühende Landschaft im Eichsfeld"
+      image="/img/garten/einfahrt-sommer.webp"
+      image-alt="Pension Volgenandt – Einfahrt mit Gartenblick im Sommer"
       title="Aktuelles"
       subtitle="Neuigkeiten aus der Region"
     />
