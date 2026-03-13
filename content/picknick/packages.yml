@@ -1,0 +1,67 @@
+items:
+  - id: brunch
+    name: 'Brunch'
+    subtitle: 'Das große Genießer-Paket'
+    timeSlot: '09:00 – 12:00 Uhr'
+    pricePerPerson: 19
+    minPersons: 2
+    description: >-
+      Mehr von allem, was gut ist. Das erweiterte Brunch-Paket
+      mit Ei, herzhafter Quiche oder Blechkuchen, einem Glas Sekt
+      und einer großen Aufschnitt-Auswahl. Ideal für einen
+      entspannten Morgen unter freiem Himmel.
+    includes:
+      - 'Frische Brötchen'
+      - 'Hausgemachte Marmelade & Aufstriche'
+      - 'Käse & Eichsfelder Wurst'
+      - 'Hartgekochtes Ei'
+      - 'Quiche oder Blechkuchen (hausgemacht)'
+      - 'Frisches Obst (saisonal)'
+      - 'Glas Sekt'
+    image: /img/content/fruehstueck-platte.webp
+    imageAlt: 'Hausgemachte Frühstücksplatte mit Marmelade, Käse und frischen Brötchen'
+    imagePosition: 'bottom'
+    sortOrder: 1
+
+  - id: kaffee-kuchen
+    name: 'Kaffee & Kuchen'
+    subtitle: 'Süßes für den Nachmittag'
+    timeSlot: '14:00 – 17:00 Uhr'
+    pricePerPerson: 19
+    minPersons: 2
+    description: >-
+      Ein nachmittäglicher Genuss mit selbst gebackenem Kuchen,
+      feinem Gebäck, hausgemachter Marmelade und einer Thermoskanne
+      Kaffee oder Tee. Als kleines Dankeschön liegt ein Glas
+      hausgemachtes Eingemachtes zur Mitnahme im Korb.
+    includes:
+      - 'Selbstgemachte Waffeln, Sahne & heiße Kirschen oder Kuchen'
+      - 'Hausgemachte Marmelade'
+      - 'Thermoskanne Kaffee oder Tee'
+      - 'Saft'
+      - 'Glas Eingemachtes als Mitnahmegabe'
+    image: /img/picknick/kuchen-streusel.webp
+    imageAlt: 'Hausgemachter Kirsch-Streuselkuchen frisch aus der Pension-Küche'
+    sortOrder: 2
+
+  - id: sonnenuntergang
+    name: 'Sonnenuntergang'
+    subtitle: 'Romantisch & stimmungsvoll'
+    timeSlot: 'Ca. 18:00 – 21:00 Uhr (saisonal)'
+    pricePerPerson: 19
+    minPersons: 2
+    description: >-
+      Käse, Wurst und Baguette unter dem Abendhimmel – mit einem
+      Glas Sekt oder Prosecco, Trauben & Feigen und einer extra
+      Wolldecke für kühlere Abende. Eine Kerze im Windlicht
+      rundet die Stimmung ab. Unser romantischstes Paket.
+    includes:
+      - 'Käse-Wurst-Platte (regional)'
+      - 'Baguette & Aufstriche'
+      - 'Trauben & Feigen'
+      - 'Sekt oder Prosecco'
+      - 'Extra Wolldecke inklusive'
+      - 'Kerze / Windlicht'
+    image: /img/garten/umgebung-wiese-sonnenuntergang.webp
+    imageAlt: 'Wiese im Sonnenuntergang rund um die Pension Volgenandt'
+    sortOrder: 3

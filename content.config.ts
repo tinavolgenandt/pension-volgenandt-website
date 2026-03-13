@@ -203,6 +203,48 @@ const newsSchema = z.object({
   sortOrder: z.number().default(0),
 })
 
+// Picknick schemas
+const picknickPackageItemSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  subtitle: z.string(),
+  timeSlot: z.string(),
+  pricePerPerson: z.number(),
+  minPersons: z.number(),
+  description: z.string(),
+  includes: z.array(z.string()),
+  image: z.string(),
+  imageAlt: z.string(),
+  imagePosition: z.string().optional(),
+  sortOrder: z.number().default(0),
+})
+
+const picknickSpotItemSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  location: z.string(),
+  distanceKm: z.number(),
+  description: z.string(),
+  mood: z.string(),
+  image: z.string().nullable(),
+  imageAlt: z.string().nullable(),
+  imagePosition: z.string().optional(),
+  sortOrder: z.number().default(0),
+})
+
+const basketAlwaysItemSchema = z.object({
+  label: z.string(),
+  note: z.string().optional(),
+})
+
+const basketExtraItemSchema = z.object({
+  id: z.string(),
+  label: z.string(),
+  description: z.string(),
+  price: z.number().nullable(),
+  unit: z.string().optional(),
+})
+
 // FAQ item schema
 const faqItemSchema = z.object({
   question: z.string(),
@@ -253,6 +295,28 @@ export default defineContentConfig({
       source: 'faq/index.yml',
       schema: z.object({
         items: z.array(faqItemSchema),
+      }),
+    }),
+    picknickPackages: defineCollection({
+      type: 'data',
+      source: 'picknick/packages.yml',
+      schema: z.object({
+        items: z.array(picknickPackageItemSchema),
+      }),
+    }),
+    picknickSpots: defineCollection({
+      type: 'data',
+      source: 'picknick/spots.yml',
+      schema: z.object({
+        items: z.array(picknickSpotItemSchema),
+      }),
+    }),
+    picknickBasket: defineCollection({
+      type: 'data',
+      source: 'picknick/basket-items.yml',
+      schema: z.object({
+        always: z.array(basketAlwaysItemSchema),
+        extras: z.array(basketExtraItemSchema),
       }),
     }),
   },

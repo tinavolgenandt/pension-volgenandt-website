@@ -1,0 +1,102 @@
+items:
+  - id: apfelbaum
+    name: 'Unter dem Apfelbaum'
+    location: 'Im Garten'
+    distanceKm: 0
+    description: 'Schattig, romantisch, direkt neben dem Biotop. Unser schönster Platz für zwei.'
+    mood: 'romantisch'
+    image: /img/content/garten-apfelbaeume.webp
+    imageAlt: 'Apfelbäume im Garten der Pension Volgenandt'
+    imagePosition: 'bottom'
+    sortOrder: 1
+
+  - id: bluehwiese
+    name: 'An der Blühwiese'
+    location: 'Im Garten'
+    distanceKm: 0
+    description: 'Sonnig, offen, mit weitem Blick in die Felder. Ideal für Familien und windstille Tage.'
+    mood: 'sonnig'
+    image: /img/content/garten-bluehwiese-fruehsommer.webp
+    imageAlt: 'Blühwiese im Frühsommer im Garten der Pension Volgenandt'
+    imagePosition: 'bottom'
+    sortOrder: 2
+
+  - id: laube
+    name: 'Unser Garten Pavillon'
+    location: 'Im Garten'
+    distanceKm: 0
+    description: 'Halbschattig und geschützt – auch bei leichtem Regen ein gemütlicher Platz.'
+    mood: 'geschützt'
+    image: /img/picknick/garten-sitzecke-rosen.webp
+    imageAlt: 'Gartensitzecke mit Rosen im Gartenpavillon der Pension Volgenandt'
+    sortOrder: 3
+
+  - id: gartenteich
+    name: 'Am Teich'
+    location: 'Im Garten'
+    distanceKm: 0
+    description: 'Idyllisch und still – abends wunderschön, wenn das Licht auf dem Wasser tanzt.'
+    mood: 'idyllisch'
+    image: /img/garten/garten-rasen-baeume-sommer.jpg
+    imageAlt: 'Sonniger Gartenrasen mit alten Obstbäumen im Sommer'
+    sortOrder: 4
+
+  - id: terrasse
+    name: 'Auf der Terrasse'
+    location: 'Im Garten'
+    distanceKm: 0
+    description: 'Überdacht und mit Grill – der sichere Hafen bei wechselhaftem Wetter.'
+    mood: 'wettergeschützt'
+    image: /img/content/terrasse-grill.webp
+    imageAlt: 'Überdachte Terrasse mit Grill und Sitzgelegenheiten'
+    sortOrder: 5
+
+  - id: badeanstalt-breitenbach
+    name: 'Badeanstalt Breitenbach'
+    location: 'Zu Fuß erreichbar'
+    distanceKm: 1
+    description: 'Das Freibad direkt im Ort – ideal für heiße Sommertage. Korb mitnehmen, ins Wasser springen, genießen.'
+    mood: 'sommerlich'
+    image: null
+    imageAlt: null
+    sortOrder: 6
+
+  - id: leine-aue
+    name: 'Wiesen an der Leine'
+    location: 'Umgebung (zu Fuß / Rad)'
+    distanceKm: 3
+    description: 'Entlang der Leine Richtung Uder – flache Bachaue, Wiesen, Ruhe. Leicht zu erreichen.'
+    mood: 'naturpur'
+    image: /img/garten/umgebung-wiese-pusteblumen.webp
+    imageAlt: 'Wiese mit Pusteblumen in der Umgebung der Pension Volgenandt'
+    sortOrder: 6
+
+  - id: seeburger-see
+    name: 'Seeburger See'
+    location: 'Mit dem Auto (ca. 30 min)'
+    distanceKm: 25
+    description: '„Das Auge des Eichsfelds" – Sandstrand, Seerosen, Badestimmung. Der perfekte Tagesausflug.'
+    mood: 'badestimmung'
+    image: /img/attractions/seeburger-see-seerosen.jpg
+    imageAlt: 'Seerosen auf dem Seeburger See im Sommer'
+    sortOrder: 7
+
+  - id: burg-hanstein
+    name: 'Burg Hanstein'
+    location: 'Mit dem Auto (ca. 25 min)'
+    distanceKm: 20
+    description: 'Romantische Burgruine mit Panorama-Ausblick über das Eichsfeld. Unvergesslicher Hintergrund.'
+    mood: 'romantisch'
+    image: /img/attractions/burg-hanstein-panorama.jpg
+    imageAlt: 'Weiter Panoramablick von der Burg Hanstein über das Eichsfeld'
+    sortOrder: 8
+
+  - id: burg-bodenstein
+    name: 'Burg Bodenstein'
+    location: 'Mit dem Auto (ca. 20 min)'
+    distanceKm: 15
+    description: 'Mittelalterliche Kulisse, grüne Hänge – ein Picknick mit Geschichte.'
+    mood: 'historisch'
+    image: /img/garten/pension-kornfeld-panorama.jpg
+    imageAlt: 'Weite Landschaft mit Kornfeldern rund um das Eichsfeld'
+    sortOrder: 9
