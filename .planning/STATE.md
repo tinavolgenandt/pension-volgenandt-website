@@ -118,7 +118,7 @@ Recent decisions affecting current work:
 
 - Confirm beds24RoomId mappings with owner before Phase 5 booking integration
 - After fresh pnpm install on Windows, run `npx prebuild-install` in node_modules/better-sqlite3/
-- Replace placeholder map image with real OSM screenshot before launch
+- ~~Replace placeholder map image with real OSM screenshot before launch~~ DONE (Mar 13 2026)
 - Replace Wikimedia Commons attraction images with owner's own photos before launch
 - Replace placeholder hero images in attraction YAML files with real photography before production
 - Replace placeholder banner images for content pages (/img/banners/\*-banner.webp) before launch
