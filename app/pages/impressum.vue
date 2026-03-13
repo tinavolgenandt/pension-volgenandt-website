@@ -17,8 +17,7 @@ useSeoMeta({
       <!-- Diensteanbieter -->
       <section>
         <h2 class="mt-8 mb-4 font-serif text-xl font-semibold text-sage-800">Diensteanbieter</h2>
-        <p>{{ config.legal.ownerName }}</p>
-        <p>{{ config.siteName }}</p>
+        <p>Zimmervermietung {{ config.legal.ownerName }}</p>
         <p>{{ config.contact.address.street }}</p>
         <p>{{ config.contact.address.city }}</p>
         <p>{{ config.contact.address.country }}</p>
@@ -29,15 +28,6 @@ useSeoMeta({
         <h2 class="mt-8 mb-4 font-serif text-xl font-semibold text-sage-800">Kontakt</h2>
         <p>
           Telefon:
-          <a
-            :href="`tel:${config.contact.phone}`"
-            class="text-waldhonig-600 underline hover:text-waldhonig-700"
-          >
-            {{ config.contact.phoneDisplay }}
-          </a>
-        </p>
-        <p>
-          Mobil:
           <a
             :href="`tel:${config.contact.mobile}`"
             class="text-waldhonig-600 underline hover:text-waldhonig-700"
@@ -56,13 +46,12 @@ useSeoMeta({
         </p>
       </section>
 
-      <!-- Umsatzsteuer-ID -->
+      <!-- Steuernummer -->
       <section>
         <h2 class="mt-8 mb-4 font-serif text-xl font-semibold text-sage-800">
-          Umsatzsteuer-ID / Steuernummer
+          Steuernummer
         </h2>
-        <p>Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz:</p>
-        <p class="font-semibold">{{ config.legal.taxId }}</p>
+        <p>{{ config.legal.taxId }}</p>
       </section>
 
       <!-- Verantwortlich für den Inhalt -->
@@ -70,7 +59,7 @@ useSeoMeta({
         <h2 class="mt-8 mb-4 font-serif text-xl font-semibold text-sage-800">
           Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV
         </h2>
-        <p>{{ config.legal.ownerName }}</p>
+        <p>Zimmervermietung {{ config.legal.ownerName }}</p>
         <p>{{ config.contact.address.street }}</p>
         <p>{{ config.contact.address.city }}</p>
       </section>

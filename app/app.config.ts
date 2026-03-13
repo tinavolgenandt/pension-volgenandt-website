@@ -1,6 +1,7 @@
 export default defineAppConfig({
   siteName: 'Pension Volgenandt',
   formspreeId: 'xPLACEHOLDER', // Replace with real Formspree form ID from https://formspree.io
+  picknickFormspreeId: 'xPICKNICK', // Replace with Formspree form ID for Picknick-Korb inquiries
   siteTagline: 'Ruhe finden im Eichsfeld',
   contact: {
     phone: '+49 160 97719112',
@@ -17,8 +18,8 @@ export default defineAppConfig({
     },
   },
   legal: {
-    ownerName: 'Stefan Volgenandt',
-    taxId: '[STEUERNUMMER_ODER_UST_IDNR]',
+    ownerName: 'Ralf Volgenandt',
+    taxId: '157/299/10837',
     authority: '',
   },
   nav: [
