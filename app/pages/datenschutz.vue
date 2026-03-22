@@ -341,6 +341,14 @@ useSeoMeta({
           (Einwilligung) und § 25 Abs. 1 TDDDG.
         </p>
 
+        <p class="mt-4 font-semibold">Statistik (Einwilligung erforderlich)</p>
+        <p>
+          Diese Cookies ermöglichen die anonyme Auswertung der Websitenutzung mit Google Analytics
+          zur Verbesserung unseres Angebots. Ohne Ihre Einwilligung werden keine Analysedaten
+          erhoben und es werden keine Daten an Google übermittelt. Rechtsgrundlage: Art. 6 Abs. 1
+          lit. a DSGVO (Einwilligung) und § 25 Abs. 1 TDDDG.
+        </p>
+
         <h3 class="mt-6 mb-3 font-serif text-lg font-semibold text-sage-800">
           Verwaltung Ihrer Cookie-Einstellungen
         </h3>
@@ -354,9 +362,57 @@ useSeoMeta({
         </p>
       </section>
 
-      <!-- 6. Kontaktformular -->
+      <!-- 6. Webanalyse mit Google Analytics 4 -->
       <section>
-        <h2 class="mt-8 mb-4 font-serif text-xl font-semibold text-sage-800">6. Kontaktformular</h2>
+        <h2 class="mt-8 mb-4 font-serif text-xl font-semibold text-sage-800">
+          6. Webanalyse mit Google Analytics 4
+        </h2>
+        <p>
+          Diese Website nutzt Google Analytics 4, einen Webanalysedienst der Google Ireland Limited
+          („Google"), Gordon House, Barrow Street, Dublin 4, Irland. Google Analytics verwendet
+          Cookies, die eine Analyse der Benutzung der Website ermöglichen. Die durch das Cookie
+          erzeugten Informationen über Ihre Benutzung dieser Website werden in der Regel an einen
+          Server von Google in der EU übertragen und dort gespeichert.
+        </p>
+        <p class="mt-2">
+          <strong>IP-Anonymisierung:</strong> Wir nutzen die Funktion zur IP-Anonymisierung. Ihre
+          IP-Adresse wird von Google innerhalb von Mitgliedstaaten der Europäischen Union oder in
+          anderen Vertragsstaaten des Abkommens über den Europäischen Wirtschaftsraum vor der
+          Übermittlung gekürzt.
+        </p>
+        <p class="mt-2">
+          <strong>Erfasste Daten:</strong> Besuchte Seiten, Sitzungsdauer, verwendetes Gerät und
+          Betriebssystem, Herkunft des Besuchs (Suchmaschine, Direktaufruf, Verweis), ungefährer
+          Standort (Land/Stadt), Spracheinstellungen des Browsers.
+        </p>
+        <p class="mt-2">
+          <strong>Zweck:</strong> Analyse und Optimierung unseres Webangebots.
+        </p>
+        <p class="mt-2">
+          <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung) und § 25
+          Abs. 1 TDDDG. Google Analytics wird erst nach Ihrer ausdrücklichen Einwilligung über
+          unsere Cookie-Einstellungen (Kategorie „Statistik") geladen.
+        </p>
+        <p class="mt-2">
+          <strong>Speicherdauer:</strong> 14 Monate. Sie können Ihre Einwilligung jederzeit über die
+          Cookie-Einstellungen in der Fußzeile unserer Website widerrufen.
+        </p>
+        <p class="mt-2">
+          Weitere Informationen zum Datenschutz bei Google finden Sie unter
+          <a
+            href="https://policies.google.com/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-waldhonig-600 underline hover:text-waldhonig-700"
+          >
+            https://policies.google.com/privacy </a
+          >.
+        </p>
+      </section>
+
+      <!-- 7. Kontaktformular -->
+      <section>
+        <h2 class="mt-8 mb-4 font-serif text-xl font-semibold text-sage-800">7. Kontaktformular</h2>
         <p>
           Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem
           Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung
@@ -380,10 +436,10 @@ useSeoMeta({
         </p>
       </section>
 
-      <!-- 7. Buchungswidget (Beds24) -->
+      <!-- 8. Buchungswidget (Beds24) -->
       <section>
         <h2 class="mt-8 mb-4 font-serif text-xl font-semibold text-sage-800">
-          7. Buchungswidget (Beds24)
+          8. Buchungswidget (Beds24)
         </h2>
         <p>
           Für die Online-Buchung von Zimmern nutzen wir das Buchungssystem des Drittanbieters Beds24
@@ -414,10 +470,10 @@ useSeoMeta({
         </p>
       </section>
 
-      <!-- 8. SSL-/TLS-Verschlüsselung -->
+      <!-- 9. SSL-/TLS-Verschlüsselung -->
       <section>
         <h2 class="mt-8 mb-4 font-serif text-xl font-semibold text-sage-800">
-          8. SSL-/TLS-Verschlüsselung
+          9. SSL-/TLS-Verschlüsselung
         </h2>
         <p>
           Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher
@@ -432,10 +488,10 @@ useSeoMeta({
         </p>
       </section>
 
-      <!-- 9. Änderung der Datenschutzerklärung -->
+      <!-- 10. Änderung der Datenschutzerklärung -->
       <section>
         <h2 class="mt-8 mb-4 font-serif text-xl font-semibold text-sage-800">
-          9. Änderung dieser Datenschutzerklärung
+          10. Änderung dieser Datenschutzerklärung
         </h2>
         <p>
           Wir behalten uns vor, diese Datenschutzerklärung anzupassen, damit sie stets den aktuellen

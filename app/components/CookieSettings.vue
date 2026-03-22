@@ -8,6 +8,7 @@ const draft = ref<ConsentPreferences>({
   essential: true,
   booking: false,
   media: false,
+  statistics: false,
 })
 
 // Sync draft from cookie when panel opens
@@ -17,6 +18,7 @@ watch(settingsOpen, (open) => {
       essential: true,
       booking: consent.value?.booking ?? false,
       media: consent.value?.media ?? false,
+      statistics: consent.value?.statistics ?? false,
     }
   }
 })
@@ -32,6 +34,7 @@ if (import.meta.client) {
 function saveAndClose() {
   updateCategory('booking', draft.value.booking)
   updateCategory('media', draft.value.media)
+  updateCategory('statistics', draft.value.statistics)
   closeSettings()
 }
 
@@ -65,6 +68,13 @@ const categories: CategoryInfo[] = [
     key: 'media',
     label: 'Medien',
     description: 'Ermöglicht die Einbindung externer Medien wie YouTube-Videos und Google Maps.',
+    disabled: false,
+  },
+  {
+    key: 'statistics',
+    label: 'Statistik',
+    description:
+      'Ermöglicht die anonyme Auswertung der Websitenutzung mit Google Analytics zur Verbesserung unseres Angebots.',
     disabled: false,
   },
 ]
