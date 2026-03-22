@@ -94,10 +94,12 @@ async function collectBeds24Data() {
   const bookingsRes = await fetch(`https://api.beds24.com/v2/bookings?${params}`, {
     headers: { token },
   })
-  const bookings = await bookingsRes.json()
+  const bookingsBody = await bookingsRes.json()
 
+  // Beds24 v2 wraps results: { success, data: [...] }
+  const bookings = Array.isArray(bookingsBody) ? bookingsBody : bookingsBody.data
   if (!Array.isArray(bookings)) {
-    console.error('Beds24 bookings response unexpected:', bookings)
+    console.error('Beds24 bookings response unexpected:', bookingsBody)
     return null
   }
 
@@ -114,34 +116,35 @@ async function collectBeds24Data() {
   for (const b of bookings) {
     totalBookings++
 
-    if (b.status === 'cancelled' || b.status === 'canceled') {
+    // Beds24 v2: cancelTime is set for cancelled bookings
+    if (b.cancelTime) {
       cancellations++
       continue
     }
 
-    // Revenue from invoice
-    if (b.invoice?.total) {
-      totalRevenue += parseFloat(b.invoice.total) || 0
+    // Revenue from price field
+    if (b.price) {
+      totalRevenue += parseFloat(b.price) || 0
     }
 
     // Nights
-    const arrival = new Date(b.arrival || b.firstNight)
-    const departure = new Date(b.departure || b.lastNight)
+    const arrival = new Date(b.arrival)
+    const departure = new Date(b.departure)
     const nights = Math.max(1, Math.round((departure - arrival) / 86400000))
     totalNights += nights
     totalBookedRoomNights += nights
 
-    // By room
-    const roomId = String(b.unitId || b.roomId || 'unknown')
+    // By room (Beds24 v2: roomId = unit ID, unitId = sub-unit index)
+    const roomId = String(b.roomId || 'unknown')
     const roomName = ROOM_NAMES[roomId] || roomId
     byRoom[roomName] = (byRoom[roomName] || 0) + 1
 
-    // By channel
-    const channel = b.bookingChannel || b.referer || 'Direkt'
+    // By channel (Beds24 v2: apiSource or referer)
+    const channel = b.apiSource || b.referer || 'Direkt'
     byChannel[channel] = (byChannel[channel] || 0) + 1
 
     // Guest country
-    const country = b.guestCountry || b.country || 'Unbekannt'
+    const country = b.country || 'Unbekannt'
     if (country && country !== 'Unbekannt') {
       guestCountries[country] = (guestCountries[country] || 0) + 1
     }
