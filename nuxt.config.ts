@@ -68,6 +68,13 @@ export default defineNuxtConfig({
     },
   },
 
+  // Runtime configuration
+  runtimeConfig: {
+    public: {
+      gaMeasurementId: '', // Set via NUXT_PUBLIC_GA_MEASUREMENT_ID
+    },
+  },
+
   // TypeScript strict mode
   typescript: {
     strict: true,

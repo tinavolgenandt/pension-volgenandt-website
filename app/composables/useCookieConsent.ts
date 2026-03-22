@@ -2,6 +2,7 @@ export interface ConsentPreferences {
   essential: boolean // Always true, cannot be toggled
   booking: boolean // Beds24 widget (Phase 5)
   media: boolean // YouTube, Maps (Phase 3+)
+  statistics: boolean // Google Analytics 4
 }
 
 export function useCookieConsent() {
@@ -17,17 +18,17 @@ export function useCookieConsent() {
   const hasConsented = computed(() => consent.value !== null)
 
   function acceptAll() {
-    consent.value = { essential: true, booking: true, media: true }
+    consent.value = { essential: true, booking: true, media: true, statistics: true }
   }
 
   function rejectAll() {
-    consent.value = { essential: true, booking: false, media: false }
+    consent.value = { essential: true, booking: false, media: false, statistics: false }
   }
 
   function updateCategory(category: keyof ConsentPreferences, value: boolean) {
     if (category === 'essential') return
     if (!consent.value) {
-      consent.value = { essential: true, booking: false, media: false }
+      consent.value = { essential: true, booking: false, media: false, statistics: false }
     }
     consent.value = { ...consent.value, [category]: value }
   }
