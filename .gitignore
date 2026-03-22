@@ -25,6 +25,9 @@ Thumbs.db
 # Existing
 .playwright-mcp/
 
+# Server (contains SMTP credentials – never commit)
+server/
+
 # Beds24 sync scripts & screenshots
 sync_beds24_photos.mjs
 sync_beds24_photos_result.txt

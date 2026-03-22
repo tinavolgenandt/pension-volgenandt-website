@@ -1,7 +1,6 @@
 export default defineAppConfig({
   siteName: 'Pension Volgenandt',
-  formspreeId: 'xPLACEHOLDER', // Replace with real Formspree form ID from https://formspree.io
-  picknickFormspreeId: 'xPICKNICK', // Replace with Formspree form ID for Picknick-Korb inquiries
+  contactFormUrl: 'https://api.pension-volgenandt.de/send-mail.php',
   siteTagline: 'Ruhe finden im Eichsfeld',
   contact: {
     phone: '+49 160 97719112',

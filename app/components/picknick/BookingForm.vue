@@ -91,7 +91,7 @@ async function handleSubmit() {
   ].filter(Boolean).join('\n')
 
   try {
-    const response = await fetch(`https://formspree.io/f/${appConfig.picknickFormspreeId}`, {
+    const response = await fetch(appConfig.contactFormUrl, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -100,13 +100,14 @@ async function handleSubmit() {
       body: JSON.stringify({
         name: form.name,
         email: form.email,
-        phone: form.phone || undefined,
         message: messageText,
         _subject: `Picknick-Anfrage: ${selectedPackage.value.name} am ${form.date}`,
       }),
     })
 
-    if (response.ok) {
+    const data = await response.json()
+
+    if (response.ok && data.ok) {
       await router.push({
         path: '/picknick/danke/',
         query: {
@@ -115,11 +116,11 @@ async function handleSubmit() {
           paket: selectedPackage.value.name,
         },
       })
+    } else if (data.errors) {
+      errorMessage.value = data.errors.map((e: { message: string }) => e.message).join(', ')
     } else {
-      const data = await response.json()
-      errorMessage.value = data.errors
-        ? data.errors.map((e: { message: string }) => e.message).join(', ')
-        : 'Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.'
+      errorMessage.value =
+        data.error || 'Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.'
     }
   } catch {
     errorMessage.value =

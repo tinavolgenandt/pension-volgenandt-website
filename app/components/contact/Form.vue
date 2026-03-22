@@ -16,7 +16,7 @@ async function handleSubmit() {
   errorMessage.value = ''
 
   try {
-    const response = await fetch(`https://formspree.io/f/${appConfig.formspreeId}`, {
+    const response = await fetch(appConfig.contactFormUrl, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -29,15 +29,15 @@ async function handleSubmit() {
       }),
     })
 
-    if (response.ok) {
+    const data = await response.json()
+
+    if (response.ok && data.ok) {
       isSubmitted.value = true
+    } else if (data.errors) {
+      errorMessage.value = data.errors.map((e: { message: string }) => e.message).join(', ')
     } else {
-      const data = await response.json()
-      if (data.errors) {
-        errorMessage.value = data.errors.map((e: { message: string }) => e.message).join(', ')
-      } else {
-        errorMessage.value = 'Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.'
-      }
+      errorMessage.value =
+        data.error || 'Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.'
     }
   } catch {
     errorMessage.value =
