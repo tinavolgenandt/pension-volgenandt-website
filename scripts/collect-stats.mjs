@@ -75,9 +75,7 @@ async function collectBeds24Data() {
 
   // Get access token
   const tokenRes = await fetch('https://api.beds24.com/v2/authentication/token', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ refreshToken: BEDS24_REFRESH_TOKEN }),
+    headers: { refreshToken: BEDS24_REFRESH_TOKEN },
   })
   const tokenData = await tokenRes.json()
   if (!tokenData.token) {
