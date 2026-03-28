@@ -3,8 +3,9 @@ const baseURL = useRuntimeConfig().app.baseURL
 
 useHead({
   link: [
-    { rel: 'icon', href: `${baseURL}favicon.ico`, sizes: '32x32' },
+    { rel: 'icon', href: `${baseURL}favicon.ico`, sizes: '16x16 32x32 48x48' },
     { rel: 'icon', href: `${baseURL}favicon.svg`, type: 'image/svg+xml' },
+    { rel: 'icon', href: `${baseURL}favicon-48x48.png`, sizes: '48x48', type: 'image/png' },
     { rel: 'apple-touch-icon', href: `${baseURL}apple-touch-icon.png` },
     { rel: 'manifest', href: `${baseURL}site.webmanifest` },
     { rel: 'preconnect', href: 'https://beds24.com' },

@@ -8,13 +8,13 @@
  * Usage: node scripts/optimize-images.mjs [--dry-run] [--delete-originals]
  */
 
+import { readdir, stat, unlink, readFile, rename } from 'fs/promises'
+import { join, extname, relative } from 'path'
+import { cpus } from 'os'
 import { createRequire } from 'module'
+
 const require = createRequire(import.meta.url)
 const sharp = require('sharp')
-
-import { readdir, stat, unlink, readFile } from 'fs/promises'
-import { join, extname, basename, relative } from 'path'
-import { cpus } from 'os'
 
 const IMG_DIR = 'public/img'
 const DRY_RUN = process.argv.includes('--dry-run')
@@ -40,14 +40,6 @@ function getPreset(filePath) {
   return PRESETS.gallery
 }
 
-// Max target sizes (KB) for warnings
-const SIZE_TARGETS = {
-  hero: 300,
-  content: 150,
-  gallery: 200,
-  thumbnail: 50,
-}
-
 async function getAllFiles(dir) {
   const entries = await readdir(dir, { withFileTypes: true })
   const files = []
@@ -69,7 +61,7 @@ async function getFileSize(filePath) {
   return s.size
 }
 
-async function optimizeImage(filePath, isConversion = false) {
+async function optimizeImage(filePath) {
   const ext = extname(filePath).toLowerCase()
   const preset = getPreset(filePath)
   const relPath = relative('.', filePath)
@@ -163,7 +155,6 @@ async function optimizeImage(filePath, isConversion = false) {
 
       // Only replace if smaller
       if (newSize < originalSize) {
-        const { rename } = await import('fs/promises')
         await rename(tempPath, filePath)
         const savings = ((1 - newSize / originalSize) * 100).toFixed(1)
         console.log(
@@ -180,7 +171,9 @@ async function optimizeImage(filePath, isConversion = false) {
       // Clean up temp file if it exists
       try {
         await unlink(filePath + '.tmp')
-      } catch {}
+      } catch {
+        // temp file may not exist, ignore
+      }
       return { action: 'error', from: relPath, error: err.message }
     }
   }
@@ -214,7 +207,7 @@ async function main() {
 
   console.log(`JPGs with existing WebP: ${jpgsWithWebp.length} (will delete JPGs)`)
   console.log(`JPGs needing conversion: ${jpgsWithoutWebp.length}`)
-  console.log(`WebPs > 500KB to re-optimize: ${webps.filter(async (f) => true).length} (checking...)\n`)
+  console.log(`WebPs to check for re-optimization: ${webps.length} (>500KB threshold)\n`)
 
   const results = []
   const concurrency = Math.max(1, cpus().length - 1)
@@ -224,7 +217,7 @@ async function main() {
   console.log(`--- Step 1: Converting ${jpgsWithoutWebp.length} JPGs to WebP ---`)
   for (let i = 0; i < jpgsWithoutWebp.length; i += concurrency) {
     const batch = jpgsWithoutWebp.slice(i, i + concurrency)
-    const batchResults = await Promise.all(batch.map((f) => optimizeImage(f, true)))
+    const batchResults = await Promise.all(batch.map((file) => optimizeImage(file)))
     results.push(...batchResults.filter(Boolean))
   }
 
@@ -232,7 +225,7 @@ async function main() {
   console.log(`\n--- Step 2: Re-optimizing oversized WebP files ---`)
   for (let i = 0; i < webps.length; i += concurrency) {
     const batch = webps.slice(i, i + concurrency)
-    const batchResults = await Promise.all(batch.map((f) => optimizeImage(f)))
+    const batchResults = await Promise.all(batch.map((file) => optimizeImage(file)))
     results.push(...batchResults.filter(Boolean))
   }
 

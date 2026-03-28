@@ -46,6 +46,7 @@ public/img-originals/
 
 # Loose screenshots & images in project root
 *.png
+!public/favicon-48x48.png
 *.jpg
 *.jpeg
 *.JPG

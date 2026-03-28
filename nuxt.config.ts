@@ -94,8 +94,9 @@ export default defineNuxtConfig({
   // Content module (better-sqlite3 build approved in package.json pnpm config)
   content: {},
 
-  // Icon module: Lucide icon set with server bundle for SSG
+  // Icon module: SVG mode avoids hydration mismatch (CSS mode renders <span> on SSR, <svg> on client)
   icon: {
+    mode: 'svg',
     serverBundle: 'local',
     clientBundle: {
       scan: true,

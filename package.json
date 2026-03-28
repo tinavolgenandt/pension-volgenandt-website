@@ -40,7 +40,11 @@
       "rollup": ">=4.59.0",
       "serialize-javascript": ">=7.0.3",
       "svgo": ">=4.0.1",
-      "fast-xml-parser": ">=5.3.8"
+      "fast-xml-parser": ">=5.3.8",
+      "picomatch": ">=4.0.4",
+      "brace-expansion@<2": "1.1.13",
+      "srvx": ">=0.11.13",
+      "yaml": ">=2.8.3"
     }
   },
   "devDependencies": {
@@ -51,7 +55,7 @@
     "@oxc-transform/binding-win32-x64-msvc": "^0.112.0",
     "@tailwindcss/vite": "^4.2.1",
     "googleapis": "^171.4.0",
-    "nodemailer": "^8.0.3",
+    "nodemailer": "^8.0.4",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4.2.1",
