@@ -4,7 +4,7 @@ import { t } from '~/utils/translations'
 const { isCompressed } = useScrollHeader()
 const config = useAppConfig()
 const route = useRoute()
-const { locale, prefix, beds24Lang } = useLocale()
+const { locale, beds24Lang } = useLocale()
 
 const isMenuOpen = ref(false)
 
@@ -117,12 +117,7 @@ const logoLink = computed(() => (locale.value === 'en' ? '/en/' : '/'))
         </a>
 
         <!-- CTA button — direct to Beds24 booking -->
-        <UiBaseButton
-          variant="primary"
-          size="md"
-          :to="bookingUrl"
-          target="_blank"
-        >
+        <UiBaseButton variant="primary" size="md" :to="bookingUrl" target="_blank">
           {{ t('cta.bookNow', locale) }}
         </UiBaseButton>
       </div>

@@ -45,9 +45,7 @@ export function useLocale() {
     }
 
     // DE → EN: add /en prefix + translate known slugs
-    const enPath = path
-      .replace(/^\/zimmer/, '/rooms')
-      .replace(/^\/kontakt/, '/contact')
+    const enPath = path.replace(/^\/zimmer/, '/rooms').replace(/^\/kontakt/, '/contact')
     return `/en${enPath}`
   })
 

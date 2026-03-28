@@ -2,7 +2,7 @@
 import { t } from '~/utils/translations'
 
 const config = useAppConfig()
-const { locale, prefix } = useLocale()
+const { locale } = useLocale()
 
 const footerNav = computed(() => {
   if (locale.value === 'en') {
@@ -71,7 +71,9 @@ function openCookieSettings() {
 
           <!-- Column 2: Kontakt (order-1 on mobile = phone first, order-2 on desktop) -->
           <div class="order-1 nav:order-2">
-            <h3 class="mb-4 font-serif text-lg font-semibold text-white">{{ t('footer.contact', locale) }}</h3>
+            <h3 class="mb-4 font-serif text-lg font-semibold text-white">
+              {{ t('footer.contact', locale) }}
+            </h3>
 
             <!-- Address -->
             <address class="leading-relaxed not-italic">
@@ -126,7 +128,9 @@ function openCookieSettings() {
 
           <!-- Column 3: Entdecken (order-2 on mobile, order-3 on desktop) -->
           <div class="order-2 nav:order-3">
-            <h3 class="mb-4 font-serif text-lg font-semibold text-white">{{ t('footer.discover', locale) }}</h3>
+            <h3 class="mb-4 font-serif text-lg font-semibold text-white">
+              {{ t('footer.discover', locale) }}
+            </h3>
             <ul class="space-y-2">
               <li v-for="item in footerNav" :key="item.to">
                 <NuxtLink
@@ -141,7 +145,9 @@ function openCookieSettings() {
 
           <!-- Column 4: Rechtliches (order-4 on both) -->
           <div class="order-4">
-            <h3 class="mb-4 font-serif text-lg font-semibold text-white">{{ t('footer.legal', locale) }}</h3>
+            <h3 class="mb-4 font-serif text-lg font-semibold text-white">
+              {{ t('footer.legal', locale) }}
+            </h3>
             <ul class="space-y-2">
               <li v-for="item in legalNav" :key="item.to">
                 <NuxtLink

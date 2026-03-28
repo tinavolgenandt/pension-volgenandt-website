@@ -170,7 +170,12 @@ useSchemaOrg([
           v-if="room.weekendOnly"
           class="mt-4 flex items-start gap-2 rounded-lg border border-waldhonig-200 bg-waldhonig-50 px-4 py-3 text-sm text-waldhonig-800"
         >
-          <Icon name="lucide:calendar-clock" :size="16" class="mt-0.5 shrink-0" aria-hidden="true" />
+          <Icon
+            name="lucide:calendar-clock"
+            :size="16"
+            class="mt-0.5 shrink-0"
+            aria-hidden="true"
+          />
           <span>Dieses Zimmer ist <strong>nur freitags bis sonntags</strong> buchbar.</span>
         </div>
       </div>

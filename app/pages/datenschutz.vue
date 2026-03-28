@@ -385,13 +385,11 @@ useSeoMeta({
           Betriebssystem, Herkunft des Besuchs (Suchmaschine, Direktaufruf, Verweis), ungefährer
           Standort (Land/Stadt), Spracheinstellungen des Browsers.
         </p>
+        <p class="mt-2"><strong>Zweck:</strong> Analyse und Optimierung unseres Webangebots.</p>
         <p class="mt-2">
-          <strong>Zweck:</strong> Analyse und Optimierung unseres Webangebots.
-        </p>
-        <p class="mt-2">
-          <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung) und § 25
-          Abs. 1 TDDDG. Google Analytics wird erst nach Ihrer ausdrücklichen Einwilligung über
-          unsere Cookie-Einstellungen (Kategorie „Statistik") geladen.
+          <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung) und § 25 Abs.
+          1 TDDDG. Google Analytics wird erst nach Ihrer ausdrücklichen Einwilligung über unsere
+          Cookie-Einstellungen (Kategorie „Statistik") geladen.
         </p>
         <p class="mt-2">
           <strong>Speicherdauer:</strong> 14 Monate. Sie können Ihre Einwilligung jederzeit über die

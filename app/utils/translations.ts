@@ -68,7 +68,10 @@ const translations: Record<string, Record<Locale, string>> = {
 
   // Booking widgets
   'booking.calendarLoading': { de: 'Kalender wird geladen...', en: 'Loading calendar...' },
-  'booking.widgetLoading': { de: 'Buchungswidget wird geladen...', en: 'Loading booking widget...' },
+  'booking.widgetLoading': {
+    de: 'Buchungswidget wird geladen...',
+    en: 'Loading booking widget...',
+  },
   'booking.calendarLabel': {
     de: 'Verfügbarkeitskalender für',
     en: 'Availability calendar for',

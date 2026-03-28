@@ -34,7 +34,7 @@ useHead({
 const { data: attractionsRaw } = await useAsyncData('aktivitaeten-all-attractions', () =>
   queryCollection('attractions').order('distanceKm', 'ASC').all(),
 )
-const attractions = computed(() => attractionsRaw.value?.filter(a => a.heroImage) ?? [])
+const attractions = computed(() => attractionsRaw.value?.filter((a) => a.heroImage) ?? [])
 
 const activityCards = [
   {

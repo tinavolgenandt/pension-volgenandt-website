@@ -47,7 +47,9 @@ const groupedRooms = computed(() => {
   <div class="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
     <!-- Page heading -->
     <div class="mb-10">
-      <h1 class="font-serif text-3xl font-bold text-sage-800 sm:text-4xl">{{ t('rooms.title', 'en') }}</h1>
+      <h1 class="font-serif text-3xl font-bold text-sage-800 sm:text-4xl">
+        {{ t('rooms.title', 'en') }}
+      </h1>
       <p class="mt-3 max-w-2xl text-lg text-sage-600">
         {{ t('rooms.subtitle', 'en') }}
       </p>

@@ -74,7 +74,9 @@ async function handleSubmit() {
 
     <div class="space-y-6">
       <div>
-        <label for="contact-name" class="block text-sm font-medium text-sage-800"> {{ t('form.name', props.locale) }} </label>
+        <label for="contact-name" class="block text-sm font-medium text-sage-800">
+          {{ t('form.name', props.locale) }}
+        </label>
         <input
           id="contact-name"
           v-model="formData.name"
@@ -86,7 +88,9 @@ async function handleSubmit() {
       </div>
 
       <div>
-        <label for="contact-email" class="block text-sm font-medium text-sage-800"> {{ t('form.email', props.locale) }} </label>
+        <label for="contact-email" class="block text-sm font-medium text-sage-800">
+          {{ t('form.email', props.locale) }}
+        </label>
         <input
           id="contact-email"
           v-model="formData.email"

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { t } from '~/utils/translations'
 
-const config = useAppConfig()
 const siteUrl = 'https://www.pension-volgenandt.de'
 
 useHead({

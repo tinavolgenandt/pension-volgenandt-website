@@ -47,7 +47,8 @@ const bookingUrl = computed(() => {
 })
 
 const guestLabel = computed(() => {
-  const word = props.maxGuests === 1 ? t('room.guest', props.locale) : t('room.guests', props.locale)
+  const word =
+    props.maxGuests === 1 ? t('room.guest', props.locale) : t('room.guests', props.locale)
   return `${props.maxGuests} ${word}`
 })
 </script>
@@ -107,7 +108,9 @@ const guestLabel = computed(() => {
 
         <!-- Starting price -->
         <p :class="compact ? 'mt-2 text-sm' : 'mt-4'">
-          <span class="font-normal text-sage-600" :class="compact ? 'text-xs' : 'text-sm'">{{ t('room.from', locale) }} </span>
+          <span class="font-normal text-sage-600" :class="compact ? 'text-xs' : 'text-sm'"
+            >{{ t('room.from', locale) }}
+          </span>
           <span class="font-semibold text-waldhonig-600" :class="compact ? 'text-sm' : 'text-lg'">
             {{ startingPrice }} EUR
           </span>

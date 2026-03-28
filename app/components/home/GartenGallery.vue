@@ -47,9 +47,7 @@ const photos = [
         <h2 class="font-serif text-3xl font-bold text-sage-900 md:text-4xl">
           Garten &amp; Umgebung
         </h2>
-        <p class="mt-3 text-lg text-sage-600">
-          Vier Jahreszeiten &ndash; ein Ort der Ruhe
-        </p>
+        <p class="mt-3 text-lg text-sage-600">Vier Jahreszeiten &ndash; ein Ort der Ruhe</p>
       </div>
 
       <!-- Photo grid -->
@@ -59,7 +57,7 @@ const photos = [
           <NuxtImg
             :src="photos[0]!.src"
             :alt="photos[0]!.alt"
-            class="aspect-[4/3] w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+            class="aspect-[4/3] h-full w-full object-cover transition-transform duration-500 hover:scale-105"
             loading="lazy"
             sizes="sm:100vw md:50vw"
           />

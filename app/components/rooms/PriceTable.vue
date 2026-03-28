@@ -45,7 +45,9 @@ function occupancyLabel(occupancy: number): string {
 
 <template>
   <div class="room-price-table">
-    <h3 class="mb-4 font-serif text-xl font-semibold text-sage-800">{{ t('room.prices', locale) }}</h3>
+    <h3 class="mb-4 font-serif text-xl font-semibold text-sage-800">
+      {{ t('room.prices', locale) }}
+    </h3>
 
     <!-- Simple display for single rate -->
     <div v-if="isSimple" class="rounded-lg border border-sage-200 bg-sage-50 px-5 py-4 text-center">
@@ -53,7 +55,9 @@ function occupancyLabel(occupancy: number): string {
         <span class="text-2xl font-bold text-sage-800">{{ allRates[0]?.pricePerNight }} EUR</span>
         <span class="text-sm text-sage-600">{{ t('price.perNight', locale) }}</span>
       </div>
-      <p class="mt-1 text-sm text-sage-600">{{ locale === 'de' ? 'für' : 'for' }} {{ occupancyLabel(allRates[0]?.occupancy ?? 1) }}</p>
+      <p class="mt-1 text-sm text-sage-600">
+        {{ locale === 'de' ? 'für' : 'for' }} {{ occupancyLabel(allRates[0]?.occupancy ?? 1) }}
+      </p>
     </div>
 
     <!-- Multi-rate table for rooms with multiple occupancy levels -->

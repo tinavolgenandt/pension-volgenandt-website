@@ -42,8 +42,10 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
         sizes="100vw"
       />
       <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-      <div class="relative z-10 flex h-full flex-col items-center justify-end px-6 pb-10 text-center md:pb-14">
-        <p class="text-sm font-medium uppercase tracking-widest text-white/70">
+      <div
+        class="relative z-10 flex h-full flex-col items-center justify-end px-6 pb-10 text-center md:pb-14"
+      >
+        <p class="text-sm font-medium tracking-widest text-white/70 uppercase">
           Pension Volgenandt
         </p>
         <h1 class="mt-2 font-serif text-4xl font-bold text-white md:text-5xl">Picknick-Korb</h1>
@@ -67,17 +69,15 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
         direkt an der Pension oder irgendwo in der wunderschönen Umgebung.
       </p>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
-        Ab <strong class="text-waldhonig-600">19 € pro Person</strong>. Korbpfand 100 €
-        (wird bei Rückgabe vollständig erstattet).
+        Ab <strong class="text-waldhonig-600">19 € pro Person</strong>. Korbpfand 100 € (wird bei
+        Rückgabe vollständig erstattet).
       </p>
     </section>
 
     <!-- 3. Pakete -->
     <section class="bg-cream px-6 py-12 md:py-16">
       <div class="mx-auto max-w-6xl">
-        <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">
-          Unsere Pakete
-        </h2>
+        <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">Unsere Pakete</h2>
         <p class="mb-10 text-center text-sage-600">Für jede Tageszeit das passende Angebot.</p>
         <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <PicknickPackageCard
@@ -105,28 +105,40 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
         </h2>
         <ol class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <li class="flex flex-col items-center text-center">
-            <span class="flex size-12 items-center justify-center rounded-full bg-waldhonig-500 text-xl font-bold text-white">1</span>
+            <span
+              class="flex size-12 items-center justify-center rounded-full bg-waldhonig-500 text-xl font-bold text-white"
+              >1</span
+            >
             <h3 class="mt-4 font-serif text-lg font-semibold text-sage-900">Paket wählen</h3>
             <p class="mt-2 text-sm leading-relaxed text-sage-600">
               Brunch, Kaffee & Kuchen oder Sonnenuntergang – suchen Sie sich Ihr Wunschangebot aus.
             </p>
           </li>
           <li class="flex flex-col items-center text-center">
-            <span class="flex size-12 items-center justify-center rounded-full bg-waldhonig-500 text-xl font-bold text-white">2</span>
+            <span
+              class="flex size-12 items-center justify-center rounded-full bg-waldhonig-500 text-xl font-bold text-white"
+              >2</span
+            >
             <h3 class="mt-4 font-serif text-lg font-semibold text-sage-900">Anfragen</h3>
             <p class="mt-2 text-sm leading-relaxed text-sage-600">
               Datum, Personenzahl und Extras im Formular eintragen und absenden.
             </p>
           </li>
           <li class="flex flex-col items-center text-center">
-            <span class="flex size-12 items-center justify-center rounded-full bg-waldhonig-500 text-xl font-bold text-white">3</span>
+            <span
+              class="flex size-12 items-center justify-center rounded-full bg-waldhonig-500 text-xl font-bold text-white"
+              >3</span
+            >
             <h3 class="mt-4 font-serif text-lg font-semibold text-sage-900">Bestätigung</h3>
             <p class="mt-2 text-sm leading-relaxed text-sage-600">
               Wir melden uns innerhalb von 24 Stunden und bestätigen Ihren Termin persönlich.
             </p>
           </li>
           <li class="flex flex-col items-center text-center">
-            <span class="flex size-12 items-center justify-center rounded-full bg-waldhonig-500 text-xl font-bold text-white">4</span>
+            <span
+              class="flex size-12 items-center justify-center rounded-full bg-waldhonig-500 text-xl font-bold text-white"
+              >4</span
+            >
             <h3 class="mt-4 font-serif text-lg font-semibold text-sage-900">Abholen & genießen</h3>
             <p class="mt-2 text-sm leading-relaxed text-sage-600">
               Korb an der Pension abholen, Lieblingsplatz aussuchen – und den Moment genießen.
@@ -139,9 +151,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
     <!-- 5. Picknick-Spots im Garten -->
     <section class="px-6 py-12 md:py-16">
       <div class="mx-auto max-w-6xl">
-        <h2 class="mb-2 font-serif text-2xl font-semibold text-sage-900">
-          Ihre Plätze im Garten
-        </h2>
+        <h2 class="mb-2 font-serif text-2xl font-semibold text-sage-900">Ihre Plätze im Garten</h2>
         <p class="mb-8 text-sage-600">Direkt an der Pension – kein Auto nötig.</p>
         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           <PicknickSpotCard
@@ -174,8 +184,8 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
     <section class="px-6 py-10 md:py-12">
       <div class="mx-auto max-w-3xl rounded-xl bg-sage-50 px-8 py-8 text-center">
         <p class="text-sage-700">
-          Den Korb einfach mitnehmen – ob zur Burg Hanstein, an den Seeburger See oder auf
-          eine Wanderung im Eichsfeld. Schöne Ausflugsziele gibt es hier in der Umgebung genug.
+          Den Korb einfach mitnehmen – ob zur Burg Hanstein, an den Seeburger See oder auf eine
+          Wanderung im Eichsfeld. Schöne Ausflugsziele gibt es hier in der Umgebung genug.
         </p>
         <NuxtLink
           to="/aktivitaeten/"
@@ -192,11 +202,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
       <p class="mb-8 text-sage-600">
         Jeder Korb ist vollständig ausgestattet – echtes Geschirr, keine Einwegprodukte.
       </p>
-      <PicknickBasketContents
-        v-if="basket"
-        :always="basket.always"
-        :extras="basket.extras"
-      />
+      <PicknickBasketContents v-if="basket" :always="basket.always" :extras="basket.extras" />
     </section>
 
     <!-- 8. Anfahrt & Parken -->
@@ -232,7 +238,10 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
               </p>
             </div>
             <div class="flex items-start gap-3">
-              <Icon name="ph:navigation-arrow-duotone" class="mt-0.5 size-5 shrink-0 text-waldhonig-500" />
+              <Icon
+                name="ph:navigation-arrow-duotone"
+                class="mt-0.5 size-5 shrink-0 text-waldhonig-500"
+              />
               <p>
                 Navigationsziel:
                 <span class="font-medium text-sage-900">Otto-Reuter-Straße 28, Breitenbach</span>
@@ -246,9 +255,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
     <!-- 8. CTA -->
     <section class="bg-waldhonig-50 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-2xl text-center">
-        <h2 class="font-serif text-2xl font-semibold text-sage-900">
-          Lust auf ein Picknick?
-        </h2>
+        <h2 class="font-serif text-2xl font-semibold text-sage-900">Lust auf ein Picknick?</h2>
         <p class="mt-3 text-sage-700">
           Jetzt Ihren Wunschtermin anfragen – wir melden uns innerhalb von 24 Stunden.
         </p>

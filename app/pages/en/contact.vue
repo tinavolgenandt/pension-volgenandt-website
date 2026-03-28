@@ -42,7 +42,9 @@ const appConfig = useAppConfig()
       <div class="mx-auto grid max-w-5xl gap-12 md:grid-cols-2">
         <!-- Left column: Contact details -->
         <div>
-          <h2 class="font-serif text-2xl font-semibold text-sage-900">{{ t('contact.talkToUs', 'en') }}</h2>
+          <h2 class="font-serif text-2xl font-semibold text-sage-900">
+            {{ t('contact.talkToUs', 'en') }}
+          </h2>
           <p class="mt-4 leading-relaxed text-sage-800">
             {{ t('contact.talkToUsText', 'en') }}
           </p>
@@ -106,7 +108,9 @@ const appConfig = useAppConfig()
 
         <!-- Right column: Contact form -->
         <div>
-          <h2 class="font-serif text-2xl font-semibold text-sage-900">{{ t('contact.sendMessage', 'en') }}</h2>
+          <h2 class="font-serif text-2xl font-semibold text-sage-900">
+            {{ t('contact.sendMessage', 'en') }}
+          </h2>
           <p class="mt-4 mb-6 leading-relaxed text-sage-800">
             {{ t('contact.sendMessageText', 'en') }}
           </p>
@@ -148,7 +152,9 @@ const appConfig = useAppConfig()
     <!-- Section 3: Driving directions + Map -->
     <section class="bg-sage-50 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-5xl">
-        <h2 class="mb-8 text-center font-serif text-2xl font-semibold text-sage-900">{{ t('directions.heading', 'en') }}</h2>
+        <h2 class="mb-8 text-center font-serif text-2xl font-semibold text-sage-900">
+          {{ t('directions.heading', 'en') }}
+        </h2>
         <div class="grid gap-8 md:grid-cols-2">
           <!-- Left: Text directions -->
           <div class="space-y-6">

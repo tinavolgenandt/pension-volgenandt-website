@@ -48,9 +48,7 @@ useSeoMeta({
 
       <!-- Steuernummer -->
       <section>
-        <h2 class="mt-8 mb-4 font-serif text-xl font-semibold text-sage-800">
-          Steuernummer
-        </h2>
+        <h2 class="mt-8 mb-4 font-serif text-xl font-semibold text-sage-800">Steuernummer</h2>
         <p>{{ config.legal.taxId }}</p>
       </section>
 

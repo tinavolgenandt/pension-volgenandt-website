@@ -38,7 +38,9 @@ function getExtraIcon(name: string): string {
 
 <template>
   <div v-if="extras.length > 0" class="room-extras">
-    <h3 class="mb-4 font-serif text-xl font-semibold text-sage-800">{{ t('room.extras', props.locale) }}</h3>
+    <h3 class="mb-4 font-serif text-xl font-semibold text-sage-800">
+      {{ t('room.extras', props.locale) }}
+    </h3>
 
     <ul class="divide-y divide-sage-200">
       <li

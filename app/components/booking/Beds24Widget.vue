@@ -72,7 +72,9 @@ watch(
 
 <template>
   <div v-if="showWidget" class="rounded-lg border border-sage-200 bg-white p-4 shadow-sm sm:p-6">
-    <h3 class="mb-4 font-serif text-lg font-semibold text-sage-800">{{ t('room.booking', lang) }}</h3>
+    <h3 class="mb-4 font-serif text-lg font-semibold text-sage-800">
+      {{ t('room.booking', lang) }}
+    </h3>
     <div
       v-if="isReady"
       :id="`beds24-booking-${beds24PropertyId}-${beds24RoomId ?? 'all'}`"

@@ -92,7 +92,9 @@ const form = reactive({
 const isSubmitting = ref(false)
 const errorMessage = ref('')
 
-const selectedPackage = computed(() => packages.value.find((p) => p.id === form.packageId) ?? packages.value[0])
+const selectedPackage = computed(
+  () => packages.value.find((p) => p.id === form.packageId) ?? packages.value[0],
+)
 
 const adultsTotal = computed(() => (selectedPackage.value?.price ?? 19) * form.adults)
 const kidsTotal = computed(() => KIDS_PRICE * form.kids)
@@ -108,9 +110,7 @@ const selectedExtrasWithCost = computed(() =>
     .filter((e) => form.extras.includes(e.id) && e.price > 0)
     .map((e) => ({ ...e, cost: extraCost(e, form.adults) })),
 )
-const extrasTotal = computed(() =>
-  selectedExtrasWithCost.value.reduce((sum, e) => sum + e.cost, 0),
-)
+const extrasTotal = computed(() => selectedExtrasWithCost.value.reduce((sum, e) => sum + e.cost, 0))
 const grandTotal = computed(() => baseTotal.value + extrasTotal.value)
 
 const beverageText = computed(() => {
@@ -153,7 +153,9 @@ async function handleSubmit() {
     `Sonderwünsche: ${form.notes || '–'}`,
     '',
     `Erwachsene: ${form.adults} × ${selectedPackage.value?.price ?? 19} € = ${adultsTotal.value} €`,
-    form.kids > 0 ? `Kinder: ${form.kids} × ${KIDS_PRICE.toLocaleString('de-DE', { minimumFractionDigits: 2 })} € = ${kidsTotal.value.toLocaleString('de-DE', { minimumFractionDigits: 2 })} €` : null,
+    form.kids > 0
+      ? `Kinder: ${form.kids} × ${KIDS_PRICE.toLocaleString('de-DE', { minimumFractionDigits: 2 })} € = ${kidsTotal.value.toLocaleString('de-DE', { minimumFractionDigits: 2 })} €`
+      : null,
     milkExtra.value > 0 ? `Pflanzenmilch: +${milkExtra.value} €` : null,
     extrasTotal.value > 0 ? `Extras: ${extrasTotal.value} €` : null,
     'Korbpfand: Bei Abholung (100 € bar oder Autoschlüssel)',
@@ -165,7 +167,9 @@ async function handleSubmit() {
     `Name: ${form.name}`,
     `E-Mail: ${form.email}`,
     `Telefon: ${form.phone}`,
-  ].filter(Boolean).join('\n')
+  ]
+    .filter(Boolean)
+    .join('\n')
 
   try {
     const response = await fetch(appConfig.contactFormUrl, {
@@ -209,7 +213,7 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <form @submit.prevent="handleSubmit" class="space-y-8">
+  <form class="space-y-8" @submit.prevent="handleSubmit">
     <!-- Honeypot -->
     <input type="text" name="_gotcha" style="display: none" tabindex="-1" autocomplete="off" />
 
@@ -249,7 +253,9 @@ async function handleSubmit() {
 
       <div class="grid gap-5 sm:grid-cols-2">
         <div>
-          <label for="pk-adults" class="block text-sm font-medium text-sage-800">Erwachsene *</label>
+          <label for="pk-adults" class="block text-sm font-medium text-sage-800"
+            >Erwachsene *</label
+          >
           <input
             id="pk-adults"
             v-model.number="form.adults"
@@ -298,7 +304,8 @@ async function handleSubmit() {
     <!-- Kinder-Korb Info -->
     <div v-if="form.kids > 0" class="rounded-lg border border-waldhonig-200 bg-waldhonig-50/50 p-5">
       <h3 class="font-serif text-base font-semibold text-sage-900">
-        Kinder-Korb ({{ KIDS_PRICE.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} € / Kind)
+        Kinder-Korb ({{ KIDS_PRICE.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} € /
+        Kind)
       </h3>
       <p class="mt-1 text-xs text-sage-500">Kindgerechte Portionen für kleine Genießer</p>
       <ul class="mt-3 space-y-1.5">
@@ -320,7 +327,10 @@ async function handleSubmit() {
 
       <div class="space-y-4">
         <!-- Kaffee -->
-        <div class="rounded-lg border p-4" :class="form.wantKaffee ? 'border-sage-400 bg-sage-50' : 'border-sage-200'">
+        <div
+          class="rounded-lg border p-4"
+          :class="form.wantKaffee ? 'border-sage-400 bg-sage-50' : 'border-sage-200'"
+        >
           <label class="flex cursor-pointer items-center gap-2">
             <input v-model="form.wantKaffee" type="checkbox" class="size-4 accent-waldhonig-500" />
             <span class="text-sm font-medium text-sage-800">Kaffee</span>
@@ -332,7 +342,13 @@ async function handleSubmit() {
               class="flex cursor-pointer items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs"
               :class="form.milkType === milk.id ? 'border-sage-400 bg-white' : 'border-sage-200'"
             >
-              <input v-model="form.milkType" type="radio" name="milch" :value="milk.id" class="accent-waldhonig-500" />
+              <input
+                v-model="form.milkType"
+                type="radio"
+                name="milch"
+                :value="milk.id"
+                class="accent-waldhonig-500"
+              />
               <span class="text-sage-800">{{ milk.label }}</span>
               <span v-if="milk.extra > 0" class="text-waldhonig-600">(+{{ milk.extra }} €)</span>
             </label>
@@ -340,7 +356,10 @@ async function handleSubmit() {
         </div>
 
         <!-- Tee -->
-        <div class="rounded-lg border p-4" :class="form.wantTee ? 'border-sage-400 bg-sage-50' : 'border-sage-200'">
+        <div
+          class="rounded-lg border p-4"
+          :class="form.wantTee ? 'border-sage-400 bg-sage-50' : 'border-sage-200'"
+        >
           <label class="flex cursor-pointer items-center gap-2">
             <input v-model="form.wantTee" type="checkbox" class="size-4 accent-waldhonig-500" />
             <span class="text-sm font-medium text-sage-800">Tee</span>
@@ -379,7 +398,10 @@ async function handleSubmit() {
           />
           <span class="text-sm text-sage-800">
             {{ extra.label }}
-            <span class="ml-1 text-xs" :class="extra.price === 0 ? 'text-sage-400' : 'text-waldhonig-600'">
+            <span
+              class="ml-1 text-xs"
+              :class="extra.price === 0 ? 'text-sage-400' : 'text-waldhonig-600'"
+            >
               ({{ extraPriceLabel(extra) }})
             </span>
           </span>
@@ -447,12 +469,21 @@ async function handleSubmit() {
       <h3 class="font-serif text-base font-semibold text-sage-900">Preisübersicht</h3>
       <dl class="mt-3 space-y-2 text-sm">
         <div class="flex justify-between">
-          <dt class="text-sage-700">{{ form.adults }} × {{ selectedPackage?.price ?? 19 }} € (Erwachsene)</dt>
-          <dd class="font-semibold text-sage-900">{{ adultsTotal.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €</dd>
+          <dt class="text-sage-700">
+            {{ form.adults }} × {{ selectedPackage?.price ?? 19 }} € (Erwachsene)
+          </dt>
+          <dd class="font-semibold text-sage-900">
+            {{ adultsTotal.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €
+          </dd>
         </div>
         <div v-if="form.kids > 0" class="flex justify-between">
-          <dt class="text-sage-700">{{ form.kids }} × {{ KIDS_PRICE.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} € (Kinder)</dt>
-          <dd class="font-semibold text-sage-900">{{ kidsTotal.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €</dd>
+          <dt class="text-sage-700">
+            {{ form.kids }} ×
+            {{ KIDS_PRICE.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} € (Kinder)
+          </dt>
+          <dd class="font-semibold text-sage-900">
+            {{ kidsTotal.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €
+          </dd>
         </div>
         <div v-if="milkExtra > 0" class="flex justify-between text-sage-600">
           <dt>Pflanzenmilch</dt>
@@ -472,7 +503,9 @@ async function handleSubmit() {
         </div>
         <div class="flex justify-between border-t border-waldhonig-200 pt-2">
           <dt class="font-semibold text-sage-900">Gesamt</dt>
-          <dd class="text-base font-bold text-waldhonig-700">{{ (grandTotal + 100).toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €</dd>
+          <dd class="text-base font-bold text-waldhonig-700">
+            {{ (grandTotal + 100).toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €
+          </dd>
         </div>
       </dl>
     </div>
@@ -485,7 +518,8 @@ async function handleSubmit() {
     <!-- Wetter & Stornierung -->
     <p class="text-sm leading-relaxed text-sage-500">
       <Icon name="ph:cloud-sun-duotone" class="inline-block size-4 align-text-bottom" />
-      Bei schlechtem Wetter steht unsere überdachte Terrasse bereit. Kostenfreie Stornierung bis 48&#8201;h vorher.
+      Bei schlechtem Wetter steht unsere überdachte Terrasse bereit. Kostenfreie Stornierung bis
+      48&#8201;h vorher.
     </p>
 
     <!-- Absenden -->

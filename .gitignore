@@ -25,6 +25,9 @@ Thumbs.db
 # Existing
 .playwright-mcp/
 
+# Archived utility scripts
+.archive/
+
 # Server (contains SMTP credentials – never commit)
 server/
 
