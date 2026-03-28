@@ -100,7 +100,7 @@ const activityCards = [
           <NuxtLink
             v-for="attraction in attractions"
             :key="attraction.slug"
-            :to="`/ausflugsziele/${attraction.slug}/`"
+            :to="`/en/attractions/${attraction.slug}/`"
             class="group overflow-hidden rounded-lg bg-white shadow-sm transition-shadow hover:shadow-md"
           >
             <div v-if="attraction.heroImage" class="aspect-[16/10] overflow-hidden bg-sage-100">

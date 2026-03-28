@@ -25,11 +25,20 @@ const footerNav = computed(() => {
   ]
 })
 
-const legalNav = computed(() => [
-  { label: t('legal.impressum', locale.value), to: '/impressum' },
-  { label: t('legal.datenschutz', locale.value), to: '/datenschutz' },
-  { label: t('legal.agb', locale.value), to: '/agb' },
-])
+const legalNav = computed(() => {
+  if (locale.value === 'en') {
+    return [
+      { label: t('legal.impressum', 'en'), to: '/en/imprint' },
+      { label: t('legal.datenschutz', 'en'), to: '/en/privacy' },
+      { label: t('legal.agb', 'en'), to: '/en/terms' },
+    ]
+  }
+  return [
+    { label: t('legal.impressum', 'de'), to: '/impressum' },
+    { label: t('legal.datenschutz', 'de'), to: '/datenschutz' },
+    { label: t('legal.agb', 'de'), to: '/agb' },
+  ]
+})
 
 const roomsLink = computed(() => (locale.value === 'en' ? '/en/rooms' : '/zimmer'))
 
