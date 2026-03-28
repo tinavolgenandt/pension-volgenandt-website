@@ -9,10 +9,16 @@ const { data: testimonialsData } = await useAsyncData('testimonials', () =>
 
 const items = computed(() => testimonialsData.value?.[0]?.items ?? [])
 
-// Carousel setup — Accessibility plugin removed (v9 RC incompatible with Embla v8)
-const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center' }, [
-  Autoplay({ delay: 6000, stopOnInteraction: true }),
-])
+// Respect prefers-reduced-motion: disable autoplay for users who prefer reduced motion
+const prefersReducedMotion = usePreferredReducedMotion()
+const autoplayPlugins = computed(() =>
+  prefersReducedMotion.value === 'reduce'
+    ? []
+    : [Autoplay({ delay: 6000, stopOnInteraction: true })],
+)
+
+// Carousel setup
+const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center' }, autoplayPlugins)
 
 // Navigation state
 const selectedIndex = ref(0)
@@ -59,9 +65,14 @@ watch(emblaApi, (api) => {
 
       <div v-if="items.length" class="mt-12">
         <!-- Embla carousel -->
-        <div class="relative">
+        <div
+          class="relative"
+          role="region"
+          aria-roledescription="Karussell"
+          aria-label="Gästebewertungen"
+        >
           <!-- Viewport -->
-          <div ref="emblaRef" class="overflow-hidden">
+          <div ref="emblaRef" class="overflow-hidden" aria-live="polite">
             <div class="flex">
               <div
                 v-for="(testimonial, index) in items"

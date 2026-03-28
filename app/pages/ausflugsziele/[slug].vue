@@ -23,7 +23,7 @@ useSeoMeta({
 })
 
 useHead({
-  titleTemplate: '%s',
+  titleTemplate: '%s | Pension Volgenandt',
   link: [
     {
       rel: 'canonical',
@@ -36,6 +36,18 @@ useHead({
     },
   ],
 })
+
+// TouristAttraction structured data
+useSchemaOrg([
+  {
+    '@type': 'TouristAttraction',
+    name: attraction.value.name,
+    description: attraction.value.seoDescription,
+    image: `https://www.pension-volgenandt.de${attraction.value.heroImage}`,
+    url: `https://www.pension-volgenandt.de/ausflugsziele/${attraction.value.slug}/`,
+    ...(attraction.value.website ? { sameAs: attraction.value.website } : {}),
+  },
+])
 
 // Breadcrumb with dynamic label
 definePageMeta({

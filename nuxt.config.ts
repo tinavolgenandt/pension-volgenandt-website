@@ -168,10 +168,14 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: { lang: 'de' },
-      title: 'Pension Volgenandt | Ruhe finden im Eichsfeld',
+      titleTemplate: '%s | Pension Volgenandt',
+      title: 'Ruhe finden im Eichsfeld',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'geo.region', content: 'DE-TH' },
+        { name: 'geo.placename', content: 'Leinefelde-Worbis' },
+        { name: 'geo.position', content: '51.4124;10.322' },
       ],
       // Favicon/manifest links are in app.vue useHead() so baseURL is applied dynamically
     },

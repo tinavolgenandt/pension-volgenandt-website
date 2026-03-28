@@ -215,7 +215,14 @@ async function handleSubmit() {
 <template>
   <form class="space-y-8" @submit.prevent="handleSubmit">
     <!-- Honeypot -->
-    <input type="text" name="_gotcha" style="display: none" tabindex="-1" autocomplete="off" />
+    <input
+      type="text"
+      name="_gotcha"
+      style="display: none"
+      tabindex="-1"
+      autocomplete="off"
+      aria-hidden="true"
+    />
 
     <!-- Datum & Paket -->
     <fieldset class="space-y-5">
@@ -422,6 +429,8 @@ async function handleSubmit() {
             type="text"
             name="name"
             required
+            aria-required="true"
+            autocomplete="name"
             class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
           />
         </div>
@@ -433,6 +442,8 @@ async function handleSubmit() {
             type="email"
             name="email"
             required
+            aria-required="true"
+            autocomplete="email"
             class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
           />
         </div>
@@ -446,6 +457,8 @@ async function handleSubmit() {
           type="tel"
           name="telefon"
           required
+          aria-required="true"
+          autocomplete="tel"
           class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
         />
       </div>
@@ -511,7 +524,7 @@ async function handleSubmit() {
     </div>
 
     <!-- Fehler -->
-    <div v-if="errorMessage" class="rounded-lg bg-red-50 p-4 text-red-700">
+    <div v-if="errorMessage" role="alert" class="rounded-lg bg-red-50 p-4 text-red-700">
       {{ errorMessage }}
     </div>
 

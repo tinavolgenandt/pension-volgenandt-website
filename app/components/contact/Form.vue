@@ -70,7 +70,14 @@ async function handleSubmit() {
   <!-- Form -->
   <form v-else @submit.prevent="handleSubmit">
     <!-- Formspree honeypot (hidden from users, catches bots) -->
-    <input type="text" name="_gotcha" style="display: none" tabindex="-1" autocomplete="off" />
+    <input
+      type="text"
+      name="_gotcha"
+      style="display: none"
+      tabindex="-1"
+      autocomplete="off"
+      aria-hidden="true"
+    />
 
     <div class="space-y-6">
       <div>
@@ -83,6 +90,8 @@ async function handleSubmit() {
           type="text"
           name="name"
           required
+          aria-required="true"
+          autocomplete="name"
           class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
         />
       </div>
@@ -97,6 +106,8 @@ async function handleSubmit() {
           type="email"
           name="email"
           required
+          aria-required="true"
+          autocomplete="email"
           class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
         />
       </div>
@@ -111,11 +122,12 @@ async function handleSubmit() {
           name="message"
           rows="5"
           required
+          aria-required="true"
           class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
         />
       </div>
 
-      <div v-if="errorMessage" class="rounded-lg bg-red-50 p-4 text-red-700">
+      <div v-if="errorMessage" role="alert" class="rounded-lg bg-red-50 p-4 text-red-700">
         {{ errorMessage }}
       </div>
 

@@ -7,10 +7,25 @@ useHead({
     { rel: 'icon', href: `${baseURL}favicon.svg`, type: 'image/svg+xml' },
     { rel: 'apple-touch-icon', href: `${baseURL}apple-touch-icon.png` },
     { rel: 'manifest', href: `${baseURL}site.webmanifest` },
+    { rel: 'preconnect', href: 'https://beds24.com' },
+    { rel: 'dns-prefetch', href: 'https://beds24.com' },
   ],
 })
 
+// Global social meta: twitter card + og:locale
+useSeoMeta({
+  twitterCard: 'summary_large_image',
+  ogLocale: 'de_DE',
+  ogSiteName: 'Pension Volgenandt',
+})
+
 useSchemaOrg([
+  {
+    '@type': 'WebSite',
+    name: 'Pension Volgenandt',
+    url: 'https://www.pension-volgenandt.de',
+    inLanguage: 'de-DE',
+  },
   {
     '@type': 'BedAndBreakfast',
     '@id': 'https://www.pension-volgenandt.de/#identity',

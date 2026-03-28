@@ -20,7 +20,7 @@ useSeoMeta({
 })
 
 useHead({
-  titleTemplate: '%s',
+  titleTemplate: '%s | Pension Volgenandt',
   link: [
     {
       rel: 'canonical',
@@ -33,6 +33,21 @@ useHead({
     },
   ],
 })
+
+// Article structured data
+useSchemaOrg([
+  {
+    '@type': 'NewsArticle',
+    headline: article.value.seoTitle,
+    description: article.value.seoDescription,
+    image: `https://www.pension-volgenandt.de${article.value.heroImage}`,
+    datePublished: article.value.publishedDate,
+    author: {
+      '@type': 'Organization',
+      name: 'Pension Volgenandt',
+    },
+  },
+])
 
 definePageMeta({
   breadcrumb: { label: 'Artikel' },

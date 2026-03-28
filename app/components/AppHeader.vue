@@ -43,9 +43,10 @@ const navItems = computed(() => {
   return config.nav
 })
 
-// Locale-aware booking URL
+// Locale-aware booking URL (centralized in app.config.ts)
 const bookingUrl = computed(() => {
-  return `https://beds24.com/booking2.php?propid=261258&lang=${beds24Lang.value}&referer=Website&numnight=2&numadult=2`
+  const { baseUrl, propId } = config.beds24
+  return `${baseUrl}?propid=${propId}&lang=${beds24Lang.value}&referer=Website&numnight=2&numadult=2`
 })
 
 // Locale-aware logo link

@@ -1,5 +1,17 @@
 <script setup lang="ts">
 const { hasConsented, acceptAll, rejectAll } = useCookieConsent()
+
+// Focus the reject button (first actionable choice) when banner appears (WCAG 2.4.3)
+const rejectBtn = ref<HTMLButtonElement | null>(null)
+watch(
+  () => hasConsented.value,
+  (consented) => {
+    if (!consented) {
+      nextTick(() => rejectBtn.value?.focus())
+    }
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
@@ -23,6 +35,7 @@ const { hasConsented, acceptAll, rejectAll } = useCookieConsent()
         <!-- Equal-prominence buttons (TDDDG § 25 / LEGL-04) -->
         <div class="flex shrink-0 gap-2 sm:gap-3">
           <button
+            ref="rejectBtn"
             type="button"
             class="rounded-lg bg-sage-700 px-4 py-2.5 font-sans text-sm font-semibold text-white transition-colors duration-200 hover:bg-sage-800 sm:px-6 sm:py-3 sm:text-base"
             @click="rejectAll"

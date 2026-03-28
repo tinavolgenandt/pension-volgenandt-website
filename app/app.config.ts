@@ -2,6 +2,10 @@ export default defineAppConfig({
   siteName: 'Pension Volgenandt',
   contactFormUrl: 'https://api.pension-volgenandt.de/send-mail.php',
   siteTagline: 'Ruhe finden im Eichsfeld',
+  beds24: {
+    propId: 261258,
+    baseUrl: 'https://beds24.com/booking2.php',
+  },
   contact: {
     phone: '+49 160 97719112',
     phoneDisplay: '0160 97719112',
