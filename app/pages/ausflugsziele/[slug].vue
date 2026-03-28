@@ -134,7 +134,7 @@ const practicalInfo = computed(() => {
       <!-- Practical info -->
       <section v-if="practicalInfo.length > 0" class="mb-10">
         <h2 class="mb-6 font-serif text-xl font-semibold text-sage-900">
-          {{ t('attraction.practicalInfo', locale.value) }}
+          {{ t('attraction.practicalInfo', locale) }}
         </h2>
         <div class="rounded-lg border border-sage-200 bg-sage-50 p-6">
           <dl class="space-y-4">
@@ -163,7 +163,7 @@ const practicalInfo = computed(() => {
       <!-- Gallery (if images available) -->
       <section v-if="attraction.gallery && attraction.gallery.length > 0" class="mb-10">
         <h2 class="mb-6 font-serif text-xl font-semibold text-sage-900">
-          {{ t('attraction.gallery', locale.value) }}
+          {{ t('attraction.gallery', locale) }}
         </h2>
         <div class="grid gap-4 sm:grid-cols-2">
           <NuxtImg
@@ -180,12 +180,12 @@ const practicalInfo = computed(() => {
     </div>
 
     <!-- Soft CTA -->
-    <SharedSoftCta :text="t('attraction.planTrip', locale.value)" />
+    <SharedSoftCta :text="t('attraction.planTrip', locale)" />
 
     <!-- Booking CTA -->
     <SharedBookingCta
-      :text="t('attraction.bookAccommodation', locale.value)"
-      :button-text="t('cta.viewRooms', locale.value)"
+      :text="t('attraction.bookAccommodation', locale)"
+      :button-text="t('cta.viewRooms', locale)"
     />
   </div>
 </template>

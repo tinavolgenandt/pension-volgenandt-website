@@ -123,7 +123,7 @@ function formatDate(dateStr: string) {
       <!-- External links -->
       <section v-if="article.externalLinks?.length" class="mb-10">
         <h2 class="mb-4 font-serif text-xl font-semibold text-sage-900">
-          {{ t('news.furtherLinks', locale.value) }}
+          {{ t('news.furtherLinks', locale) }}
         </h2>
         <div class="rounded-lg border border-sage-200 bg-sage-50 p-6">
           <ul class="space-y-3">
@@ -147,7 +147,7 @@ function formatDate(dateStr: string) {
       </section>
     </div>
 
-    <SharedSoftCta :text="t('news.eventQuestion', locale.value)" />
-    <SharedBookingCta :text="t('news.stayWithUs', locale.value)" />
+    <SharedSoftCta :text="t('news.eventQuestion', locale)" />
+    <SharedBookingCta :text="t('news.stayWithUs', locale)" />
   </div>
 </template>
