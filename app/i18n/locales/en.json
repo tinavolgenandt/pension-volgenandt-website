@@ -18,7 +18,8 @@
     "viewRooms": "View rooms",
     "checkAvailability": "Check availability",
     "allRooms": "View all rooms",
-    "learnMore": "Learn more"
+    "learnMore": "Learn more",
+    "readMore": "Read more"
   },
   "room": {
     "type": {
