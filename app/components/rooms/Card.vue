@@ -46,6 +46,8 @@ const bookingUrl = computed(() => {
   return `https://beds24.com/booking2.php?${params}`
 })
 
+const { onImgError } = useImageFallback()
+
 const guestLabel = computed(() => {
   const word =
     props.maxGuests === 1 ? t('room.guest', props.locale) : t('room.guests', props.locale)
@@ -62,13 +64,17 @@ const guestLabel = computed(() => {
       class="block focus-visible:ring-2 focus-visible:ring-waldhonig-500 focus-visible:ring-offset-2"
     >
       <!-- Image area -->
-      <div class="relative overflow-hidden" :class="compact ? 'aspect-[3/2]' : 'aspect-[4/3]'">
+      <div
+        class="relative overflow-hidden bg-sage-100"
+        :class="compact ? 'aspect-[3/2]' : 'aspect-[4/3]'"
+      >
         <NuxtImg
           :src="heroImage"
           :alt="heroImageAlt"
           loading="lazy"
           sizes="sm:100vw md:50vw"
           class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          @error="onImgError"
         />
       </div>
 

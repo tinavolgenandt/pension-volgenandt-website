@@ -9,6 +9,8 @@ defineProps<{
   excerpt: string
 }>()
 
+const { onImgError } = useImageFallback()
+
 const categoryBadge: Record<string, { label: string; class: string }> = {
   veranstaltung: { label: 'Veranstaltung', class: 'bg-waldhonig-500 text-white' },
   region: { label: 'Region', class: 'bg-sage-700 text-white' },
@@ -31,13 +33,14 @@ function formatDate(dateStr: string) {
     class="group overflow-hidden rounded-lg bg-white shadow-sm transition-shadow hover:shadow-md"
   >
     <!-- Image with category badge -->
-    <div class="relative aspect-video overflow-hidden">
+    <div class="relative aspect-video overflow-hidden bg-sage-100">
       <NuxtImg
         :src="heroImage"
         :alt="heroImageAlt"
         class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         loading="lazy"
         sizes="100vw sm:50vw lg:33vw"
+        @error="onImgError"
       />
       <span
         :class="categoryBadge[category]?.class"

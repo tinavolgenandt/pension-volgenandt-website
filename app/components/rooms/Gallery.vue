@@ -9,6 +9,8 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const { onImgError } = useImageFallback()
+
 // Combine hero image with gallery into a single array (hero first)
 const allImages = computed<GalleryImage[]>(() => [
   { src: props.heroImage, alt: props.heroImageAlt },
@@ -41,6 +43,7 @@ const {
           loading="eager"
           fetchpriority="high"
           class="h-full w-full object-cover"
+          @error="onImgError"
         />
       </div>
 

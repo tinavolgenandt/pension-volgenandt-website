@@ -5,10 +5,12 @@ defineProps<{
   title: string
   subtitle?: string
 }>()
+
+const { onImgError } = useImageFallback()
 </script>
 
 <template>
-  <section class="relative h-[200px] overflow-hidden md:h-[300px]">
+  <section class="relative h-[200px] overflow-hidden bg-sage-100 md:h-[300px]">
     <!-- Banner photo -->
     <NuxtImg
       :src="image"
@@ -16,6 +18,7 @@ defineProps<{
       class="absolute inset-0 h-full w-full object-cover"
       loading="eager"
       sizes="100vw"
+      @error="onImgError"
     />
 
     <!-- Dark gradient overlay (bottom-to-top, 80% at bottom) -->
