@@ -27,6 +27,16 @@ useHead({
       hreflang: 'de',
       href: 'https://www.pension-volgenandt.de/nachhaltigkeit/',
     },
+    {
+      rel: 'alternate',
+      hreflang: 'en',
+      href: 'https://www.pension-volgenandt.de/en/sustainability/',
+    },
+    {
+      rel: 'alternate',
+      hreflang: 'x-default',
+      href: 'https://www.pension-volgenandt.de/nachhaltigkeit/',
+    },
   ],
 })
 
@@ -124,9 +134,9 @@ const sustainabilityFeatures = [
             sparsam einzusetzen – ohne dass unsere Gäste auf Komfort verzichten müssen.
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
-            Für Wärme und Heizung nutzen wir eine moderne Holzpelletsanlage. Pellets aus
-            regionalen Holzresten verbrennen besonders sauber und gelten als klimaneutral –
-            das freigesetzte CO₂ wurde zuvor beim Baumwachstum gebunden.
+            Für Wärme und Heizung nutzen wir eine moderne Holzpelletsanlage. Pellets aus regionalen
+            Holzresten verbrennen besonders sauber und gelten als klimaneutral – das freigesetzte
+            CO₂ wurde zuvor beim Baumwachstum gebunden.
           </p>
         </div>
         <NuxtImg
@@ -197,14 +207,14 @@ const sustainabilityFeatures = [
           <NuxtImg
             src="/img/content/garten-schmetterling-flieder.webp"
             alt="Tagpfauenauge auf Sommerflieder im Garten der Pension"
-            class="rounded-lg aspect-square object-cover w-full"
+            class="aspect-square w-full rounded-lg object-cover"
             loading="lazy"
             sizes="50vw md:25vw"
           />
           <NuxtImg
             src="/img/content/amphibien-gartenteich.webp"
             alt="Amphibien am Gartenteich der Pension Volgenandt"
-            class="rounded-lg aspect-square object-cover w-full"
+            class="aspect-square w-full rounded-lg object-cover"
             loading="lazy"
             sizes="50vw md:25vw"
           />

@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { t } from '~/utils/translations'
+
+const { locale } = useLocale()
+
 // Load attractions teaser data via Nuxt Content queryCollection
 const { data: attractionsData } = await useAsyncData('attractionsTeaser', () =>
   queryCollection('attractionsTeaser').all(),
@@ -9,7 +13,9 @@ const featuredAttraction = computed(() =>
   items.value.find((a: { featured?: boolean }) => a.featured),
 )
 const otherAttractions = computed(() =>
-  items.value.filter((a: { featured?: boolean; image?: string }) => !a.featured && a.image).slice(0, 2),
+  items.value
+    .filter((a: { featured?: boolean; image?: string }) => !a.featured && a.image)
+    .slice(0, 2),
 )
 </script>
 
@@ -17,14 +23,18 @@ const otherAttractions = computed(() =>
   <section class="py-20 md:py-24">
     <div class="mx-auto max-w-6xl px-6">
       <h2 class="font-serif text-3xl font-bold text-sage-900 md:text-4xl">
-        Erleben Sie das Eichsfeld
+        {{ t('home.experienceHeading', locale) }}
       </h2>
 
       <div v-if="items.length" class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
         <!-- Hero card: featured attraction (Barenpark) spanning 2 columns -->
         <UiScrollReveal v-if="featuredAttraction" :delay="0" class="md:col-span-2 md:row-span-2">
           <NuxtLink
-            :to="`/ausflugsziele/${featuredAttraction.slug}/`"
+            :to="
+              locale === 'en'
+                ? `/en/attractions/${featuredAttraction.slug}/`
+                : `/ausflugsziele/${featuredAttraction.slug}/`
+            "
             class="group relative block h-full overflow-hidden rounded-lg"
           >
             <NuxtImg
@@ -63,7 +73,11 @@ const otherAttractions = computed(() =>
           :delay="Math.min((index + 1) * 150, 400)"
         >
           <NuxtLink
-            :to="`/ausflugsziele/${attraction.slug}/`"
+            :to="
+              locale === 'en'
+                ? `/en/attractions/${attraction.slug}/`
+                : `/ausflugsziele/${attraction.slug}/`
+            "
             class="group relative block overflow-hidden rounded-lg"
           >
             <NuxtImg
@@ -99,10 +113,10 @@ const otherAttractions = computed(() =>
       <!-- CTA link -->
       <div class="mt-10 text-center">
         <NuxtLink
-          to="/ausflugsziele/"
+          :to="locale === 'en' ? '/en/attractions/' : '/ausflugsziele/'"
           class="inline-flex items-center gap-1 font-sans text-lg font-semibold text-sage-600 transition-colors hover:text-sage-700 hover:underline"
         >
-          Alle Ausflugsziele entdecken &rarr;
+          {{ t('home.exploreAttractions', locale) }} &rarr;
         </NuxtLink>
       </div>
     </div>

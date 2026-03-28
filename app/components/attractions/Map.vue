@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { t } from '~/utils/translations'
+
 defineProps<{
   attractions: Array<{
     name: string
@@ -8,6 +10,8 @@ defineProps<{
     shortDescription: string
   }>
 }>()
+
+const { locale } = useLocale()
 
 // Pension coordinates (center of map)
 const pensionCoords = [51.4124, 10.322] as [number, number]
@@ -45,8 +49,16 @@ const pensionCoords = [51.4124, 10.322] as [number, number]
       <LPopup>
         <strong>{{ attraction.name }}</strong
         ><br />
-        {{ attraction.distanceKm }} km von der Pension<br />
-        <NuxtLink :to="`/ausflugsziele/${attraction.slug}/`"> Mehr erfahren </NuxtLink>
+        {{ attraction.distanceKm }} km<br />
+        <NuxtLink
+          :to="
+            locale === 'en'
+              ? `/en/attractions/${attraction.slug}/`
+              : `/ausflugsziele/${attraction.slug}/`
+          "
+        >
+          {{ t('cta.learnMore', locale) }}
+        </NuxtLink>
       </LPopup>
     </LMarker>
   </LMap>

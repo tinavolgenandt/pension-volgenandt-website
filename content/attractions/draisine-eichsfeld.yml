@@ -2,7 +2,7 @@ name: 'Draisinen-Erlebnis Eichsfeld'
 slug: draisine-eichsfeld
 seoTitle: 'Draisinen-Erlebnis Eichsfeld – Tunnelfahrt auf alten Gleisen | Pension im Eichsfeld'
 seoDescription: 'Mit der Draisine durch historische Bahntunnel im Eichsfeld – ein unvergessliches Erlebnis für die ganze Familie. Nur 20 km von der Pension Volgenandt.'
-heroImage: /img/attractions/draisine-tunnel.jpg
+heroImage: /img/attractions/draisine-tunnel.webp
 heroImageAlt: 'Beleuchteter Bahntunnel mit alten Gleisen und Radweg – Draisinen-Strecke im Eichsfeld'
 distanceKm: 20
 drivingMinutes: 25
@@ -47,6 +47,6 @@ coordinates:
   lat: 51.45
   lng: 10.30
 gallery:
-  - src: /img/attractions/draisine-tunnel-2.jpg
+  - src: /img/attractions/draisine-tunnel-2.webp
     alt: 'Blick durch den langen Backsteingewölbe-Tunnel der Draisinen-Strecke'
 sortOrder: 13

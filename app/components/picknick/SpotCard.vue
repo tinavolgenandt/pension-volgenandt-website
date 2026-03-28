@@ -23,10 +23,7 @@ defineProps<{
         loading="lazy"
         sizes="100vw sm:50vw lg:33vw"
       />
-      <div
-        v-else
-        class="flex h-full w-full items-center justify-center bg-sage-100"
-      >
+      <div v-else class="flex h-full w-full items-center justify-center bg-sage-100">
         <Icon name="ph:map-pin-duotone" class="size-12 text-sage-300" />
       </div>
 
@@ -47,7 +44,7 @@ defineProps<{
 
     <!-- Text -->
     <div class="p-4">
-      <p class="text-xs font-medium uppercase tracking-wide text-sage-400">{{ location }}</p>
+      <p class="text-xs font-medium tracking-wide text-sage-400 uppercase">{{ location }}</p>
       <h3 class="mt-1 font-serif text-base font-semibold text-sage-900">{{ name }}</h3>
       <p class="mt-1.5 text-sm leading-relaxed text-sage-600">{{ description }}</p>
     </div>

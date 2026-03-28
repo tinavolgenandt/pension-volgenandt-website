@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { t } from '~/utils/translations'
+
+const { locale } = useLocale()
 const scrollIndicatorVisible = ref(true)
 const posterError = ref(false)
 const videoReady = ref(false)
@@ -98,14 +101,14 @@ if (import.meta.client) {
         class="hero-animate mt-3 font-sans text-lg text-white/90 md:text-[22px]"
         style="animation-delay: 550ms; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3)"
       >
-        Ruhe finden im Eichsfeld
+        {{ t('site.tagline', locale) }}
       </p>
       <div class="hero-animate mt-4 md:mt-6" style="animation-delay: 800ms">
         <NuxtLink
-          to="/zimmer/"
+          :to="locale === 'en' ? '/en/rooms/' : '/zimmer/'"
           class="inline-block w-full rounded-lg bg-waldhonig-600 px-6 py-3 text-center font-sans text-base font-semibold text-white transition-[transform,background-color] hover:scale-[1.02] hover:bg-waldhonig-700 md:w-auto md:px-8 md:py-4 md:text-left md:text-lg"
         >
-          Zimmer entdecken
+          {{ t('home.heroButton', locale) }}
         </NuxtLink>
       </div>
     </div>

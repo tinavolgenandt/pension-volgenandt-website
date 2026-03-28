@@ -6,18 +6,20 @@ items:
     pricePerPerson: 19
     minPersons: 2
     description: >-
-      Mehr von allem, was gut ist. Das erweiterte Brunch-Paket
-      mit Ei, herzhafter Quiche oder Blechkuchen, einem Glas Sekt
-      und einer großen Aufschnitt-Auswahl. Ideal für einen
-      entspannten Morgen unter freiem Himmel.
+      Frische Brötchen, hausgemachte Marmelade aus eigenem Gartenobst,
+      Aufstriche nach Muttis Rezepten, Joghurt, Orangensaft und
+      ein hartgekochtes Ei. Dazu eine Thermoskanne Kaffee oder Tee.
+      Ideal für einen entspannten Morgen unter freiem Himmel.
     includes:
-      - 'Frische Brötchen'
-      - 'Hausgemachte Marmelade & Aufstriche'
+      - 'Frische Brötchen (2 pro Person)'
+      - 'Hausgemachte Marmelade (Obst aus dem eigenen Garten)'
+      - 'Aufstriche nach Muttis Rezepten'
       - 'Käse & Eichsfelder Wurst'
-      - 'Hartgekochtes Ei'
-      - 'Quiche oder Blechkuchen (hausgemacht)'
+      - 'Hartgekochtes Ei (1 pro Person)'
+      - 'Joghurt'
+      - 'Orangensaft'
       - 'Frisches Obst (saisonal)'
-      - 'Glas Sekt'
+      - 'Thermoskanne Kaffee oder Tee'
     image: /img/content/fruehstueck-platte.webp
     imageAlt: 'Hausgemachte Frühstücksplatte mit Marmelade, Käse und frischen Brötchen'
     imagePosition: 'bottom'

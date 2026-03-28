@@ -1,0 +1,77 @@
+name: 'Single Room'
+slug: einzelzimmer
+type: einzelzimmer
+category: 'Einzelzimmer'
+shortDescription: >-
+  Cosy single room for solo and business travellers.
+  Compact, comfortable and equipped with everything
+  you need.
+description: >-
+  Our single room is the ideal retreat for solo and
+  business travellers. You will find a comfortable
+  single bed and an en-suite bathroom with shower.
+  Wi-Fi and TV provide comfort and entertainment.
+  Despite its compact size, the room offers everything
+  you need for a pleasant stay. Our fully equipped
+  shared kitchen and the terrace are available for all
+  guests – we kindly ask for consideration of others.
+
+weekendOnly: true
+
+beds24PropertyId: 261258
+beds24RoomId: 656178
+
+maxGuests: 1
+beds: '1 single bed'
+
+pricing:
+  - label: 'Direct booking'
+    rates:
+      - occupancy: 1
+        pricePerNight: 50
+
+startingPrice: 50
+
+heroImage: /img/rooms/einzelzimmer-zimmer-2.webp
+heroImageAlt: 'Single room with single bed, wardrobe and window'
+gallery:
+  - src: /img/rooms/einzelzimmer-zimmer.webp
+    alt: 'Single room – second perspective'
+  - src: /img/rooms/einzelzimmer-zimmer-3.webp
+    alt: 'Single room with single bed, wooden wardrobe and bright window'
+  - src: /img/rooms/zimmer-badezimmer.png
+    alt: 'Private bathroom with shower'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-5.webp
+    alt: 'Shared kitchen with breakfast tables and warm lighting'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-6.webp
+    alt: 'Shared kitchen with cooking area, dining space and fresh flowers'
+
+amenities:
+  - wifi
+  - tv
+  - parkplatz
+  - bettwaesche
+  - handtuecher
+  - dusche
+  - heizung
+
+highlights:
+  - 'Ideal for solo travellers'
+  - 'En-suite bathroom'
+  - 'Compact & comfortable'
+
+extras:
+  - name: 'Breakfast'
+    description: 'Rolls, cold cuts, homemade jam & coffee or tea'
+    price: 10
+    unit: 'per person / night'
+  - name: 'Gourmet breakfast'
+    description: 'Rolls, regional cold cuts, homemade jam, seasonal fruit, fresh juice & coffee or tea'
+    price: 15
+    unit: 'per person / night'
+  - name: 'BBQ set'
+    description: 'Incl. barbecue utensils and pans'
+    price: 10
+    unit: 'per use'
+
+sortOrder: 7

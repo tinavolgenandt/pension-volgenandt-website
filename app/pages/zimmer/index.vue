@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { t } from '~/utils/translations'
+
+const { locale } = useLocale()
+
 useSeoMeta({
   title: 'Zimmer & Ferienwohnungen',
   ogTitle: 'Zimmer & Ferienwohnungen | Pension Volgenandt',
@@ -6,13 +10,15 @@ useSeoMeta({
     'Entdecken Sie unsere 6 gemütlichen Zimmer und Ferienwohnungen in Breitenbach im Eichsfeld. Ab 50 EUR pro Nacht inkl. MwSt.',
   ogDescription:
     'Entdecken Sie unsere 6 gemütlichen Zimmer und Ferienwohnungen in Breitenbach im Eichsfeld. Ab 50 EUR pro Nacht inkl. MwSt.',
-  ogImage: '/img/rooms/emils-kuhwiese/hero.webp',
+  ogImage: '/img/rooms/emils-kuhwiese-schlafzimmer-2.webp',
   ogType: 'website',
 })
 useHead({
   link: [
     { rel: 'canonical', href: 'https://www.pension-volgenandt.de/zimmer/' },
     { rel: 'alternate', hreflang: 'de', href: 'https://www.pension-volgenandt.de/zimmer/' },
+    { rel: 'alternate', hreflang: 'en', href: 'https://www.pension-volgenandt.de/en/rooms/' },
+    { rel: 'alternate', hreflang: 'x-default', href: 'https://www.pension-volgenandt.de/zimmer/' },
   ],
 })
 
@@ -33,26 +39,20 @@ const groupedRooms = computed(() => {
   }
   return groups
 })
-
-// Category heading labels (plural forms for section headings)
-const categoryHeadings: Record<string, string> = {
-  Ferienwohnung: 'Ferienwohnungen',
-  Doppelzimmer: 'Doppel- & Zweibettzimmer',
-  Einzelzimmer: 'Einzelzimmer',
-}
 </script>
 
 <template>
   <div class="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
     <!-- Page heading -->
     <div class="mb-10">
-      <h1 class="font-serif text-3xl font-bold text-sage-800 sm:text-4xl">Unsere Zimmer</h1>
+      <h1 class="font-serif text-3xl font-bold text-sage-800 sm:text-4xl">
+        {{ t('rooms.title', locale) }}
+      </h1>
       <p class="mt-3 max-w-2xl text-lg text-sage-600">
-        Ob gemütliche Ferienwohnung für die ganze Familie oder komfortables Doppelzimmer für Paare
-        &ndash; bei uns finden Sie den passenden Rückzugsort für Ihren Aufenthalt im Eichsfeld.
+        {{ t('rooms.subtitle', locale) }}
       </p>
       <p class="mt-2 text-sm text-sage-700">
-        Wählen Sie ein Zimmer, um Verfügbarkeit und Buchungsmöglichkeiten zu sehen.
+        {{ t('rooms.chooseRoom', locale) }}
       </p>
     </div>
 
@@ -60,7 +60,7 @@ const categoryHeadings: Record<string, string> = {
     <div v-if="rooms && rooms.length > 0" class="space-y-12">
       <section v-for="[category, categoryRooms] in groupedRooms" :key="category">
         <h2 class="mb-6 font-serif text-2xl font-semibold text-sage-700">
-          {{ categoryHeadings[category] || category }}
+          {{ t(`room.category.${category}`, locale) }}
         </h2>
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
           <RoomsCard
@@ -83,7 +83,7 @@ const categoryHeadings: Record<string, string> = {
 
     <!-- Loading/empty state -->
     <div v-else class="py-12 text-center text-sage-700">
-      <p>Zimmer werden geladen...</p>
+      <p>{{ t('room.loading', locale) }}</p>
     </div>
   </div>
 </template>

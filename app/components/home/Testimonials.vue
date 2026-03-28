@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import useEmblaCarousel from 'embla-carousel-vue'
 import Autoplay from 'embla-carousel-autoplay'
+import { t } from '~/utils/translations'
+
+const { locale } = useLocale()
 
 // Load testimonials via Nuxt Content queryCollection
 const { data: testimonialsData } = await useAsyncData('testimonials', () =>
@@ -9,10 +12,16 @@ const { data: testimonialsData } = await useAsyncData('testimonials', () =>
 
 const items = computed(() => testimonialsData.value?.[0]?.items ?? [])
 
-// Carousel setup — Accessibility plugin removed (v9 RC incompatible with Embla v8)
-const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center' }, [
-  Autoplay({ delay: 6000, stopOnInteraction: true }),
-])
+// Respect prefers-reduced-motion: disable autoplay for users who prefer reduced motion
+const prefersReducedMotion = usePreferredReducedMotion()
+const autoplayPlugins = computed(() =>
+  prefersReducedMotion.value === 'reduce'
+    ? []
+    : [Autoplay({ delay: 6000, stopOnInteraction: true })],
+)
+
+// Carousel setup
+const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center' }, autoplayPlugins)
 
 // Navigation state
 const selectedIndex = ref(0)
@@ -54,14 +63,19 @@ watch(emblaApi, (api) => {
   <section class="bg-sage-50 py-20 md:py-24">
     <div class="mx-auto max-w-4xl px-6">
       <h2 class="text-center font-serif text-3xl font-bold text-sage-900 md:text-4xl">
-        Was unsere G&auml;ste sagen
+        {{ t('home.testimonialsHeading', locale) }}
       </h2>
 
       <div v-if="items.length" class="mt-12">
         <!-- Embla carousel -->
-        <div class="relative">
+        <div
+          class="relative"
+          role="region"
+          :aria-roledescription="t('home.ariaCarousel', locale)"
+          :aria-label="t('home.ariaGuestReviews', locale)"
+        >
           <!-- Viewport -->
-          <div ref="emblaRef" class="overflow-hidden">
+          <div ref="emblaRef" class="overflow-hidden" aria-live="polite">
             <div class="flex">
               <div
                 v-for="(testimonial, index) in items"
@@ -88,7 +102,7 @@ watch(emblaApi, (api) => {
                   <p class="mt-4 font-semibold text-sage-600">
                     {{ testimonial.name }}
                   </p>
-                  <p class="mt-1 text-xs text-sage-600">Google Bewertung</p>
+                  <p class="mt-1 text-xs text-sage-600">{{ t('home.googleReview', locale) }}</p>
                 </div>
               </div>
             </div>
@@ -99,7 +113,7 @@ watch(emblaApi, (api) => {
             <button
               type="button"
               class="absolute top-1/2 left-2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-sage-700 shadow-sm transition-colors hover:bg-white md:left-0"
-              aria-label="Vorheriges Zitat"
+              :aria-label="t('home.ariaPrevQuote', locale)"
               @click="scrollPrev"
             >
               <Icon name="lucide:chevron-left" class="size-5" />
@@ -107,7 +121,7 @@ watch(emblaApi, (api) => {
             <button
               type="button"
               class="absolute top-1/2 right-2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-sage-700 shadow-sm transition-colors hover:bg-white md:right-0"
-              aria-label="Nächstes Zitat"
+              :aria-label="t('home.ariaNextQuote', locale)"
               @click="scrollNext"
             >
               <Icon name="lucide:chevron-right" class="size-5" />
@@ -123,7 +137,11 @@ watch(emblaApi, (api) => {
               :key="index"
               type="button"
               class="flex size-12 items-center justify-center"
-              :aria-label="`Zitat ${index + 1} von ${scrollSnaps.length}`"
+              :aria-label="
+                t('home.ariaQuoteOf', locale)
+                  .replace('{current}', String(index + 1))
+                  .replace('{total}', String(scrollSnaps.length))
+              "
               @click="scrollTo(index)"
             >
               <span

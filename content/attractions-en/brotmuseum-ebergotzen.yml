@@ -1,0 +1,59 @@
+name: 'European Bread Museum Ebergotzen'
+slug: brotmuseum-ebergotzen
+seoTitle: 'European Bread Museum Ebergotzen – Cultural Excursion in the Eichsfeld'
+seoDescription: 'The European Bread Museum in Ebergotzen showcases 10,000 years of bread culture on a historic farmstead with windmill and herb garden – 35 km from Pension Volgenandt.'
+heroImage: /img/attractions/brotmuseum-windmuehle-kutsche.webp
+heroImageAlt: 'Historic windmill and old carriage on the outdoor grounds of the European Bread Museum Ebergotzen'
+distanceKm: 35
+drivingMinutes: 40
+category: kultur
+shortDescription: '10,000 years of bread history on a historic farmstead with windmill'
+intro: >-
+  The European Bread Museum in Ebergotzen tells the story of bread
+  on a sprawling historic farmstead – from the Stone Age to the
+  present day. With a windmill, herb garden and engaging exhibitions,
+  it makes a great outing for the whole family.
+content: >-
+  Set in the green countryside near Gottingen, not far from the
+  Eichsfeld region, the European Bread Museum Ebergotzen occupies
+  an old farmstead with characteristic slate buildings. Everything
+  here revolves around humanity's oldest cultural foodstuff.
+
+
+  Across several exhibition buildings, the cultural history of bread
+  comes to life on over 1,500 square metres: from harvesting grain
+  to milling in the historic windmill to baking in an old brick oven.
+  Authentic exhibits, vintage kitchen utensils, scales and tools bring
+  bygone eras back to life.
+
+
+  The expansive outdoor grounds invite you to stroll: a functioning
+  windmill, old agricultural machinery, a historic carriage, and a
+  lush herb garden where plants related to bread-making thrive.
+  For children there are hands-on activities, and baking demonstrations
+  are often held on weekends.
+
+
+  The museum is located right on the Leinepfad trail – a visit can
+  easily be combined with a cycling tour or a walk along the river.
+hostTip: >-
+  Allow at least two hours – the outdoor grounds are more extensive
+  than you might expect. If possible, visit on a weekend when baking
+  demonstrations are often held and freshly baked bread can be tasted.
+bestTimeToVisit: 'April to October'
+website: 'https://www.brotmuseum.de'
+coordinates:
+  lat: 51.5388
+  lng: 9.9979
+gallery:
+  - src: /img/attractions/brotmuseum-eingang.webp
+    alt: 'Historic main building of the Bread Museum Ebergotzen with slate facade'
+  - src: /img/attractions/brotmuseum-aussengelaende-garten.webp
+    alt: 'Expansive outdoor grounds of the Bread Museum with historic buildings and green spaces'
+  - src: /img/attractions/brotmuseum-ausstellung-kueche.webp
+    alt: 'Indoor exhibition with historic kitchen utensils, old scales and bread-baking tools'
+  - src: /img/attractions/brotmuseum-gebaeude-garten.webp
+    alt: 'Museum building surrounded by mature trees and garden grounds'
+  - src: /img/attractions/brotmuseum-eingang-2.webp
+    alt: 'Entrance area of the European Bread Museum Ebergotzen'
+sortOrder: 14

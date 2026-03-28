@@ -1,0 +1,58 @@
+name: 'Alternative Bear Park Worbis'
+slug: baerenpark-worbis
+seoTitle: 'Bear Park Worbis | Guesthouse near Bear Park'
+seoDescription: 'Visit the Alternative Bear Park Worbis – just 6 km from our guesthouse. Tips and accommodation in the Eichsfeld region.'
+heroImage: /img/attractions/baerenpark-worbis.webp
+heroImageAlt: 'Brown bear in the naturalistic enclosure of the Alternative Bear Park Worbis'
+distanceKm: 6
+drivingMinutes: 9
+category: natur
+shortDescription: 'Experience brown bears and black bears in naturalistic enclosures'
+intro: >-
+  The Alternative Bear Park Worbis is one of the most popular
+  destinations near us. Bears and wolves rescued from poor keeping
+  conditions live here in large, naturalistic enclosures.
+content: >-
+  Just 6 kilometres from our guesthouse lies the Alternative Bear
+  Park in Worbis. Across an area of 4 hectares, brown bears, black
+  bears and wolves live in species-appropriate enclosures.
+
+
+  The park was founded as a sanctuary for bears rescued from poor
+  keeping conditions and offers visitors a unique insight into the
+  lives of these fascinating animals. A circular trail leads through
+  the entire park, past observation points and information boards.
+
+
+  For families with children there is a petting zoo and an adventure
+  playground. The park restaurant serves regional cuisine to help you
+  recharge.
+
+
+  The bear park is actively committed to animal welfare and raises
+  awareness about the issues of private wild animal keeping. A visit
+  is not only a wonderful experience but also supports an important
+  cause.
+hostTip: >-
+  Come early in the morning when the bears are most active. The
+  trail takes about 1-2 hours. Bring sturdy footwear – the path
+  leads through hilly woodland.
+bestTimeToVisit: 'Spring to autumn'
+website: 'https://www.baer.de'
+coordinates:
+  lat: 51.3891
+  lng: 10.2064
+gallery:
+  - src: /img/attractions/baerenpark-baer-baumstamm.webp
+    alt: 'Brown bear relaxing on a tree trunk in the naturalistic enclosure'
+  - src: /img/attractions/baerenpark-baer-nahaufnahme.webp
+    alt: 'Brown bear – expressive close-up of the head'
+  - src: /img/attractions/baerenpark-baer-wald-fruehling.webp
+    alt: 'Brown bear roaming its spacious woodland enclosure in spring'
+  - src: /img/attractions/baerenpark-baer-wald.webp
+    alt: 'Bear in the woodland enclosure of the Alternative Bear Park Worbis'
+  - src: /img/attractions/baerenpark-papageien.webp
+    alt: 'Colourful parrots in the aviary area of the bear park'
+  - src: /img/attractions/baerenpark-kraeutergarten.webp
+    alt: 'Well-kept herb garden on the grounds of the bear park'
+sortOrder: 1

@@ -1,0 +1,294 @@
+{
+  "site": {
+    "tagline": "Find Peace in the Eichsfeld",
+    "country": "Germany"
+  },
+  "nav": {
+    "rooms": "Rooms",
+    "families": "For Families",
+    "activities": "Activities",
+    "news": "News",
+    "sustainability": "Sustainability",
+    "contact": "Contact"
+  },
+  "cta": {
+    "bookNow": "Book now",
+    "book": "Book",
+    "viewDetails": "View details",
+    "viewRooms": "View rooms",
+    "checkAvailability": "Check availability",
+    "allRooms": "View all rooms",
+    "learnMore": "Learn more",
+    "readMore": "Read more"
+  },
+  "room": {
+    "type": {
+      "ferienwohnung": "Holiday apartment",
+      "doppelzimmer": "Double room",
+      "zweibettzimmer": "Twin room",
+      "einzelzimmer": "Single room"
+    },
+    "category": {
+      "Ferienwohnung": "Holiday Apartments",
+      "Doppelzimmer": "Double & Twin Rooms",
+      "Einzelzimmer": "Single Rooms"
+    },
+    "from": "from",
+    "perNight": "/ night incl. VAT",
+    "guest": "guest",
+    "guests": "guests",
+    "weekendOnly": "This room is available <strong>Friday to Sunday only</strong>.",
+    "phoneOnly": "This room can only be booked by phone",
+    "loading": "Loading rooms...",
+    "notFound": "Room not found",
+    "prices": "Prices",
+    "amenities": "Amenities",
+    "extras": "Add-ons",
+    "otherRooms": "Other Rooms",
+    "availability": "Availability",
+    "booking": "Booking",
+    "availabilityBooking": "Availability & Booking"
+  },
+  "rooms": {
+    "title": "Our Rooms",
+    "subtitle": "Whether a cosy holiday apartment for the whole family or a comfortable double room for couples – you will find the perfect retreat for your stay in the Eichsfeld.",
+    "chooseRoom": "Select a room to see availability and booking options."
+  },
+  "price": {
+    "perNight": "per night",
+    "person": "person",
+    "persons": "persons",
+    "allIncl": "All prices incl. VAT"
+  },
+  "desc": {
+    "readMore": "Read more",
+    "showLess": "Show less"
+  },
+  "booking": {
+    "calendarLoading": "Loading calendar...",
+    "widgetLoading": "Loading booking widget...",
+    "calendarLabel": "Availability calendar for",
+    "widgetLabel": "Booking widget for"
+  },
+  "contact": {
+    "heading": "Contact & Directions",
+    "subtitle": "We look forward to hearing from you",
+    "talkToUs": "Get in touch",
+    "talkToUsText": "Whether you have a question, would like to book a room, or simply want to learn more about our guesthouse – we are happy to help.",
+    "mobile": "Mobile",
+    "landline": "Landline",
+    "email": "Email",
+    "address": "Address",
+    "sendMessage": "Send a message",
+    "sendMessageText": "Write to us – we usually reply within 24 hours."
+  },
+  "form": {
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "submit": "Send message",
+    "sending": "Sending...",
+    "successTitle": "Thank you!",
+    "successText": "We have received your message and will get back to you as soon as possible.",
+    "errorGeneric": "An error occurred. Please try again.",
+    "errorNetwork": "An error occurred. Please try again or give us a call."
+  },
+  "directions": {
+    "heading": "Directions",
+    "byCar": "By car (A38)",
+    "byCarText": "From the A38 motorway, take the Leinefelde exit and follow signs towards Breitenbach. After about 10 minutes you will reach our guesthouse at Otto-Reuter-Straße 28. Free parking is available right in front of the building.",
+    "byTrain": "By train",
+    "byTrainText": "Leinefelde station is 4 km from our guesthouse. We are happy to pick you up by arrangement – just give us a call beforehand.",
+    "gps": "GPS coordinates",
+    "openMaps": "Open in Google Maps"
+  },
+  "faq": {
+    "heading": "Frequently Asked Questions"
+  },
+  "footer": {
+    "contact": "Contact",
+    "discover": "Explore",
+    "legal": "Legal",
+    "cookieSettings": "Cookie Settings",
+    "copyright": "All rights reserved.",
+    "ctaHeading": "Ready for your stay in the Eichsfeld?",
+    "ctaButton": "Check availability",
+    "callUs": "Or call us directly",
+    "nav": {
+      "roomsPrices": "Rooms & Prices",
+      "forFamilies": "For Families",
+      "activities": "Activities",
+      "sustainability": "Sustainability",
+      "attractions": "Attractions",
+      "contactDirections": "Contact & Directions"
+    }
+  },
+  "legal": {
+    "impressum": "Imprint",
+    "datenschutz": "Privacy Policy",
+    "agb": "Terms & Conditions"
+  },
+  "header": {
+    "toggleNav": "Toggle navigation",
+    "mainNav": "Main navigation",
+    "mobileNav": "Mobile navigation"
+  },
+  "home": {
+    "title": "Pension Volgenandt | Find Peace in the Eichsfeld",
+    "description": "Family-run guesthouse in Breitenbach, Eichsfeld. Holiday apartments and rooms with views of the countryside.",
+    "heroButton": "Discover rooms",
+    "welcomeHeading": "Welcome to Breitenbach",
+    "welcomeText": "Our family-run guesthouse in the heart of the Eichsfeld region offers the perfect base for a relaxing getaway. Surrounded by rolling hills, castles, and nature, you can unwind in our comfortable rooms and apartments – each with its own character and views of the countryside.",
+    "welcomeTitle": "Welcome to Our Home",
+    "welcomeParagraph1": "We are Simone & Ralf Volgenandt and we are delighted to welcome you to our home in the Eichsfeld region. Our guesthouse is located about one kilometre outside Breitenbach, nestled in the gentle hills of Thuringia – a place where time passes a little more slowly.",
+    "welcomeParagraph2": "Whether you want to explore the castles and hiking trails of the region, visit the nearby bear park, or simply enjoy the peace and quiet: our guesthouse is the perfect starting point for relaxing days. Our holiday apartments and rooms offer space, comfort, and views of the countryside.",
+    "welcomeParagraph3": "We run our home with care and a love for nature – with solar energy from our own roof, a biological sewage treatment plant, and a garden that invites you to linger.",
+    "welcomeImageAlt": "Simone and Ralf Volgenandt – your hosts in Breitenbach",
+    "gardenHeading": "Garden & Surroundings",
+    "gardenSubtitle": "Four Seasons – A Place of Tranquility",
+    "ourRooms": "Our Rooms",
+    "testimonialsHeading": "What Our Guests Say",
+    "googleReview": "Google Review",
+    "ariaCarousel": "Carousel",
+    "ariaGuestReviews": "Guest reviews",
+    "ariaPrevQuote": "Previous quote",
+    "ariaNextQuote": "Next quote",
+    "ariaQuoteOf": "Quote {current} of {total}",
+    "experienceHeading": "Experience the Eichsfeld",
+    "exploreAttractions": "Explore all attractions",
+    "sustainabilityHeading": "Naturally Sustainable",
+    "sustainabilityText": "Sustainability is not a trend for us – it is part of our everyday life. We care for our home in the Eichsfeld with the same attention we give to your stay.",
+    "sustainabilityFeature1Title": "Solar Energy",
+    "sustainabilityFeature1Desc": "Our own power from the roof",
+    "sustainabilityFeature2Title": "Bio Sewage Plant",
+    "sustainabilityFeature2Desc": "Natural wastewater treatment",
+    "sustainabilityFeature3Title": "Compost & Cycle",
+    "sustainabilityFeature3Desc": "Green cuttings become garden soil",
+    "learnSustainability": "Learn more about our sustainability",
+    "sustainabilityImageAlt": "Yellow coneflowers and colourful blooms in the guesthouse garden",
+    "locationHeading": "How to Find Us",
+    "locationText": "Pension Volgenandt is located in the village of Breitenbach, part of Leinefelde-Worbis in Thuringia. The A38 motorway is just 10 minutes away, and Leinefelde train station is 4 km from our door.",
+    "mapPlaceholderAlt": "Map showing the location of Pension Volgenandt in Breitenbach, Eichsfeld",
+    "gardenPhoto1": "Driveway to Pension Volgenandt in summer",
+    "gardenPhoto2": "Spring meadow with dandelion clocks next to the guesthouse",
+    "gardenPhoto3": "Natural pond with reeds and wildflowers in the guesthouse garden",
+    "gardenPhoto4": "Apple tree with ripe fruit and flower beds in the guesthouse garden",
+    "gardenPhoto5": "Entrance of Pension Volgenandt in summer",
+    "gardenPhoto6": "Meadow at sunset near the guesthouse",
+    "gardenPhoto7": "Building and entrance with parking at Pension Volgenandt",
+    "gardenPhoto8": "Pension Volgenandt in winter with deep snow and blue sky",
+    "gardenPhoto9": "Winter landscape in the Eichsfeld with snow-covered fields and sunshine"
+  },
+  "hosts": {
+    "caption": "Simone & Ralf Volgenandt – we look forward to welcoming you",
+    "buildingCaption": "This is how our guesthouse welcomes you"
+  },
+  "softCta": {
+    "default": "Have a question? We are happy to help.",
+    "callUs": "Or call us directly"
+  },
+  "bookingCta": {
+    "default": "Find your perfect room"
+  },
+  "schema": {
+    "persons": "persons"
+  },
+  "layout": {
+    "skipToContent": "Skip to content"
+  },
+  "attraction": {
+    "notFound": "Attraction not found",
+    "practicalInfo": "Practical Information",
+    "bestTime": "Best time to visit",
+    "gallery": "Gallery",
+    "planTrip": "Planning a trip? We're happy to advise.",
+    "bookAccommodation": "Book your accommodation for the perfect day trip"
+  },
+  "news": {
+    "notFound": "Article not found",
+    "furtherLinks": "Further Links",
+    "category": {
+      "veranstaltung": "Event",
+      "region": "Region",
+      "pension": "Guesthouse"
+    },
+    "eventQuestion": "Have questions about this event? We're happy to help.",
+    "stayWithUs": "Stay with us in the Eichsfeld"
+  },
+  "activities": {
+    "title": "Activities",
+    "subtitle": "Explore the Eichsfeld",
+    "intro1": "The Eichsfeld is a paradise for anyone who loves the outdoors. In the surroundings of our guesthouse you will find numerous hiking and cycling trails leading through one of the most beautiful landscapes in Thuringia.",
+    "intro2": "Whether sporty or leisurely, alone or with the family – we are happy to advise you on the best routes and attractions nearby.",
+    "popularAttractions": "Popular Attractions",
+    "sportingActivities": "Sporting Activities",
+    "planActive": "Plan your active holiday in the Eichsfeld",
+    "hiking": {
+      "title": "Hiking",
+      "description": "The Eichsfeld offers a dense network of hiking trails through gentle hills, deep forests, and along historic paths."
+    },
+    "cycling": {
+      "title": "Cycling",
+      "description": "Whether a leisurely ride along the Leine or a sporty route through the hills – there is something for everyone."
+    }
+  },
+  "attractions": {
+    "title": "Attractions",
+    "subtitle": "Explore the Eichsfeld",
+    "intro": "The Eichsfeld is full of surprises: bears and wolves at the Bärenpark, medieval castles with panoramic views, and a UNESCO World Heritage Site with a treetop walkway. All attractions are less than an hour from our guesthouse.",
+    "onMap": "Attractions on the Map",
+    "recommendations": "Our Recommendations",
+    "activitiesHeading": "Activities",
+    "returnToRooms": "Return to cosy rooms after an eventful day",
+    "hikingDesc": "Hiking trails nearby – from leisurely to challenging.",
+    "cyclingDesc": "The Leine Cycle Path passes right by Breitenbach."
+  },
+  "activity": {
+    "notFound": "Activity not found",
+    "difficulty": {
+      "leicht": "Easy",
+      "mittel": "Moderate",
+      "schwer": "Difficult"
+    },
+    "viewRoute": "View route",
+    "discoverMore": "Discover More Tours",
+    "hiking": {
+      "title": "Hiking in the Eichsfeld",
+      "subtitle": "Discover trails in the area",
+      "regionHeading": "The Eichsfeld Hiking Region",
+      "recommended": "Recommended Hiking Tours",
+      "portalIntro": "Find more hiking tours in the Eichsfeld on these portals:",
+      "softCta": "Need hiking tips? We know the best trails.",
+      "bookingCta": "Return to cosy rooms after your hike"
+    },
+    "cycling": {
+      "title": "Cycling in the Eichsfeld",
+      "subtitle": "The Leine Cycle Path passes right by",
+      "regionHeading": "The Eichsfeld Cycling Region",
+      "recommended": "Recommended Cycling Tours",
+      "portalIntro": "Find more cycling tours in the Eichsfeld on these portals:",
+      "softCta": "Questions about cycling? We know the best routes.",
+      "bookingCta": "The ideal base for your cycling tour"
+    }
+  },
+  "amenity": {
+    "wifi": "Free Wi-Fi",
+    "tv": "Television",
+    "balkon": "Balcony",
+    "terrasse": "Terrace",
+    "kueche": "Kitchen",
+    "kuehlschrank": "Refrigerator",
+    "kaffeemaschine": "Coffee machine",
+    "wasserkocher": "Kettle",
+    "spuele": "Sink",
+    "dusche": "Shower",
+    "badewanne": "Bathtub",
+    "parkplatz": "Free parking",
+    "garten": "Garden",
+    "bettwaesche": "Bed linen",
+    "handtuecher": "Towels",
+    "foehn": "Hair dryer",
+    "tisch": "Small table",
+    "heizung": "Heating"
+  }
+}

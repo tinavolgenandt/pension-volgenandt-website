@@ -1,10 +1,16 @@
 <script setup lang="ts">
+import type { Locale } from '~/composables/useLocale'
+import { t } from '~/utils/translations'
+
 interface Props {
   shortDescription: string
   description: string
+  locale?: Locale
 }
 
-defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  locale: 'de',
+})
 
 const isExpanded = ref(false)
 
@@ -37,7 +43,7 @@ function toggle() {
       :aria-expanded="isExpanded"
       @click="toggle"
     >
-      {{ isExpanded ? 'Weniger anzeigen' : 'Mehr lesen' }}
+      {{ isExpanded ? t('desc.showLess', props.locale) : t('desc.readMore', props.locale) }}
       <Icon
         :name="isExpanded ? 'lucide:chevron-up' : 'lucide:chevron-down'"
         :size="16"

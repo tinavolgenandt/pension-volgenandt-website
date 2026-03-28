@@ -35,11 +35,11 @@ startingPrice: 58
 heroImage: /img/rooms/balkonzimmer-zimmer.webp
 heroImageAlt: 'Balkonzimmer – Zwei Einzelbetten mit Holzmöbeln und Sonnenlicht'
 gallery:
-  - src: /img/rooms/balkonzimmer-balkon-1.jpg
+  - src: /img/rooms/balkonzimmer-balkon-1.webp
     alt: 'Balkonzimmer – Balkon mit Blumenkasten und Aussicht'
   - src: /img/rooms/balkonzimmer-bad.webp
     alt: 'Badezimmer mit Handtuchheizung und Glasdusche'
-  - src: /img/rooms/balkonzimmer-balkon-2.jpg
+  - src: /img/rooms/balkonzimmer-balkon-2.webp
     alt: 'Blick vom Balkon in den Innenhof'
   - src: /img/rooms/balkonzimmer-zimmer-2.webp
     alt: 'Schlafbereich mit Kiefernmöbeln und Spiegel'

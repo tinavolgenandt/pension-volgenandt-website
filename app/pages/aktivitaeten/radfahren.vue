@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { t } from '~/utils/translations'
+
+const { locale } = useLocale()
+
 definePageMeta({
   breadcrumb: { label: 'Radfahren' },
 })
@@ -9,7 +13,7 @@ const { data: activity } = await useAsyncData('activity-radfahren', () =>
 )
 
 if (!activity.value) {
-  throw createError({ statusCode: 404, message: 'Aktivität nicht gefunden' })
+  throw createError({ statusCode: 404, message: t('activity.notFound', 'de') })
 }
 
 // SEO from YAML
@@ -34,9 +38,18 @@ useHead({
 })
 
 const difficultyBadge: Record<string, { label: string; class: string }> = {
-  leicht: { label: 'Leicht', class: 'bg-sage-100 text-sage-700' },
-  mittel: { label: 'Mittel', class: 'bg-waldhonig-100 text-waldhonig-700' },
-  schwer: { label: 'Schwer', class: 'bg-charcoal-100 text-charcoal-700' },
+  leicht: {
+    label: t('activity.difficulty.leicht', locale.value),
+    class: 'bg-sage-100 text-sage-700',
+  },
+  mittel: {
+    label: t('activity.difficulty.mittel', locale.value),
+    class: 'bg-waldhonig-100 text-waldhonig-700',
+  },
+  schwer: {
+    label: t('activity.difficulty.schwer', locale.value),
+    class: 'bg-charcoal-100 text-charcoal-700',
+  },
 }
 </script>
 
@@ -46,8 +59,8 @@ const difficultyBadge: Record<string, { label: string; class: string }> = {
     <SharedPageBanner
       :image="activity.heroImage"
       :image-alt="activity.heroImageAlt"
-      title="Radfahren im Eichsfeld"
-      subtitle="Der Leine-Radweg führt direkt vorbei"
+      :title="t('activity.cycling.title', locale)"
+      :subtitle="t('activity.cycling.subtitle', locale)"
     />
 
     <!-- Intro -->
@@ -61,7 +74,7 @@ const difficultyBadge: Record<string, { label: string; class: string }> = {
     <section class="bg-sage-50 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-3xl">
         <h2 class="mb-6 font-serif text-2xl font-semibold text-sage-900">
-          Die Radregion Eichsfeld
+          {{ t('activity.cycling.regionHeading', locale) }}
         </h2>
         <p class="leading-relaxed text-sage-700">
           {{ activity.regionDescription }}
@@ -72,7 +85,9 @@ const difficultyBadge: Record<string, { label: string; class: string }> = {
     <!-- Route recommendations -->
     <section v-if="activity.routes && activity.routes.length > 0" class="px-6 py-12 md:py-16">
       <div class="mx-auto max-w-4xl">
-        <h2 class="mb-8 font-serif text-2xl font-semibold text-sage-900">Empfohlene Radtouren</h2>
+        <h2 class="mb-8 font-serif text-2xl font-semibold text-sage-900">
+          {{ t('activity.cycling.recommended', locale) }}
+        </h2>
         <div class="space-y-6">
           <div
             v-for="route in activity.routes"
@@ -108,7 +123,7 @@ const difficultyBadge: Record<string, { label: string; class: string }> = {
               rel="noopener noreferrer"
               class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-waldhonig-600 hover:text-waldhonig-700"
             >
-              Route ansehen
+              {{ t('activity.viewRoute', locale) }}
               <Icon name="ph:arrow-square-out" class="size-4" />
             </a>
           </div>
@@ -123,10 +138,10 @@ const difficultyBadge: Record<string, { label: string; class: string }> = {
     >
       <div class="mx-auto max-w-3xl text-center">
         <h2 class="mb-6 font-serif text-2xl font-semibold text-sage-900">
-          Weitere Touren entdecken
+          {{ t('activity.discoverMore', locale) }}
         </h2>
         <p class="mb-8 text-sage-700">
-          Finden Sie noch mehr Radtouren im Eichsfeld auf diesen Portalen:
+          {{ t('activity.cycling.portalIntro', locale) }}
         </p>
         <div class="flex flex-wrap justify-center gap-4">
           <a
@@ -145,9 +160,12 @@ const difficultyBadge: Record<string, { label: string; class: string }> = {
     </section>
 
     <!-- Soft CTA -->
-    <SharedSoftCta text="Fragen zur Radregion? Wir kennen die besten Strecken." />
+    <SharedSoftCta :text="t('activity.cycling.softCta', locale)" />
 
     <!-- Booking CTA -->
-    <SharedBookingCta text="Idealer Ausgangspunkt für Ihre Radtour" button-text="Zimmer ansehen" />
+    <SharedBookingCta
+      :text="t('activity.cycling.bookingCta', locale)"
+      :button-text="t('cta.viewRooms', locale)"
+    />
   </div>
 </template>

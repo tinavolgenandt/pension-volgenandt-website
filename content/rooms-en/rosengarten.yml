@@ -1,0 +1,89 @@
+name: 'Rose Garden Room'
+slug: rosengarten
+type: zweibettzimmer
+category: 'Doppelzimmer'
+shortDescription: >-
+  Charming twin room with a view of the rose garden.
+  Comfortably furnished and ideal for a relaxing stay
+  for two.
+description: >-
+  The Rose Garden Room owes its name to the beautiful
+  view of our well-tended rose garden. Two single beds
+  that can be pushed together on request, an en-suite
+  bathroom with shower and tasteful country-style
+  furnishings await you. Wi-Fi and TV are of course
+  included. Let the scent of roses lull you to sleep.
+  Our fully equipped shared kitchen and the terrace are
+  available for all guests – we kindly ask for
+  consideration of others.
+
+beds24PropertyId: 261258
+beds24RoomId: 549252
+
+maxGuests: 3
+beds: '2 single beds (can be pushed together on request)'
+
+pricing:
+  - label: 'Direct booking'
+    rates:
+      - occupancy: 2
+        pricePerNight: 58
+      - occupancy: 3
+        pricePerNight: 68
+
+startingPrice: 58
+
+heroImage: /img/rooms/rosengarten-zimmer.webp
+heroImageAlt: 'Rose Garden Room – Single beds with armchair and wardrobe'
+gallery:
+  - src: /img/rooms/rosengarten-zimmer-3.webp
+    alt: 'Rose Garden – Room overview with sofa corner and seating area'
+  - src: /img/rooms/rosengarten-zimmer-4.webp
+    alt: 'Rose Garden – Both single beds with window and turquoise curtains'
+  - src: /img/rooms/rosengarten-zimmer-2.webp
+    alt: 'Rose Garden – Room view with both single beds and window'
+  - src: /img/rooms/rosengarten-bad.webp
+    alt: 'Private bathroom with corner shower and WC'
+  - src: /img/rooms/rosengarten-bad-3.webp
+    alt: 'Bathroom with corner shower, washbasin and towel holder'
+  - src: /img/rooms/rosengarten-zimmer-5.webp
+    alt: 'Rose Garden – Room overview with sofa, armchair and both single beds'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-5.webp
+    alt: 'Shared kitchen with breakfast tables and warm lighting'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-6.webp
+    alt: 'Shared kitchen with cooking area, dining space and fresh flowers'
+
+amenities:
+  - wifi
+  - tv
+  - garten
+  - parkplatz
+  - bettwaesche
+  - handtuecher
+  - dusche
+  - heizung
+
+highlights:
+  - 'View of the rose garden'
+  - 'Country charm'
+  - 'Quiet location in the countryside'
+
+extras:
+  - name: 'Breakfast'
+    description: 'Rolls, cold cuts, homemade jam & coffee or tea'
+    price: 10
+    unit: 'per person / night'
+  - name: 'Gourmet breakfast'
+    description: 'Rolls, regional cold cuts, homemade jam, seasonal fruit, fresh juice & coffee or tea'
+    price: 15
+    unit: 'per person / night'
+  - name: 'Extra bed'
+    description: 'Additional sleeping space on the sofa bed'
+    price: 10
+    unit: 'per person / night'
+  - name: 'BBQ set'
+    description: 'Incl. barbecue utensils and pans'
+    price: 10
+    unit: 'per use'
+
+sortOrder: 5

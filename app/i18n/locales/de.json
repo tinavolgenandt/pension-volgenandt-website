@@ -1,0 +1,294 @@
+{
+  "site": {
+    "tagline": "Ruhe finden im Eichsfeld",
+    "country": "Deutschland"
+  },
+  "nav": {
+    "rooms": "Zimmer",
+    "families": "Für Familien",
+    "activities": "Aktivitäten",
+    "news": "Aktuelles",
+    "sustainability": "Nachhaltigkeit",
+    "contact": "Kontakt"
+  },
+  "cta": {
+    "bookNow": "Jetzt buchen",
+    "book": "Buchen",
+    "viewDetails": "Details ansehen",
+    "viewRooms": "Zimmer ansehen",
+    "checkAvailability": "Verfügbarkeit prüfen",
+    "allRooms": "Alle Zimmer ansehen",
+    "learnMore": "Mehr erfahren",
+    "readMore": "Weiterlesen"
+  },
+  "room": {
+    "type": {
+      "ferienwohnung": "Ferienwohnung",
+      "doppelzimmer": "Doppelzimmer",
+      "zweibettzimmer": "Zweibettzimmer",
+      "einzelzimmer": "Einzelzimmer"
+    },
+    "category": {
+      "Ferienwohnung": "Ferienwohnungen",
+      "Doppelzimmer": "Doppel- & Zweibettzimmer",
+      "Einzelzimmer": "Einzelzimmer"
+    },
+    "from": "ab",
+    "perNight": "/ Nacht inkl. MwSt.",
+    "guest": "Gast",
+    "guests": "Gäste",
+    "weekendOnly": "Dieses Zimmer ist <strong>nur freitags bis sonntags</strong> buchbar.",
+    "phoneOnly": "Dieses Zimmer ist nur telefonisch buchbar",
+    "loading": "Zimmer werden geladen...",
+    "notFound": "Zimmer nicht gefunden",
+    "prices": "Preise",
+    "amenities": "Ausstattung",
+    "extras": "Zusatzleistungen",
+    "otherRooms": "Weitere Zimmer",
+    "availability": "Verfügbarkeit",
+    "booking": "Buchung",
+    "availabilityBooking": "Verfügbarkeit & Buchung"
+  },
+  "rooms": {
+    "title": "Unsere Zimmer",
+    "subtitle": "Ob gemütliche Ferienwohnung für die ganze Familie oder komfortables Doppelzimmer für Paare – bei uns finden Sie den passenden Rückzugsort für Ihren Aufenthalt im Eichsfeld.",
+    "chooseRoom": "Wählen Sie ein Zimmer, um Verfügbarkeit und Buchungsmöglichkeiten zu sehen."
+  },
+  "price": {
+    "perNight": "pro Nacht",
+    "person": "Person",
+    "persons": "Personen",
+    "allIncl": "Alle Preise inkl. MwSt."
+  },
+  "desc": {
+    "readMore": "Mehr lesen",
+    "showLess": "Weniger anzeigen"
+  },
+  "booking": {
+    "calendarLoading": "Kalender wird geladen...",
+    "widgetLoading": "Buchungswidget wird geladen...",
+    "calendarLabel": "Verfügbarkeitskalender für",
+    "widgetLabel": "Buchungswidget für"
+  },
+  "contact": {
+    "heading": "Kontakt & Anfahrt",
+    "subtitle": "Wir freuen uns auf Sie",
+    "talkToUs": "Sprechen Sie uns an",
+    "talkToUsText": "Ob Sie eine Frage haben, ein Zimmer buchen möchten oder einfach mehr über unsere Pension erfahren wollen – wir sind gerne für Sie da.",
+    "mobile": "Mobil",
+    "landline": "Festnetz",
+    "email": "E-Mail",
+    "address": "Adresse",
+    "sendMessage": "Nachricht senden",
+    "sendMessageText": "Schreiben Sie uns – wir antworten in der Regel innerhalb von 24 Stunden."
+  },
+  "form": {
+    "name": "Name",
+    "email": "E-Mail",
+    "message": "Nachricht",
+    "submit": "Nachricht senden",
+    "sending": "Wird gesendet...",
+    "successTitle": "Vielen Dank!",
+    "successText": "Wir haben Ihre Nachricht erhalten und melden uns schnellstmöglich bei Ihnen.",
+    "errorGeneric": "Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+    "errorNetwork": "Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder rufen Sie uns an."
+  },
+  "directions": {
+    "heading": "Anfahrt",
+    "byCar": "Mit dem Auto (A38)",
+    "byCarText": "Von der A38 nehmen Sie die Ausfahrt Leinefelde und folgen der Beschilderung Richtung Breitenbach. Nach etwa 10 Minuten Fahrt erreichen Sie unsere Pension an der Otto-Reuter-Straße 28. Kostenlose Parkplätze stehen direkt vor dem Haus bereit.",
+    "byTrain": "Mit der Bahn",
+    "byTrainText": "Vom Bahnhof Leinefelde sind es 4 km bis zu unserer Pension. Gerne holen wir Sie nach Absprache vom Bahnhof ab – rufen Sie uns einfach vorher an.",
+    "gps": "Koordinaten für das Navi",
+    "openMaps": "In Google Maps öffnen"
+  },
+  "faq": {
+    "heading": "Häufige Fragen"
+  },
+  "footer": {
+    "contact": "Kontakt",
+    "discover": "Entdecken",
+    "legal": "Rechtliches",
+    "cookieSettings": "Cookie-Einstellungen",
+    "copyright": "Alle Rechte vorbehalten.",
+    "ctaHeading": "Bereit für Ihren Aufenthalt im Eichsfeld?",
+    "ctaButton": "Verfügbarkeit prüfen",
+    "callUs": "Oder rufen Sie uns direkt an",
+    "nav": {
+      "roomsPrices": "Zimmer & Preise",
+      "forFamilies": "Für Familien",
+      "activities": "Aktivitäten",
+      "sustainability": "Nachhaltigkeit",
+      "attractions": "Ausflugsziele",
+      "contactDirections": "Kontakt & Anfahrt"
+    }
+  },
+  "legal": {
+    "impressum": "Impressum",
+    "datenschutz": "Datenschutz",
+    "agb": "AGB"
+  },
+  "header": {
+    "toggleNav": "Navigation umschalten",
+    "mainNav": "Hauptnavigation",
+    "mobileNav": "Mobile Navigation"
+  },
+  "home": {
+    "title": "Pension Volgenandt | Ruhe finden im Eichsfeld",
+    "description": "Familiär geführte Pension in Breitenbach, Eichsfeld. Ferienwohnungen und Zimmer mit Blick ins Grüne.",
+    "heroButton": "Zimmer entdecken",
+    "welcomeHeading": "Willkommen in Breitenbach",
+    "welcomeText": "",
+    "welcomeTitle": "Willkommen bei uns",
+    "welcomeParagraph1": "Wir sind Simone & Ralf Volgenandt und freuen uns, Sie in unserem Zuhause im Eichsfeld willkommen zu heißen. Unsere Pension liegt etwa einen Kilometer außerhalb von Breitenbach, eingebettet in die sanfte Hügellandschaft Thüringens – ein Ort, an dem die Zeit ein wenig langsamer vergeht.",
+    "welcomeParagraph2": "Ob Sie die Burgen und Wanderwege der Region erkunden, den nahen Bärenpark besuchen oder einfach die Stille genießen möchten: Bei uns finden Sie den Ausgangspunkt für erholsame Tage. Unsere Ferienwohnungen und Zimmer bieten Ihnen Platz, Komfort und einen Blick ins Grüne.",
+    "welcomeParagraph3": "Wir bewirtschaften unser Haus mit Sorgfalt und Liebe zur Natur – mit Solarenergie vom eigenen Dach, einer biologischen Kläranlage und einem Garten, der zum Verweilen einlädt.",
+    "welcomeImageAlt": "Simone und Ralf Volgenandt – Ihre Gastgeber in Breitenbach",
+    "gardenHeading": "Garten & Umgebung",
+    "gardenSubtitle": "Vier Jahreszeiten – ein Ort der Ruhe",
+    "ourRooms": "Unsere Zimmer",
+    "testimonialsHeading": "Was unsere Gäste sagen",
+    "googleReview": "Google Bewertung",
+    "ariaCarousel": "Karussell",
+    "ariaGuestReviews": "Gästebewertungen",
+    "ariaPrevQuote": "Vorheriges Zitat",
+    "ariaNextQuote": "Nächstes Zitat",
+    "ariaQuoteOf": "Zitat {current} von {total}",
+    "experienceHeading": "Erleben Sie das Eichsfeld",
+    "exploreAttractions": "Alle Ausflugsziele entdecken",
+    "sustainabilityHeading": "Natürlich nachhaltig",
+    "sustainabilityText": "Nachhaltigkeit ist bei uns kein Trend, sondern gelebter Alltag. Unser Zuhause im Eichsfeld pflegen wir mit derselben Sorgfalt wie Ihren Aufenthalt.",
+    "sustainabilityFeature1Title": "Solarenergie",
+    "sustainabilityFeature1Desc": "Eigener Strom vom Dach",
+    "sustainabilityFeature2Title": "Bio-Kläranlage",
+    "sustainabilityFeature2Desc": "Natürliche Abwasserreinigung",
+    "sustainabilityFeature3Title": "Kompost & Kreislauf",
+    "sustainabilityFeature3Desc": "Grünschnitt wird zu Gartenerde",
+    "learnSustainability": "Mehr über unsere Nachhaltigkeit erfahren",
+    "sustainabilityImageAlt": "Gelber Sonnenhut und bunte Blumen im Garten der Pension",
+    "locationHeading": "So finden Sie uns",
+    "locationText": "",
+    "mapPlaceholderAlt": "Karte mit Standort der Pension Volgenandt in Breitenbach, Eichsfeld",
+    "gardenPhoto1": "Einfahrt zur Pension Volgenandt im Sommer",
+    "gardenPhoto2": "Frühlingswiese mit Pusteblumen direkt neben der Pension",
+    "gardenPhoto3": "Naturteich mit Schilf und Wildblumen im Garten der Pension",
+    "gardenPhoto4": "Apfelbaum mit reifen Früchten und Blumenbeeten im Pensionsgarten",
+    "gardenPhoto5": "Eingang der Pension Volgenandt im Sommer",
+    "gardenPhoto6": "Wiese bei Sonnenuntergang in der Umgebung der Pension",
+    "gardenPhoto7": "Gebäude und Eingang mit Parkplatz der Pension Volgenandt",
+    "gardenPhoto8": "Pension Volgenandt im Winter mit tiefem Schnee und blauem Himmel",
+    "gardenPhoto9": "Winterlandschaft im Eichsfeld mit verschneiten Feldern und Sonnenschein"
+  },
+  "hosts": {
+    "caption": "Simone & Ralf Volgenandt – wir freuen uns auf Sie",
+    "buildingCaption": "So empfängt Sie unsere Pension"
+  },
+  "softCta": {
+    "default": "Haben Sie Fragen? Wir helfen Ihnen gerne weiter.",
+    "callUs": "Oder rufen Sie uns direkt an"
+  },
+  "bookingCta": {
+    "default": "Finden Sie Ihr perfektes Zimmer"
+  },
+  "schema": {
+    "persons": "Personen"
+  },
+  "layout": {
+    "skipToContent": "Zum Inhalt springen"
+  },
+  "attraction": {
+    "notFound": "Ausflugsziel nicht gefunden",
+    "practicalInfo": "Praktische Informationen",
+    "bestTime": "Beste Reisezeit",
+    "gallery": "Impressionen",
+    "planTrip": "Planen Sie Ihren Ausflug? Wir beraten Sie gerne.",
+    "bookAccommodation": "Buchen Sie Ihre Unterkunft für den perfekten Tagesausflug"
+  },
+  "news": {
+    "notFound": "Artikel nicht gefunden",
+    "furtherLinks": "Weiterführende Links",
+    "category": {
+      "veranstaltung": "Veranstaltung",
+      "region": "Region",
+      "pension": "Pension"
+    },
+    "eventQuestion": "Haben Sie Fragen zu dieser Veranstaltung? Wir beraten Sie gerne.",
+    "stayWithUs": "Übernachten Sie bei uns im Eichsfeld"
+  },
+  "activities": {
+    "title": "Aktivitäten",
+    "subtitle": "Entdecken Sie das Eichsfeld",
+    "intro1": "Das Eichsfeld ist ein Paradies für alle, die gerne draußen unterwegs sind. In der Umgebung unserer Pension finden Sie zahlreiche Wander- und Radwege, die durch eine der schönsten Landschaften Thüringens führen.",
+    "intro2": "Ob sportlich oder gemütlich, allein oder mit der Familie – wir beraten Sie gerne zu den besten Routen und Ausflugszielen in unserer Nähe.",
+    "popularAttractions": "Beliebte Ausflugsziele",
+    "sportingActivities": "Sportliche Aktivitäten",
+    "planActive": "Planen Sie Ihren aktiven Urlaub im Eichsfeld",
+    "hiking": {
+      "title": "Wandern",
+      "description": "Das Eichsfeld bietet ein dichtes Netz an Wanderwegen durch sanfte Hügel, tiefe Wälder und entlang historischer Pfade."
+    },
+    "cycling": {
+      "title": "Radfahren",
+      "description": "Ob gemütliche Radtour entlang der Leine oder sportliche Route durch die Hügel – hier ist für jeden etwas dabei."
+    }
+  },
+  "attractions": {
+    "title": "Ausflugsziele",
+    "subtitle": "Entdecken Sie das Eichsfeld",
+    "intro": "Das Eichsfeld ist voller Überraschungen: Bären und Wölfe im Bärenpark, mittelalterliche Burgen mit Panoramablick und ein UNESCO-Weltnaturerbe mit Baumkronenpfad. Alle Ausflugsziele sind in weniger als einer Stunde von unserer Pension erreichbar.",
+    "onMap": "Ausflugsziele auf der Karte",
+    "recommendations": "Unsere Empfehlungen",
+    "activitiesHeading": "Aktivitäten",
+    "returnToRooms": "Nach einem erlebnisreichen Tag zurück in gemütliche Zimmer",
+    "hikingDesc": "Wanderwege in der Umgebung – von gemütlich bis anspruchsvoll.",
+    "cyclingDesc": "Der Leine-Radweg führt direkt an Breitenbach vorbei."
+  },
+  "activity": {
+    "notFound": "Aktivität nicht gefunden",
+    "difficulty": {
+      "leicht": "Leicht",
+      "mittel": "Mittel",
+      "schwer": "Schwer"
+    },
+    "viewRoute": "Route ansehen",
+    "discoverMore": "Weitere Touren entdecken",
+    "hiking": {
+      "title": "Wandern im Eichsfeld",
+      "subtitle": "Wege in der Umgebung entdecken",
+      "regionHeading": "Die Wanderregion Eichsfeld",
+      "recommended": "Empfohlene Wandertouren",
+      "portalIntro": "Finden Sie noch mehr Wandertouren im Eichsfeld auf diesen Portalen:",
+      "softCta": "Brauchen Sie Wandertipps? Wir kennen die besten Wege.",
+      "bookingCta": "Nach der Wanderung in gemütliche Zimmer zurückkehren"
+    },
+    "cycling": {
+      "title": "Radfahren im Eichsfeld",
+      "subtitle": "Der Leine-Radweg führt direkt vorbei",
+      "regionHeading": "Die Radregion Eichsfeld",
+      "recommended": "Empfohlene Radtouren",
+      "portalIntro": "Finden Sie noch mehr Radtouren im Eichsfeld auf diesen Portalen:",
+      "softCta": "Fragen zur Radregion? Wir kennen die besten Strecken.",
+      "bookingCta": "Idealer Ausgangspunkt für Ihre Radtour"
+    }
+  },
+  "amenity": {
+    "wifi": "Kostenloses WLAN",
+    "tv": "Fernseher",
+    "balkon": "Balkon",
+    "terrasse": "Terrasse",
+    "kueche": "Küche",
+    "kuehlschrank": "Kühlschrank",
+    "kaffeemaschine": "Kaffeemaschine",
+    "wasserkocher": "Wasserkocher",
+    "spuele": "Spüle",
+    "dusche": "Dusche",
+    "badewanne": "Badewanne",
+    "parkplatz": "Kostenloser Parkplatz",
+    "garten": "Garten",
+    "bettwaesche": "Bettwäsche",
+    "handtuecher": "Handtücher",
+    "foehn": "Föhn",
+    "tisch": "Kleiner Tisch",
+    "heizung": "Heizung"
+  }
+}

@@ -1,42 +1,46 @@
 <script setup lang="ts">
-const photos = [
+import { t } from '~/utils/translations'
+
+const { locale } = useLocale()
+
+const photos = computed(() => [
   {
     src: '/img/garten/einfahrt-sommer.webp',
-    alt: 'Einfahrt zur Pension Volgenandt im Sommer',
+    alt: t('home.gardenPhoto1', locale.value),
   },
   {
     src: '/img/garten/umgebung-wiese-pusteblumen.webp',
-    alt: 'Frühlingswiese mit Pusteblumen direkt neben der Pension',
+    alt: t('home.gardenPhoto2', locale.value),
   },
   {
     src: '/img/garten/garten-biotop-schilf.webp',
-    alt: 'Naturteich mit Schilf und Wildblumen im Garten der Pension',
+    alt: t('home.gardenPhoto3', locale.value),
   },
   {
     src: '/img/garten/garten-apfelbaum-blumen.webp',
-    alt: 'Apfelbaum mit reifen Früchten und Blumenbeeten im Pensionsgarten',
+    alt: t('home.gardenPhoto4', locale.value),
   },
   {
     src: '/img/garten/pension-eingang-sommer.webp',
-    alt: 'Eingang der Pension Volgenandt im Sommer',
+    alt: t('home.gardenPhoto5', locale.value),
   },
   {
     src: '/img/garten/umgebung-wiese-sonnenuntergang.webp',
-    alt: 'Wiese bei Sonnenuntergang in der Umgebung der Pension',
+    alt: t('home.gardenPhoto6', locale.value),
   },
   {
     src: '/img/garten/gebaeude-eingang-parkplatz.webp',
-    alt: 'Gebäude und Eingang mit Parkplatz der Pension Volgenandt',
+    alt: t('home.gardenPhoto7', locale.value),
   },
   {
     src: '/img/garten/pension-winter-schnee.webp',
-    alt: 'Pension Volgenandt im Winter mit tiefem Schnee und blauem Himmel',
+    alt: t('home.gardenPhoto8', locale.value),
   },
   {
     src: '/img/content/landschaft-winter.webp',
-    alt: 'Winterlandschaft im Eichsfeld mit verschneiten Feldern und Sonnenschein',
+    alt: t('home.gardenPhoto9', locale.value),
   },
-]
+])
 </script>
 
 <template>
@@ -45,11 +49,9 @@ const photos = [
       <!-- Heading -->
       <div class="mb-10 text-center">
         <h2 class="font-serif text-3xl font-bold text-sage-900 md:text-4xl">
-          Garten &amp; Umgebung
+          {{ t('home.gardenHeading', locale) }}
         </h2>
-        <p class="mt-3 text-lg text-sage-600">
-          Vier Jahreszeiten &ndash; ein Ort der Ruhe
-        </p>
+        <p class="mt-3 text-lg text-sage-600">{{ t('home.gardenSubtitle', locale) }}</p>
       </div>
 
       <!-- Photo grid -->
@@ -59,7 +61,7 @@ const photos = [
           <NuxtImg
             :src="photos[0]!.src"
             :alt="photos[0]!.alt"
-            class="aspect-[4/3] w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+            class="aspect-[4/3] h-full w-full object-cover transition-transform duration-500 hover:scale-105"
             loading="lazy"
             sizes="sm:100vw md:50vw"
           />

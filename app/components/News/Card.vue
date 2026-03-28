@@ -1,5 +1,7 @@
 <script setup lang="ts">
-defineProps<{
+import { t } from '~/utils/translations'
+
+const props = defineProps<{
   title: string
   slug: string
   heroImage: string
@@ -9,15 +11,31 @@ defineProps<{
   excerpt: string
 }>()
 
-const categoryBadge: Record<string, { label: string; class: string }> = {
-  veranstaltung: { label: 'Veranstaltung', class: 'bg-waldhonig-500 text-white' },
-  region: { label: 'Region', class: 'bg-sage-700 text-white' },
-  pension: { label: 'Pension', class: 'bg-charcoal-600 text-white' },
-}
+const { locale } = useLocale()
+const { onImgError } = useImageFallback()
+
+const categoryBadge = computed(() => ({
+  veranstaltung: {
+    label: t('news.category.veranstaltung', locale.value),
+    class: 'bg-waldhonig-500 text-white',
+  },
+  region: {
+    label: t('news.category.region', locale.value),
+    class: 'bg-sage-700 text-white',
+  },
+  pension: {
+    label: t('news.category.pension', locale.value),
+    class: 'bg-charcoal-600 text-white',
+  },
+}))
+
+const cardLink = computed(() =>
+  locale.value === 'en' ? `/en/news/${props.slug}/` : `/aktuelles/${props.slug}/`,
+)
 
 function formatDate(dateStr: string) {
   const date = new Date(dateStr)
-  return date.toLocaleDateString('de-DE', {
+  return date.toLocaleDateString(locale.value === 'en' ? 'en-GB' : 'de-DE', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
@@ -27,17 +45,18 @@ function formatDate(dateStr: string) {
 
 <template>
   <NuxtLink
-    :to="`/aktuelles/${slug}/`"
+    :to="cardLink"
     class="group overflow-hidden rounded-lg bg-white shadow-sm transition-shadow hover:shadow-md"
   >
     <!-- Image with category badge -->
-    <div class="relative aspect-video overflow-hidden">
+    <div class="relative aspect-video overflow-hidden bg-sage-100">
       <NuxtImg
         :src="heroImage"
         :alt="heroImageAlt"
         class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         loading="lazy"
         sizes="100vw sm:50vw lg:33vw"
+        @error="onImgError"
       />
       <span
         :class="categoryBadge[category]?.class"
@@ -59,7 +78,7 @@ function formatDate(dateStr: string) {
         {{ excerpt }}
       </p>
       <span class="mt-3 inline-flex items-center gap-1 text-sm font-medium text-waldhonig-600">
-        Weiterlesen
+        {{ t('cta.readMore', locale) }}
         <Icon name="ph:arrow-right" class="size-4" />
       </span>
     </div>

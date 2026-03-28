@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { t } from '~/utils/translations'
+
+const { locale } = useLocale()
 const config = useAppConfig()
 
 // Pension coordinates
@@ -8,13 +11,15 @@ const pensionCoords = [51.4124, 10.322] as [number, number]
 <template>
   <section class="py-20 md:py-24">
     <div class="mx-auto max-w-6xl px-6">
-      <h2 class="font-serif text-3xl font-bold text-sage-900 md:text-4xl">So finden Sie uns</h2>
+      <h2 class="font-serif text-3xl font-bold text-sage-900 md:text-4xl">
+        {{ t('home.locationHeading', locale) }}
+      </h2>
 
       <div class="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2">
         <!-- Interactive map column (consent-gated) -->
         <AttractionsMapConsent
           placeholder-image="/img/map/pension-location.png"
-          placeholder-alt="Karte mit Standort der Pension Volgenandt in Breitenbach, Eichsfeld"
+          :placeholder-alt="t('home.mapPlaceholderAlt', locale)"
         >
           <LMap
             :zoom="13"

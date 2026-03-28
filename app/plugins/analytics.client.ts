@@ -27,9 +27,13 @@ export default defineNuxtPlugin(() => {
     document.head.appendChild(script)
   }
 
-  watch(() => isAllowed('statistics'), (allowed) => {
-    if (allowed) loadGA4()
-  }, { immediate: true })
+  watch(
+    () => isAllowed('statistics'),
+    (allowed) => {
+      if (allowed) loadGA4()
+    },
+    { immediate: true },
+  )
 
   const router = useRouter()
   router.afterEach((to) => {

@@ -3,14 +3,30 @@ const baseURL = useRuntimeConfig().app.baseURL
 
 useHead({
   link: [
-    { rel: 'icon', href: `${baseURL}favicon.ico`, sizes: '32x32' },
+    { rel: 'icon', href: `${baseURL}favicon.ico`, sizes: '16x16 32x32 48x48' },
     { rel: 'icon', href: `${baseURL}favicon.svg`, type: 'image/svg+xml' },
+    { rel: 'icon', href: `${baseURL}favicon-48x48.png`, sizes: '48x48', type: 'image/png' },
     { rel: 'apple-touch-icon', href: `${baseURL}apple-touch-icon.png` },
     { rel: 'manifest', href: `${baseURL}site.webmanifest` },
+    { rel: 'preconnect', href: 'https://beds24.com' },
+    { rel: 'dns-prefetch', href: 'https://beds24.com' },
   ],
 })
 
+// Global social meta: twitter card + og:locale
+useSeoMeta({
+  twitterCard: 'summary_large_image',
+  ogLocale: 'de_DE',
+  ogSiteName: 'Pension Volgenandt',
+})
+
 useSchemaOrg([
+  {
+    '@type': 'WebSite',
+    name: 'Pension Volgenandt',
+    url: 'https://www.pension-volgenandt.de',
+    inLanguage: 'de-DE',
+  },
   {
     '@type': 'BedAndBreakfast',
     '@id': 'https://www.pension-volgenandt.de/#identity',
@@ -18,7 +34,7 @@ useSchemaOrg([
     description:
       'Familiär geführte Pension in Breitenbach, Eichsfeld. Ferienwohnungen und Zimmer mit Blick ins Grüne.',
     url: 'https://www.pension-volgenandt.de',
-    logo: 'https://www.pension-volgenandt.de/img/logo.webp',
+    logo: 'https://www.pension-volgenandt.de/img/hero/hero-poster.webp',
     image: 'https://www.pension-volgenandt.de/img/hero/hero-poster.webp',
     telephone: '+49 3605 542775',
     email: 'kontakt@pension-volgenandt.de',

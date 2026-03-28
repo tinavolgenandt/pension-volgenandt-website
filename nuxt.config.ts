@@ -94,8 +94,9 @@ export default defineNuxtConfig({
   // Content module (better-sqlite3 build approved in package.json pnpm config)
   content: {},
 
-  // Icon module: Lucide icon set with server bundle for SSG
+  // Icon module: SVG mode avoids hydration mismatch (CSS mode renders <span> on SSR, <svg> on client)
   icon: {
+    mode: 'svg',
     serverBundle: 'local',
     clientBundle: {
       scan: true,
@@ -149,6 +150,47 @@ export default defineNuxtConfig({
         '/aktuelles/open-air-burg-scharfenstein-2026/',
         '/aktuelles/neuer-radweg-unstrut-leine/',
         '/aktuelles/baerenpark-festival-2026/',
+        // English pages
+        '/en/',
+        '/en/rooms/',
+        '/en/rooms/emils-kuhwiese/',
+        '/en/rooms/schoene-aussicht/',
+        '/en/rooms/balkonzimmer/',
+        '/en/rooms/rosengarten/',
+        '/en/rooms/wohlfuehl-appartement/',
+        '/en/rooms/einzelzimmer/',
+        '/en/contact/',
+        '/en/families/',
+        '/en/sustainability/',
+        '/en/activities/',
+        '/en/activities/hiking/',
+        '/en/activities/cycling/',
+        '/en/attractions/',
+        '/en/attractions/baerenpark-worbis/',
+        '/en/attractions/eiscafe-san-remo/',
+        '/en/attractions/burg-bodenstein/',
+        '/en/attractions/burg-hanstein/',
+        '/en/attractions/skywalk-sonnenstein/',
+        '/en/attractions/burg-scharfenstein/',
+        '/en/attractions/grenzlandmuseum/',
+        '/en/attractions/vitalpark-heiligenstadt/',
+        '/en/attractions/seeburger-see/',
+        '/en/attractions/baumkronenpfad-hainich/',
+        '/en/attractions/wartburg/',
+        '/en/attractions/harz/',
+        '/en/news/',
+        '/en/news/landesgartenschau-2026/',
+        '/en/news/open-air-burg-scharfenstein-2026/',
+        '/en/news/neuer-radweg-unstrut-leine/',
+        '/en/news/baerenpark-festival-2026/',
+        // English legal pages
+        '/en/imprint/',
+        '/en/privacy/',
+        '/en/terms/',
+        // English picnic pages
+        '/en/picnic/',
+        '/en/picnic/book/',
+        '/en/picnic/thanks/',
       ],
       failOnError: false,
     },
@@ -157,11 +199,15 @@ export default defineNuxtConfig({
   // Global head defaults
   app: {
     head: {
-      htmlAttrs: { lang: 'de' },
-      title: 'Pension Volgenandt | Ruhe finden im Eichsfeld',
+      // lang is set dynamically in app.vue based on locale
+      titleTemplate: '%s | Pension Volgenandt',
+      title: 'Ruhe finden im Eichsfeld',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'geo.region', content: 'DE-TH' },
+        { name: 'geo.placename', content: 'Leinefelde-Worbis' },
+        { name: 'geo.position', content: '51.4124;10.322' },
       ],
       // Favicon/manifest links are in app.vue useHead() so baseURL is applied dynamically
     },
