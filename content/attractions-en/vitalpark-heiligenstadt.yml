@@ -1,0 +1,59 @@
+name: 'Heilbad Heiligenstadt & Vitalpark'
+slug: vitalpark-heiligenstadt
+seoTitle: 'Heilbad Heiligenstadt – Old Town, Spa Park & Vitalpark | Guesthouse in the Eichsfeld'
+seoDescription: 'Heilbad Heiligenstadt – the over 1,000-year-old county town of the Eichsfeld with historic old town, spa park, literary museum and Vitalpark. Just 15 km from our guesthouse.'
+heroImage: /img/attractions/vitalpark-heiligenstadt.webp
+heroImageAlt: "St Mary's Church with twin towers and baroque cloister garden in Heilbad Heiligenstadt"
+distanceKm: 15
+drivingMinutes: 14
+category: kultur
+shortDescription: 'Over 1,000-year-old county town with old town, spa park and thermal baths'
+intro: >-
+  Heilbad Heiligenstadt, the county town of the Eichsfeld, is also
+  known as the "Town of Ten Towers". Half-timbered houses, three
+  Gothic churches and a charming pedestrian zone invite you to
+  explore – just 15 minutes from our guesthouse.
+content: >-
+  Along Wilhelmstrasse, the roughly one-kilometre-long pedestrian
+  zone, small cafes, restaurants and shops line up side by side.
+  Three Gothic churches shape the townscape: St Mary's with its
+  distinctive twin towers, the hilltop church of St Martin, and
+  St Aegidien. The baroque cloister garden in the heart of the
+  old town is a green oasis for a quiet break.
+
+
+  In the Theodor Storm Literary Museum you can learn how the famous
+  author lived in Heiligenstadt from 1856 to 1864 and wrote some of
+  his best-known novellas here. The Eichsfeld Museum in the baroque
+  Jesuit College tells the story of the region across three floors.
+
+
+  The Heinrich Heine Spa Park is an oasis of calm with Kneipp pools,
+  a brine fountain and a pond with a fountain. At the Geislede
+  waterfall, which inspired Theodor Storm's fairy tale "The Rain
+  Maiden", a life-size wooden sculpture of the legendary figure
+  stands. From May to September, free spa concerts take place on
+  Sundays in the bandstand.
+
+
+  A stroll through town pairs perfectly with a visit to the Vitalpark:
+  thermal baths, eight saunas ranging from an earth sauna to a Finnish
+  sauna, a rasul, sauna garden and tower bar – ideal for relaxing
+  after an active day.
+hostTip: >-
+  Our tip: stroll through the old town in the morning and relax
+  in the Vitalpark in the afternoon. If you are staying with us
+  over Easter, do not miss the Palm Sunday procession – a UNESCO
+  cultural heritage event and a truly special experience.
+bestTimeToVisit: 'Year-round'
+website: 'https://www.heilbad-heiligenstadt.de'
+additionalWebsites:
+  - label: 'Vitalpark (Thermal Baths & Sauna)'
+    url: 'https://www.vitalpark-heiligenstadt.de'
+coordinates:
+  lat: 51.3844
+  lng: 10.1488
+gallery:
+  - src: /img/attractions/heiligenstadt-altstadt.webp
+    alt: 'Wooden sculpture of the Rain Maiden at the Geislede waterfall in Heiligenstadt'
+sortOrder: 4

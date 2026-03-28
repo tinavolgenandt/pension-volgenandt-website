@@ -285,14 +285,29 @@ export default defineContentConfig({
       source: 'attractions/*.yml',
       schema: attractionSchema,
     }),
+    attractionsEn: defineCollection({
+      type: 'data',
+      source: 'attractions-en/*.yml',
+      schema: attractionSchema,
+    }),
     activities: defineCollection({
       type: 'data',
       source: 'activities/*.yml',
       schema: activitySchema,
     }),
+    activitiesEn: defineCollection({
+      type: 'data',
+      source: 'activities-en/*.yml',
+      schema: activitySchema,
+    }),
     news: defineCollection({
       type: 'data',
       source: 'news/*.yml',
+      schema: newsSchema,
+    }),
+    newsEn: defineCollection({
+      type: 'data',
+      source: 'news-en/*.yml',
       schema: newsSchema,
     }),
     faq: defineCollection({

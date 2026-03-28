@@ -1,0 +1,44 @@
+name: 'Eiscafe San Remo'
+slug: eiscafe-san-remo
+seoTitle: 'Eiscafe San Remo Worbis – Homemade Ice Cream | Eichsfeld'
+seoDescription: 'Eiscafe San Remo in Worbis offers homemade ice cream, coffee and cake – just 9 km from our guesthouse in the Eichsfeld.'
+heroImage: /img/attractions/eiscafe-san-remo-eisteller.webp
+heroImageAlt: 'Ice cream platter at Eiscafe San Remo – scoops, fruit, cream and wafer rolls'
+distanceKm: 9
+drivingMinutes: 11
+category: kultur
+shortDescription: 'Homemade ice cream, coffee and cake in the heart of Worbis'
+intro: >-
+  Eiscafe San Remo in the centre of Worbis is known for its
+  homemade ice cream flavours. The Grohmann family makes all
+  the ice cream varieties on site – a treat for young and old,
+  especially after visiting the nearby bear park.
+content: >-
+  Located in the shopping arcade on Lange Strasse, Eiscafe San Remo
+  offers a wide selection of homemade ice cream in cones or cups.
+  Alongside the classic flavours, creative specialities like the
+  spaghetti ice cream platter are sure to surprise.
+
+
+  There is also coffee and cake, yoghurt creations, waffles and
+  light hot dishes. The atmosphere is cosy and the service friendly
+  – no wonder the cafe has a 4.7 out of 5 star rating on Google.
+
+
+  San Remo is the perfect stop during a stroll through Worbis or
+  after a visit to the Alternative Bear Park, which is just a short
+  walk away.
+hostTip: >-
+  Be sure to try the homemade ice cream flavours – every single one
+  is freshly made on site. Combine your visit with the Bear Park
+  Worbis, which is just a few minutes' walk away.
+bestTimeToVisit: 'Spring to autumn, especially on warm days'
+website: 'https://www.google.com/maps/search/Eiscafé+San+Remo+Worbis'
+additionalWebsites:
+  - label: 'Instagram'
+    url: 'https://www.instagram.com/eiscafe.san.remo/'
+coordinates:
+  lat: 51.4088
+  lng: 10.2128
+gallery: []
+sortOrder: 2

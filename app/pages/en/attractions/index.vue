@@ -28,7 +28,7 @@ useHead({
 
 // Fetch all attractions ordered by sortOrder
 const { data: attractions } = await useAsyncData('en-attractions', () =>
-  queryCollection('attractions').order('sortOrder', 'ASC').all(),
+  queryCollection('attractionsEn').order('sortOrder', 'ASC').all(),
 )
 
 // Activity cards data

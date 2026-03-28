@@ -199,7 +199,7 @@ export default defineNuxtConfig({
   // Global head defaults
   app: {
     head: {
-      htmlAttrs: { lang: 'de' },
+      // lang is set dynamically in app.vue based on locale
       titleTemplate: '%s | Pension Volgenandt',
       title: 'Ruhe finden im Eichsfeld',
       meta: [

@@ -1,0 +1,51 @@
+name: 'Rail Bike Adventure Eichsfeld'
+slug: draisine-eichsfeld
+seoTitle: 'Rail Bike Adventure Eichsfeld – Tunnel Rides on Historic Tracks | Guesthouse in the Eichsfeld'
+seoDescription: 'Ride a rail bike through historic railway tunnels in the Eichsfeld – an unforgettable experience for the whole family. Just 20 km from Pension Volgenandt.'
+heroImage: /img/attractions/draisine-tunnel.webp
+heroImageAlt: 'Illuminated railway tunnel with old tracks and cycle path – rail bike route in the Eichsfeld'
+distanceKm: 20
+drivingMinutes: 25
+category: natur
+shortDescription: 'Pedal a rail bike through historic railway tunnels on disused tracks'
+intro: >-
+  A truly unique riding experience: pedal along old railway tracks
+  through the Eichsfeld – past forests, meadows and through
+  impressive brick-vaulted tunnels. Ideal for families, couples
+  and groups.
+content: >-
+  On disused railway lines in the Eichsfeld, you can experience
+  the landscape from a completely different perspective: by rail
+  bike (draisine). These converted bicycles on rails follow the
+  old track beds through the gentle rolling hills of the region.
+
+
+  The highlight of every tour is the historic brick-vaulted tunnels
+  – old railway tunnels that are now illuminated and open to
+  visitors. The dim light, cool breeze and long tunnel passages
+  leave a lasting impression.
+
+
+  The rail bikes typically seat two to four people and are easy to
+  operate – no special fitness or prior experience required. Children
+  can ride along and enjoy a journey that feels like stepping back
+  in time.
+
+
+  Routes vary in length and can be chosen according to your fitness
+  and interests. Starting points generally have parking and small
+  refreshment options.
+hostTip: >-
+  Book the rail bikes in advance – especially on weekends and
+  during school holidays, the popular spots fill up quickly.
+  Allow some extra time to pause at the tunnel exits and take
+  in the views.
+bestTimeToVisit: 'Spring to autumn'
+website: 'https://www.eichsfeld-tourismus.de'
+coordinates:
+  lat: 51.45
+  lng: 10.30
+gallery:
+  - src: /img/attractions/draisine-tunnel-2.webp
+    alt: 'View through the long brick-vaulted tunnel of the rail bike route'
+sortOrder: 13

@@ -4,7 +4,7 @@ const slug = route.params.slug as string
 
 // Fetch attraction by slug
 const { data: attraction } = await useAsyncData(`attraction-en-${slug}`, () =>
-  queryCollection('attractions').where('slug', '=', slug).first(),
+  queryCollection('attractionsEn').where('slug', '=', slug).first(),
 )
 
 // Handle 404

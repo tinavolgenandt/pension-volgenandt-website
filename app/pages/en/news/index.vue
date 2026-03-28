@@ -25,7 +25,7 @@ useHead({
 })
 
 const { data: articles } = await useAsyncData('en-news', () =>
-  queryCollection('news').order('sortOrder', 'ASC').all(),
+  queryCollection('newsEn').order('sortOrder', 'ASC').all(),
 )
 </script>
 

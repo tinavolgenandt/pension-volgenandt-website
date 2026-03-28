@@ -1,0 +1,51 @@
+name: 'Hiking in the Eichsfeld'
+slug: wandern
+seoTitle: 'Hiking in the Eichsfeld'
+seoDescription: 'Discover the most beautiful hiking trails in the Eichsfeld around our guesthouse. Routes, tips, and tour suggestions for every level.'
+heroImage: /img/homepage/aussicht-panorama.webp
+heroImageAlt: 'Hiking trail through the hilly Eichsfeld landscape'
+intro: >-
+  The Eichsfeld is a paradise for hikers. Around our guesthouse, paths
+  lead into a gentle hilly landscape with wide meadows, dense forests,
+  and magnificent viewpoints. Whether a leisurely stroll or a demanding
+  full-day hike – everyone will find their favourite trail here.
+regionDescription: >-
+  The Eichsfeld landscape captivates with its distinctive character:
+  gentle hills, deeply cut valleys, and extensive beech forests alternate
+  with open meadow landscapes. The well-marked trail network connects
+  historic villages, castle ruins, and nature reserves. The ridges of
+  the Ohmgebirge and the Dunwald offer wide-ranging views, while the
+  river valleys of the Leine and Unstrut invite relaxed walks. The region
+  is one of the most sparsely populated areas in Germany – perfect for
+  anyone seeking peace and quiet in nature.
+routes:
+  - name: 'TOP Trail Dun Panorama'
+    distance: '5 km'
+    difficulty: leicht
+    highlight: 'Short family hike with a magnificent panoramic view of Heilbad Heiligenstadt from the Dun Cross, about 200 metres above the town.'
+    externalUrl: 'https://www.outdooractive.com/de/route/wanderung/eichsfeld/top-wanderweg-duen-panorama-eichsfeld-thueringen/59258222/'
+  - name: 'TOP Trail Dieterode Cliffs'
+    distance: '7.6 km'
+    difficulty: mittel
+    highlight: 'Varied circular hike to one of the most beautiful viewpoints in the nature park, overlooking the western Eichsfeld.'
+    externalUrl: 'https://www.outdooractive.com/de/route/wanderung/eichsfeld/top-wanderweg-dieteroeder-klippen/58675541/'
+  - name: 'TOP Trail Bodenstein'
+    distance: '9.8 km'
+    difficulty: mittel
+    highlight: 'Circular tour through the Ohmgebirge to the imposing Bodenstein Castle, featuring the Yellow Cliff and the Kanstein viewpoint above the Hahle valley.'
+    externalUrl: 'https://www.outdooractive.com/de/route/wanderung/eichsfeld/top-wanderweg-bodenstein/802576105/'
+  - name: 'TOP Trail Scharfenstein'
+    distance: '11.9 km'
+    difficulty: mittel
+    highlight: 'Varied tour featuring Scharfenstein Castle, the Herrenberg viewpoint, and the Steinhagen Chapel with sweeping views across the Eichsfeld.'
+    externalUrl: 'https://www.outdooractive.com/de/route/wanderung/eichsfeld/top-wanderweg-scharfenstein-eichsfeld-thueringen/51209181/'
+  - name: 'TOP Trail Iberg Experience'
+    distance: '12.7 km'
+    difficulty: mittel
+    highlight: 'Certified "dream tour" through the Heiligenstadt town forest with the 14th-century Iberg tower and ancient beech woods.'
+    externalUrl: 'https://www.outdooractive.com/de/route/wanderung/eichsfeld/top-wanderweg-erlebnis-iberg-eichsfeld-thueringen/38748828/'
+externalPortals:
+  - name: 'komoot'
+    url: 'https://www.komoot.com/guide/1417/hiking-in-landkreis-eichsfeld'
+  - name: 'outdooractive'
+    url: 'https://www.outdooractive.com/de/wanderwege/eichsfeld/wandern-in-eichsfeld/19537383/'

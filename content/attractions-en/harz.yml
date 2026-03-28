@@ -1,0 +1,45 @@
+name: 'Harz Mountains'
+slug: harz
+seoTitle: 'Harz Mountains – Day Trip from the Guesthouse in the Eichsfeld'
+seoDescription: 'The Harz Mountains with the Brocken peak are just 40 km from our guesthouse. Brocken Railway, hiking trails and stalactite caves as a day trip.'
+heroImage: ''
+heroImageAlt: ''
+distanceKm: 40
+drivingMinutes: 40
+category: natur
+shortDescription: "Brocken peak, Brocken Railway and hiking trails – Germany's northernmost low mountain range"
+intro: >-
+  The Harz Mountains lie just around 40 kilometres north of our
+  guesthouse and are perfect for a day trip. With the Brocken peak
+  (1,141 m), the historic Brocken Railway and thousands of kilometres
+  of hiking trails, the Harz offers pure nature.
+content: >-
+  Via Bad Lauterberg or Bad Sachsa you can reach the southern Harz
+  in less than an hour. The highlight is the Brocken – at 1,141
+  metres the highest peak in northern Germany. You can reach the
+  summit on foot or aboard the steam-powered Brocken Railway, one
+  of the largest narrow-gauge railways in Germany.
+
+
+  Harz National Park protects 247 square kilometres of unique
+  mountain landscape with moors, spruce forests and rare animal
+  species. Over 8,000 kilometres of marked hiking trails lead
+  through the region – from leisurely walks to challenging summit
+  tours.
+
+
+  For rainy days, the stalactite caves in Rubeland and the Unicorn
+  Cave near Scharzfeld offer an underground adventure. Historic
+  half-timbered towns such as Wernigerode and Quedlinburg invite
+  you to explore.
+hostTip: >-
+  Take the Brocken Railway from Wernigerode to the summit and hike
+  back down via the Goetheweg trail – that way you can experience
+  both in one day.
+bestTimeToVisit: 'June to October, dress warmly on the Brocken'
+website: 'https://www.harzinfo.de'
+coordinates:
+  lat: 51.8000
+  lng: 10.6173
+gallery: []
+sortOrder: 11

@@ -7,7 +7,7 @@ definePageMeta({
 
 // Fetch activity data
 const { data: activity } = await useAsyncData('en-activity-wandern', () =>
-  queryCollection('activities').where('slug', '=', 'wandern').first(),
+  queryCollection('activitiesEn').where('slug', '=', 'wandern').first(),
 )
 
 if (!activity.value) {

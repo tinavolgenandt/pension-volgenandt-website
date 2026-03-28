@@ -1,0 +1,51 @@
+name: 'Cycling & Leine Cycle Route'
+slug: radfahren
+seoTitle: 'Cycling in the Eichsfeld'
+seoDescription: 'Cycle tours in the Eichsfeld and along the Leine Cycle Route. Our guesthouse is the ideal starting point for cyclists in Thuringia.'
+heroImage: /img/garten/umgebung-felder-abendsonne.webp
+heroImageAlt: 'Cyclist on the Leine Cycle Route in the Eichsfeld'
+intro: >-
+  Whether a leisurely cycle along the Leine or a sporty ride through
+  the hills of the Eichsfeld – our guesthouse is the ideal starting
+  point for cyclists. The popular Leine Cycle Route passes directly
+  by Breitenbach.
+regionDescription: >-
+  The Eichsfeld offers cyclists a varied landscape with well-maintained
+  cycle paths and quiet back roads. The Leine Cycle Route, one of the
+  most popular long-distance cycle routes in northern Germany, runs from
+  the Leine spring near Leinefelde to Hanover and passes through our
+  village of Breitenbach. The region is particularly suited to touring
+  cyclists who appreciate gentle hills and rural tranquillity. E-bike
+  riders find ideal conditions in the hilly landscape – the gradients
+  are moderate, and the reward of the views all the greater.
+routes:
+  - name: 'Unstrut Cycle Route (Stage 1: Source – Muehlhausen)'
+    distance: '28 km'
+    difficulty: leicht
+    highlight: 'Family-friendly river tour along the Unstrut from its source near Kefferhausen through the idyllic Reiser valley to Muehlhausen.'
+    externalUrl: 'https://www.outdooractive.com/de/route/radtour/unstrut-hainich-kreis/unstrutradweg-1.-etappe-quelle-muehlhausen/26165886/'
+  - name: 'Kanonenbahn Cycle Route'
+    distance: '33 km'
+    difficulty: leicht
+    highlight: 'Former railway line from Dingelstadt to Frieda with five rideable railway tunnels and impressive viaducts through the Eichsfeld landscape.'
+    externalUrl: 'https://www.outdooractive.com/de/route/radtour/eichsfeld/kanonenbahnradweg-eichsfeld-thueringen/43161371/'
+  - name: 'Leine-Heide Cycle Route (Stage 1: Leinefelde – Goettingen)'
+    distance: '55 km'
+    difficulty: leicht
+    highlight: 'The long-distance cycle route begins at the Leine spring in Leinefelde and leads through orchards and picturesque villages via Heilbad Heiligenstadt to Goettingen.'
+    externalUrl: 'https://www.komoot.com/tour/31182019'
+  - name: 'History Tour through the Eichsfeld'
+    distance: '53 km'
+    difficulty: mittel
+    highlight: 'Cultural circular tour past the Leine spring, Bear Park Worbis, the Border Museum Teistungen, and the half-timbered town of Duderstadt.'
+    externalUrl: 'https://www.outdooractive.com/de/route/radtour/eichsfeld/geschichtstour-durchs-eichsfeld/218944224/'
+  - name: 'Eichsfeld Five Circular Cycle Route'
+    distance: '74 km'
+    difficulty: mittel
+    highlight: 'Sporty circular cycle tour connecting the five Eichsfeld towns of Leinefelde, Dingelstadt, Heiligenstadt, Duderstadt, and Worbis.'
+    externalUrl: 'https://www.outdooractive.com/de/route/radtour/eichsfeld/eichsfeld-fuenfer-radrundweg/173321477/'
+externalPortals:
+  - name: 'komoot'
+    url: 'https://www.komoot.com/guide/1420/cycling-in-landkreis-eichsfeld'
+  - name: 'outdooractive'
+    url: 'https://www.outdooractive.com/de/radtouren/eichsfeld/radtouren-in-eichsfeld/19537382/'
