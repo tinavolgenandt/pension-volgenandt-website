@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { t } from '~/utils/translations'
+
+const { locale } = useLocale()
+
 definePageMeta({
   breadcrumb: { label: 'Ausflugsziele' },
 })
@@ -37,20 +41,20 @@ const { data: attractions } = await useAsyncData('attractions', () =>
 )
 
 // Activity cards data
-const activityCards = [
+const activityCards = computed(() => [
   {
-    title: 'Wandern',
-    description: 'Wanderwege in der Umgebung – von gemütlich bis anspruchsvoll.',
+    title: t('activities.hiking.title', locale.value),
+    description: t('attractions.hikingDesc', locale.value),
     icon: 'ph:mountains-duotone',
-    to: '/aktivitaeten/wandern/',
+    to: locale.value === 'de' ? '/aktivitaeten/wandern/' : '/en/activities/hiking/',
   },
   {
-    title: 'Radfahren',
-    description: 'Der Leine-Radweg führt direkt an Breitenbach vorbei.',
+    title: t('activities.cycling.title', locale.value),
+    description: t('attractions.cyclingDesc', locale.value),
     icon: 'ph:bicycle-duotone',
-    to: '/aktivitaeten/radfahren/',
+    to: locale.value === 'de' ? '/aktivitaeten/radfahren/' : '/en/activities/cycling/',
   },
-]
+])
 </script>
 
 <template>
@@ -59,16 +63,14 @@ const activityCards = [
     <SharedPageBanner
       image="/img/garten/einfahrt-sommer.webp"
       image-alt="Pension Volgenandt – Einfahrt mit Gartenblick im Sommer"
-      title="Ausflugsziele"
-      subtitle="Entdecken Sie das Eichsfeld"
+      :title="t('attractions.title', locale)"
+      :subtitle="t('attractions.subtitle', locale)"
     />
 
     <!-- Intro -->
     <section class="mx-auto max-w-3xl px-6 py-12 md:py-16">
       <p class="text-lg leading-relaxed text-sage-800">
-        Das Eichsfeld ist voller Überraschungen: Bären und Wölfe im Bärenpark, mittelalterliche
-        Burgen mit Panoramablick und ein UNESCO-Weltnaturerbe mit Baumkronenpfad. Alle Ausflugsziele
-        sind in weniger als einer Stunde von unserer Pension erreichbar.
+        {{ t('attractions.intro', locale) }}
       </p>
     </section>
 
@@ -76,7 +78,7 @@ const activityCards = [
     <section class="px-6 py-6 md:py-8">
       <div class="mx-auto max-w-6xl">
         <h2 class="mb-6 font-serif text-2xl font-semibold text-sage-900">
-          Ausflugsziele auf der Karte
+          {{ t('attractions.onMap', locale) }}
         </h2>
         <AttractionsMapConsent
           placeholder-image="/img/map/ausflugsziele-placeholder.webp"
@@ -90,7 +92,9 @@ const activityCards = [
     <!-- Attraction card grid -->
     <section class="px-6 py-12 md:py-16">
       <div class="mx-auto max-w-6xl">
-        <h2 class="mb-8 font-serif text-2xl font-semibold text-sage-900">Unsere Empfehlungen</h2>
+        <h2 class="mb-8 font-serif text-2xl font-semibold text-sage-900">
+          {{ t('attractions.recommendations', locale) }}
+        </h2>
         <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <AttractionsCard
             v-for="attraction in attractions"
@@ -111,7 +115,9 @@ const activityCards = [
     <!-- Activity cards -->
     <section class="bg-sage-50 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-6xl">
-        <h2 class="mb-8 font-serif text-2xl font-semibold text-sage-900">Aktivitäten</h2>
+        <h2 class="mb-8 font-serif text-2xl font-semibold text-sage-900">
+          {{ t('attractions.activitiesHeading', locale) }}
+        </h2>
         <div class="grid gap-6 sm:grid-cols-2">
           <NuxtLink
             v-for="activity in activityCards"
@@ -130,7 +136,7 @@ const activityCards = [
               <span
                 class="mt-2 inline-flex items-center gap-1 text-sm font-medium text-waldhonig-600"
               >
-                Mehr erfahren
+                {{ t('cta.learnMore', locale) }}
                 <Icon name="ph:arrow-right" class="size-4" />
               </span>
             </div>
@@ -141,8 +147,8 @@ const activityCards = [
 
     <!-- Booking CTA -->
     <SharedBookingCta
-      text="Nach einem erlebnisreichen Tag zurück in gemütliche Zimmer"
-      button-text="Zimmer ansehen"
+      :text="t('attractions.returnToRooms', locale)"
+      :button-text="t('cta.viewRooms', locale)"
     />
   </div>
 </template>

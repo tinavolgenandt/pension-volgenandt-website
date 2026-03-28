@@ -22,6 +22,11 @@ useHead({
 
 <template>
   <div>
+    <!-- Language suggestion for English-speaking visitors (client-only, dismissible) -->
+    <ClientOnly>
+      <SharedLanguageBanner />
+    </ClientOnly>
+
     <HomeHeroVideo />
 
     <UiScrollReveal>

@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { t } from '~/utils/translations'
+
+const { locale } = useLocale()
+
 definePageMeta({
   breadcrumb: { label: 'Wandern' },
 })
@@ -9,7 +13,7 @@ const { data: activity } = await useAsyncData('activity-wandern', () =>
 )
 
 if (!activity.value) {
-  throw createError({ statusCode: 404, message: 'Aktivität nicht gefunden' })
+  throw createError({ statusCode: 404, message: t('activity.notFound', 'de') })
 }
 
 // SEO from YAML
@@ -34,9 +38,18 @@ useHead({
 })
 
 const difficultyBadge: Record<string, { label: string; class: string }> = {
-  leicht: { label: 'Leicht', class: 'bg-sage-100 text-sage-700' },
-  mittel: { label: 'Mittel', class: 'bg-waldhonig-100 text-waldhonig-700' },
-  schwer: { label: 'Schwer', class: 'bg-charcoal-100 text-charcoal-700' },
+  leicht: {
+    label: t('activity.difficulty.leicht', locale.value),
+    class: 'bg-sage-100 text-sage-700',
+  },
+  mittel: {
+    label: t('activity.difficulty.mittel', locale.value),
+    class: 'bg-waldhonig-100 text-waldhonig-700',
+  },
+  schwer: {
+    label: t('activity.difficulty.schwer', locale.value),
+    class: 'bg-charcoal-100 text-charcoal-700',
+  },
 }
 </script>
 
@@ -46,8 +59,8 @@ const difficultyBadge: Record<string, { label: string; class: string }> = {
     <SharedPageBanner
       :image="activity.heroImage"
       :image-alt="activity.heroImageAlt"
-      title="Wandern im Eichsfeld"
-      subtitle="Wege in der Umgebung entdecken"
+      :title="t('activity.hiking.title', locale)"
+      :subtitle="t('activity.hiking.subtitle', locale)"
     />
 
     <!-- Intro -->
@@ -61,7 +74,7 @@ const difficultyBadge: Record<string, { label: string; class: string }> = {
     <section class="bg-sage-50 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-3xl">
         <h2 class="mb-6 font-serif text-2xl font-semibold text-sage-900">
-          Die Wanderregion Eichsfeld
+          {{ t('activity.hiking.regionHeading', locale) }}
         </h2>
         <p class="leading-relaxed text-sage-700">
           {{ activity.regionDescription }}
@@ -73,7 +86,7 @@ const difficultyBadge: Record<string, { label: string; class: string }> = {
     <section v-if="activity.routes && activity.routes.length > 0" class="px-6 py-12 md:py-16">
       <div class="mx-auto max-w-4xl">
         <h2 class="mb-8 font-serif text-2xl font-semibold text-sage-900">
-          Empfohlene Wandertouren
+          {{ t('activity.hiking.recommended', locale) }}
         </h2>
         <div class="space-y-6">
           <div
@@ -110,7 +123,7 @@ const difficultyBadge: Record<string, { label: string; class: string }> = {
               rel="noopener noreferrer"
               class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-waldhonig-600 hover:text-waldhonig-700"
             >
-              Route ansehen
+              {{ t('activity.viewRoute', locale) }}
               <Icon name="ph:arrow-square-out" class="size-4" />
             </a>
           </div>
@@ -125,10 +138,10 @@ const difficultyBadge: Record<string, { label: string; class: string }> = {
     >
       <div class="mx-auto max-w-3xl text-center">
         <h2 class="mb-6 font-serif text-2xl font-semibold text-sage-900">
-          Weitere Touren entdecken
+          {{ t('activity.discoverMore', locale) }}
         </h2>
         <p class="mb-8 text-sage-700">
-          Finden Sie noch mehr Wandertouren im Eichsfeld auf diesen Portalen:
+          {{ t('activity.hiking.portalIntro', locale) }}
         </p>
         <div class="flex flex-wrap justify-center gap-4">
           <a
@@ -147,12 +160,12 @@ const difficultyBadge: Record<string, { label: string; class: string }> = {
     </section>
 
     <!-- Soft CTA -->
-    <SharedSoftCta text="Brauchen Sie Wandertipps? Wir kennen die besten Wege." />
+    <SharedSoftCta :text="t('activity.hiking.softCta', locale)" />
 
     <!-- Booking CTA -->
     <SharedBookingCta
-      text="Nach der Wanderung in gemütliche Zimmer zurückkehren"
-      button-text="Zimmer ansehen"
+      :text="t('activity.hiking.bookingCta', locale)"
+      :button-text="t('cta.viewRooms', locale)"
     />
   </div>
 </template>

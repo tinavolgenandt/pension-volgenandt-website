@@ -22,12 +22,29 @@ const enToDe: Record<string, string> = Object.fromEntries(
 // German paths that have English counterparts
 const translatedDePaths = Object.keys(deToEn)
 
+// Special sub-route mappings (DE slug → EN slug)
+const subRouteMappings: Record<string, string> = {
+  '/aktivitaeten/wandern': '/activities/hiking',
+  '/aktivitaeten/radfahren': '/activities/cycling',
+  '/picknick/buchen': '/picnic/book',
+  '/picknick/danke': '/picnic/thanks',
+}
+
+const subRouteMappingsReverse: Record<string, string> = Object.fromEntries(
+  Object.entries(subRouteMappings).map(([de, en]) => [en, de]),
+)
+
 function isTranslatedDePage(path: string): boolean {
   const normalized = path.replace(/\/$/, '') || '/'
   if (normalized === '/') return true
+  // Exact match on top-level paths
   if (translatedDePaths.includes(normalized)) return true
-  // Room detail pages: /zimmer/[slug]
-  if (/^\/zimmer\/[^/]+\/?$/.test(path)) return true
+  // Special sub-route mappings
+  if (subRouteMappings[normalized]) return true
+  // Any subpage of a translated path (e.g. /ausflugsziele/seeburger-see, /aktuelles/xyz)
+  for (const dePath of translatedDePaths) {
+    if (normalized.startsWith(dePath + '/')) return true
+  }
   return false
 }
 
@@ -55,22 +72,37 @@ export function useLocale() {
     const path = route.path
 
     if (locale.value === 'en') {
-      // EN → DE: strip /en prefix + translate known slugs
+      // EN → DE: strip /en prefix
       let dePath = path.replace(/^\/en/, '') || '/'
+      // Check special sub-route mappings first
+      for (const [en, de] of Object.entries(subRouteMappingsReverse)) {
+        if (dePath === en || dePath === en + '/') {
+          return de + '/'
+        }
+      }
+      // Then translate known base paths
       for (const [en, de] of Object.entries(enToDe)) {
         if (dePath.startsWith(en)) {
-          dePath = dePath.replace(en, de)
+          dePath = de + dePath.slice(en.length)
           break
         }
       }
       return dePath
     }
 
-    // DE → EN: add /en prefix + translate known slugs
+    // DE → EN: check special sub-routes first
+    const normalized = path.replace(/\/$/, '')
+    for (const [de, en] of Object.entries(subRouteMappings)) {
+      if (normalized === de) {
+        return `/en${en}/`
+      }
+    }
+
+    // Translate known base paths
     let enPath = path
     for (const [de, en] of Object.entries(deToEn)) {
       if (enPath.startsWith(de)) {
-        enPath = enPath.replace(de, en)
+        enPath = en + enPath.slice(de.length)
         break
       }
     }

@@ -17,7 +17,8 @@
     "viewDetails": "View details",
     "viewRooms": "View rooms",
     "checkAvailability": "Check availability",
-    "allRooms": "View all rooms"
+    "allRooms": "View all rooms",
+    "learnMore": "Learn more"
   },
   "room": {
     "type": {
@@ -193,6 +194,81 @@
   },
   "layout": {
     "skipToContent": "Skip to content"
+  },
+  "attraction": {
+    "notFound": "Attraction not found",
+    "practicalInfo": "Practical Information",
+    "bestTime": "Best time to visit",
+    "gallery": "Gallery",
+    "planTrip": "Planning a trip? We're happy to advise.",
+    "bookAccommodation": "Book your accommodation for the perfect day trip"
+  },
+  "news": {
+    "notFound": "Article not found",
+    "furtherLinks": "Further Links",
+    "category": {
+      "veranstaltung": "Event",
+      "region": "Region",
+      "pension": "Guesthouse"
+    },
+    "eventQuestion": "Have questions about this event? We're happy to help.",
+    "stayWithUs": "Stay with us in the Eichsfeld"
+  },
+  "activities": {
+    "title": "Activities",
+    "subtitle": "Explore the Eichsfeld",
+    "intro1": "The Eichsfeld is a paradise for anyone who loves the outdoors. In the surroundings of our guesthouse you will find numerous hiking and cycling trails leading through one of the most beautiful landscapes in Thuringia.",
+    "intro2": "Whether sporty or leisurely, alone or with the family – we are happy to advise you on the best routes and attractions nearby.",
+    "popularAttractions": "Popular Attractions",
+    "sportingActivities": "Sporting Activities",
+    "planActive": "Plan your active holiday in the Eichsfeld",
+    "hiking": {
+      "title": "Hiking",
+      "description": "The Eichsfeld offers a dense network of hiking trails through gentle hills, deep forests, and along historic paths."
+    },
+    "cycling": {
+      "title": "Cycling",
+      "description": "Whether a leisurely ride along the Leine or a sporty route through the hills – there is something for everyone."
+    }
+  },
+  "attractions": {
+    "title": "Attractions",
+    "subtitle": "Explore the Eichsfeld",
+    "intro": "The Eichsfeld is full of surprises: bears and wolves at the Bärenpark, medieval castles with panoramic views, and a UNESCO World Heritage Site with a treetop walkway. All attractions are less than an hour from our guesthouse.",
+    "onMap": "Attractions on the Map",
+    "recommendations": "Our Recommendations",
+    "activitiesHeading": "Activities",
+    "returnToRooms": "Return to cosy rooms after an eventful day",
+    "hikingDesc": "Hiking trails nearby – from leisurely to challenging.",
+    "cyclingDesc": "The Leine Cycle Path passes right by Breitenbach."
+  },
+  "activity": {
+    "notFound": "Activity not found",
+    "difficulty": {
+      "leicht": "Easy",
+      "mittel": "Moderate",
+      "schwer": "Difficult"
+    },
+    "viewRoute": "View route",
+    "discoverMore": "Discover More Tours",
+    "hiking": {
+      "title": "Hiking in the Eichsfeld",
+      "subtitle": "Discover trails in the area",
+      "regionHeading": "The Eichsfeld Hiking Region",
+      "recommended": "Recommended Hiking Tours",
+      "portalIntro": "Find more hiking tours in the Eichsfeld on these portals:",
+      "softCta": "Need hiking tips? We know the best trails.",
+      "bookingCta": "Return to cosy rooms after your hike"
+    },
+    "cycling": {
+      "title": "Cycling in the Eichsfeld",
+      "subtitle": "The Leine Cycle Path passes right by",
+      "regionHeading": "The Eichsfeld Cycling Region",
+      "recommended": "Recommended Cycling Tours",
+      "portalIntro": "Find more cycling tours in the Eichsfeld on these portals:",
+      "softCta": "Questions about cycling? We know the best routes.",
+      "bookingCta": "The ideal base for your cycling tour"
+    }
   },
   "amenity": {
     "wifi": "Free Wi-Fi",

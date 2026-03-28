@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { t } from '~/utils/translations'
+
+const { locale } = useLocale()
 const route = useRoute()
 const slug = route.params.slug as string
 
@@ -7,7 +10,7 @@ const { data: article } = await useAsyncData(`news-${slug}`, () =>
 )
 
 if (!article.value) {
-  throw createError({ statusCode: 404, message: 'Artikel nicht gefunden' })
+  throw createError({ statusCode: 404, message: t('news.notFound', locale.value) })
 }
 
 useSeoMeta({
@@ -54,9 +57,12 @@ definePageMeta({
 })
 
 const categoryBadge: Record<string, { label: string; class: string }> = {
-  veranstaltung: { label: 'Veranstaltung', class: 'bg-waldhonig-500 text-white' },
-  region: { label: 'Region', class: 'bg-sage-700 text-white' },
-  pension: { label: 'Pension', class: 'bg-charcoal-600 text-white' },
+  veranstaltung: {
+    label: t('news.category.veranstaltung', locale.value),
+    class: 'bg-waldhonig-500 text-white',
+  },
+  region: { label: t('news.category.region', locale.value), class: 'bg-sage-700 text-white' },
+  pension: { label: t('news.category.pension', locale.value), class: 'bg-charcoal-600 text-white' },
 }
 
 const contentParagraphs = computed(() => {
@@ -66,7 +72,7 @@ const contentParagraphs = computed(() => {
 
 function formatDate(dateStr: string) {
   const date = new Date(dateStr)
-  return date.toLocaleDateString('de-DE', {
+  return date.toLocaleDateString(locale.value === 'en' ? 'en-GB' : 'de-DE', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
@@ -116,7 +122,9 @@ function formatDate(dateStr: string) {
 
       <!-- External links -->
       <section v-if="article.externalLinks?.length" class="mb-10">
-        <h2 class="mb-4 font-serif text-xl font-semibold text-sage-900">Weiterführende Links</h2>
+        <h2 class="mb-4 font-serif text-xl font-semibold text-sage-900">
+          {{ t('news.furtherLinks', locale.value) }}
+        </h2>
         <div class="rounded-lg border border-sage-200 bg-sage-50 p-6">
           <ul class="space-y-3">
             <li
@@ -139,7 +147,7 @@ function formatDate(dateStr: string) {
       </section>
     </div>
 
-    <SharedSoftCta text="Haben Sie Fragen zu dieser Veranstaltung? Wir beraten Sie gerne." />
-    <SharedBookingCta text="Übernachten Sie bei uns im Eichsfeld" />
+    <SharedSoftCta :text="t('news.eventQuestion', locale.value)" />
+    <SharedBookingCta :text="t('news.stayWithUs', locale.value)" />
   </div>
 </template>

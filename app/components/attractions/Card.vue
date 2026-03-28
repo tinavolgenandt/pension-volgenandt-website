@@ -1,5 +1,7 @@
 <script setup lang="ts">
-defineProps<{
+import { t } from '~/utils/translations'
+
+const props = defineProps<{
   name: string
   slug: string
   heroImage: string
@@ -10,7 +12,12 @@ defineProps<{
   category: 'natur' | 'kultur' | 'aktivitaet'
 }>()
 
+const { locale } = useLocale()
 const { onImgError } = useImageFallback()
+
+const attractionLink = computed(() =>
+  locale.value === 'de' ? `/ausflugsziele/${props.slug}/` : `/en/attractions/${props.slug}/`,
+)
 
 const categoryBadge: Record<string, { label: string; class: string }> = {
   natur: { label: 'Natur', class: 'bg-sage-700 text-white' },
@@ -21,7 +28,7 @@ const categoryBadge: Record<string, { label: string; class: string }> = {
 
 <template>
   <NuxtLink
-    :to="`/ausflugsziele/${slug}/`"
+    :to="attractionLink"
     class="group overflow-hidden rounded-lg bg-white shadow-sm transition-shadow hover:shadow-md"
   >
     <!-- Image with category badge -->
@@ -56,7 +63,7 @@ const categoryBadge: Record<string, { label: string; class: string }> = {
         {{ shortDescription }}
       </p>
       <span class="mt-3 inline-flex items-center gap-1 text-sm font-medium text-waldhonig-600">
-        Mehr erfahren
+        {{ t('cta.learnMore', locale) }}
         <Icon name="ph:arrow-right" class="size-4" />
       </span>
     </div>

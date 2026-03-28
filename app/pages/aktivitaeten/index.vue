@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { t } from '~/utils/translations'
+
+const { locale } = useLocale()
+
 definePageMeta({
   breadcrumb: {
     label: 'Aktivitäten',
@@ -46,22 +50,24 @@ const { data: attractionsRaw } = await useAsyncData('aktivitaeten-all-attraction
 )
 const attractions = computed(() => attractionsRaw.value?.filter((a) => a.heroImage) ?? [])
 
-const activityCards = [
+const activityCards = computed(() => [
   {
-    title: 'Wandern',
-    description:
-      'Das Eichsfeld bietet ein dichtes Netz an Wanderwegen durch sanfte Hügel, tiefe Wälder und entlang historischer Pfade.',
+    title: t('activities.hiking.title', locale.value),
+    description: t('activities.hiking.description', locale.value),
     icon: 'ph:mountains-duotone',
-    to: '/aktivitaeten/wandern/',
+    to: locale.value === 'de' ? '/aktivitaeten/wandern/' : '/en/activities/hiking/',
   },
   {
-    title: 'Radfahren',
-    description:
-      'Ob gemütliche Radtour entlang der Leine oder sportliche Route durch die Hügel – hier ist für jeden etwas dabei.',
+    title: t('activities.cycling.title', locale.value),
+    description: t('activities.cycling.description', locale.value),
     icon: 'ph:bicycle-duotone',
-    to: '/aktivitaeten/radfahren/',
+    to: locale.value === 'de' ? '/aktivitaeten/radfahren/' : '/en/activities/cycling/',
   },
-]
+])
+
+function attractionLink(slug: string) {
+  return locale.value === 'de' ? `/ausflugsziele/${slug}/` : `/en/attractions/${slug}/`
+}
 </script>
 
 <template>
@@ -70,20 +76,17 @@ const activityCards = [
     <SharedPageBanner
       image="/img/garten/einfahrt-sommer.webp"
       image-alt="Pension Volgenandt – Einfahrt mit Gartenblick im Sommer"
-      title="Aktivitäten"
-      subtitle="Entdecken Sie das Eichsfeld"
+      :title="t('activities.title', locale)"
+      :subtitle="t('activities.subtitle', locale)"
     />
 
     <!-- 2. Personal intro -->
     <section class="mx-auto max-w-3xl px-6 py-12 md:py-16">
       <p class="text-lg leading-relaxed text-sage-800">
-        Das Eichsfeld ist ein Paradies für alle, die gerne draußen unterwegs sind. In der Umgebung
-        unserer Pension finden Sie zahlreiche Wander- und Radwege, die durch eine der schönsten
-        Landschaften Thüringens führen.
+        {{ t('activities.intro1', locale) }}
       </p>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
-        Ob sportlich oder gemütlich, allein oder mit der Familie – wir beraten Sie gerne zu den
-        besten Routen und Ausflugszielen in unserer Nähe.
+        {{ t('activities.intro2', locale) }}
       </p>
     </section>
 
@@ -91,13 +94,13 @@ const activityCards = [
     <section class="bg-cream px-6 py-12 md:py-16">
       <div class="mx-auto max-w-5xl">
         <h2 class="mb-8 text-center font-serif text-2xl font-semibold text-sage-900">
-          Beliebte Ausflugsziele
+          {{ t('activities.popularAttractions', locale) }}
         </h2>
         <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <NuxtLink
             v-for="attraction in attractions"
             :key="attraction.slug"
-            :to="`/ausflugsziele/${attraction.slug}/`"
+            :to="attractionLink(attraction.slug)"
             class="group overflow-hidden rounded-lg bg-white shadow-sm transition-shadow hover:shadow-md"
           >
             <div v-if="attraction.heroImage" class="aspect-[16/10] overflow-hidden bg-sage-100">
@@ -128,7 +131,7 @@ const activityCards = [
               <span
                 class="mt-3 inline-flex items-center gap-1 text-sm font-medium text-waldhonig-600 transition-colors group-hover:text-waldhonig-700"
               >
-                Mehr erfahren
+                {{ t('cta.learnMore', locale) }}
                 <Icon name="ph:arrow-right" class="size-4" />
               </span>
             </div>
@@ -141,7 +144,7 @@ const activityCards = [
     <section class="px-6 py-12 md:py-16">
       <div class="mx-auto max-w-5xl">
         <h2 class="mb-8 text-center font-serif text-2xl font-semibold text-sage-900">
-          Sportliche Aktivitäten
+          {{ t('activities.sportingActivities', locale) }}
         </h2>
         <div class="grid gap-6 sm:grid-cols-2">
           <NuxtLink
@@ -162,7 +165,7 @@ const activityCards = [
                 <span
                   class="mt-3 inline-flex items-center gap-1 text-sm font-medium text-waldhonig-600 transition-colors group-hover:text-waldhonig-700"
                 >
-                  Mehr erfahren
+                  {{ t('cta.learnMore', locale) }}
                   <Icon name="ph:arrow-right" class="size-4" />
                 </span>
               </div>
@@ -173,6 +176,6 @@ const activityCards = [
     </section>
 
     <!-- 5. Booking CTA -->
-    <SharedBookingCta text="Planen Sie Ihren aktiven Urlaub im Eichsfeld" />
+    <SharedBookingCta :text="t('activities.planActive', locale)" />
   </div>
 </template>

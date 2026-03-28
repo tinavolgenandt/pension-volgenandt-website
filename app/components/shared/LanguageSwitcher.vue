@@ -1,5 +1,12 @@
 <script setup lang="ts">
 const { locale, alternateUrl, hasAlternate } = useLocale()
+
+// Persist language choice in localStorage when user clicks
+function savePreference(lang: 'de' | 'en') {
+  if (import.meta.client) {
+    localStorage.setItem('locale-preference', lang)
+  }
+}
 </script>
 
 <template>
@@ -19,6 +26,7 @@ const { locale, alternateUrl, hasAlternate } = useLocale()
         :to="alternateUrl"
         class="px-2.5 py-1 text-sage-400 transition-colors duration-200 hover:text-sage-200"
         title="Zur deutschen Seite"
+        @click="savePreference('de')"
       >
         DE
       </NuxtLink>
@@ -36,6 +44,7 @@ const { locale, alternateUrl, hasAlternate } = useLocale()
         :to="alternateUrl"
         class="px-2.5 py-1 text-sage-400 transition-colors duration-200 hover:text-sage-200"
         title="Switch to English"
+        @click="savePreference('en')"
       >
         EN
       </NuxtLink>

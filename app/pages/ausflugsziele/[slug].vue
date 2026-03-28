@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { t } from '~/utils/translations'
+
+const { locale } = useLocale()
 const route = useRoute()
 const slug = route.params.slug as string
 
@@ -9,7 +12,7 @@ const { data: attraction } = await useAsyncData(`attraction-${slug}`, () =>
 
 // Handle 404
 if (!attraction.value) {
-  throw createError({ statusCode: 404, message: 'Ausflugsziel nicht gefunden' })
+  throw createError({ statusCode: 404, message: t('attraction.notFound', locale.value) })
 }
 
 // SEO from YAML data
@@ -67,7 +70,7 @@ const practicalInfo = computed(() => {
   if (attraction.value.bestTimeToVisit) {
     items.push({
       icon: 'ph:sun',
-      label: 'Beste Reisezeit',
+      label: t('attraction.bestTime', locale.value),
       value: attraction.value.bestTimeToVisit,
     })
   }
@@ -131,7 +134,7 @@ const practicalInfo = computed(() => {
       <!-- Practical info -->
       <section v-if="practicalInfo.length > 0" class="mb-10">
         <h2 class="mb-6 font-serif text-xl font-semibold text-sage-900">
-          Praktische Informationen
+          {{ t('attraction.practicalInfo', locale.value) }}
         </h2>
         <div class="rounded-lg border border-sage-200 bg-sage-50 p-6">
           <dl class="space-y-4">
@@ -159,7 +162,9 @@ const practicalInfo = computed(() => {
 
       <!-- Gallery (if images available) -->
       <section v-if="attraction.gallery && attraction.gallery.length > 0" class="mb-10">
-        <h2 class="mb-6 font-serif text-xl font-semibold text-sage-900">Impressionen</h2>
+        <h2 class="mb-6 font-serif text-xl font-semibold text-sage-900">
+          {{ t('attraction.gallery', locale.value) }}
+        </h2>
         <div class="grid gap-4 sm:grid-cols-2">
           <NuxtImg
             v-for="(image, index) in attraction.gallery"
@@ -175,12 +180,12 @@ const practicalInfo = computed(() => {
     </div>
 
     <!-- Soft CTA -->
-    <SharedSoftCta text="Planen Sie Ihren Ausflug? Wir beraten Sie gerne." />
+    <SharedSoftCta :text="t('attraction.planTrip', locale.value)" />
 
     <!-- Booking CTA -->
     <SharedBookingCta
-      text="Buchen Sie Ihre Unterkunft für den perfekten Tagesausflug"
-      button-text="Zimmer ansehen"
+      :text="t('attraction.bookAccommodation', locale.value)"
+      :button-text="t('cta.viewRooms', locale.value)"
     />
   </div>
 </template>

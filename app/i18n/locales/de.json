@@ -17,7 +17,8 @@
     "viewDetails": "Details ansehen",
     "viewRooms": "Zimmer ansehen",
     "checkAvailability": "Verfügbarkeit prüfen",
-    "allRooms": "Alle Zimmer ansehen"
+    "allRooms": "Alle Zimmer ansehen",
+    "learnMore": "Mehr erfahren"
   },
   "room": {
     "type": {
@@ -193,6 +194,81 @@
   },
   "layout": {
     "skipToContent": "Zum Inhalt springen"
+  },
+  "attraction": {
+    "notFound": "Ausflugsziel nicht gefunden",
+    "practicalInfo": "Praktische Informationen",
+    "bestTime": "Beste Reisezeit",
+    "gallery": "Impressionen",
+    "planTrip": "Planen Sie Ihren Ausflug? Wir beraten Sie gerne.",
+    "bookAccommodation": "Buchen Sie Ihre Unterkunft für den perfekten Tagesausflug"
+  },
+  "news": {
+    "notFound": "Artikel nicht gefunden",
+    "furtherLinks": "Weiterführende Links",
+    "category": {
+      "veranstaltung": "Veranstaltung",
+      "region": "Region",
+      "pension": "Pension"
+    },
+    "eventQuestion": "Haben Sie Fragen zu dieser Veranstaltung? Wir beraten Sie gerne.",
+    "stayWithUs": "Übernachten Sie bei uns im Eichsfeld"
+  },
+  "activities": {
+    "title": "Aktivitäten",
+    "subtitle": "Entdecken Sie das Eichsfeld",
+    "intro1": "Das Eichsfeld ist ein Paradies für alle, die gerne draußen unterwegs sind. In der Umgebung unserer Pension finden Sie zahlreiche Wander- und Radwege, die durch eine der schönsten Landschaften Thüringens führen.",
+    "intro2": "Ob sportlich oder gemütlich, allein oder mit der Familie – wir beraten Sie gerne zu den besten Routen und Ausflugszielen in unserer Nähe.",
+    "popularAttractions": "Beliebte Ausflugsziele",
+    "sportingActivities": "Sportliche Aktivitäten",
+    "planActive": "Planen Sie Ihren aktiven Urlaub im Eichsfeld",
+    "hiking": {
+      "title": "Wandern",
+      "description": "Das Eichsfeld bietet ein dichtes Netz an Wanderwegen durch sanfte Hügel, tiefe Wälder und entlang historischer Pfade."
+    },
+    "cycling": {
+      "title": "Radfahren",
+      "description": "Ob gemütliche Radtour entlang der Leine oder sportliche Route durch die Hügel – hier ist für jeden etwas dabei."
+    }
+  },
+  "attractions": {
+    "title": "Ausflugsziele",
+    "subtitle": "Entdecken Sie das Eichsfeld",
+    "intro": "Das Eichsfeld ist voller Überraschungen: Bären und Wölfe im Bärenpark, mittelalterliche Burgen mit Panoramablick und ein UNESCO-Weltnaturerbe mit Baumkronenpfad. Alle Ausflugsziele sind in weniger als einer Stunde von unserer Pension erreichbar.",
+    "onMap": "Ausflugsziele auf der Karte",
+    "recommendations": "Unsere Empfehlungen",
+    "activitiesHeading": "Aktivitäten",
+    "returnToRooms": "Nach einem erlebnisreichen Tag zurück in gemütliche Zimmer",
+    "hikingDesc": "Wanderwege in der Umgebung – von gemütlich bis anspruchsvoll.",
+    "cyclingDesc": "Der Leine-Radweg führt direkt an Breitenbach vorbei."
+  },
+  "activity": {
+    "notFound": "Aktivität nicht gefunden",
+    "difficulty": {
+      "leicht": "Leicht",
+      "mittel": "Mittel",
+      "schwer": "Schwer"
+    },
+    "viewRoute": "Route ansehen",
+    "discoverMore": "Weitere Touren entdecken",
+    "hiking": {
+      "title": "Wandern im Eichsfeld",
+      "subtitle": "Wege in der Umgebung entdecken",
+      "regionHeading": "Die Wanderregion Eichsfeld",
+      "recommended": "Empfohlene Wandertouren",
+      "portalIntro": "Finden Sie noch mehr Wandertouren im Eichsfeld auf diesen Portalen:",
+      "softCta": "Brauchen Sie Wandertipps? Wir kennen die besten Wege.",
+      "bookingCta": "Nach der Wanderung in gemütliche Zimmer zurückkehren"
+    },
+    "cycling": {
+      "title": "Radfahren im Eichsfeld",
+      "subtitle": "Der Leine-Radweg führt direkt vorbei",
+      "regionHeading": "Die Radregion Eichsfeld",
+      "recommended": "Empfohlene Radtouren",
+      "portalIntro": "Finden Sie noch mehr Radtouren im Eichsfeld auf diesen Portalen:",
+      "softCta": "Fragen zur Radregion? Wir kennen die besten Strecken.",
+      "bookingCta": "Idealer Ausgangspunkt für Ihre Radtour"
+    }
   },
   "amenity": {
     "wifi": "Kostenloses WLAN",
