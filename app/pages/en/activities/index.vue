@@ -1,65 +1,68 @@
 <script setup lang="ts">
+const siteUrl = 'https://www.pension-volgenandt.de'
+
 definePageMeta({
   breadcrumb: {
-    label: 'Aktivitäten',
+    label: 'Activities',
   },
 })
 
 useSeoMeta({
-  title: 'Aktivitäten im Eichsfeld',
-  ogTitle: 'Aktivitäten im Eichsfeld | Pension Volgenandt',
+  title: 'Activities in the Eichsfeld',
+  ogTitle: 'Activities in the Eichsfeld | Pension Volgenandt',
   description:
-    'Wandern, Radfahren, Burgen und Natur: Entdecken Sie die Aktivitäten rund um die Pension Volgenandt im Eichsfeld.',
+    'Hiking, cycling, castles and nature: Discover the activities around Pension Volgenandt in the Eichsfeld.',
   ogDescription:
-    'Wandern, Radfahren, Burgen und Natur: Entdecken Sie die Aktivitäten rund um die Pension Volgenandt im Eichsfeld.',
+    'Hiking, cycling, castles and nature: Discover the activities around Pension Volgenandt in the Eichsfeld.',
   ogImage: '/img/homepage/aussicht-panorama.webp',
   ogType: 'website',
 })
 
 useHead({
+  htmlAttrs: { lang: 'en' },
   link: [
     {
       rel: 'canonical',
-      href: 'https://www.pension-volgenandt.de/aktivitaeten/',
+      href: `${siteUrl}/en/activities/`,
     },
     {
       rel: 'alternate',
       hreflang: 'de',
-      href: 'https://www.pension-volgenandt.de/aktivitaeten/',
+      href: `${siteUrl}/aktivitaeten/`,
     },
     {
       rel: 'alternate',
       hreflang: 'en',
-      href: 'https://www.pension-volgenandt.de/en/activities/',
+      href: `${siteUrl}/en/activities/`,
     },
     {
       rel: 'alternate',
       hreflang: 'x-default',
-      href: 'https://www.pension-volgenandt.de/aktivitaeten/',
+      href: `${siteUrl}/aktivitaeten/`,
     },
   ],
 })
 
 // Fetch attractions with photos only (no-photo ones tracked in .planning/missing-attraction-photos.md)
-const { data: attractionsRaw } = await useAsyncData('aktivitaeten-all-attractions', () =>
+const { data: attractionsRaw } = await useAsyncData('en-activities-all-attractions', () =>
   queryCollection('attractions').order('distanceKm', 'ASC').all(),
 )
 const attractions = computed(() => attractionsRaw.value?.filter((a) => a.heroImage) ?? [])
 
 const activityCards = [
   {
-    title: 'Wandern',
+    title: 'Hiking',
     description:
-      'Das Eichsfeld bietet ein dichtes Netz an Wanderwegen durch sanfte Hügel, tiefe Wälder und entlang historischer Pfade.',
+      'The Eichsfeld offers a dense network of hiking trails through gentle hills, deep forests and along historic paths.',
     icon: 'ph:mountains-duotone',
-    to: '/aktivitaeten/wandern/',
+    to: '/en/activities/hiking/',
   },
   {
-    title: 'Radfahren',
+    title: 'Cycling',
     description:
-      'Ob gemütliche Radtour entlang der Leine oder sportliche Route durch die Hügel – hier ist für jeden etwas dabei.',
+      'Whether a leisurely cycle along the Leine or a sporty route through the hills \u2013 there is something for everyone.',
     icon: 'ph:bicycle-duotone',
-    to: '/aktivitaeten/radfahren/',
+    to: '/en/activities/cycling/',
   },
 ]
 </script>
@@ -69,29 +72,29 @@ const activityCards = [
     <!-- 1. Thin photo banner -->
     <SharedPageBanner
       image="/img/garten/einfahrt-sommer.webp"
-      image-alt="Pension Volgenandt – Einfahrt mit Gartenblick im Sommer"
-      title="Aktivitäten"
-      subtitle="Entdecken Sie das Eichsfeld"
+      image-alt="Pension Volgenandt – entrance with garden view in summer"
+      title="Activities"
+      subtitle="Explore the Eichsfeld"
     />
 
     <!-- 2. Personal intro -->
     <section class="mx-auto max-w-3xl px-6 py-12 md:py-16">
       <p class="text-lg leading-relaxed text-sage-800">
-        Das Eichsfeld ist ein Paradies für alle, die gerne draußen unterwegs sind. In der Umgebung
-        unserer Pension finden Sie zahlreiche Wander- und Radwege, die durch eine der schönsten
-        Landschaften Thüringens führen.
+        The Eichsfeld is a paradise for anyone who loves the outdoors. In the area around our
+        guesthouse you will find numerous hiking and cycling trails that lead through one of the
+        most beautiful landscapes in Thuringia.
       </p>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
-        Ob sportlich oder gemütlich, allein oder mit der Familie – wir beraten Sie gerne zu den
-        besten Routen und Ausflugszielen in unserer Nähe.
+        Whether sporty or leisurely, alone or with the family &ndash; we are happy to advise you on
+        the best routes and attractions nearby.
       </p>
     </section>
 
-    <!-- 3. Beliebte Ausflugsziele -->
+    <!-- 3. Popular Attractions -->
     <section class="bg-cream px-6 py-12 md:py-16">
       <div class="mx-auto max-w-5xl">
         <h2 class="mb-8 text-center font-serif text-2xl font-semibold text-sage-900">
-          Beliebte Ausflugsziele
+          Popular Attractions
         </h2>
         <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <NuxtLink
@@ -128,7 +131,7 @@ const activityCards = [
               <span
                 class="mt-3 inline-flex items-center gap-1 text-sm font-medium text-waldhonig-600 transition-colors group-hover:text-waldhonig-700"
               >
-                Mehr erfahren
+                Learn more
                 <Icon name="ph:arrow-right" class="size-4" />
               </span>
             </div>
@@ -137,11 +140,11 @@ const activityCards = [
       </div>
     </section>
 
-    <!-- 4. Sportliche Aktivitäten -->
+    <!-- 4. Sporting Activities -->
     <section class="px-6 py-12 md:py-16">
       <div class="mx-auto max-w-5xl">
         <h2 class="mb-8 text-center font-serif text-2xl font-semibold text-sage-900">
-          Sportliche Aktivitäten
+          Sporting Activities
         </h2>
         <div class="grid gap-6 sm:grid-cols-2">
           <NuxtLink
@@ -162,7 +165,7 @@ const activityCards = [
                 <span
                   class="mt-3 inline-flex items-center gap-1 text-sm font-medium text-waldhonig-600 transition-colors group-hover:text-waldhonig-700"
                 >
-                  Mehr erfahren
+                  Learn more
                   <Icon name="ph:arrow-right" class="size-4" />
                 </span>
               </div>
@@ -173,6 +176,6 @@ const activityCards = [
     </section>
 
     <!-- 5. Booking CTA -->
-    <SharedBookingCta text="Planen Sie Ihren aktiven Urlaub im Eichsfeld" />
+    <SharedBookingCta text="Plan your active holiday in the Eichsfeld" />
   </div>
 </template>

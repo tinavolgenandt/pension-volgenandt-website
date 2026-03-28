@@ -8,6 +8,10 @@ const footerNav = computed(() => {
   if (locale.value === 'en') {
     return [
       { label: t('footer.nav.roomsPrices', 'en'), to: '/en/rooms' },
+      { label: t('footer.nav.forFamilies', 'en'), to: '/en/families' },
+      { label: t('footer.nav.activities', 'en'), to: '/en/activities' },
+      { label: t('footer.nav.sustainability', 'en'), to: '/en/sustainability' },
+      { label: t('footer.nav.attractions', 'en'), to: '/en/attractions' },
       { label: t('footer.nav.contactDirections', 'en'), to: '/en/contact' },
     ]
   }

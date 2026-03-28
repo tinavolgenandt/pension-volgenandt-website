@@ -1,11 +1,26 @@
 export type Locale = 'de' | 'en'
 
+// Route slug mappings between German and English
+const deToEn: Record<string, string> = {
+  '/zimmer': '/rooms',
+  '/kontakt': '/contact',
+  '/familie': '/families',
+  '/aktivitaeten': '/activities',
+  '/nachhaltigkeit': '/sustainability',
+  '/ausflugsziele': '/attractions',
+  '/aktuelles': '/news',
+}
+
+const enToDe: Record<string, string> = Object.fromEntries(
+  Object.entries(deToEn).map(([de, en]) => [en, de]),
+)
+
 // German paths that have English counterparts
-const translatedDePaths = ['/', '/zimmer', '/kontakt']
+const translatedDePaths = Object.keys(deToEn)
 
 function isTranslatedDePage(path: string): boolean {
-  // Exact matches for listing pages
   const normalized = path.replace(/\/$/, '') || '/'
+  if (normalized === '/') return true
   if (translatedDePaths.includes(normalized)) return true
   // Room detail pages: /zimmer/[slug]
   if (/^\/zimmer\/[^/]+\/?$/.test(path)) return true
@@ -37,15 +52,24 @@ export function useLocale() {
 
     if (locale.value === 'en') {
       // EN → DE: strip /en prefix + translate known slugs
-      const dePath = path
-        .replace(/^\/en/, '')
-        .replace(/^\/rooms/, '/zimmer')
-        .replace(/^\/contact/, '/kontakt')
-      return dePath || '/'
+      let dePath = path.replace(/^\/en/, '') || '/'
+      for (const [en, de] of Object.entries(enToDe)) {
+        if (dePath.startsWith(en)) {
+          dePath = dePath.replace(en, de)
+          break
+        }
+      }
+      return dePath
     }
 
     // DE → EN: add /en prefix + translate known slugs
-    const enPath = path.replace(/^\/zimmer/, '/rooms').replace(/^\/kontakt/, '/contact')
+    let enPath = path
+    for (const [de, en] of Object.entries(deToEn)) {
+      if (enPath.startsWith(de)) {
+        enPath = enPath.replace(de, en)
+        break
+      }
+    }
     return `/en${enPath}`
   })
 

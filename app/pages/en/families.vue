@@ -1,38 +1,41 @@
 <script setup lang="ts">
+const siteUrl = 'https://www.pension-volgenandt.de'
+
 definePageMeta({
   breadcrumb: {
-    label: 'Für Familien',
+    label: 'For Families',
   },
 })
 
 useSeoMeta({
-  title: 'Für Familien',
-  ogTitle: 'Für Familien | Pension Volgenandt',
+  title: 'For Families',
+  ogTitle: 'For Families | Pension Volgenandt',
   description:
-    'Familienurlaub im Eichsfeld: Spielplatz, Garten, Kinderfahrzeuge, Kinderbetten und mehr. Pension Volgenandt in Breitenbach.',
+    'Family holiday in the Eichsfeld: playground, garden, ride-on toys, cots and more. Pension Volgenandt in Breitenbach.',
   ogDescription:
-    'Familienurlaub im Eichsfeld: Spielplatz, Garten, Kinderfahrzeuge, Kinderbetten und mehr. Pension Volgenandt in Breitenbach.',
+    'Family holiday in the Eichsfeld: playground, garden, ride-on toys, cots and more. Pension Volgenandt in Breitenbach.',
   ogImage: '/img/content/terrasse-grill.webp',
   ogType: 'website',
 })
 
 useHead({
+  htmlAttrs: { lang: 'en' },
   link: [
-    { rel: 'canonical', href: 'https://www.pension-volgenandt.de/familie/' },
+    { rel: 'canonical', href: `${siteUrl}/en/families/` },
     {
       rel: 'alternate',
       hreflang: 'de',
-      href: 'https://www.pension-volgenandt.de/familie/',
+      href: `${siteUrl}/familie/`,
     },
     {
       rel: 'alternate',
       hreflang: 'en',
-      href: 'https://www.pension-volgenandt.de/en/families/',
+      href: `${siteUrl}/en/families/`,
     },
     {
       rel: 'alternate',
       hreflang: 'x-default',
-      href: 'https://www.pension-volgenandt.de/familie/',
+      href: `${siteUrl}/familie/`,
     },
   ],
 })
@@ -40,33 +43,33 @@ useHead({
 const familyFeatures = [
   {
     icon: 'ph:baby-duotone',
-    title: 'Kinderbetten & Hochstühle',
-    description: 'Kostenlos in jedem Zimmer verfügbar',
+    title: 'Cots & High Chairs',
+    description: 'Free in every room',
   },
   {
     icon: 'ph:plant-duotone',
-    title: 'Großer Garten',
-    description: 'Viel Platz zum Spielen und Entdecken',
+    title: 'Large Garden',
+    description: 'Plenty of space to play and explore',
   },
   {
     icon: 'ph:car-duotone',
-    title: 'Kinderfahrzeuge',
-    description: 'Bobbycars, Dreirad und mehr',
+    title: 'Kids Vehicles',
+    description: 'Bobby cars, tricycles and more',
   },
   {
     icon: 'ph:tree-duotone',
-    title: 'Spielplatz',
-    description: 'Schaukel, Rutsche und Sandkasten',
+    title: 'Playground',
+    description: 'Swings, slide and sandpit',
   },
   {
     icon: 'ph:dog-duotone',
-    title: 'Haustiere willkommen',
-    description: 'Hunde willkommen in der Ferienwohnung Emils Kuhwiese & im Balkonzimmer',
+    title: 'Pets Welcome',
+    description: "Dogs welcome in Emil's Kuhwiese & Balkonzimmer apartments",
   },
   {
     icon: 'ph:mountains-duotone',
-    title: 'Natur erleben',
-    description: 'Wanderwege & Radtouren in der Umgebung',
+    title: 'Explore Nature',
+    description: 'Hiking and cycling trails nearby',
   },
 ]
 </script>
@@ -76,20 +79,20 @@ const familyFeatures = [
     <!-- 1. Thin photo banner -->
     <SharedPageBanner
       image="/img/garten/einfahrt-sommer.webp"
-      image-alt="Pension Volgenandt – Einfahrt mit Gartenblick im Sommer"
-      title="Für Familien"
-      subtitle="Bei uns sind die Kleinen die Größten"
+      image-alt="Pension Volgenandt – entrance with garden view in summer"
+      title="For Families"
+      subtitle="Where Little Ones Are the Stars"
     />
 
     <!-- 2. Personal intro -->
     <section class="mx-auto max-w-3xl px-6 py-12 md:py-16">
       <p class="text-lg leading-relaxed text-sage-800">
-        Wir wissen, wie wichtig ein entspannter Urlaub mit der ganzen Familie ist. Deshalb haben wir
-        uns darauf eingerichtet, dass sich bei uns Groß und Klein gleichermaßen wohlfühlen.
+        We know how important a relaxing holiday with the whole family is. That is why we have made
+        sure that both young and old feel equally at home with us.
       </p>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
-        Unser großer Garten, die ruhige Lage mitten im Eichsfeld und viel Platz zum Toben machen die
-        Pension Volgenandt zum idealen Ausgangspunkt für Ihren Familienurlaub.
+        Our large garden, the peaceful location in the heart of the Eichsfeld and plenty of space to
+        run around make Pension Volgenandt the ideal starting point for your family holiday.
       </p>
     </section>
 
@@ -97,7 +100,7 @@ const familyFeatures = [
     <section class="bg-cream px-6 py-12 md:py-16">
       <div class="mx-auto max-w-5xl">
         <h2 class="mb-8 text-center font-serif text-2xl font-semibold text-sage-900">
-          Das erwartet Ihre Familie
+          What Awaits Your Family
         </h2>
         <SharedFeatureGrid :features="familyFeatures" />
       </div>
@@ -108,50 +111,50 @@ const familyFeatures = [
       <div class="grid items-center gap-8 md:grid-cols-2">
         <NuxtImg
           src="/img/content/familie-garten.webp"
-          alt="Großer Garten mit Spielplatz an der Pension Volgenandt"
+          alt="Large garden with playground at Pension Volgenandt"
           class="rounded-lg"
           loading="lazy"
           sizes="100vw md:50vw"
         />
         <div>
           <h2 class="font-serif text-2xl font-bold text-sage-900">
-            Unser Garten – ein Paradies für Kinder
+            Our Garden – A Paradise for Children
           </h2>
           <p class="mt-4 leading-relaxed text-sage-800">
-            Auf unserer großen Grünfläche können Ihre Kinder nach Herzenslust spielen und die Natur
-            entdecken. Schaukel, Rutsche und Sandkasten laden zum Toben ein, während Sie in der
-            Sonne entspannen.
+            On our large green area, your children can play to their hearts' content and discover
+            nature. Swings, a slide and a sandpit invite them to romp around while you relax in the
+            sun.
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
-            Bobbycars und Dreirad stehen bereit, und am Abend beobachten wir gemeinsam die
-            Glühwürmchen im Garten. Für uns ist Familienurlaub mehr als nur ein Zimmer – es sind die
-            kleinen Momente, die zählen.
+            Bobby cars and tricycles are ready to go, and in the evening we watch the fireflies in
+            the garden together. For us, a family holiday is more than just a room – it is the
+            little moments that count.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- 5. Terrasse & Grillen -->
+    <!-- 5. Terrace & BBQ -->
     <section class="bg-sage-50 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-5xl">
         <div class="grid items-center gap-8 md:grid-cols-2">
           <div>
             <h2 class="font-serif text-2xl font-bold text-sage-900">
-              Sommerabende auf der Terrasse
+              Summer Evenings on the Terrace
             </h2>
             <p class="mt-4 leading-relaxed text-sage-800">
-              Unsere überdachte Terrasse mit Grill lädt zu gemütlichen Familienabenden ein. Während
-              die Kinder im Garten spielen, können Sie den Grill anwerfen und den Blick ins Grüne
-              genießen.
+              Our covered terrace with barbecue is perfect for cosy family evenings. While the
+              children play in the garden, you can fire up the grill and enjoy the view of the
+              greenery.
             </p>
             <p class="mt-4 leading-relaxed text-sage-800">
-              Ein Grill-Set mit Besteck und Pfannen können Sie bei uns dazubuchen – Grillkohle
-              bringen Sie einfach selbst mit.
+              A barbecue set with utensils and pans can be booked as an extra – just bring your own
+              charcoal.
             </p>
           </div>
           <NuxtImg
             src="/img/content/terrasse-grill.webp"
-            alt="Überdachte Terrasse mit Grill und Sitzgruppe"
+            alt="Covered terrace with barbecue and seating area"
             class="rounded-lg"
             loading="lazy"
             sizes="100vw md:50vw"
@@ -160,28 +163,27 @@ const familyFeatures = [
       </div>
     </section>
 
-    <!-- 6. Frühstück -->
+    <!-- 6. Breakfast -->
     <section class="mx-auto max-w-5xl px-6 py-12 md:py-16">
       <div class="grid items-center gap-8 md:grid-cols-2">
         <NuxtImg
           src="/img/content/fruehstueck-platte.webp"
-          alt="Genießer-Frühstück mit regionalen Spezialitäten"
+          alt="Gourmet breakfast with regional specialities"
           class="rounded-lg"
           loading="lazy"
           sizes="100vw md:50vw"
         />
         <div>
           <h2 class="font-serif text-2xl font-bold text-sage-900">
-            Frühstück für die ganze Familie
+            Breakfast for the Whole Family
           </h2>
           <p class="mt-4 leading-relaxed text-sage-800">
-            Ein guter Tag beginnt mit einem guten Frühstück. Unser Genießer-Frühstück mit regionalen
-            Wurstspezialitäten, hausgemachter Marmelade und saisonalem Obst aus dem eigenen Garten
-            lässt keine Wünsche offen.
+            A good day starts with a good breakfast. Our gourmet breakfast with regional sausage
+            specialities, homemade jam and seasonal fruit from our own garden leaves nothing to be
+            desired.
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
-            Beim Frühstück gehen wir gerne auf die Wünsche der Kleinen ein – sprechen Sie uns
-            einfach an.
+            At breakfast, we are happy to cater to the little ones' wishes – just let us know.
           </p>
         </div>
       </div>
@@ -191,34 +193,33 @@ const familyFeatures = [
     <section class="bg-sage-50 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-3xl">
         <h2 class="mb-6 text-center font-serif text-2xl font-semibold text-sage-900">
-          Praktisches für Familien
+          Practical Tips for Families
         </h2>
         <ul class="space-y-4">
           <li class="flex items-start gap-3">
             <Icon name="ph:check-circle-duotone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
             <span class="leading-relaxed text-sage-800">
-              Kinderbetten und Hochstühle stellen wir kostenlos in jedem Zimmer bereit – einfach bei
-              der Buchung angeben.
+              We provide cots and high chairs free of charge in every room – simply let us know when
+              booking.
             </span>
           </li>
           <li class="flex items-start gap-3">
             <Icon name="ph:check-circle-duotone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
             <span class="leading-relaxed text-sage-800">
-              Beim Frühstück gehen wir gerne auf die Wünsche der Kleinen ein.
+              At breakfast, we are happy to cater to the little ones' wishes.
             </span>
           </li>
           <li class="flex items-start gap-3">
             <Icon name="ph:check-circle-duotone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
             <span class="leading-relaxed text-sage-800">
-              Der Bärenpark Worbis ist nur 6 km entfernt – ein tolles Erlebnis für die ganze
-              Familie.
+              The Bear Park Worbis is only 6 km away – a wonderful experience for the whole family.
             </span>
           </li>
           <li class="flex items-start gap-3">
             <Icon name="ph:check-circle-duotone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
             <span class="leading-relaxed text-sage-800">
-              Wanderwege und Radtouren in der Umgebung – per Auto oder Leihrad gut erreichbar, auch
-              für kleine Beine geeignet.
+              Hiking trails and cycling routes nearby – easily accessible by car or rental bike,
+              also suitable for little legs.
             </span>
           </li>
         </ul>
@@ -226,9 +227,9 @@ const familyFeatures = [
     </section>
 
     <!-- 8. Soft CTA -->
-    <SharedSoftCta text="Haben Sie Fragen zu unserem Familienangebot? Wir beraten Sie gerne." />
+    <SharedSoftCta text="Have questions about our family offerings? We're happy to advise." />
 
     <!-- 9. Booking CTA -->
-    <SharedBookingCta text="Planen Sie Ihren Familienurlaub im Eichsfeld" />
+    <SharedBookingCta text="Plan your family holiday in the Eichsfeld" />
   </div>
 </template>

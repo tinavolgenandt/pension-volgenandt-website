@@ -27,6 +27,16 @@ useHead({
       hreflang: 'de',
       href: 'https://www.pension-volgenandt.de/nachhaltigkeit/',
     },
+    {
+      rel: 'alternate',
+      hreflang: 'en',
+      href: 'https://www.pension-volgenandt.de/en/sustainability/',
+    },
+    {
+      rel: 'alternate',
+      hreflang: 'x-default',
+      href: 'https://www.pension-volgenandt.de/nachhaltigkeit/',
+    },
   ],
 })
 

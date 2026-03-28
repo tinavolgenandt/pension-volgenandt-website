@@ -18,6 +18,16 @@ useHead({
   link: [
     { rel: 'canonical', href: 'https://www.pension-volgenandt.de/aktuelles/' },
     { rel: 'alternate', hreflang: 'de', href: 'https://www.pension-volgenandt.de/aktuelles/' },
+    {
+      rel: 'alternate',
+      hreflang: 'en',
+      href: 'https://www.pension-volgenandt.de/en/news/',
+    },
+    {
+      rel: 'alternate',
+      hreflang: 'x-default',
+      href: 'https://www.pension-volgenandt.de/aktuelles/',
+    },
   ],
 })
 

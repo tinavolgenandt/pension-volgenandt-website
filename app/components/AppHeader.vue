@@ -37,6 +37,10 @@ const navItems = computed(() => {
   if (locale.value === 'en') {
     return [
       { label: t('nav.rooms', 'en'), to: '/en/rooms' },
+      { label: t('nav.families', 'en'), to: '/en/families' },
+      { label: t('nav.activities', 'en'), to: '/en/activities' },
+      { label: t('nav.news', 'en'), to: '/en/news' },
+      { label: t('nav.sustainability', 'en'), to: '/en/sustainability' },
       { label: t('nav.contact', 'en'), to: '/en/contact' },
     ]
   }
