@@ -1,3 +1,5 @@
+import type { Locale } from '~/composables/useLocale'
+
 export interface AmenityInfo {
   icon: string
   label: string
@@ -22,4 +24,34 @@ export const amenityMap: Record<string, AmenityInfo> = {
   foehn: { icon: 'lucide:wind', label: 'Föhn' },
   tisch: { icon: 'lucide:lamp-desk', label: 'Kleiner Tisch' },
   heizung: { icon: 'lucide:heater', label: 'Heizung' },
+}
+
+export const amenityMapEn: Record<string, string> = {
+  wifi: 'Free Wi-Fi',
+  tv: 'Television',
+  balkon: 'Balcony',
+  terrasse: 'Terrace',
+  kueche: 'Kitchen',
+  kuehlschrank: 'Refrigerator',
+  kaffeemaschine: 'Coffee machine',
+  wasserkocher: 'Kettle',
+  spuele: 'Sink',
+  dusche: 'Shower',
+  badewanne: 'Bathtub',
+  parkplatz: 'Free parking',
+  garten: 'Garden',
+  bettwaesche: 'Bed linen',
+  handtuecher: 'Towels',
+  foehn: 'Hair dryer',
+  tisch: 'Small table',
+  heizung: 'Heating',
+}
+
+export function getAmenityLabel(key: string, locale: Locale = 'de'): string {
+  if (locale === 'en') return amenityMapEn[key] ?? amenityMap[key]?.label ?? key
+  return amenityMap[key]?.label ?? key
+}
+
+export function getAmenityIcon(key: string): string {
+  return amenityMap[key]?.icon ?? 'lucide:check'
 }

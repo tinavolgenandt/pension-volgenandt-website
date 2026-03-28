@@ -1,0 +1,90 @@
+name: 'Balcony Room'
+slug: balkonzimmer
+type: zweibettzimmer
+category: 'Doppelzimmer'
+shortDescription: >-
+  Cosy twin room with a private balcony overlooking the
+  courtyard. The perfect retreat for couples and solo
+  travellers.
+description: >-
+  The Balcony Room combines a cosy atmosphere with the
+  added bonus of a private balcony. Two single beds that
+  can be pushed together on request, a small table, and
+  an en-suite bathroom with shower await you. In the
+  morning you can enjoy your coffee on the balcony while
+  taking in the view of the courtyard. Wi-Fi and TV
+  provide evening entertainment. The fully equipped
+  shared kitchen and the terrace are available for all
+  guests – we kindly ask for consideration of others.
+
+beds24PropertyId: 261258
+beds24RoomId: 548066
+
+maxGuests: 2
+beds: '2 single beds (can be pushed together on request)'
+
+pricing:
+  - label: 'Direct booking'
+    rates:
+      - occupancy: 2
+        pricePerNight: 58
+
+startingPrice: 58
+
+heroImage: /img/rooms/balkonzimmer-zimmer.webp
+heroImageAlt: 'Balcony Room – Two single beds with wooden furniture and sunlight'
+gallery:
+  - src: /img/rooms/balkonzimmer-balkon-1.jpg
+    alt: 'Balcony Room – Balcony with flower box and view'
+  - src: /img/rooms/balkonzimmer-bad.webp
+    alt: 'Bathroom with heated towel rail and glass shower'
+  - src: /img/rooms/balkonzimmer-balkon-2.jpg
+    alt: 'View from the balcony into the courtyard'
+  - src: /img/rooms/balkonzimmer-zimmer-2.webp
+    alt: 'Sleeping area with pine furniture and mirror'
+  - src: /img/rooms/balkonzimmer-balkon-3.webp
+    alt: 'Balcony with wooden floor, flower boxes and roof view'
+  - src: /img/rooms/balkonzimmer-balkon-4.webp
+    alt: 'View from the balcony towards terrace and herb garden'
+  - src: /img/rooms/balkonzimmer-zimmer-3.webp
+    alt: 'Bedroom with two single beds and sunlight'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-5.webp
+    alt: 'Shared kitchen with breakfast tables and warm lighting'
+  - src: /img/rooms/zimmer-gemeinschaftskueche-6.webp
+    alt: 'Shared kitchen with cooking area, dining space and fresh flowers'
+
+amenities:
+  - wifi
+  - tv
+  - balkon
+  - tisch
+  - parkplatz
+  - bettwaesche
+  - handtuecher
+  - dusche
+  - heizung
+
+highlights:
+  - 'Private balcony overlooking the courtyard'
+  - 'Quiet location'
+  - 'En-suite bathroom with shower'
+
+extras:
+  - name: 'Breakfast'
+    description: 'Rolls, cold cuts, homemade jam & coffee or tea'
+    price: 10
+    unit: 'per person / night'
+  - name: 'Gourmet breakfast'
+    description: 'Rolls, regional cold cuts, homemade jam, seasonal fruit, fresh juice & coffee or tea'
+    price: 15
+    unit: 'per person / night'
+  - name: 'Dog'
+    description: 'Your four-legged friend is welcome – our large garden offers plenty of space to run and explore.'
+    price: 5
+    unit: 'per night'
+  - name: 'BBQ set'
+    description: 'Incl. barbecue utensils and pans'
+    price: 10
+    unit: 'per use'
+
+sortOrder: 4

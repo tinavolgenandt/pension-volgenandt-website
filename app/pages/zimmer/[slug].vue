@@ -72,6 +72,16 @@ useHead({
       hreflang: 'de',
       href: `https://www.pension-volgenandt.de/zimmer/${room.value.slug}/`,
     },
+    {
+      rel: 'alternate',
+      hreflang: 'en',
+      href: `https://www.pension-volgenandt.de/en/rooms/${room.value.slug}/`,
+    },
+    {
+      rel: 'alternate',
+      hreflang: 'x-default',
+      href: `https://www.pension-volgenandt.de/zimmer/${room.value.slug}/`,
+    },
   ],
 })
 

@@ -1,11 +1,18 @@
 <script setup lang="ts">
+import type { Locale } from '~/composables/useLocale'
+import { t } from '~/utils/translations'
+
 interface Props {
   beds24PropertyId: number
   beds24RoomId?: number
   roomName: string
+  lang?: Locale
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  beds24RoomId: undefined,
+  lang: 'de',
+})
 
 const { isAllowed } = useCookieConsent()
 const { isReady } = useBeds24Widget()
@@ -31,10 +38,10 @@ watch(
       widgetType: 'AvailabilityCalendar',
       propid: props.beds24PropertyId,
       ...(props.beds24RoomId != null ? { roomid: props.beds24RoomId } : {}),
-      widgetLang: 'de',
+      widgetLang: props.lang,
       numMonth: 3,
-      dateFormat: 'dd.mm.yy',
-      weekFirstDay: 1,
+      dateFormat: props.lang === 'en' ? 'mm/dd/yy' : 'dd.mm.yy',
+      weekFirstDay: props.lang === 'en' ? 0 : 1,
       defaultNumAdult: 2,
       defaultNumNight: 2,
       fontSize: '16px',
@@ -49,7 +56,7 @@ watch(
       pastColor: '#a6c9a6',
       requestBackgroundColor: '#f8f5ee',
       requestColor: '#865725',
-      searchLinkText: 'Verfügbarkeit prüfen',
+      searchLinkText: t('cta.checkAvailability', props.lang),
       formAction: 'https://beds24.com/booking2.php',
       formTarget: '_blank',
     })
@@ -60,12 +67,12 @@ watch(
 
 <template>
   <div v-if="showCalendar" class="rounded-lg border border-sage-200 bg-white p-4 shadow-sm sm:p-6">
-    <h3 class="mb-4 font-serif text-lg font-semibold text-sage-800">Verfügbarkeit</h3>
+    <h3 class="mb-4 font-serif text-lg font-semibold text-sage-800">{{ t('room.availability', lang) }}</h3>
     <div
       v-if="isReady"
       :id="`beds24-calendar-${beds24PropertyId}-${beds24RoomId ?? 'all'}`"
       ref="containerRef"
-      :aria-label="`Verfügbarkeitskalender für ${roomName}`"
+      :aria-label="`${t('booking.calendarLabel', lang)} ${roomName}`"
       role="region"
     />
     <div v-else class="flex items-center gap-2 py-4 text-sm text-sage-500">
@@ -77,7 +84,7 @@ watch(
           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
         />
       </svg>
-      Kalender wird geladen...
+      {{ t('booking.calendarLoading', lang) }}
     </div>
   </div>
 </template>

@@ -1,20 +1,33 @@
 <script setup lang="ts">
-const config = useAppConfig()
+import { t } from '~/utils/translations'
 
-const footerNav = [
-  { label: 'Zimmer & Preise', to: '/zimmer' },
-  { label: 'Für Familien', to: '/familie' },
-  { label: 'Aktivitäten', to: '/aktivitaeten' },
-  { label: 'Nachhaltigkeit', to: '/nachhaltigkeit' },
-  { label: 'Ausflugsziele', to: '/ausflugsziele' },
-  { label: 'Kontakt & Anfahrt', to: '/kontakt' },
-]
+const config = useAppConfig()
+const { locale, prefix } = useLocale()
+
+const footerNav = computed(() => {
+  if (locale.value === 'en') {
+    return [
+      { label: 'Rooms & Prices', to: '/en/rooms' },
+      { label: 'Contact & Directions', to: '/en/contact' },
+    ]
+  }
+  return [
+    { label: 'Zimmer & Preise', to: '/zimmer' },
+    { label: 'Für Familien', to: '/familie' },
+    { label: 'Aktivitäten', to: '/aktivitaeten' },
+    { label: 'Nachhaltigkeit', to: '/nachhaltigkeit' },
+    { label: 'Ausflugsziele', to: '/ausflugsziele' },
+    { label: 'Kontakt & Anfahrt', to: '/kontakt' },
+  ]
+})
 
 const legalNav = [
   { label: 'Impressum', to: '/impressum' },
   { label: 'Datenschutz', to: '/datenschutz' },
   { label: 'AGB', to: '/agb' },
 ]
+
+const roomsLink = computed(() => (locale.value === 'en' ? '/en/rooms' : '/zimmer'))
 
 const { openSettings } = useCookieConsent()
 
@@ -29,14 +42,14 @@ function openCookieSettings() {
     <section class="bg-waldhonig-500">
       <div class="mx-auto max-w-screen-xl px-4 py-8 text-center">
         <h2 class="font-serif text-2xl font-semibold text-white">
-          Bereit für Ihren Aufenthalt im Eichsfeld?
+          {{ t('footer.ctaHeading', locale) }}
         </h2>
         <div class="mt-4">
           <NuxtLink
-            to="/zimmer"
+            :to="roomsLink"
             class="inline-flex items-center justify-center rounded-lg bg-white px-8 py-4 font-sans font-semibold text-waldhonig-600 transition-colors duration-200 hover:bg-waldhonig-50"
           >
-            Verfügbarkeit prüfen
+            {{ t('footer.ctaButton', locale) }}
           </NuxtLink>
         </div>
       </div>
@@ -54,13 +67,11 @@ function openCookieSettings() {
             <p class="mt-2 font-sans text-sage-300 italic">
               {{ config.siteTagline }}
             </p>
-            <!-- Social icons placeholder: include when active per CONTEXT -->
-            <!-- Facebook | Instagram links: pending owner confirmation of active profiles -->
           </div>
 
           <!-- Column 2: Kontakt (order-1 on mobile = phone first, order-2 on desktop) -->
           <div class="order-1 nav:order-2">
-            <h3 class="mb-4 font-serif text-lg font-semibold text-white">Kontakt</h3>
+            <h3 class="mb-4 font-serif text-lg font-semibold text-white">{{ t('footer.contact', locale) }}</h3>
 
             <!-- Address -->
             <address class="leading-relaxed not-italic">
@@ -115,7 +126,7 @@ function openCookieSettings() {
 
           <!-- Column 3: Entdecken (order-2 on mobile, order-3 on desktop) -->
           <div class="order-2 nav:order-3">
-            <h3 class="mb-4 font-serif text-lg font-semibold text-white">Entdecken</h3>
+            <h3 class="mb-4 font-serif text-lg font-semibold text-white">{{ t('footer.discover', locale) }}</h3>
             <ul class="space-y-2">
               <li v-for="item in footerNav" :key="item.to">
                 <NuxtLink
@@ -130,7 +141,7 @@ function openCookieSettings() {
 
           <!-- Column 4: Rechtliches (order-4 on both) -->
           <div class="order-4">
-            <h3 class="mb-4 font-serif text-lg font-semibold text-white">Rechtliches</h3>
+            <h3 class="mb-4 font-serif text-lg font-semibold text-white">{{ t('footer.legal', locale) }}</h3>
             <ul class="space-y-2">
               <li v-for="item in legalNav" :key="item.to">
                 <NuxtLink
@@ -147,7 +158,7 @@ function openCookieSettings() {
                   class="inline-block py-1 text-sage-300 transition-colors duration-200 hover:text-white"
                   @click="openCookieSettings"
                 >
-                  Cookie-Einstellungen
+                  {{ t('footer.cookieSettings', locale) }}
                 </button>
               </li>
             </ul>
@@ -164,7 +175,7 @@ function openCookieSettings() {
     <!-- Sub-footer copyright bar -->
     <section class="bg-charcoal-950">
       <div class="mx-auto max-w-screen-xl px-4 py-4 text-center text-sm text-sage-400">
-        &copy; 2026 {{ config.siteName }}. Alle Rechte vorbehalten.
+        &copy; 2026 {{ config.siteName }}. {{ t('footer.copyright', locale) }}
       </div>
     </section>
   </footer>

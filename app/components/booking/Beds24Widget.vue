@@ -1,11 +1,18 @@
 <script setup lang="ts">
+import type { Locale } from '~/composables/useLocale'
+import { t } from '~/utils/translations'
+
 interface Props {
   beds24PropertyId: number
   beds24RoomId?: number
   roomName: string
+  lang?: Locale
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  beds24RoomId: undefined,
+  lang: 'de',
+})
 
 const { isAllowed } = useCookieConsent()
 const { isReady } = useBeds24Widget()
@@ -31,10 +38,10 @@ watch(
       widgetType: 'BookingBox',
       propid: props.beds24PropertyId,
       ...(props.beds24RoomId != null ? { roomid: props.beds24RoomId } : {}),
-      widgetLang: 'de',
-      dateFormat: 'dd.mm.yy',
+      widgetLang: props.lang,
+      dateFormat: props.lang === 'en' ? 'mm/dd/yy' : 'dd.mm.yy',
       dateSelection: 2,
-      weekFirstDay: 1,
+      weekFirstDay: props.lang === 'en' ? 0 : 1,
       peopleSelection: 2,
       defaultNumAdult: 2,
       defaultNumNight: 2,
@@ -45,7 +52,7 @@ watch(
       color: '#234024',
       buttonBackgroundColor: '#865725',
       buttonColor: '#ffffff',
-      buttonTitle: 'Jetzt buchen',
+      buttonTitle: t('cta.bookNow', props.lang),
       availableBackgroundColor: '#e3efe3',
       availableColor: '#234024',
       unavailableBackgroundColor: '#f2dede',
@@ -54,7 +61,7 @@ watch(
       pastColor: '#a6c9a6',
       requestBackgroundColor: '#f8f5ee',
       requestColor: '#865725',
-      searchLinkText: 'Verfügbarkeit prüfen',
+      searchLinkText: t('cta.checkAvailability', props.lang),
       formAction: 'https://beds24.com/booking2.php',
       formTarget: '_blank',
     })
@@ -65,12 +72,12 @@ watch(
 
 <template>
   <div v-if="showWidget" class="rounded-lg border border-sage-200 bg-white p-4 shadow-sm sm:p-6">
-    <h3 class="mb-4 font-serif text-lg font-semibold text-sage-800">Buchung</h3>
+    <h3 class="mb-4 font-serif text-lg font-semibold text-sage-800">{{ t('room.booking', lang) }}</h3>
     <div
       v-if="isReady"
       :id="`beds24-booking-${beds24PropertyId}-${beds24RoomId ?? 'all'}`"
       ref="containerRef"
-      :aria-label="`Buchungswidget für ${roomName}`"
+      :aria-label="`${t('booking.widgetLabel', lang)} ${roomName}`"
       role="region"
     />
     <div v-else class="flex items-center gap-2 py-4 text-sm text-sage-500">
@@ -82,7 +89,7 @@ watch(
           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
         />
       </svg>
-      Buchungswidget wird geladen...
+      {{ t('booking.widgetLoading', lang) }}
     </div>
   </div>
 </template>

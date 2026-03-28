@@ -1,0 +1,69 @@
+items:
+  - question: 'Was passiert bei schlechtem Wetter?'
+    answer: >-
+      Kein Problem! Bei Regen oder schlechtem Wetter steht unsere
+      überdachte Terrasse bereit – so können Sie Ihren Picknick-Korb
+      trotzdem in entspannter Atmosphäre genießen. Alternativ ist eine
+      kostenfreie Stornierung bis 48 Stunden vorher möglich.
+    category: picknick
+    sortOrder: 1
+
+  - question: 'Wie lange darf ich den Korb behalten?'
+    answer: >-
+      Den Korb können Sie innerhalb des gebuchten Zeitfensters (ca. 3 Stunden)
+      genießen. Bitte bringen Sie ihn spätestens 1 Stunde nach Ende des
+      Zeitfensters zurück, damit wir ihn für den nächsten Einsatz vorbereiten
+      können.
+    category: picknick
+    sortOrder: 2
+
+  - question: 'Wie funktioniert das Korbpfand?'
+    answer: >-
+      Bei der Abholung hinterlegen Sie ein Pfand von 100 € (bar oder
+      PayPal) oder alternativ Ihren Autoschlüssel als Sicherheit.
+      Sobald der Korb mit allem Zubehör (Geschirr, Besteck, Decke)
+      zurückgebracht wird, erhalten Sie das Pfand sofort zurück.
+    category: picknick
+    sortOrder: 3
+
+  - question: 'Was ist bei Allergien oder Unverträglichkeiten?'
+    answer: >-
+      Bitte teilen Sie uns Allergien oder Unverträglichkeiten im
+      Buchungsformular unter „Sonderwünsche" mit. Wir passen den Korb
+      gerne individuell an – z.&thinsp;B. glutenfreie Brötchen oder
+      vegane Aufstriche.
+    category: picknick
+    sortOrder: 4
+
+  - question: 'Darf ich den Korb auf einen Ausflug mitnehmen?'
+    answer: >-
+      Selbstverständlich! Der Korb ist dafür gemacht, mitgenommen zu
+      werden – ob zur Burg Hanstein, an den Seeburger See oder auf eine
+      Wanderung. Bitte bringen Sie ihn einfach innerhalb der vereinbarten
+      Zeit zurück.
+    category: picknick
+    sortOrder: 5
+
+  - question: 'Gibt es Toiletten und Sanitäranlagen vor Ort?'
+    answer: >-
+      Ja, unsere Gäste können die Sanitäranlagen in der Pension nutzen.
+      Für Tagesgäste (Picknick ohne Übernachtung) steht eine Gästetoilette
+      zur Verfügung.
+    category: picknick
+    sortOrder: 6
+
+  - question: 'Wie viele Personen müssen mindestens buchen?'
+    answer: >-
+      Unsere Picknick-Körbe sind ab 2 Personen buchbar. Für größere
+      Gruppen bis 12 Personen packen wir gerne entsprechend mehr ein –
+      geben Sie einfach die gewünschte Personenzahl im Formular an.
+    category: picknick
+    sortOrder: 7
+
+  - question: 'Kann ich auch als Tagesgast buchen (ohne Übernachtung)?'
+    answer: >-
+      Ja! Der Picknick-Korb ist sowohl für Übernachtungsgäste als auch
+      für Tagesgäste buchbar. Sie müssen kein Zimmer bei uns gebucht
+      haben, um einen Korb zu genießen.
+    category: picknick
+    sortOrder: 8

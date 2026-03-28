@@ -1,0 +1,97 @@
+name: 'Comfort Apartment'
+slug: wohlfuehl-appartement
+type: doppelzimmer
+category: 'Doppelzimmer'
+shortDescription: >-
+  Spacious apartment with kettle, refrigerator and sink
+  in the room. Ideal for 2 guests, with an additional
+  sofa bed.
+description: >-
+  The Comfort Apartment offers everything you need for a
+  relaxing stay. A kettle, refrigerator and sink are
+  available right in the room. The double bed
+  accommodates 2 guests; an additional sofa bed is
+  suitable for e.g. children. Wi-Fi, TV and an en-suite
+  bathroom with shower are included as standard. The
+  fully equipped shared kitchen and the terrace are
+  available for all guests – we kindly ask for
+  consideration of others.
+
+beds24PropertyId: 261258
+beds24RoomId: 549319
+
+maxGuests: 3
+beds: '1 double bed, 1 sofa bed'
+
+pricing:
+  - label: 'Direct booking'
+    rates:
+      - occupancy: 2
+        pricePerNight: 65
+      - occupancy: 3
+        pricePerNight: 75
+
+startingPrice: 65
+
+heroImage: /img/rooms/wohlfuehl-appartement-zimmer.webp
+heroImageAlt: 'Comfort Apartment – Sleeping and living area with double bed'
+gallery:
+  - src: /img/rooms/wohlfuehl-appartement-zimmer-2.webp
+    alt: 'Comfort Apartment – Sleeping and living area with TV'
+  - src: /img/rooms/wohlfuehl-appartement-kueche-2.webp
+    alt: 'Kitchenette with kettle, refrigerator and sink'
+  - src: /img/rooms/wohlfuehl-appartement-kueche.webp
+    alt: 'Kitchen area with view towards bathroom'
+  - src: /img/rooms/wohlfuehl-appartement-bad-2.webp
+    alt: 'Private bathroom with round shower'
+  - src: /img/rooms/wohlfuehl-appartement-bad.webp
+    alt: 'Bathroom with shower'
+  - src: /img/rooms/wohlfuehl-appartement-balkon-1.webp
+    alt: 'Balcony with table and view towards terrace'
+  - src: /img/rooms/wohlfuehl-appartement-balkon-2.webp
+    alt: 'Balcony with birdhouse and garden panorama'
+  - src: /img/rooms/wohlfuehl-appartement-zimmer-3.webp
+    alt: 'Comfort Apartment – Spacious living-sleeping area with double bed and TV'
+  - src: /img/rooms/wohlfuehl-appartement-bad-3.webp
+    alt: 'Comfort Apartment – Bathroom with round shower and washbasin'
+  - src: /img/rooms/wohlfuehl-appartement-kueche-3.webp
+    alt: 'Comfort Apartment – Small kitchenette with kettle and refrigerator'
+
+amenities:
+  - wifi
+  - tv
+  - wasserkocher
+  - kuehlschrank
+  - spuele
+  - garten
+  - parkplatz
+  - bettwaesche
+  - handtuecher
+  - dusche
+  - heizung
+
+highlights:
+  - 'Own kitchenette in the room'
+  - 'Balcony overlooking the courtyard'
+  - 'Sofa bed for e.g. children'
+
+extras:
+  - name: 'Breakfast'
+    description: 'Rolls, cold cuts, homemade jam & coffee or tea'
+    price: 10
+    unit: 'per person / night'
+  - name: 'Gourmet breakfast'
+    description: 'Rolls, regional cold cuts, homemade jam, seasonal fruit, fresh juice & coffee or tea'
+    price: 15
+    unit: 'per person / night'
+  - name: 'Extra bed'
+    description: 'Additional sleeping space on the sofa bed'
+    price: 10
+    unit: 'per person / night'
+  - name: 'BBQ set'
+    description: 'Incl. barbecue utensils and pans'
+    price: 10
+    unit: 'per use'
+
+sortOrder: 3
+featured: true

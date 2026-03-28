@@ -261,6 +261,11 @@ export default defineContentConfig({
       source: 'rooms/*.yml',
       schema: roomSchema,
     }),
+    roomsEn: defineCollection({
+      type: 'data',
+      source: 'rooms-en/*.yml',
+      schema: roomSchema,
+    }),
     testimonials: defineCollection({
       type: 'data',
       source: 'testimonials/index.yml',

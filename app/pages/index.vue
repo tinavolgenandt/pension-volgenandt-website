@@ -14,6 +14,8 @@ useHead({
   link: [
     { rel: 'canonical', href: 'https://www.pension-volgenandt.de/' },
     { rel: 'alternate', hreflang: 'de', href: 'https://www.pension-volgenandt.de/' },
+    { rel: 'alternate', hreflang: 'en', href: 'https://www.pension-volgenandt.de/en/' },
+    { rel: 'alternate', hreflang: 'x-default', href: 'https://www.pension-volgenandt.de/' },
   ],
 })
 </script>

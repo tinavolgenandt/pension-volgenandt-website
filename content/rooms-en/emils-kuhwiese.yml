@@ -1,0 +1,103 @@
+name: "Holiday Apartment Emil's Kuhwiese"
+slug: emils-kuhwiese
+type: ferienwohnung
+category: 'Ferienwohnung'
+shortDescription: >-
+  Cosy holiday apartment with garden views. Own kitchen,
+  terrace and an additional sofa bed – ideal for
+  2 guests or small families.
+description: >-
+  The holiday apartment Emil's Kuhwiese offers
+  everything you need for a relaxing stay. The fully
+  equipped kitchen allows self-catering, while the
+  terrace invites you to enjoy breakfast outdoors. The
+  double bed accommodates 2 guests; an additional sofa
+  bed is suitable for e.g. children, so families with
+  2 adults and up to 2 children can stay here
+  comfortably. Wi-Fi, TV and an en-suite bathroom
+  with shower are included as standard.
+
+beds24PropertyId: 261258
+beds24RoomId: 656179
+
+maxGuests: 3
+beds: '1 double bed, 1 sofa bed'
+
+pricing:
+  - label: 'Direct booking'
+    rates:
+      - occupancy: 2
+        pricePerNight: 73
+      - occupancy: 3
+        pricePerNight: 83
+
+startingPrice: 73
+
+heroImage: /img/rooms/emils-kuhwiese-schlafzimmer-2.webp
+heroImageAlt: "Holiday Apartment Emil's Kuhwiese – Bedroom with double bed and accent wall"
+gallery:
+  - src: /img/rooms/emils-kuhwiese-schlafzimmer.webp
+    alt: "Emil's Kuhwiese – Bedroom with double bed"
+  - src: /img/rooms/emils-kuhwiese-wohnbereich-2.webp
+    alt: 'Living area with sofa, plant shelf and window'
+  - src: /img/rooms/emils-kuhwiese-wohnbereich.webp
+    alt: 'Living area with sofa and coffee table'
+  - src: /img/rooms/emils-kuhwiese-kueche-2.webp
+    alt: 'Fully equipped kitchen with stove, microwave and dining table'
+  - src: /img/rooms/emils-kuhwiese-kueche.webp
+    alt: 'Kitchen with dining table'
+  - src: /img/rooms/emils-kuhwiese-bad-2.webp
+    alt: 'Spacious bathroom with walk-in shower'
+  - src: /img/rooms/emils-kuhwiese-bad.webp
+    alt: 'Bright bathroom with walk-in shower'
+  - src: /img/rooms/emils-kuhwiese-schlafzimmer-3.webp
+    alt: "Emil's Kuhwiese – Bedroom with double bed and green accent wall"
+  - src: /img/rooms/emils-kuhwiese-wohnbereich-3.webp
+    alt: "Emil's Kuhwiese – Living area with sofa and garden view"
+  - src: /img/rooms/emils-kuhwiese-kueche-3.webp
+    alt: "Emil's Kuhwiese – Kitchen with stone wallpaper, stove and dining area"
+  - src: /img/rooms/emils-kuhwiese-bad-3.webp
+    alt: "Emil's Kuhwiese – Bright bathroom with walk-in shower and WC"
+
+amenities:
+  - wifi
+  - tv
+  - kueche
+  - kuehlschrank
+  - kaffeemaschine
+  - terrasse
+  - parkplatz
+  - bettwaesche
+  - handtuecher
+  - dusche
+  - heizung
+
+highlights:
+  - 'Own kitchen for self-catering'
+  - 'Private terrace with garden views'
+  - 'Sofa bed for e.g. children'
+
+extras:
+  - name: 'Breakfast'
+    description: 'Rolls, cold cuts, homemade jam & coffee or tea'
+    price: 10
+    unit: 'per person / night'
+  - name: 'Gourmet breakfast'
+    description: 'Rolls, regional cold cuts, homemade jam, seasonal fruit, fresh juice & coffee or tea'
+    price: 15
+    unit: 'per person / night'
+  - name: 'Extra bed'
+    description: 'Additional sleeping space on the sofa bed'
+    price: 10
+    unit: 'per person / night'
+  - name: 'Dog'
+    description: 'Your four-legged friend is welcome – our large garden offers plenty of space to run and explore.'
+    price: 5
+    unit: 'per night'
+  - name: 'BBQ set'
+    description: 'Incl. barbecue utensils and pans'
+    price: 10
+    unit: 'per use'
+
+sortOrder: 1
+featured: true

@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { t } from '~/utils/translations'
+
 const { isCompressed } = useScrollHeader()
 const config = useAppConfig()
 const route = useRoute()
+const { locale, prefix, beds24Lang } = useLocale()
 
 const isMenuOpen = ref(false)
 
@@ -28,6 +31,25 @@ function toggleMenu() {
 function isActive(to: string): boolean {
   return route.path === to
 }
+
+// Locale-aware nav items
+const navItems = computed(() => {
+  if (locale.value === 'en') {
+    return [
+      { label: t('nav.rooms', 'en'), to: '/en/rooms' },
+      { label: t('nav.contact', 'en'), to: '/en/contact' },
+    ]
+  }
+  return config.nav
+})
+
+// Locale-aware booking URL
+const bookingUrl = computed(() => {
+  return `https://beds24.com/booking2.php?propid=261258&lang=${beds24Lang.value}&referer=Website&numnight=2&numadult=2`
+})
+
+// Locale-aware logo link
+const logoLink = computed(() => (locale.value === 'en' ? '/en/' : '/'))
 </script>
 
 <template>
@@ -38,7 +60,7 @@ function isActive(to: string): boolean {
     <div class="mx-auto flex max-w-screen-xl items-center justify-between px-4 lg:px-6">
       <!-- Logo -->
       <div class="min-w-0 shrink">
-        <NuxtLink to="/" class="group block">
+        <NuxtLink :to="logoLink" class="group block">
           <span
             class="font-serif text-xl font-bold text-white transition-[font-size] duration-300 nav:text-2xl"
             :class="isCompressed ? 'nav:text-xl' : 'nav:text-2xl'"
@@ -55,9 +77,9 @@ function isActive(to: string): boolean {
       </div>
 
       <!-- Desktop navigation (>= 1024px / breakpoint-nav) -->
-      <nav class="hidden items-center gap-1 nav:flex" aria-label="Hauptnavigation">
+      <nav class="hidden items-center gap-1 nav:flex" :aria-label="t('header.mainNav', locale)">
         <NuxtLink
-          v-for="item in config.nav"
+          v-for="item in navItems"
           :key="item.to"
           :to="item.to"
           class="rounded-lg px-3 py-2 font-sans text-sm font-medium text-sage-200 transition-colors duration-200 hover:text-white"
@@ -65,6 +87,9 @@ function isActive(to: string): boolean {
         >
           {{ item.label }}
         </NuxtLink>
+
+        <!-- Language switcher (desktop) -->
+        <SharedLanguageSwitcher />
       </nav>
 
       <!-- Desktop phone + CTA -->
@@ -95,10 +120,10 @@ function isActive(to: string): boolean {
         <UiBaseButton
           variant="primary"
           size="md"
-          to="https://beds24.com/booking2.php?propid=261258&lang=de&referer=Website&numnight=2&numadult=2"
+          :to="bookingUrl"
           target="_blank"
         >
-          Jetzt buchen
+          {{ t('cta.bookNow', locale) }}
         </UiBaseButton>
       </div>
 
@@ -108,12 +133,12 @@ function isActive(to: string): boolean {
         <UiBaseButton
           variant="primary"
           size="sm"
-          to="https://beds24.com/booking2.php?propid=261258&lang=de&referer=Website&numnight=2&numadult=2"
+          :to="bookingUrl"
           target="_blank"
           class="whitespace-nowrap"
         >
-          <span class="min-[480px]:hidden">Buchen</span>
-          <span class="hidden min-[480px]:inline">Jetzt buchen</span>
+          <span class="min-[480px]:hidden">{{ t('cta.book', locale) }}</span>
+          <span class="hidden min-[480px]:inline">{{ t('cta.bookNow', locale) }}</span>
         </UiBaseButton>
 
         <!-- Hamburger button -->
@@ -122,7 +147,7 @@ function isActive(to: string): boolean {
           class="rounded-lg p-2 text-sage-200 transition-colors duration-200 hover:text-white"
           :aria-expanded="isMenuOpen"
           aria-controls="mobile-menu"
-          aria-label="Navigation umschalten"
+          :aria-label="t('header.toggleNav', locale)"
           @click="toggleMenu"
         >
           <!-- Hamburger icon (3 lines) -->
@@ -176,11 +201,11 @@ function isActive(to: string): boolean {
       >
         <nav
           class="mx-auto max-w-screen-xl overflow-hidden px-4 py-4"
-          aria-label="Mobile Navigation"
+          :aria-label="t('header.mobileNav', locale)"
         >
           <!-- Nav items -->
           <NuxtLink
-            v-for="item in config.nav"
+            v-for="item in navItems"
             :key="item.to"
             :to="item.to"
             class="block rounded-lg px-4 py-3 font-sans text-base font-medium text-sage-200 transition-colors duration-200 hover:bg-charcoal-800 hover:text-white"
@@ -188,6 +213,11 @@ function isActive(to: string): boolean {
           >
             {{ item.label }}
           </NuxtLink>
+
+          <!-- Language switcher (mobile) -->
+          <div class="px-4 py-3">
+            <SharedLanguageSwitcher />
+          </div>
 
           <!-- Divider -->
           <div class="my-3 border-t border-sage-700" />
@@ -219,11 +249,11 @@ function isActive(to: string): boolean {
             <UiBaseButton
               variant="primary"
               size="lg"
-              to="https://beds24.com/booking2.php?propid=261258&lang=de&referer=Website&numnight=2&numadult=2"
+              :to="bookingUrl"
               target="_blank"
               class="w-full"
             >
-              Jetzt buchen
+              {{ t('cta.bookNow', locale) }}
             </UiBaseButton>
           </div>
         </nav>

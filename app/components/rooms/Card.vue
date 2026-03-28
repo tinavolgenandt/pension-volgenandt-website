@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import type { Locale } from '~/composables/useLocale'
+import { t } from '~/utils/translations'
+
 interface Props {
   name: string
   slug: string
@@ -11,12 +14,20 @@ interface Props {
   beds24PropertyId?: number
   beds24RoomId?: number
   compact?: boolean
+  locale?: Locale
 }
 
 const props = withDefaults(defineProps<Props>(), {
   beds24PropertyId: undefined,
   beds24RoomId: undefined,
   compact: false,
+  locale: 'de',
+})
+
+// Locale-aware room detail path
+const roomPath = computed(() => {
+  if (props.locale === 'en') return `/en/rooms/${props.slug}`
+  return `/zimmer/${props.slug}`
 })
 
 // Direct booking URL for rooms with Beds24 integration
@@ -24,7 +35,7 @@ const bookingUrl = computed(() => {
   if (!props.beds24PropertyId) return null
   const params = new URLSearchParams({
     propid: String(props.beds24PropertyId),
-    lang: 'de',
+    lang: props.locale === 'en' ? 'en' : 'de',
     referer: 'Website',
     numnight: '2',
     numadult: '2',
@@ -34,6 +45,11 @@ const bookingUrl = computed(() => {
   }
   return `https://beds24.com/booking2.php?${params}`
 })
+
+const guestLabel = computed(() => {
+  const word = props.maxGuests === 1 ? t('room.guest', props.locale) : t('room.guests', props.locale)
+  return `${props.maxGuests} ${word}`
+})
 </script>
 
 <template>
@@ -41,7 +57,7 @@ const bookingUrl = computed(() => {
     class="group overflow-hidden rounded-xl bg-white shadow-sm transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-lg"
   >
     <NuxtLink
-      :to="`/zimmer/${slug}`"
+      :to="roomPath"
       class="block focus-visible:ring-2 focus-visible:ring-waldhonig-500 focus-visible:ring-offset-2"
     >
       <!-- Image area -->
@@ -77,7 +93,7 @@ const bookingUrl = computed(() => {
         >
           <span class="inline-flex items-center gap-1">
             <Icon name="lucide:users" :size="16" aria-hidden="true" />
-            {{ maxGuests }} {{ maxGuests === 1 ? 'Gast' : 'Gäste' }}
+            {{ guestLabel }}
           </span>
           <span
             v-for="highlight in highlights.slice(0, 2)"
@@ -91,14 +107,12 @@ const bookingUrl = computed(() => {
 
         <!-- Starting price -->
         <p :class="compact ? 'mt-2 text-sm' : 'mt-4'">
-          <span class="font-normal text-sage-600" :class="compact ? 'text-xs' : 'text-sm'"
-            >ab
-          </span>
+          <span class="font-normal text-sage-600" :class="compact ? 'text-xs' : 'text-sm'">{{ t('room.from', locale) }} </span>
           <span class="font-semibold text-waldhonig-600" :class="compact ? 'text-sm' : 'text-lg'">
             {{ startingPrice }} EUR
           </span>
           <span class="font-normal text-sage-600" :class="compact ? 'text-xs' : 'text-sm'">
-            / Nacht inkl. MwSt.
+            {{ t('room.perNight', locale) }}
           </span>
         </p>
       </div>
@@ -107,12 +121,12 @@ const bookingUrl = computed(() => {
     <!-- CTA buttons (full variant only) -->
     <div v-if="!compact" class="flex gap-2 px-5 pb-5">
       <NuxtLink
-        :to="`/zimmer/${slug}`"
+        :to="roomPath"
         aria-hidden="true"
         tabindex="-1"
         class="flex-1 rounded-lg border border-sage-200 px-4 py-2.5 text-center text-sm font-semibold text-sage-700 transition-colors duration-200 hover:bg-sage-50"
       >
-        Details ansehen
+        {{ t('cta.viewDetails', locale) }}
       </NuxtLink>
       <a
         v-if="bookingUrl"
@@ -122,7 +136,7 @@ const bookingUrl = computed(() => {
         class="flex-1 rounded-lg bg-waldhonig-500 px-4 py-2.5 text-center text-sm font-semibold text-white transition-colors duration-200 hover:bg-waldhonig-600"
         @click.stop
       >
-        Jetzt buchen
+        {{ t('cta.bookNow', locale) }}
       </a>
     </div>
   </div>
