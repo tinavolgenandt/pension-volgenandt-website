@@ -42,16 +42,16 @@ coordinates:
   lat: 51.3891
   lng: 10.2064
 gallery:
-  - src: /img/attractions/baerenpark-baer-baumstamm.jpg
+  - src: /img/attractions/baerenpark-baer-baumstamm.webp
     alt: 'Braunbär lehnt entspannt auf einem Baumstamm im naturnahen Gehege'
-  - src: /img/attractions/baerenpark-baer-nahaufnahme.jpg
+  - src: /img/attractions/baerenpark-baer-nahaufnahme.webp
     alt: 'Braunbär – ausdrucksstarke Nahaufnahme des Kopfes'
-  - src: /img/attractions/baerenpark-baer-wald-fruehling.jpg
+  - src: /img/attractions/baerenpark-baer-wald-fruehling.webp
     alt: 'Braunbär durchstreift sein weitläufiges Waldgehege im Frühling'
-  - src: /img/attractions/baerenpark-baer-wald.jpg
+  - src: /img/attractions/baerenpark-baer-wald.webp
     alt: 'Bär im Waldgehege des Alternativen Bärenparks Worbis'
-  - src: /img/attractions/baerenpark-papageien.jpg
+  - src: /img/attractions/baerenpark-papageien.webp
     alt: 'Bunte Papageien im Vogelbereich des Bärenparks'
-  - src: /img/attractions/baerenpark-kraeutergarten.jpg
+  - src: /img/attractions/baerenpark-kraeutergarten.webp
     alt: 'Gepflegter Kräutergarten auf dem Parkgelände des Bärenparks'
 sortOrder: 1

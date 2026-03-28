@@ -37,7 +37,7 @@ items:
     distanceKm: 0
     description: 'Idyllisch und still – abends wunderschön, wenn das Licht auf dem Wasser tanzt.'
     mood: 'idyllisch'
-    image: /img/garten/garten-rasen-baeume-sommer.jpg
+    image: /img/garten/garten-rasen-baeume-sommer.webp
     imageAlt: 'Sonniger Gartenrasen mit alten Obstbäumen im Sommer'
     sortOrder: 4
 
@@ -77,7 +77,7 @@ items:
     distanceKm: 25
     description: '„Das Auge des Eichsfelds" – Sandstrand, Seerosen, Badestimmung. Der perfekte Tagesausflug.'
     mood: 'badestimmung'
-    image: /img/attractions/seeburger-see-seerosen.jpg
+    image: /img/attractions/seeburger-see-seerosen.webp
     imageAlt: 'Seerosen auf dem Seeburger See im Sommer'
     sortOrder: 7
 
@@ -87,7 +87,7 @@ items:
     distanceKm: 20
     description: 'Romantische Burgruine mit Panorama-Ausblick über das Eichsfeld. Unvergesslicher Hintergrund.'
     mood: 'romantisch'
-    image: /img/attractions/burg-hanstein-panorama.jpg
+    image: /img/attractions/burg-hanstein-panorama.webp
     imageAlt: 'Weiter Panoramablick von der Burg Hanstein über das Eichsfeld'
     sortOrder: 8
 
@@ -97,6 +97,6 @@ items:
     distanceKm: 15
     description: 'Mittelalterliche Kulisse, grüne Hänge – ein Picknick mit Geschichte.'
     mood: 'historisch'
-    image: /img/garten/pension-kornfeld-panorama.jpg
+    image: /img/garten/pension-kornfeld-panorama.webp
     imageAlt: 'Weite Landschaft mit Kornfeldern rund um das Eichsfeld'
     sortOrder: 9

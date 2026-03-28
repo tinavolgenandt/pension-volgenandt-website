@@ -52,6 +52,26 @@ scripts/          # CI/automation scripts (collect-stats.mjs)
 - No unused variables (prefix with `_` if intentionally unused)
 - German UI text in components, English translations in `app/utils/translations.ts`
 
+### Image Optimization — STRICT
+
+1. **ALL production images must be WebP format.** No JPG/JPEG/PNG in `public/img/` except legacy PNGs that cannot be converted (e.g., map markers). Target max file sizes:
+   - Hero/banner images (1920px max): 150-300 KB
+   - Content images (1200px max): 80-150 KB
+   - Gallery images (1600px max): 100-200 KB
+   - Thumbnails (600px max): 25-50 KB
+
+2. **Run the image optimizer before committing new images:**
+   ```bash
+   node scripts/optimize-images.mjs --delete-originals
+   ```
+   This converts JPGs to WebP (quality 80, max 1920px), re-optimizes oversized WebPs (>500KB), and deletes original JPGs.
+
+3. **NEVER reference `.jpg` or `.jpeg` in Vue components or YAML content files.** All image paths must use `.webp` extension.
+
+4. **New source images** go in `public/img/source-uploads/` (gitignored). After optimization, only the WebP output in `public/img/` is committed.
+
+5. **Image provider:** The custom `static` provider in `app/providers/static.ts` is a pass-through — it does NOT optimize. All optimization must happen before build time via the script above.
+
 ### Content
 
 - Room data lives in `content/rooms/*.yml` (German) and `content/rooms-en/*.yml` (English)
@@ -63,3 +83,4 @@ scripts/          # CI/automation scripts (collect-stats.mjs)
 - Static site generated with `nuxt generate`
 - Hosted on IONOS — deploy by pushing to `main`
 - `scripts/collect-stats.mjs` runs monthly via GitHub Actions (do not remove)
+- `scripts/optimize-images.mjs` — run manually before committing new images (not in CI)

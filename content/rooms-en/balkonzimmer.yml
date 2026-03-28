@@ -34,11 +34,11 @@ startingPrice: 58
 heroImage: /img/rooms/balkonzimmer-zimmer.webp
 heroImageAlt: 'Balcony Room – Two single beds with wooden furniture and sunlight'
 gallery:
-  - src: /img/rooms/balkonzimmer-balkon-1.jpg
+  - src: /img/rooms/balkonzimmer-balkon-1.webp
     alt: 'Balcony Room – Balcony with flower box and view'
   - src: /img/rooms/balkonzimmer-bad.webp
     alt: 'Bathroom with heated towel rail and glass shower'
-  - src: /img/rooms/balkonzimmer-balkon-2.jpg
+  - src: /img/rooms/balkonzimmer-balkon-2.webp
     alt: 'View from the balcony into the courtyard'
   - src: /img/rooms/balkonzimmer-zimmer-2.webp
     alt: 'Sleeping area with pine furniture and mirror'

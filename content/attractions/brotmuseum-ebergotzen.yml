@@ -2,7 +2,7 @@ name: 'Europäisches Brotmuseum Ebergötzen'
 slug: brotmuseum-ebergotzen
 seoTitle: 'Europäisches Brotmuseum Ebergötzen – Kulturausflug ins Eichsfeld'
 seoDescription: 'Das Europäische Brotmuseum in Ebergötzen zeigt 10.000 Jahre Brotkultur auf historischem Gutshof mit Windmühle und Kräutergarten – 35 km von der Pension Volgenandt.'
-heroImage: /img/attractions/brotmuseum-windmuehle-kutsche.jpg
+heroImage: /img/attractions/brotmuseum-windmuehle-kutsche.webp
 heroImageAlt: 'Historische Windmühle und alte Kutsche auf dem Freigelände des Europäischen Brotmuseums Ebergötzen'
 distanceKm: 35
 drivingMinutes: 40
@@ -48,14 +48,14 @@ coordinates:
   lat: 51.5388
   lng: 9.9979
 gallery:
-  - src: /img/attractions/brotmuseum-eingang.jpg
+  - src: /img/attractions/brotmuseum-eingang.webp
     alt: 'Historisches Hauptgebäude des Brotmuseums Ebergötzen mit Schieferfassade'
-  - src: /img/attractions/brotmuseum-aussengelaende-garten.jpg
+  - src: /img/attractions/brotmuseum-aussengelaende-garten.webp
     alt: 'Weitläufiges Freigelände des Brotmuseums mit historischen Gebäuden und Grünflächen'
-  - src: /img/attractions/brotmuseum-ausstellung-kueche.jpg
+  - src: /img/attractions/brotmuseum-ausstellung-kueche.webp
     alt: 'Innenausstellung mit historischen Küchengeräten, alten Waagen und Brotbackutensilien'
-  - src: /img/attractions/brotmuseum-gebaeude-garten.jpg
+  - src: /img/attractions/brotmuseum-gebaeude-garten.webp
     alt: 'Museumsgebäude umgeben von altem Baumbestand und Gartenanlage'
-  - src: /img/attractions/brotmuseum-eingang-2.jpg
+  - src: /img/attractions/brotmuseum-eingang-2.webp
     alt: 'Eingangsbereich des Europäischen Brotmuseums Ebergötzen'
 sortOrder: 14

@@ -11,7 +11,7 @@ useSeoMeta({
     'Hausgemacht, regional, mit Herz gepackt. Buchen Sie Ihren Picknick-Korb für den Garten oder die Umgebung – ab 19 € pro Person.',
   ogDescription:
     'Hausgemacht, regional, mit Herz gepackt. Buchen Sie Ihren Picknick-Korb für den Garten oder die Umgebung – ab 19 € pro Person.',
-  ogImage: '/img/garten/garten-sitzbank-apfelbaum-bluete.jpg',
+  ogImage: '/img/garten/garten-sitzbank-apfelbaum-bluete.webp',
   ogType: 'website',
 })
 
@@ -35,7 +35,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
     <!-- 1. Hero -->
     <section class="relative h-[55vh] min-h-[380px] overflow-hidden">
       <NuxtImg
-        src="/img/garten/garten-haengekorb-blumen.jpg"
+        src="/img/garten/garten-haengekorb-blumen.webp"
         alt="Hängender Blumenkorb im Garten der Pension Volgenandt"
         class="absolute inset-0 h-full w-full object-cover"
         loading="eager"
