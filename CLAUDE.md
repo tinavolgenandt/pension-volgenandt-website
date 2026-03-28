@@ -15,6 +15,7 @@ Nuxt 4 website for a family-run guesthouse in Eichsfeld, Thuringia. German is th
 
 ```
 app/              # Nuxt app directory (components, pages, composables, utils)
+app/i18n/locales/ # Translation JSON files (de.json, en.json)
 content/          # YAML content collections (rooms, attractions, news, picknick, FAQ)
 content/rooms-en/ # English room translations
 public/img/       # Optimized production images (WebP)
@@ -40,7 +41,7 @@ scripts/          # CI/automation scripts (collect-stats.mjs)
 ### Before Every Commit
 
 - Run `npx eslint .` — must pass with 0 errors
-- Run `npx prettier --check "app/**/*.{vue,ts,js}" "content/**/*.{yml,yaml}" "nuxt.config.ts" "content.config.ts"` — must pass
+- Run `npx prettier --check "app/**/*.{vue,ts,js}" "content/**/*.{yml,yaml}" "nuxt.config.ts" "content.config.ts" "i18n/**/*.json"` — must pass
 - Run `npx nuxi typecheck` — must pass
 - Check `git status` for accidentally staged screenshots, temp files, or planning docs
 
@@ -50,7 +51,38 @@ scripts/          # CI/automation scripts (collect-stats.mjs)
 - ESLint via @nuxt/eslint
 - Vue attributes order: `class` before event handlers (`@click`, `@submit`, etc.)
 - No unused variables (prefix with `_` if intentionally unused)
-- German UI text in components, English translations in `app/utils/translations.ts`
+
+### Internationalization (i18n)
+
+**Custom i18n system** — no @nuxtjs/i18n module. German is primary, English is partial.
+
+#### Translation Files
+- UI strings live in `app/i18n/locales/de.json` and `app/i18n/locales/en.json` (nested JSON)
+- Access via `t(key, locale)` from `app/utils/translations.ts`
+- Fallback chain: requested locale → German → key itself
+- Amenity labels are in JSON under `amenity.*` keys; icons in `app/utils/amenities.ts`
+
+#### Adding New Translations
+1. Add the key to **both** `app/i18n/locales/de.json` and `app/i18n/locales/en.json`
+2. Use nested structure matching dotted key path (e.g., `room.prices` → `{ "room": { "prices": "..." } }`)
+3. In components, import and use: `import { t } from '~/utils/translations'` then `t('key.path', locale)`
+4. **NEVER hardcode German text in templates** — always use `t()` for any user-visible string
+5. Both JSON files must stay in sync — same keys in both, even if English is just a placeholder
+
+#### Locale Detection
+- Route-based: `/en/*` → English, everything else → German
+- Composable: `const { locale, prefix, alternateUrl, hasAlternate } = useLocale()`
+- English pages live under `app/pages/en/` with separate page files
+- Content collections: `rooms` (German) and `roomsEn` (English) in `content.config.ts`
+
+#### Language Switcher
+- `app/components/shared/LanguageSwitcher.vue` — globe icon + pill toggle
+- Shows in header nav (desktop and mobile)
+- Dimmed EN segment when page has no English version (`hasAlternate === false`)
+
+#### hreflang SEO
+- All pages with English equivalents must have reciprocal hreflang tags in both DE and EN page files
+- Include `hreflang: 'de'`, `hreflang: 'en'`, and `hreflang: 'x-default'` (pointing to German)
 
 ### Image Optimization — STRICT
 

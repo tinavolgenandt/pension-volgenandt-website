@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { amenityMap } from '~/utils/amenities'
+import { t } from '~/utils/translations'
+import { getAmenityLabel } from '~/utils/amenities'
 
+const { locale } = useLocale()
 const route = useRoute()
 const slug = route.params.slug as string
 const config = useAppConfig()
@@ -12,21 +14,13 @@ const { data: room } = await useAsyncData(`room-${slug}`, () =>
 
 // 404 if room not found
 if (!room.value) {
-  throw createError({ statusCode: 404, message: 'Zimmer nicht gefunden' })
+  throw createError({ statusCode: 404, message: t('room.notFound', 'de') })
 }
 
 // Fetch other rooms (exclude current), ordered by sortOrder
 const { data: otherRooms } = await useAsyncData(`other-rooms-${slug}`, () =>
   queryCollection('rooms').where('slug', '<>', slug).order('sortOrder', 'ASC').all(),
 )
-
-// Type labels for badge display
-const typeLabel: Record<string, string> = {
-  ferienwohnung: 'Ferienwohnung',
-  doppelzimmer: 'Doppelzimmer',
-  zweibettzimmer: 'Zweibettzimmer',
-  einzelzimmer: 'Einzelzimmer',
-}
 
 // Booking consent check (SSG-safe, same pattern as MapConsent)
 const { isAllowed } = useCookieConsent()
@@ -102,7 +96,7 @@ useSchemaOrg([
     },
     amenityFeature: room.value.amenities.map((a: string) => ({
       '@type': 'LocationFeatureSpecification',
-      name: amenityMap[a]?.label ?? a,
+      name: getAmenityLabel(a, 'de'),
       value: true,
     })),
     offers: room.value.pricing.flatMap(
@@ -120,7 +114,7 @@ useSchemaOrg([
           eligibleQuantity: {
             '@type': 'QuantitativeValue',
             value: rate.occupancy,
-            unitText: 'Personen',
+            unitText: t('schema.persons', 'de'),
           },
         })),
     ),
@@ -143,15 +137,15 @@ useSchemaOrg([
         <span
           class="mb-2 inline-block rounded-full bg-sage-100 px-3 py-1 text-xs font-medium tracking-wide text-sage-600"
         >
-          {{ typeLabel[room.type] || room.category }}
+          {{ t(`room.type.${room.type}`, locale) || room.category }}
         </span>
         <h1 class="font-serif text-3xl font-bold text-sage-800 sm:text-4xl">
           {{ room.name }}
         </h1>
         <p class="mt-2 text-lg">
-          <span class="text-sm text-sage-600">ab </span>
+          <span class="text-sm text-sage-600">{{ t('room.from', locale) }} </span>
           <span class="font-semibold text-waldhonig-600">{{ room.startingPrice }} EUR</span>
-          <span class="text-sm text-sage-600"> / Nacht inkl. MwSt.</span>
+          <span class="text-sm text-sage-600"> {{ t('room.perNight', locale) }}</span>
         </p>
         <!-- Direct booking link -->
         <a
@@ -162,7 +156,7 @@ useSchemaOrg([
           class="mt-4 inline-flex items-center gap-2 rounded-lg bg-waldhonig-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-waldhonig-600"
         >
           <Icon name="lucide:calendar-check" :size="18" aria-hidden="true" />
-          Jetzt buchen
+          {{ t('cta.bookNow', locale) }}
         </a>
 
         <!-- Weekend-only notice -->
@@ -176,15 +170,19 @@ useSchemaOrg([
             class="mt-0.5 shrink-0"
             aria-hidden="true"
           />
-          <span>Dieses Zimmer ist <strong>nur freitags bis sonntags</strong> buchbar.</span>
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <span v-html="t('room.weekendOnly', locale)" />
         </div>
       </div>
 
       <!-- 3. Booking Widgets (consent-gated, completely absent when not granted) -->
       <ClientOnly>
-        <section v-if="showBooking && room.beds24PropertyId" aria-label="Verfügbarkeit & Buchung">
+        <section
+          v-if="showBooking && room.beds24PropertyId"
+          :aria-label="t('room.availabilityBooking', locale)"
+        >
           <h2 class="mb-4 font-serif text-2xl font-semibold text-sage-800">
-            Verfügbarkeit & Buchung
+            {{ t('room.availabilityBooking', locale) }}
           </h2>
           <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
             <BookingBeds24Calendar
@@ -207,7 +205,7 @@ useSchemaOrg([
         class="rounded-lg border border-sage-200 bg-sage-50 p-6 text-center"
       >
         <p class="font-serif text-lg font-semibold text-sage-800">
-          Dieses Zimmer ist nur telefonisch buchbar
+          {{ t('room.phoneOnly', locale) }}
         </p>
         <a
           :href="`tel:${config.contact.phone}`"

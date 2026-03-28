@@ -1,0 +1,177 @@
+{
+  "site": {
+    "tagline": "Ruhe finden im Eichsfeld",
+    "country": "Deutschland"
+  },
+  "nav": {
+    "rooms": "Zimmer",
+    "families": "Für Familien",
+    "activities": "Aktivitäten",
+    "news": "Aktuelles",
+    "sustainability": "Nachhaltigkeit",
+    "contact": "Kontakt"
+  },
+  "cta": {
+    "bookNow": "Jetzt buchen",
+    "book": "Buchen",
+    "viewDetails": "Details ansehen",
+    "viewRooms": "Zimmer ansehen",
+    "checkAvailability": "Verfügbarkeit prüfen",
+    "allRooms": "Alle Zimmer ansehen"
+  },
+  "room": {
+    "type": {
+      "ferienwohnung": "Ferienwohnung",
+      "doppelzimmer": "Doppelzimmer",
+      "zweibettzimmer": "Zweibettzimmer",
+      "einzelzimmer": "Einzelzimmer"
+    },
+    "category": {
+      "Ferienwohnung": "Ferienwohnungen",
+      "Doppelzimmer": "Doppel- & Zweibettzimmer",
+      "Einzelzimmer": "Einzelzimmer"
+    },
+    "from": "ab",
+    "perNight": "/ Nacht inkl. MwSt.",
+    "guest": "Gast",
+    "guests": "Gäste",
+    "weekendOnly": "Dieses Zimmer ist <strong>nur freitags bis sonntags</strong> buchbar.",
+    "phoneOnly": "Dieses Zimmer ist nur telefonisch buchbar",
+    "loading": "Zimmer werden geladen...",
+    "notFound": "Zimmer nicht gefunden",
+    "prices": "Preise",
+    "amenities": "Ausstattung",
+    "extras": "Zusatzleistungen",
+    "otherRooms": "Weitere Zimmer",
+    "availability": "Verfügbarkeit",
+    "booking": "Buchung",
+    "availabilityBooking": "Verfügbarkeit & Buchung"
+  },
+  "rooms": {
+    "title": "Unsere Zimmer",
+    "subtitle": "Ob gemütliche Ferienwohnung für die ganze Familie oder komfortables Doppelzimmer für Paare – bei uns finden Sie den passenden Rückzugsort für Ihren Aufenthalt im Eichsfeld.",
+    "chooseRoom": "Wählen Sie ein Zimmer, um Verfügbarkeit und Buchungsmöglichkeiten zu sehen."
+  },
+  "price": {
+    "perNight": "pro Nacht",
+    "person": "Person",
+    "persons": "Personen",
+    "allIncl": "Alle Preise inkl. MwSt."
+  },
+  "desc": {
+    "readMore": "Mehr lesen",
+    "showLess": "Weniger anzeigen"
+  },
+  "booking": {
+    "calendarLoading": "Kalender wird geladen...",
+    "widgetLoading": "Buchungswidget wird geladen...",
+    "calendarLabel": "Verfügbarkeitskalender für",
+    "widgetLabel": "Buchungswidget für"
+  },
+  "contact": {
+    "heading": "Kontakt & Anfahrt",
+    "subtitle": "Wir freuen uns auf Sie",
+    "talkToUs": "Sprechen Sie uns an",
+    "talkToUsText": "Ob Sie eine Frage haben, ein Zimmer buchen möchten oder einfach mehr über unsere Pension erfahren wollen – wir sind gerne für Sie da.",
+    "mobile": "Mobil",
+    "landline": "Festnetz",
+    "email": "E-Mail",
+    "address": "Adresse",
+    "sendMessage": "Nachricht senden",
+    "sendMessageText": "Schreiben Sie uns – wir antworten in der Regel innerhalb von 24 Stunden."
+  },
+  "form": {
+    "name": "Name",
+    "email": "E-Mail",
+    "message": "Nachricht",
+    "submit": "Nachricht senden",
+    "sending": "Wird gesendet...",
+    "successTitle": "Vielen Dank!",
+    "successText": "Wir haben Ihre Nachricht erhalten und melden uns schnellstmöglich bei Ihnen.",
+    "errorGeneric": "Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+    "errorNetwork": "Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder rufen Sie uns an."
+  },
+  "directions": {
+    "heading": "Anfahrt",
+    "byCar": "Mit dem Auto (A38)",
+    "byCarText": "Von der A38 nehmen Sie die Ausfahrt Leinefelde und folgen der Beschilderung Richtung Breitenbach. Nach etwa 10 Minuten Fahrt erreichen Sie unsere Pension an der Otto-Reuter-Straße 28. Kostenlose Parkplätze stehen direkt vor dem Haus bereit.",
+    "byTrain": "Mit der Bahn",
+    "byTrainText": "Vom Bahnhof Leinefelde sind es 4 km bis zu unserer Pension. Gerne holen wir Sie nach Absprache vom Bahnhof ab – rufen Sie uns einfach vorher an.",
+    "gps": "Koordinaten für das Navi",
+    "openMaps": "In Google Maps öffnen"
+  },
+  "faq": {
+    "heading": "Häufige Fragen"
+  },
+  "footer": {
+    "contact": "Kontakt",
+    "discover": "Entdecken",
+    "legal": "Rechtliches",
+    "cookieSettings": "Cookie-Einstellungen",
+    "copyright": "Alle Rechte vorbehalten.",
+    "ctaHeading": "Bereit für Ihren Aufenthalt im Eichsfeld?",
+    "ctaButton": "Verfügbarkeit prüfen",
+    "callUs": "Oder rufen Sie uns direkt an",
+    "nav": {
+      "roomsPrices": "Zimmer & Preise",
+      "forFamilies": "Für Familien",
+      "activities": "Aktivitäten",
+      "sustainability": "Nachhaltigkeit",
+      "attractions": "Ausflugsziele",
+      "contactDirections": "Kontakt & Anfahrt"
+    }
+  },
+  "legal": {
+    "impressum": "Impressum",
+    "datenschutz": "Datenschutz",
+    "agb": "AGB"
+  },
+  "header": {
+    "toggleNav": "Navigation umschalten",
+    "mainNav": "Hauptnavigation",
+    "mobileNav": "Mobile Navigation"
+  },
+  "home": {
+    "title": "Pension Volgenandt | Ruhe finden im Eichsfeld",
+    "description": "Familiär geführte Pension in Breitenbach, Eichsfeld. Ferienwohnungen und Zimmer mit Blick ins Grüne.",
+    "welcomeHeading": "Willkommen in Breitenbach",
+    "welcomeText": "",
+    "ourRooms": "Unsere Zimmer",
+    "locationHeading": "So finden Sie uns",
+    "locationText": ""
+  },
+  "hosts": {
+    "caption": "Simone & Ralf Volgenandt – wir freuen uns auf Sie",
+    "buildingCaption": "So empfängt Sie unsere Pension"
+  },
+  "softCta": {
+    "default": "Haben Sie Fragen? Wir helfen Ihnen gerne weiter.",
+    "callUs": "Oder rufen Sie uns direkt an"
+  },
+  "bookingCta": {
+    "default": "Finden Sie Ihr perfektes Zimmer"
+  },
+  "schema": {
+    "persons": "Personen"
+  },
+  "amenity": {
+    "wifi": "Kostenloses WLAN",
+    "tv": "Fernseher",
+    "balkon": "Balkon",
+    "terrasse": "Terrasse",
+    "kueche": "Küche",
+    "kuehlschrank": "Kühlschrank",
+    "kaffeemaschine": "Kaffeemaschine",
+    "wasserkocher": "Wasserkocher",
+    "spuele": "Spüle",
+    "dusche": "Dusche",
+    "badewanne": "Badewanne",
+    "parkplatz": "Kostenloser Parkplatz",
+    "garten": "Garten",
+    "bettwaesche": "Bettwäsche",
+    "handtuecher": "Handtücher",
+    "foehn": "Föhn",
+    "tisch": "Kleiner Tisch",
+    "heizung": "Heizung"
+  }
+}

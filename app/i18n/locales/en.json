@@ -1,0 +1,177 @@
+{
+  "site": {
+    "tagline": "Find Peace in the Eichsfeld",
+    "country": "Germany"
+  },
+  "nav": {
+    "rooms": "Rooms",
+    "families": "For Families",
+    "activities": "Activities",
+    "news": "News",
+    "sustainability": "Sustainability",
+    "contact": "Contact"
+  },
+  "cta": {
+    "bookNow": "Book now",
+    "book": "Book",
+    "viewDetails": "View details",
+    "viewRooms": "View rooms",
+    "checkAvailability": "Check availability",
+    "allRooms": "View all rooms"
+  },
+  "room": {
+    "type": {
+      "ferienwohnung": "Holiday apartment",
+      "doppelzimmer": "Double room",
+      "zweibettzimmer": "Twin room",
+      "einzelzimmer": "Single room"
+    },
+    "category": {
+      "Ferienwohnung": "Holiday Apartments",
+      "Doppelzimmer": "Double & Twin Rooms",
+      "Einzelzimmer": "Single Rooms"
+    },
+    "from": "from",
+    "perNight": "/ night incl. VAT",
+    "guest": "guest",
+    "guests": "guests",
+    "weekendOnly": "This room is available <strong>Friday to Sunday only</strong>.",
+    "phoneOnly": "This room can only be booked by phone",
+    "loading": "Loading rooms...",
+    "notFound": "Room not found",
+    "prices": "Prices",
+    "amenities": "Amenities",
+    "extras": "Add-ons",
+    "otherRooms": "Other Rooms",
+    "availability": "Availability",
+    "booking": "Booking",
+    "availabilityBooking": "Availability & Booking"
+  },
+  "rooms": {
+    "title": "Our Rooms",
+    "subtitle": "Whether a cosy holiday apartment for the whole family or a comfortable double room for couples – you will find the perfect retreat for your stay in the Eichsfeld.",
+    "chooseRoom": "Select a room to see availability and booking options."
+  },
+  "price": {
+    "perNight": "per night",
+    "person": "person",
+    "persons": "persons",
+    "allIncl": "All prices incl. VAT"
+  },
+  "desc": {
+    "readMore": "Read more",
+    "showLess": "Show less"
+  },
+  "booking": {
+    "calendarLoading": "Loading calendar...",
+    "widgetLoading": "Loading booking widget...",
+    "calendarLabel": "Availability calendar for",
+    "widgetLabel": "Booking widget for"
+  },
+  "contact": {
+    "heading": "Contact & Directions",
+    "subtitle": "We look forward to hearing from you",
+    "talkToUs": "Get in touch",
+    "talkToUsText": "Whether you have a question, would like to book a room, or simply want to learn more about our guesthouse – we are happy to help.",
+    "mobile": "Mobile",
+    "landline": "Landline",
+    "email": "Email",
+    "address": "Address",
+    "sendMessage": "Send a message",
+    "sendMessageText": "Write to us – we usually reply within 24 hours."
+  },
+  "form": {
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "submit": "Send message",
+    "sending": "Sending...",
+    "successTitle": "Thank you!",
+    "successText": "We have received your message and will get back to you as soon as possible.",
+    "errorGeneric": "An error occurred. Please try again.",
+    "errorNetwork": "An error occurred. Please try again or give us a call."
+  },
+  "directions": {
+    "heading": "Directions",
+    "byCar": "By car (A38)",
+    "byCarText": "From the A38 motorway, take the Leinefelde exit and follow signs towards Breitenbach. After about 10 minutes you will reach our guesthouse at Otto-Reuter-Straße 28. Free parking is available right in front of the building.",
+    "byTrain": "By train",
+    "byTrainText": "Leinefelde station is 4 km from our guesthouse. We are happy to pick you up by arrangement – just give us a call beforehand.",
+    "gps": "GPS coordinates",
+    "openMaps": "Open in Google Maps"
+  },
+  "faq": {
+    "heading": "Frequently Asked Questions"
+  },
+  "footer": {
+    "contact": "Contact",
+    "discover": "Explore",
+    "legal": "Legal",
+    "cookieSettings": "Cookie Settings",
+    "copyright": "All rights reserved.",
+    "ctaHeading": "Ready for your stay in the Eichsfeld?",
+    "ctaButton": "Check availability",
+    "callUs": "Or call us directly",
+    "nav": {
+      "roomsPrices": "Rooms & Prices",
+      "forFamilies": "For Families",
+      "activities": "Activities",
+      "sustainability": "Sustainability",
+      "attractions": "Attractions",
+      "contactDirections": "Contact & Directions"
+    }
+  },
+  "legal": {
+    "impressum": "Imprint",
+    "datenschutz": "Privacy Policy",
+    "agb": "Terms & Conditions"
+  },
+  "header": {
+    "toggleNav": "Toggle navigation",
+    "mainNav": "Main navigation",
+    "mobileNav": "Mobile navigation"
+  },
+  "home": {
+    "title": "Pension Volgenandt | Find Peace in the Eichsfeld",
+    "description": "Family-run guesthouse in Breitenbach, Eichsfeld. Holiday apartments and rooms with views of the countryside.",
+    "welcomeHeading": "Welcome to Breitenbach",
+    "welcomeText": "Our family-run guesthouse in the heart of the Eichsfeld region offers the perfect base for a relaxing getaway. Surrounded by rolling hills, castles, and nature, you can unwind in our comfortable rooms and apartments – each with its own character and views of the countryside.",
+    "ourRooms": "Our Rooms",
+    "locationHeading": "How to Find Us",
+    "locationText": "Pension Volgenandt is located in the village of Breitenbach, part of Leinefelde-Worbis in Thuringia. The A38 motorway is just 10 minutes away, and Leinefelde train station is 4 km from our door."
+  },
+  "hosts": {
+    "caption": "Simone & Ralf Volgenandt – we look forward to welcoming you",
+    "buildingCaption": "This is how our guesthouse welcomes you"
+  },
+  "softCta": {
+    "default": "Have a question? We are happy to help.",
+    "callUs": "Or call us directly"
+  },
+  "bookingCta": {
+    "default": "Find your perfect room"
+  },
+  "schema": {
+    "persons": "persons"
+  },
+  "amenity": {
+    "wifi": "Free Wi-Fi",
+    "tv": "Television",
+    "balkon": "Balcony",
+    "terrasse": "Terrace",
+    "kueche": "Kitchen",
+    "kuehlschrank": "Refrigerator",
+    "kaffeemaschine": "Coffee machine",
+    "wasserkocher": "Kettle",
+    "spuele": "Sink",
+    "dusche": "Shower",
+    "badewanne": "Bathtub",
+    "parkplatz": "Free parking",
+    "garten": "Garden",
+    "bettwaesche": "Bed linen",
+    "handtuecher": "Towels",
+    "foehn": "Hair dryer",
+    "tisch": "Small table",
+    "heizung": "Heating"
+  }
+}

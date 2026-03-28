@@ -1,12 +1,15 @@
 <script setup lang="ts">
+import { t } from '~/utils/translations'
+
 const props = defineProps<{
   text?: string
   phone?: string
 }>()
 
 const appConfig = useAppConfig()
+const { locale } = useLocale()
 
-const displayText = computed(() => props.text ?? 'Haben Sie Fragen? Wir helfen Ihnen gerne weiter.')
+const displayText = computed(() => props.text ?? t('softCta.default', locale.value))
 const phoneNumber = computed(() => props.phone ?? appConfig.contact.phone)
 const phoneDisplay = computed(() => {
   if (props.phone) return props.phone
@@ -29,7 +32,7 @@ const phoneDisplay = computed(() => {
           {{ phoneDisplay }}
         </a>
       </p>
-      <p class="mt-2 text-sm text-sage-500">Oder rufen Sie uns direkt an</p>
+      <p class="mt-2 text-sm text-sage-500">{{ t('softCta.callUs', locale) }}</p>
     </div>
   </section>
 </template>

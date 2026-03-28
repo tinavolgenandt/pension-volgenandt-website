@@ -7,25 +7,25 @@ const { locale } = useLocale()
 const footerNav = computed(() => {
   if (locale.value === 'en') {
     return [
-      { label: 'Rooms & Prices', to: '/en/rooms' },
-      { label: 'Contact & Directions', to: '/en/contact' },
+      { label: t('footer.nav.roomsPrices', 'en'), to: '/en/rooms' },
+      { label: t('footer.nav.contactDirections', 'en'), to: '/en/contact' },
     ]
   }
   return [
-    { label: 'Zimmer & Preise', to: '/zimmer' },
-    { label: 'Für Familien', to: '/familie' },
-    { label: 'Aktivitäten', to: '/aktivitaeten' },
-    { label: 'Nachhaltigkeit', to: '/nachhaltigkeit' },
-    { label: 'Ausflugsziele', to: '/ausflugsziele' },
-    { label: 'Kontakt & Anfahrt', to: '/kontakt' },
+    { label: t('footer.nav.roomsPrices', 'de'), to: '/zimmer' },
+    { label: t('footer.nav.forFamilies', 'de'), to: '/familie' },
+    { label: t('footer.nav.activities', 'de'), to: '/aktivitaeten' },
+    { label: t('footer.nav.sustainability', 'de'), to: '/nachhaltigkeit' },
+    { label: t('footer.nav.attractions', 'de'), to: '/ausflugsziele' },
+    { label: t('footer.nav.contactDirections', 'de'), to: '/kontakt' },
   ]
 })
 
-const legalNav = [
-  { label: 'Impressum', to: '/impressum' },
-  { label: 'Datenschutz', to: '/datenschutz' },
-  { label: 'AGB', to: '/agb' },
-]
+const legalNav = computed(() => [
+  { label: t('legal.impressum', locale.value), to: '/impressum' },
+  { label: t('legal.datenschutz', locale.value), to: '/datenschutz' },
+  { label: t('legal.agb', locale.value), to: '/agb' },
+])
 
 const roomsLink = computed(() => (locale.value === 'en' ? '/en/rooms' : '/zimmer'))
 
@@ -65,7 +65,7 @@ function openCookieSettings() {
               {{ config.siteName }}
             </p>
             <p class="mt-2 font-sans text-sage-300 italic">
-              {{ config.siteTagline }}
+              {{ t('site.tagline', locale) }}
             </p>
           </div>
 
@@ -79,7 +79,7 @@ function openCookieSettings() {
             <address class="leading-relaxed not-italic">
               <p>{{ config.contact.address.street }}</p>
               <p>{{ config.contact.address.city }}</p>
-              <p>{{ config.contact.address.country }}</p>
+              <p>{{ t('site.country', locale) }}</p>
             </address>
 
             <!-- Phone -->

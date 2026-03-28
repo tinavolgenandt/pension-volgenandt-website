@@ -40,7 +40,14 @@ const navItems = computed(() => {
       { label: t('nav.contact', 'en'), to: '/en/contact' },
     ]
   }
-  return config.nav
+  return [
+    { label: t('nav.rooms', 'de'), to: '/zimmer' },
+    { label: t('nav.families', 'de'), to: '/familie' },
+    { label: t('nav.activities', 'de'), to: '/aktivitaeten' },
+    { label: t('nav.news', 'de'), to: '/aktuelles' },
+    { label: t('nav.sustainability', 'de'), to: '/nachhaltigkeit' },
+    { label: t('nav.contact', 'de'), to: '/kontakt' },
+  ]
 })
 
 // Locale-aware booking URL (centralized in app.config.ts)
@@ -72,7 +79,7 @@ const logoLink = computed(() => (locale.value === 'en' ? '/en/' : '/'))
             class="block font-sans text-xs text-sage-300 transition-[opacity,height] duration-300 nav:text-sm"
             :class="isCompressed ? 'h-0 overflow-hidden opacity-0' : 'opacity-100'"
           >
-            {{ config.siteTagline }}
+            {{ t('site.tagline', locale) }}
           </span>
         </NuxtLink>
       </div>
