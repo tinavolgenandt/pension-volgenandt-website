@@ -20,7 +20,7 @@ useSeoMeta({
     'Discover our 6 cosy rooms and holiday apartments in Breitenbach, Eichsfeld. From 50 EUR per night incl. VAT.',
   ogDescription:
     'Discover our 6 cosy rooms and holiday apartments in Breitenbach, Eichsfeld. From 50 EUR per night incl. VAT.',
-  ogImage: '/img/rooms/emils-kuhwiese/hero.webp',
+  ogImage: '/img/rooms/emils-kuhwiese-schlafzimmer-2.webp',
   ogType: 'website',
 })
 

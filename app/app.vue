@@ -33,7 +33,7 @@ useSchemaOrg([
     description:
       'Familiär geführte Pension in Breitenbach, Eichsfeld. Ferienwohnungen und Zimmer mit Blick ins Grüne.',
     url: 'https://www.pension-volgenandt.de',
-    logo: 'https://www.pension-volgenandt.de/img/logo.webp',
+    logo: 'https://www.pension-volgenandt.de/img/hero/hero-poster.webp',
     image: 'https://www.pension-volgenandt.de/img/hero/hero-poster.webp',
     telephone: '+49 3605 542775',
     email: 'kontakt@pension-volgenandt.de',

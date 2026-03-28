@@ -67,11 +67,14 @@ function extraCost(extra: (typeof extrasOptions)[0], adults: number): number {
   return extra.perPerson ? extra.price * adults : extra.price
 }
 
-const minDate = computed(() => {
+// Compute min date on client only to avoid SSR/client hydration mismatch
+// (SSR bakes in build-time date, client computes current date)
+const minDate = ref('')
+if (import.meta.client) {
   const d = new Date()
   d.setDate(d.getDate() + 1)
-  return d.toISOString().split('T')[0]
-})
+  minDate.value = d.toISOString().slice(0, 10)
+}
 
 const form = reactive({
   date: '',
