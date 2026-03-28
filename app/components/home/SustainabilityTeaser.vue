@@ -1,21 +1,25 @@
 <script setup lang="ts">
-const proofPoints = [
+import { t } from '~/utils/translations'
+
+const { locale } = useLocale()
+
+const proofPoints = computed(() => [
   {
     icon: 'lucide:sun',
-    title: 'Solarenergie',
-    subtitle: 'Eigener Strom vom Dach',
+    title: t('home.sustainabilityFeature1Title', locale.value),
+    subtitle: t('home.sustainabilityFeature1Desc', locale.value),
   },
   {
     icon: 'lucide:droplets',
-    title: 'Bio-Kl\u00e4ranlage',
-    subtitle: 'Nat\u00fcrliche Abwasserreinigung',
+    title: t('home.sustainabilityFeature2Title', locale.value),
+    subtitle: t('home.sustainabilityFeature2Desc', locale.value),
   },
   {
     icon: 'lucide:recycle',
-    title: 'Kompost & Kreislauf',
-    subtitle: 'Gr\u00fcnschnitt wird zu Gartenerde',
+    title: t('home.sustainabilityFeature3Title', locale.value),
+    subtitle: t('home.sustainabilityFeature3Desc', locale.value),
   },
-]
+])
 </script>
 
 <template>
@@ -25,7 +29,7 @@ const proofPoints = [
         <!-- Left: Image -->
         <NuxtImg
           src="/img/content/garten-sonnenhut-blumen.webp"
-          alt="Gelber Sonnenhut und bunte Blumen im Garten der Pension"
+          :alt="t('home.sustainabilityImageAlt', locale)"
           class="rounded-lg"
           loading="lazy"
           sizes="100vw md:50vw"
@@ -34,11 +38,10 @@ const proofPoints = [
         <!-- Right: Text + proof points -->
         <div class="flex flex-col justify-center md:items-center md:text-center">
           <h2 class="font-serif text-3xl font-bold text-sage-900 md:text-4xl">
-            Nat&uuml;rlich nachhaltig
+            {{ t('home.sustainabilityHeading', locale) }}
           </h2>
           <p class="mt-4 text-lg text-sage-700">
-            Nachhaltigkeit ist bei uns kein Trend, sondern gelebter Alltag. Unser Zuhause im
-            Eichsfeld pflegen wir mit derselben Sorgfalt wie Ihren Aufenthalt.
+            {{ t('home.sustainabilityText', locale) }}
           </p>
 
           <!-- Icon proof points -->
@@ -67,10 +70,10 @@ const proofPoints = [
           <!-- CTA text link -->
           <div class="mt-8">
             <NuxtLink
-              to="/nachhaltigkeit/"
+              :to="locale === 'en' ? '/en/sustainability/' : '/nachhaltigkeit/'"
               class="inline-flex items-center gap-1 font-sans font-semibold text-sage-600 transition-colors hover:text-sage-700 hover:underline"
             >
-              Mehr &uuml;ber unsere Nachhaltigkeit erfahren &rarr;
+              {{ t('home.learnSustainability', locale) }} &rarr;
             </NuxtLink>
           </div>
         </div>
