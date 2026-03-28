@@ -22,7 +22,10 @@ Thumbs.db
 # Claude Code
 .claude/
 
-# Existing
+# Planning, research & development docs (local only)
+.planning/
+
+# Playwright MCP temp files
 .playwright-mcp/
 
 # Archived utility scripts
@@ -32,14 +35,27 @@ Thumbs.db
 server/
 
 # Beds24 sync scripts & screenshots
-sync_beds24_photos.mjs
-sync_beds24_photos_result.txt
-sync_booking.mjs
-sync_booking_result.txt
+sync_*.mjs
+sync_*_result.txt
 sync_booking_screenshot*.png
 beds24_*.png
 
-# Unprocessed / device-named source uploads
+# Unprocessed source uploads & image originals (keep locally, never commit)
+public/img/source-uploads/
+public/img-originals/
+
+# Loose screenshots & images in project root
+*.png
+*.jpg
+*.jpeg
+*.JPG
+*.JPEG
+*.heic
+*.HEIC
+*.bmp
+*.gif
+
+# Unprocessed / device-named images in public
 public/img/WhatsApp\ Image*
 public/img/Hanstein.jpeg
 public/img/hero-pension-einfahrt-sommer.jpg
