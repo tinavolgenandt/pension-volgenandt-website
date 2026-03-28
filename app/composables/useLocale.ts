@@ -9,6 +9,10 @@ const deToEn: Record<string, string> = {
   '/nachhaltigkeit': '/sustainability',
   '/ausflugsziele': '/attractions',
   '/aktuelles': '/news',
+  '/impressum': '/imprint',
+  '/datenschutz': '/privacy',
+  '/agb': '/terms',
+  '/picknick': '/picnic',
 }
 
 const enToDe: Record<string, string> = Object.fromEntries(
