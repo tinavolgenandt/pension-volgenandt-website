@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { t } from '~/utils/translations'
+
 const route = useRoute()
 const slug = route.params.slug as string
 
@@ -171,7 +173,9 @@ function formatDate(dateStr: string) {
 
       <!-- Room cards (for event articles with showRooms) -->
       <section v-if="article.showRooms && rooms?.length" class="mb-10">
-        <h2 class="mb-6 font-serif text-xl font-semibold text-sage-900">Our rooms for your stay</h2>
+        <h2 class="mb-6 font-serif text-xl font-semibold text-sage-900">
+          {{ t('lgs.ourRoomsHeading', 'en') }}
+        </h2>
         <div class="grid gap-6 sm:grid-cols-2">
           <RoomsCard
             v-for="room in rooms"
@@ -195,7 +199,7 @@ function formatDate(dateStr: string) {
             to="/en/rooms/"
             class="inline-block rounded-lg bg-waldhonig-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-waldhonig-600"
           >
-            Book a room now
+            {{ t('lgs.bookNow', 'en') }}
           </NuxtLink>
         </div>
       </section>

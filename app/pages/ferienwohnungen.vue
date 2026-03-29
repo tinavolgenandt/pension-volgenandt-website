@@ -51,7 +51,7 @@ const { data: rooms } = await useAsyncData('ferienwohnungen', () =>
 <template>
   <div>
     <SharedPageBanner
-      image="/img/content/landesgartenschau-2026.webp"
+      image="/img/rooms/schoene-aussicht-wohnkueche.webp"
       :image-alt="t('ferienwohnungen.title', locale)"
       :title="t('ferienwohnungen.title', locale)"
       :subtitle="t('ferienwohnungen.subtitle', locale)"

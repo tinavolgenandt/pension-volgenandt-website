@@ -127,6 +127,8 @@ if (import.meta.client) {
 </template>
 
 <style scoped>
+/* Z-index stack: poster=1, video=2, gradient=3, text=10, LGS banner=20 */
+
 /* Poster layers — always visible under the video */
 .hero-poster {
   z-index: 1;
