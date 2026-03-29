@@ -46,6 +46,8 @@ const roomSchema = z.object({
   // Identity
   name: z.string(),
   slug: z.string(),
+  seoTitle: z.string().max(60).optional(),
+  seoDescription: z.string().max(155).optional(),
   type: z.enum(['ferienwohnung', 'doppelzimmer', 'zweibettzimmer', 'einzelzimmer']),
   category: z.string(),
   shortDescription: z.string(),
@@ -201,6 +203,11 @@ const newsSchema = z.object({
     )
     .default([]),
   sortOrder: z.number().default(0),
+
+  // Optional: show room cards on event articles
+  showRooms: z.boolean().default(false),
+  eventStartDate: z.string().optional(),
+  eventEndDate: z.string().optional(),
 })
 
 // Picknick schemas

@@ -74,17 +74,16 @@ useHead({
   ],
 })
 
+const fallbackDescription =
+  room.value.shortDescription.length > 155
+    ? `${room.value.shortDescription.slice(0, 152)}...`
+    : room.value.shortDescription
+
 useSeoMeta({
-  title: room.value.name,
-  ogTitle: `${room.value.name} | Pension Volgenandt`,
-  description:
-    room.value.shortDescription.length > 155
-      ? `${room.value.shortDescription.slice(0, 152)}...`
-      : room.value.shortDescription,
-  ogDescription:
-    room.value.shortDescription.length > 155
-      ? `${room.value.shortDescription.slice(0, 152)}...`
-      : room.value.shortDescription,
+  title: room.value.seoTitle ?? room.value.name,
+  ogTitle: room.value.seoTitle ?? `${room.value.name} | Pension Volgenandt`,
+  description: room.value.seoDescription ?? fallbackDescription,
+  ogDescription: room.value.seoDescription ?? fallbackDescription,
   ogImage: `${siteUrl}${room.value.heroImage}`,
   ogType: 'website',
 })

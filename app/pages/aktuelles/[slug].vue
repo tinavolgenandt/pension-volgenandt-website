@@ -13,6 +13,13 @@ if (!article.value) {
   throw createError({ statusCode: 404, message: t('news.notFound', locale.value) })
 }
 
+// Optional: load rooms for event articles with showRooms flag
+const { data: rooms } = await useAsyncData(
+  `news-rooms-${slug}`,
+  () => queryCollection('rooms').order('sortOrder', 'ASC').all(),
+  { immediate: article.value.showRooms },
+)
+
 useSeoMeta({
   title: article.value.seoTitle,
   ogTitle: article.value.seoTitle,
@@ -34,11 +41,21 @@ useHead({
       hreflang: 'de',
       href: `https://www.pension-volgenandt.de/aktuelles/${article.value.slug}/`,
     },
+    {
+      rel: 'alternate',
+      hreflang: 'en',
+      href: `https://www.pension-volgenandt.de/en/news/${article.value.slug}/`,
+    },
+    {
+      rel: 'alternate',
+      hreflang: 'x-default',
+      href: `https://www.pension-volgenandt.de/aktuelles/${article.value.slug}/`,
+    },
   ],
 })
 
 // Article structured data
-useSchemaOrg([
+const schemaItems: Record<string, unknown>[] = [
   {
     '@type': 'NewsArticle',
     headline: article.value.seoTitle,
@@ -50,7 +67,44 @@ useSchemaOrg([
       name: 'Pension Volgenandt',
     },
   },
-])
+]
+
+// Add Event schema when event dates are present
+if (article.value.eventStartDate && article.value.eventEndDate) {
+  schemaItems.push({
+    '@type': 'Event',
+    name: article.value.title,
+    startDate: article.value.eventStartDate,
+    endDate: article.value.eventEndDate,
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    eventStatus: 'https://schema.org/EventScheduled',
+    location: {
+      '@type': 'Place',
+      name: 'Landesgartenschau Leinefelde-Worbis',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Leinefelde-Worbis',
+        addressRegion: 'Thüringen',
+        addressCountry: 'DE',
+      },
+    },
+    organizer: {
+      '@type': 'Organization',
+      name: 'Landesgartenschau Leinefelde-Worbis 2026 gGmbH',
+      url: 'https://www.lgs-leinefelde-worbis.de/',
+    },
+    offers: {
+      '@type': 'Offer',
+      name: t('lgs.pageTitle', locale.value),
+      url: `https://www.pension-volgenandt.de/aktuelles/${article.value.slug}/`,
+      priceCurrency: 'EUR',
+      price: '50',
+      availability: 'https://schema.org/InStock',
+    },
+  })
+}
+
+useSchemaOrg(schemaItems)
 
 definePageMeta({
   breadcrumb: { label: 'Artikel' },
@@ -118,6 +172,39 @@ function formatDate(dateStr: string) {
         >
           {{ paragraph }}
         </p>
+      </section>
+
+      <!-- Room cards (for event articles with showRooms) -->
+      <section v-if="article.showRooms && rooms?.length" class="mb-10">
+        <h2 class="mb-6 font-serif text-xl font-semibold text-sage-900">
+          {{ t('lgs.ourRoomsHeading', locale) }}
+        </h2>
+        <div class="grid gap-6 sm:grid-cols-2">
+          <RoomsCard
+            v-for="room in rooms"
+            :key="room.slug"
+            :name="room.name"
+            :slug="room.slug"
+            :short-description="room.shortDescription"
+            :hero-image="room.heroImage"
+            :hero-image-alt="room.heroImageAlt"
+            :starting-price="room.startingPrice"
+            :max-guests="room.maxGuests"
+            :highlights="room.highlights"
+            :beds24-property-id="room.beds24PropertyId"
+            :beds24-room-id="room.beds24RoomId"
+            :locale="locale"
+            compact
+          />
+        </div>
+        <div class="mt-6 text-center">
+          <NuxtLink
+            :to="locale === 'en' ? '/en/rooms/' : '/zimmer/'"
+            class="inline-block rounded-lg bg-waldhonig-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-waldhonig-600"
+          >
+            {{ t('lgs.bookNow', locale) }}
+          </NuxtLink>
+        </div>
       </section>
 
       <!-- External links -->

@@ -13,6 +13,8 @@ const deToEn: Record<string, string> = {
   '/datenschutz': '/privacy',
   '/agb': '/terms',
   '/picknick': '/picnic',
+  '/ferienwohnungen': '/holiday-apartments',
+  '/monteurzimmer': '/worker-rooms',
 }
 
 const enToDe: Record<string, string> = Object.fromEntries(

@@ -290,5 +290,43 @@
     "foehn": "Hair dryer",
     "tisch": "Small table",
     "heizung": "Heating"
+  },
+  "lgs": {
+    "bannerTitle": "State Garden Show 2026",
+    "countdown": "{days} days to go",
+    "countdownOne": "1 day to go",
+    "liveNow": "Experience it now!",
+    "linkText": "Book accommodation",
+    "pageTitle": "Accommodation for the State Garden Show 2026",
+    "pageSubtitle": "Just a 5-minute drive from the venue",
+    "introHeading": "The State Garden Show right on our doorstep",
+    "eventDates": "April 23 – October 11, 2026",
+    "distance": "5 min. away",
+    "ourRoomsHeading": "Our rooms for your garden show stay",
+    "bookNow": "Book a room now"
+  },
+  "ferienwohnungen": {
+    "title": "Holiday Apartments in the Eichsfeld",
+    "subtitle": "Fully equipped kitchen, terrace & garden",
+    "intro": "Our two holiday apartments offer plenty of space, a fully equipped kitchen, and direct access to our 25,000 m² garden. Ideal for families and longer stays.",
+    "highlights": "Highlights",
+    "kitchen": "Fully equipped kitchen",
+    "terrace": "Private terrace",
+    "garden": "25,000 m² garden",
+    "parking": "Free parking",
+    "bookNow": "Book apartment"
+  },
+  "monteurzimmer": {
+    "title": "Worker Accommodation in Leinefelde-Worbis",
+    "subtitle": "Affordable, comfortable & conveniently located",
+    "intro": "Working in Leinefelde-Worbis or the Eichsfeld region? Our guesthouse offers comfortable rooms for tradespeople, craftsmen, and business travellers – with free WiFi, parking, and kitchen access.",
+    "highlights": "Your benefits",
+    "wifi": "Free WiFi",
+    "parking": "Free parking",
+    "kitchen": "Kitchen access",
+    "location": "Near A38 & Leinefelde",
+    "quiet": "Quiet location in nature",
+    "weekly": "Attractive weekly rates on request",
+    "bookNow": "Enquire about rooms"
   }
 }

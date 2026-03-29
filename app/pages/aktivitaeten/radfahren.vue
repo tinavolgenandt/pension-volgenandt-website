@@ -34,6 +34,16 @@ useHead({
       hreflang: 'de',
       href: 'https://www.pension-volgenandt.de/aktivitaeten/radfahren/',
     },
+    {
+      rel: 'alternate',
+      hreflang: 'en',
+      href: 'https://www.pension-volgenandt.de/en/activities/cycling/',
+    },
+    {
+      rel: 'alternate',
+      hreflang: 'x-default',
+      href: 'https://www.pension-volgenandt.de/aktivitaeten/radfahren/',
+    },
   ],
 })
 
