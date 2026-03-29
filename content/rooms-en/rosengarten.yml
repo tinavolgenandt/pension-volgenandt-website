@@ -38,18 +38,8 @@ startingPrice: 58
 heroImage: /img/rooms/rosengarten-zimmer.webp
 heroImageAlt: 'Rose Garden Room – Single beds with armchair and wardrobe'
 gallery:
-  - src: /img/rooms/rosengarten-zimmer-3.webp
-    alt: 'Rose Garden – Room overview with sofa corner and seating area'
-  - src: /img/rooms/rosengarten-zimmer-4.webp
-    alt: 'Rose Garden – Both single beds with window and turquoise curtains'
-  - src: /img/rooms/rosengarten-zimmer-2.webp
-    alt: 'Rose Garden – Room view with both single beds and window'
   - src: /img/rooms/rosengarten-bad.webp
     alt: 'Private bathroom with corner shower and WC'
-  - src: /img/rooms/rosengarten-bad-3.webp
-    alt: 'Bathroom with corner shower, washbasin and towel holder'
-  - src: /img/rooms/rosengarten-zimmer-5.webp
-    alt: 'Rose Garden – Room overview with sofa, armchair and both single beds'
   - src: /img/rooms/zimmer-gemeinschaftskueche-5.webp
     alt: 'Shared kitchen with breakfast tables and warm lighting'
   - src: /img/rooms/zimmer-gemeinschaftskueche-6.webp
