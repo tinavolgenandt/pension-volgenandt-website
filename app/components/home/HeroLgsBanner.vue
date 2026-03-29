@@ -46,7 +46,7 @@ const linkTarget = computed(() =>
   <NuxtLink
     v-if="showBanner"
     :to="linkTarget"
-    class="hero-animate group absolute right-6 bottom-24 z-[5] hidden flex-col items-center rounded-xl border border-white/20 bg-white/15 px-5 py-4 text-center backdrop-blur-md transition-transform hover:scale-[1.03] md:flex lg:right-12"
+    class="hero-animate group absolute right-6 bottom-24 z-20 hidden flex-col items-center rounded-xl border border-white/20 bg-white/15 px-5 py-4 text-center backdrop-blur-md transition-transform hover:scale-[1.03] md:flex lg:right-12"
     style="animation-delay: 2000ms"
   >
     <span class="text-xs font-semibold tracking-wide text-white/80 uppercase">
