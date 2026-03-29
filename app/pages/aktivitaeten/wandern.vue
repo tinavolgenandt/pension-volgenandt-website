@@ -34,6 +34,16 @@ useHead({
       hreflang: 'de',
       href: 'https://www.pension-volgenandt.de/aktivitaeten/wandern/',
     },
+    {
+      rel: 'alternate',
+      hreflang: 'en',
+      href: 'https://www.pension-volgenandt.de/en/activities/hiking/',
+    },
+    {
+      rel: 'alternate',
+      hreflang: 'x-default',
+      href: 'https://www.pension-volgenandt.de/aktivitaeten/wandern/',
+    },
   ],
 })
 

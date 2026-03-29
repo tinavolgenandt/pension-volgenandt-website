@@ -1,9 +1,9 @@
 title: 'Landesgartenschau 2026 in Leinefelde-Worbis'
 slug: landesgartenschau-2026
-seoTitle: 'Landesgartenschau 2026 Leinefelde-Worbis – Übernachten'
+seoTitle: 'Landesgartenschau 2026 Unterkunft | Pension Volgenandt'
 seoDescription: >-
-  Die Landesgartenschau 2026 findet direkt in Leinefelde-Worbis statt.
-  Übernachten Sie in der Pension Volgenandt – nur wenige Minuten entfernt.
+  Übernachten Sie zur Landesgartenschau 2026 in Leinefelde-Worbis. Pension
+  nur 5 Min entfernt – Zimmer & Ferienwohnungen ab 50 €/Nacht.
 heroImage: '/img/content/landesgartenschau-2026.webp'
 heroImageAlt: 'Landesgartenschau 2026 in Leinefelde-Worbis'
 publishedDate: '2026-02-15'
@@ -52,3 +52,6 @@ externalLinks:
   - label: 'Informationen der Stadt Leinefelde-Worbis'
     url: 'https://www.leinefelde-worbis.de/de/lgs-2026/landesgartenschau-2026/'
 sortOrder: 1
+showRooms: true
+eventStartDate: '2026-04-23'
+eventEndDate: '2026-10-11'

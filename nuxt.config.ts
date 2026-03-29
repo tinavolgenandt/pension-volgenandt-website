@@ -144,6 +144,9 @@ export default defineNuxtConfig({
         // Phase 4 activity pages
         '/aktivitaeten/wandern/',
         '/aktivitaeten/radfahren/',
+        // SEO landing pages
+        '/ferienwohnungen/',
+        '/monteurzimmer/',
         // News pages
         '/aktuelles/',
         '/aktuelles/landesgartenschau-2026/',
@@ -183,6 +186,9 @@ export default defineNuxtConfig({
         '/en/news/open-air-burg-scharfenstein-2026/',
         '/en/news/neuer-radweg-unstrut-leine/',
         '/en/news/baerenpark-festival-2026/',
+        // English SEO landing pages
+        '/en/holiday-apartments/',
+        '/en/worker-rooms/',
         // English legal pages
         '/en/imprint/',
         '/en/privacy/',

@@ -290,5 +290,43 @@
     "foehn": "Föhn",
     "tisch": "Kleiner Tisch",
     "heizung": "Heizung"
+  },
+  "lgs": {
+    "bannerTitle": "Landesgartenschau 2026",
+    "countdown": "Noch {days} Tage",
+    "countdownOne": "Noch 1 Tag",
+    "liveNow": "Jetzt erleben!",
+    "linkText": "Unterkunft sichern",
+    "pageTitle": "Unterkunft zur Landesgartenschau 2026",
+    "pageSubtitle": "Nur 5 Autominuten vom Gelände entfernt",
+    "introHeading": "Die Landesgartenschau direkt vor unserer Tür",
+    "eventDates": "23. April – 11. Oktober 2026",
+    "distance": "5 Min. entfernt",
+    "ourRoomsHeading": "Unsere Zimmer für Ihren LGS-Aufenthalt",
+    "bookNow": "Jetzt Zimmer sichern"
+  },
+  "ferienwohnungen": {
+    "title": "Ferienwohnungen im Eichsfeld",
+    "subtitle": "Voll ausgestattete Küche, Terrasse & Garten",
+    "intro": "Unsere beiden Ferienwohnungen bieten Ihnen viel Platz, eine komplett ausgestattete Küche und direkten Zugang zu unserem 25.000 m² großen Garten. Ideal für Familien und längere Aufenthalte.",
+    "highlights": "Ausstattungs-Highlights",
+    "kitchen": "Voll ausgestattete Küche",
+    "terrace": "Eigene Terrasse",
+    "garden": "25.000 m² Garten",
+    "parking": "Kostenloser Parkplatz",
+    "bookNow": "Ferienwohnung buchen"
+  },
+  "monteurzimmer": {
+    "title": "Monteurzimmer in Leinefelde-Worbis",
+    "subtitle": "Günstig, komfortabel & verkehrsgünstig gelegen",
+    "intro": "Sie arbeiten in Leinefelde-Worbis oder im Eichsfeld? Unsere Pension bietet komfortable Zimmer für Monteure, Handwerker und Geschäftsreisende – mit kostenlosem WLAN, Parkplatz und Küchenzugang.",
+    "highlights": "Ihre Vorteile",
+    "wifi": "Kostenloses WLAN",
+    "parking": "Kostenloser Parkplatz",
+    "kitchen": "Küchenzugang",
+    "location": "Nahe A38 & Leinefelde",
+    "quiet": "Ruhige Lage im Grünen",
+    "weekly": "Attraktive Wochenpreise auf Anfrage",
+    "bookNow": "Zimmer anfragen"
   }
 }

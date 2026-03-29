@@ -28,6 +28,10 @@ useSeoMeta({
   <div>
     <HomeHeroVideo />
 
+    <ClientOnly>
+      <HomeHeroLgsBannerMobile />
+    </ClientOnly>
+
     <UiScrollReveal>
       <HomeWelcome />
     </UiScrollReveal>

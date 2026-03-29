@@ -1,9 +1,9 @@
 title: 'State Garden Show 2026 in Leinefelde-Worbis'
 slug: landesgartenschau-2026
-seoTitle: 'State Garden Show 2026 Leinefelde-Worbis – Stay'
+seoTitle: 'State Garden Show 2026 Accommodation | Pension Volgenandt'
 seoDescription: >-
-  The State Garden Show 2026 takes place right in Leinefelde-Worbis.
-  Stay at Pension Volgenandt – just minutes away.
+  Stay near the 2026 State Garden Show in Leinefelde-Worbis. Pension just
+  5 min away – apartments & rooms from 50 €/night.
 heroImage: '/img/content/landesgartenschau-2026.webp'
 heroImageAlt: 'State Garden Show 2026 in Leinefelde-Worbis'
 publishedDate: '2026-02-15'
@@ -51,3 +51,6 @@ externalLinks:
   - label: 'Information from the town of Leinefelde-Worbis'
     url: 'https://www.leinefelde-worbis.de/de/lgs-2026/landesgartenschau-2026/'
 sortOrder: 1
+showRooms: true
+eventStartDate: '2026-04-23'
+eventEndDate: '2026-10-11'

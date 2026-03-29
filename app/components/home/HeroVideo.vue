@@ -113,6 +113,9 @@ if (import.meta.client) {
       </div>
     </div>
 
+    <!-- LGS countdown banner (desktop only — mobile variant in page) -->
+    <HomeHeroLgsBanner />
+
     <!-- Scroll indicator -->
     <UiScrollIndicator
       :visible="scrollIndicatorVisible"
