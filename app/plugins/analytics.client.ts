@@ -2,12 +2,13 @@ export default defineNuxtPlugin(() => {
   const { isAllowed } = useCookieConsent()
   const config = useRuntimeConfig()
   const measurementId = config.public.gaMeasurementId as string
+  const googleAdsId = config.public.googleAdsId as string
 
-  if (!measurementId) return
+  if (!measurementId && !googleAdsId) return
 
   let loaded = false
 
-  function loadGA4() {
+  function loadAnalytics() {
     if (loaded || !isAllowed('statistics')) return
     loaded = true
 
@@ -16,13 +17,24 @@ export default defineNuxtPlugin(() => {
       window.dataLayer.push(args)
     }
     window.gtag('js', new Date())
-    window.gtag('config', measurementId, {
-      anonymize_ip: true,
-      cookie_flags: 'SameSite=Lax;Secure',
-    })
 
+    // GA4
+    if (measurementId) {
+      window.gtag('config', measurementId, {
+        anonymize_ip: true,
+        cookie_flags: 'SameSite=Lax;Secure',
+      })
+    }
+
+    // Google Ads
+    if (googleAdsId) {
+      window.gtag('config', googleAdsId)
+    }
+
+    // Load gtag.js once (use GA4 ID if available, otherwise Ads ID)
+    const primaryId = measurementId || googleAdsId
     const script = document.createElement('script')
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${primaryId}`
     script.async = true
     document.head.appendChild(script)
   }
@@ -30,7 +42,7 @@ export default defineNuxtPlugin(() => {
   watch(
     () => isAllowed('statistics'),
     (allowed) => {
-      if (allowed) loadGA4()
+      if (allowed) loadAnalytics()
     },
     { immediate: true },
   )

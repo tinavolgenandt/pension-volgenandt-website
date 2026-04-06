@@ -72,6 +72,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       gaMeasurementId: '', // Set via NUXT_PUBLIC_GA_MEASUREMENT_ID
+      googleAdsId: '', // Set via NUXT_PUBLIC_GOOGLE_ADS_ID
     },
   },
 
