@@ -64,7 +64,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
     <!-- 2. Intro -->
     <section class="mx-auto max-w-3xl px-6 py-12 text-center md:py-16">
       <p class="text-lg leading-relaxed text-sage-800">
-        Wir packen für Sie einen handgefüllten Weidenkorb mit hausgemachten Produkten, echter
+        Wir packen für Sie einen Picknickkorb mit hausgemachten Produkten, echter
         Picknickdecke, Geschirr und Besteck. Sie suchen sich Ihren Lieblingsplatz aus – im Garten
         direkt an der Pension oder irgendwo in der wunderschönen Umgebung.
       </p>
@@ -79,7 +79,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
       <div class="mx-auto max-w-6xl">
         <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">Unsere Pakete</h2>
         <p class="mb-10 text-center text-sage-600">Für jede Tageszeit das passende Angebot.</p>
-        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="mx-auto grid max-w-4xl gap-6 sm:grid-cols-2">
           <PicknickPackageCard
             v-for="pkg in packages"
             :key="pkg.id"
@@ -87,7 +87,6 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
             :subtitle="pkg.subtitle"
             :time-slot="pkg.timeSlot"
             :price-per-person="pkg.pricePerPerson"
-            :description="pkg.description"
             :includes="pkg.includes"
             :image="pkg.image"
             :image-alt="pkg.imageAlt"
@@ -111,7 +110,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
             >
             <h3 class="mt-4 font-serif text-lg font-semibold text-sage-900">Paket wählen</h3>
             <p class="mt-2 text-sm leading-relaxed text-sage-600">
-              Brunch, Kaffee & Kuchen oder Sonnenuntergang – suchen Sie sich Ihr Wunschangebot aus.
+              Brunch oder Sonnenuntergang – suchen Sie sich Ihr Wunschangebot aus.
             </p>
           </li>
           <li class="flex flex-col items-center text-center">
@@ -217,7 +216,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
             <NuxtImg
               src="/img/garten/gebaeude-eingang-parkplatz.webp"
               alt="Einfahrt und Parkplatz der Pension Volgenandt"
-              class="h-64 w-full object-cover md:h-72"
+              class="h-64 w-full object-cover md:h-72" style="object-position: center 80%"
               loading="lazy"
               sizes="100vw md:50vw"
             />
@@ -247,7 +246,27 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
                 <span class="font-medium text-sage-900">Otto-Reuter-Straße 28, Breitenbach</span>
               </p>
             </div>
+            <a
+              href="https://www.google.com/maps/place/Pension+Volgenandt/@51.4124,10.322,15z"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-2 inline-flex items-center gap-2 rounded-lg bg-waldhonig-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-waldhonig-600"
+            >
+              <Icon name="ph:map-trifold-duotone" class="size-4" />
+              In Google Maps öffnen
+            </a>
           </div>
+        </div>
+        <!-- Google Maps Embed -->
+        <div class="mt-8 overflow-hidden rounded-lg shadow-sm">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d10.322!3d51.4124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a4d5b5a5a5a5a5%3A0x0!2sOtto-Reuter-Stra%C3%9Fe+28%2C+37327+Leinefelde-Worbis!5e0!3m2!1sde!2sde!4v1"
+            class="h-64 w-full md:h-80"
+            style="border: 0"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
         </div>
       </div>
     </section>

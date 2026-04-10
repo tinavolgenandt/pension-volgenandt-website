@@ -1,69 +1,39 @@
 items:
   - id: brunch
     name: 'Brunch'
-    subtitle: 'Das große Genießer-Paket'
+    subtitle: 'Entspannter Morgen mit hausgemachten Leckereien'
     timeSlot: '09:00 – 12:00 Uhr'
     pricePerPerson: 19
     minPersons: 2
-    description: >-
-      Frische Brötchen, hausgemachte Marmelade aus eigenem Gartenobst,
-      Aufstriche nach Muttis Rezepten, Joghurt, Orangensaft und
-      ein hartgekochtes Ei. Dazu eine Thermoskanne Kaffee oder Tee.
-      Ideal für einen entspannten Morgen unter freiem Himmel.
     includes:
       - 'Frische Brötchen (2 pro Person)'
-      - 'Hausgemachte Marmelade (Obst aus dem eigenen Garten)'
+      - 'Hausgemachte Marmelade mit Obst aus dem eigenen Garten'
       - 'Aufstriche nach Muttis Rezepten'
-      - 'Käse & Eichsfelder Wurst'
+      - 'Käseaufschnitt'
       - 'Hartgekochtes Ei (1 pro Person)'
       - 'Joghurt'
       - 'Orangensaft'
       - 'Frisches Obst (saisonal)'
-      - 'Thermoskanne Kaffee oder Tee'
+      - 'Kaffee oder Tee'
     image: /img/content/fruehstueck-platte.webp
     imageAlt: 'Hausgemachte Frühstücksplatte mit Marmelade, Käse und frischen Brötchen'
     imagePosition: 'bottom'
     sortOrder: 1
 
-  - id: kaffee-kuchen
-    name: 'Kaffee & Kuchen'
-    subtitle: 'Süßes für den Nachmittag'
-    timeSlot: '14:00 – 17:00 Uhr'
-    pricePerPerson: 19
-    minPersons: 2
-    description: >-
-      Ein nachmittäglicher Genuss mit selbst gebackenem Kuchen,
-      feinem Gebäck, hausgemachter Marmelade und einer Thermoskanne
-      Kaffee oder Tee. Als kleines Dankeschön liegt ein Glas
-      hausgemachtes Eingemachtes zur Mitnahme im Korb.
-    includes:
-      - 'Selbstgemachte Waffeln, Sahne & heiße Kirschen oder Kuchen'
-      - 'Hausgemachte Marmelade'
-      - 'Thermoskanne Kaffee oder Tee'
-      - 'Saft'
-      - 'Glas Eingemachtes als Mitnahmegabe'
-    image: /img/picknick/kuchen-streusel.webp
-    imageAlt: 'Hausgemachter Kirsch-Streuselkuchen frisch aus der Pension-Küche'
-    sortOrder: 2
-
   - id: sonnenuntergang
-    name: 'Sonnenuntergang'
-    subtitle: 'Romantisch & stimmungsvoll'
+    name: 'Abendschmaus'
+    subtitle: 'Romantischer Abend mit Sekt, Käse & Kerzenlicht'
     timeSlot: 'Ca. 18:00 – 21:00 Uhr (saisonal)'
     pricePerPerson: 19
     minPersons: 2
-    description: >-
-      Käse, Wurst und Baguette unter dem Abendhimmel – mit einem
-      Glas Sekt oder Prosecco, Trauben & Feigen und einer extra
-      Wolldecke für kühlere Abende. Eine Kerze im Windlicht
-      rundet die Stimmung ab. Unser romantischstes Paket.
     includes:
-      - 'Käse-Wurst-Platte (regional)'
-      - 'Baguette & Aufstriche'
-      - 'Trauben & Feigen'
-      - 'Sekt oder Prosecco'
+      - 'Regionale Käse-Wurst-Platte'
+      - 'Brezeln'
+      - 'Hausgemachte Aufstriche'
+      - 'Saisonales Obst'
+      - 'Sekt, Wein oder Bier'
       - 'Extra Wolldecke inklusive'
       - 'Kerze / Windlicht'
     image: /img/garten/umgebung-wiese-sonnenuntergang.webp
-    imageAlt: 'Wiese im Sonnenuntergang rund um die Pension Volgenandt'
-    sortOrder: 3
+    imageAlt: 'Wiese im Abendschmaus rund um die Pension Volgenandt'
+    sortOrder: 2

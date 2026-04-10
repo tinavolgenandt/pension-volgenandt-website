@@ -99,7 +99,6 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
             :subtitle="pkg.subtitle"
             :time-slot="pkg.timeSlot"
             :price-per-person="pkg.pricePerPerson"
-            :description="pkg.description"
             :includes="pkg.includes"
             :image="pkg.image"
             :image-alt="pkg.imageAlt"

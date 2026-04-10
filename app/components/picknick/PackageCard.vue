@@ -4,7 +4,7 @@ defineProps<{
   subtitle: string
   timeSlot: string
   pricePerPerson: number
-  description: string
+
   includes: string[]
   image: string
   imageAlt: string
@@ -38,8 +38,6 @@ defineProps<{
           <p class="text-xs text-sage-500">pro Person</p>
         </div>
       </div>
-
-      <p class="mt-4 text-sm leading-relaxed text-sage-700">{{ description }}</p>
 
       <ul class="mt-4 space-y-1.5">
         <li

@@ -1,26 +1,14 @@
 always:
-  - label: 'Handgewebter Weidenkorb'
-    note: 'mit 100 € Pfand (wird bei Rückgabe erstattet)'
   - label: 'Picknickdecke'
     note: 'wasserfest'
   - label: 'Besteck, Teller & Gläser'
     note: 'echtes Geschirr, kein Plastik'
-  - label: 'Frühstücks-Ei'
-    note: 'hartgekocht, aus Freilandhaltung'
-  - label: 'Leinentuch als Abdeckung'
-  - label: 'Begrüßungskärtchen'
-    note: 'mit unseren liebsten Picknick-Spots'
 
 extras:
   - id: vegetarisch
-    label: 'Vegetarisch / Vegan'
-    description: 'Kein Fleisch, kein Käse – mehr Aufstriche, mehr Obst'
+    label: 'Vegetarisch'
+    description: 'Kein Fleisch – mehr Aufstriche, mehr Obst'
     price: 0
-  - id: glutenfrei
-    label: 'Glutenfreie Brötchen'
-    description: 'Brötchen in glutenfreier Variante'
-    price: 1
-    unit: 'pro Person'
   - id: kinder
     label: 'Kinder-Korb'
     description: 'Kleinere Portionen, Saft statt Sekt'
@@ -35,11 +23,6 @@ extras:
     description: 'Für kühlere Tage oder größere Gruppen'
     price: 2
     unit: 'pro Stück'
-  - id: thermoskanne
-    label: 'Thermoskanne Kaffee oder Tee'
-    description: 'Frisch gebrüht, für unterwegs'
-    price: 4
-    unit: 'pro Kanne'
   - id: blumenstrauss
     label: 'Kleiner Blumenstrauß'
     description: 'Als stille Überraschung im Korb – ideal für besondere Anlässe'

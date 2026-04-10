@@ -73,6 +73,7 @@ export default defineNuxtConfig({
     public: {
       gaMeasurementId: '', // Set via NUXT_PUBLIC_GA_MEASUREMENT_ID
       googleAdsId: '', // Set via NUXT_PUBLIC_GOOGLE_ADS_ID
+      paypalClientId: '', // Set via NUXT_PUBLIC_PAYPAL_CLIENT_ID
     },
   },
 

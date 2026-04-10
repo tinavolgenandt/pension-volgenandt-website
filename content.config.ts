@@ -218,7 +218,6 @@ const picknickPackageItemSchema = z.object({
   timeSlot: z.string(),
   pricePerPerson: z.number(),
   minPersons: z.number(),
-  description: z.string(),
   includes: z.array(z.string()),
   image: z.string(),
   imageAlt: z.string(),

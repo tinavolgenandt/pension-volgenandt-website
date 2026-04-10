@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const appConfig = useAppConfig()
 const router = useRouter()
+const { isReady: paypalReady } = usePayPal()
 
 const KIDS_PRICE = 9.5
 
@@ -18,21 +19,34 @@ const packages = computed(() =>
   })),
 )
 
-const teaOptions = [
+const brunchDrinkOptions = [
+  { id: 'kaffee', label: 'Kaffee' },
+  { id: 'tee', label: 'Tee' },
+]
+
+const kaffeeVarianten = [
+  { id: 'schwarz', label: 'Schwarz' },
+  { id: 'milch', label: 'Mit Milch' },
+  { id: 'hafermilch', label: 'Hafermilch (+1 €)' },
+]
+
+const teeVarianten = [
   { id: 'schwarztee', label: 'Schwarztee' },
   { id: 'gruentee', label: 'Grüntee' },
   { id: 'fruechtetee', label: 'Früchtetee' },
   { id: 'kraeutertee', label: 'Kräutertee' },
-  { id: 'pfefferminze', label: 'Pfefferminztee' },
-  { id: 'kamille', label: 'Kamillentee' },
+  { id: 'pfefferminztee', label: 'Pfefferminztee' },
+  { id: 'kamillentee', label: 'Kamillentee' },
 ]
 
-const milkOptions = [
-  { id: 'schwarz', label: 'Schwarz', extra: 0 },
-  { id: 'milch', label: 'Mit Milch', extra: 0 },
-  { id: 'hafermilch', label: 'Hafermilch', extra: 1 },
-  { id: 'sojamilch', label: 'Sojamilch', extra: 1 },
-  { id: 'reisdrink', label: 'Reisdrink', extra: 1 },
+const abendDrinkOptions = [
+  { id: 'sekt', label: 'Sekt / Prosecco' },
+  { id: 'weiss-wein', label: 'Weißwein' },
+  { id: 'rot-wein', label: 'Rotwein' },
+  { id: 'bier', label: 'Bier' },
+  { id: 'aperol', label: 'Aperol Spritz' },
+  { id: 'sekt-alkoholfrei', label: 'Alkoholfreier Sekt' },
+  { id: 'bier-alkoholfrei', label: 'Alkoholfreies Bier' },
 ]
 
 const kidsKorbInhalt = [
@@ -45,17 +59,28 @@ const kidsKorbInhalt = [
 ]
 
 const extrasOptions = [
-  { id: 'vegetarisch', label: 'Vegetarisch / Vegan', price: 0, perPerson: false },
-  { id: 'glutenfrei', label: 'Glutenfreie Brötchen', price: 1, perPerson: true },
-  { id: 'hummus', label: 'Hausgemachter Hummus', price: 2, perPerson: false },
-  { id: 'lachs', label: 'Lachs mit Frischkäse & Dill', price: 4, perPerson: true },
-  { id: 'croissants', label: 'Croissants (zusätzlich)', price: 2, perPerson: true },
-  { id: 'pancakes', label: 'Pancakes', price: 5, perPerson: true },
-  { id: 'sekt', label: 'Sekt / Prosecco', price: 3, perPerson: true },
-  { id: 'sekt-alkoholfrei', label: 'Alkoholfreier Sekt', price: 3, perPerson: true },
-  { id: 'decke-extra', label: 'Extra Decke', price: 2, perPerson: false },
-  { id: 'blumenstrauss', label: 'Kleiner Blumenstrauß', price: 6, perPerson: false },
+  { id: 'vegetarisch', label: 'Vegetarisch', price: 0, perPerson: false, brunchOnly: false },
+  { id: 'hummus', label: 'Hausgemachter Hummus', price: 2, perPerson: false, brunchOnly: false },
+  {
+    id: 'lachs',
+    label: 'Lachs mit Frischkäse & Dill',
+    price: 4,
+    perPerson: true,
+    brunchOnly: false,
+  },
+  { id: 'croissants', label: 'Croissant', price: 2, perPerson: true, brunchOnly: false },
+  { id: 'sekt', label: 'Sekt / Prosecco', price: 3, perPerson: true, brunchOnly: true },
+  { id: 'decke-extra', label: 'Extra Decke', price: 2, perPerson: false, brunchOnly: false },
+  {
+    id: 'blumenstrauss',
+    label: 'Kleiner Blumenstrauß',
+    price: 6,
+    perPerson: false,
+    brunchOnly: false,
+  },
 ]
+
+const filteredExtras = computed(() => extrasOptions.filter((e) => !e.brunchOnly || isBrunch.value))
 
 function extraPriceLabel(extra: (typeof extrasOptions)[0]): string {
   if (extra.price === 0) return 'kostenlos'
@@ -72,7 +97,8 @@ function extraCost(extra: (typeof extrasOptions)[0], adults: number): number {
 const minDate = ref('')
 if (import.meta.client) {
   const d = new Date()
-  d.setDate(d.getDate() + 1)
+  // Nach 12 Uhr: übermorgen (keine 24h mehr bis morgen früh)
+  d.setDate(d.getDate() + (d.getHours() >= 12 ? 2 : 1))
   minDate.value = d.toISOString().slice(0, 10)
 }
 
@@ -81,16 +107,28 @@ const form = reactive({
   packageId: 'brunch',
   adults: 2,
   kids: 0,
-  wantKaffee: true,
-  wantTee: false,
-  milkType: 'schwarz',
-  teaType: 'fruechtetee',
+  drinks: {} as Record<string, number>,
+  kaffeeType: 'schwarz',
+  teeType: 'fruechtetee',
   extras: [] as string[],
   name: '',
   email: '',
   phone: '',
   notes: '',
 })
+
+const isBrunch = computed(() => form.packageId === 'brunch')
+const activeDrinkOptions = computed(() => (isBrunch.value ? brunchDrinkOptions : abendDrinkOptions))
+
+watch(
+  () => form.packageId,
+  () => {
+    form.drinks = {}
+  },
+)
+
+const totalDrinks = computed(() => Object.values(form.drinks).reduce((sum, n) => sum + n, 0))
+const drinksRemaining = computed(() => form.adults - totalDrinks.value)
 
 const isSubmitting = ref(false)
 const errorMessage = ref('')
@@ -101,11 +139,10 @@ const selectedPackage = computed(
 
 const adultsTotal = computed(() => (selectedPackage.value?.price ?? 19) * form.adults)
 const kidsTotal = computed(() => KIDS_PRICE * form.kids)
-const milkExtra = computed(() => {
-  if (!form.wantKaffee) return 0
-  return milkOptions.find((m) => m.id === form.milkType)?.extra ?? 0
-})
-const baseTotal = computed(() => adultsTotal.value + kidsTotal.value + milkExtra.value)
+const drinksExtra = computed(() =>
+  form.kaffeeType === 'hafermilch' ? (form.drinks['kaffee'] ?? 0) : 0,
+)
+const baseTotal = computed(() => adultsTotal.value + kidsTotal.value + drinksExtra.value)
 const totalPersons = computed(() => form.adults + form.kids)
 
 const selectedExtrasWithCost = computed(() =>
@@ -116,42 +153,47 @@ const selectedExtrasWithCost = computed(() =>
 const extrasTotal = computed(() => selectedExtrasWithCost.value.reduce((sum, e) => sum + e.cost, 0))
 const grandTotal = computed(() => baseTotal.value + extrasTotal.value)
 
+const isFormValid = computed(
+  () =>
+    form.date !== '' &&
+    form.name.trim() !== '' &&
+    form.email.trim() !== '' &&
+    form.phone.trim() !== '' &&
+    totalDrinks.value === form.adults &&
+    grandTotal.value > 0,
+)
+
 const beverageText = computed(() => {
   const parts: string[] = []
-  if (form.wantKaffee) {
-    const milk = milkOptions.find((m) => m.id === form.milkType)
-    parts.push(`Kaffee (${milk?.label ?? 'Schwarz'})`)
+  const kaffeeCount = form.drinks['kaffee'] ?? 0
+  const teeCount = form.drinks['tee'] ?? 0
+  if (isBrunch.value) {
+    const kaffeeLabel = kaffeeVarianten.find((k) => k.id === form.kaffeeType)?.label ?? 'Schwarz'
+    const teeLabel = teeVarianten.find((t) => t.id === form.teeType)?.label ?? form.teeType
+    if (kaffeeCount > 0) parts.push(`${kaffeeCount}× Kaffee (${kaffeeLabel})`)
+    if (teeCount > 0) parts.push(`${teeCount}× Tee (${teeLabel})`)
+  } else {
+    for (const d of abendDrinkOptions) {
+      const count = form.drinks[d.id] ?? 0
+      if (count > 0) parts.push(`${count}× ${d.label}`)
+    }
   }
-  if (form.wantTee) {
-    const tea = teaOptions.find((t) => t.id === form.teaType)
-    parts.push(`Tee: ${tea?.label ?? form.teaType}`)
-  }
-  return parts.join(' + ') || '–'
+  return parts.length > 0 ? parts.join(', ') : '–'
 })
 
-async function handleSubmit() {
-  if (!form.wantKaffee && !form.wantTee) {
-    errorMessage.value = 'Bitte wählen Sie mindestens Kaffee oder Tee.'
-    return
-  }
-
-  isSubmitting.value = true
-  errorMessage.value = ''
-
+function buildMessageText(): string {
   const selectedExtras = extrasOptions.filter((e) => form.extras.includes(e.id))
   const extrasText =
     selectedExtras.length > 0
       ? selectedExtras.map((e) => `${e.label} (${extraPriceLabel(e)})`).join(', ')
       : 'keine'
 
-  const messageText = [
-    '=== PICKNICK-ANFRAGE ===',
-    '',
+  return [
     `Datum: ${form.date}`,
     `Paket: ${selectedPackage.value?.name} (${selectedPackage.value?.timeSlot})`,
     `Erwachsene: ${form.adults}`,
     form.kids > 0 ? `Kinder: ${form.kids}` : null,
-    `Thermoskanne: ${beverageText.value}`,
+    `Getränke: ${beverageText.value}`,
     `Extras: ${extrasText}`,
     `Sonderwünsche: ${form.notes || '–'}`,
     '',
@@ -159,74 +201,129 @@ async function handleSubmit() {
     form.kids > 0
       ? `Kinder: ${form.kids} × ${KIDS_PRICE.toLocaleString('de-DE', { minimumFractionDigits: 2 })} € = ${kidsTotal.value.toLocaleString('de-DE', { minimumFractionDigits: 2 })} €`
       : null,
-    milkExtra.value > 0 ? `Pflanzenmilch: +${milkExtra.value} €` : null,
+    drinksExtra.value > 0 ? `Hafermilch-Aufpreis: +${drinksExtra.value} €` : null,
     extrasTotal.value > 0 ? `Extras: ${extrasTotal.value} €` : null,
-    'Korbpfand: Bei Abholung (100 € bar oder Autoschlüssel)',
-    `Gesamtbetrag (ohne Pfand): ${grandTotal.value.toLocaleString('de-DE', { minimumFractionDigits: 2 })} €`,
+    `Gesamt: ${grandTotal.value.toLocaleString('de-DE', { minimumFractionDigits: 2 })} €`,
     '',
-    'Hinweis: Max. 2 Körbe/Tag – Verfügbarkeit wird geprüft.',
-    '',
-    '=== KONTAKT ===',
     `Name: ${form.name}`,
     `E-Mail: ${form.email}`,
     `Telefon: ${form.phone}`,
   ]
     .filter(Boolean)
     .join('\n')
+}
 
-  try {
-    const response = await fetch(appConfig.contactFormUrl, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+function buildSubject(): string {
+  return `Picknick-Buchung: ${selectedPackage.value?.name} am ${form.date} (${form.adults} Erw.${form.kids > 0 ? `, ${form.kids} Kind.` : ''})`
+}
+
+// PayPal button rendering
+const paypalContainer = ref<HTMLElement | null>(null)
+const paypalRendered = ref(false)
+
+function renderPayPalButton() {
+  if (!window.paypal || !paypalContainer.value || paypalRendered.value) return
+
+  paypalRendered.value = true
+  window.paypal
+    .Buttons({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      createOrder: (_data: any, actions: any) => {
+        errorMessage.value = ''
+        if (!isFormValid.value) {
+          errorMessage.value =
+            'Bitte füllen Sie alle Pflichtfelder aus und wählen Sie die Getränke.'
+          return Promise.reject(new Error('Form invalid'))
+        }
+        return actions.order.create({
+          purchase_units: [
+            {
+              amount: { value: grandTotal.value.toFixed(2), currency_code: 'EUR' },
+              description: `Picknick ${selectedPackage.value?.name} – ${form.adults} Pers.`,
+            },
+          ],
+        })
       },
-      body: JSON.stringify({
-        name: form.name,
-        email: form.email,
-        message: messageText,
-        _subject: `Picknick-Anfrage: ${selectedPackage.value?.name} am ${form.date} (${form.adults} Erw.${form.kids > 0 ? `, ${form.kids} Kind.` : ''})`,
-      }),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      onApprove: async (data: { orderID: string }, actions: any) => {
+        isSubmitting.value = true
+        errorMessage.value = ''
+
+        try {
+          // Capture the payment first
+          await actions.order.capture()
+          const response = await fetch(appConfig.picknickBookingUrl as string, {
+            method: 'POST',
+            headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              paypalOrderId: data.orderID,
+              amount: grandTotal.value,
+              name: form.name,
+              email: form.email,
+              phone: form.phone,
+              message: buildMessageText(),
+              _subject: buildSubject(),
+            }),
+          })
+
+          const result = await response.json()
+
+          if (response.ok && result.ok) {
+            await router.push({
+              path: '/picknick/danke/',
+              query: {
+                betrag: String(grandTotal.value),
+                personen: String(totalPersons.value),
+                paket: selectedPackage.value?.name ?? '',
+                txn: result.transactionId ?? '',
+              },
+            })
+          } else if (result.errors) {
+            errorMessage.value = result.errors.map((e: { message: string }) => e.message).join(', ')
+          } else {
+            errorMessage.value =
+              result.error || 'Leider ist ein Fehler aufgetreten. Bitte kontaktieren Sie uns.'
+          }
+        } catch {
+          errorMessage.value =
+            'Zahlung erfolgreich, aber Übermittlung fehlgeschlagen. Bitte kontaktieren Sie uns unter kontakt@pension-volgenandt.de.'
+        } finally {
+          isSubmitting.value = false
+        }
+      },
+      onCancel: () => {
+        errorMessage.value = 'Zahlung abgebrochen. Sie können es erneut versuchen.'
+      },
+      onError: () => {
+        errorMessage.value =
+          'Bei der Zahlung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.'
+      },
+      style: {
+        layout: 'vertical',
+        color: 'gold',
+        shape: 'rect',
+        label: 'pay',
+      },
     })
+    .render(paypalContainer.value)
+}
 
-    const data = await response.json()
-
-    if (response.ok && data.ok) {
-      await router.push({
-        path: '/picknick/danke/',
-        query: {
-          betrag: String(grandTotal.value),
-          personen: String(totalPersons.value),
-          paket: selectedPackage.value?.name ?? '',
-        },
-      })
-    } else if (data.errors) {
-      errorMessage.value = data.errors.map((e: { message: string }) => e.message).join(', ')
-    } else {
-      errorMessage.value =
-        data.error || 'Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.'
-    }
-  } catch {
-    errorMessage.value =
-      'Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder rufen Sie uns an.'
-  } finally {
-    isSubmitting.value = false
-  }
+// Render PayPal button when SDK is ready and container is mounted
+if (import.meta.client) {
+  watch(
+    [paypalReady, paypalContainer],
+    ([ready, container]) => {
+      if (ready && container && !paypalRendered.value) {
+        nextTick(() => renderPayPalButton())
+      }
+    },
+    { immediate: true },
+  )
 }
 </script>
 
 <template>
-  <form class="space-y-8" @submit.prevent="handleSubmit">
-    <!-- Honeypot -->
-    <input
-      type="text"
-      name="_gotcha"
-      style="display: none"
-      tabindex="-1"
-      autocomplete="off"
-      aria-hidden="true"
-    />
-
+  <div class="space-y-8">
     <!-- Datum & Paket -->
     <fieldset class="space-y-5">
       <legend class="font-serif text-lg font-semibold text-sage-900">Ihr Wunschtermin</legend>
@@ -240,7 +337,6 @@ async function handleSubmit() {
             type="date"
             name="date"
             :min="minDate"
-            required
             class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
           />
         </div>
@@ -251,7 +347,6 @@ async function handleSubmit() {
             id="pk-package"
             v-model="form.packageId"
             name="paket"
-            required
             class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
           >
             <option v-for="pkg in packages" :key="pkg.id" :value="pkg.id">
@@ -273,7 +368,6 @@ async function handleSubmit() {
             name="erwachsene"
             min="2"
             max="12"
-            required
             class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
           />
         </div>
@@ -330,57 +424,73 @@ async function handleSubmit() {
       </ul>
     </div>
 
-    <!-- Thermoskanne -->
+    <!-- Getränke -->
     <fieldset class="space-y-4">
-      <legend class="font-serif text-lg font-semibold text-sage-900">Thermoskanne</legend>
-      <p class="text-sm text-sage-500">Im Paket enthalten. Wählen Sie Kaffee, Tee oder beides.</p>
-
-      <div class="space-y-4">
-        <!-- Kaffee -->
+      <legend class="font-serif text-lg font-semibold text-sage-900">Getränke</legend>
+      <p class="text-sm text-sage-500">
+        Im Paket enthalten. Wählen Sie pro Person ein Getränk
+        <span v-if="drinksRemaining > 0" class="font-medium text-waldhonig-600">
+          (noch {{ drinksRemaining }} offen)
+        </span>
+        <span v-else-if="drinksRemaining === 0" class="font-medium text-sage-600">
+          (alle vergeben)
+        </span>
+      </p>
+      <div class="space-y-2">
         <div
-          class="rounded-lg border p-4"
-          :class="form.wantKaffee ? 'border-sage-400 bg-sage-50' : 'border-sage-200'"
+          v-for="drink in activeDrinkOptions"
+          :key="drink.id"
+          class="rounded-lg border px-4 py-3"
+          :class="
+            (form.drinks[drink.id] ?? 0) > 0 ? 'border-sage-400 bg-sage-50' : 'border-sage-200'
+          "
         >
-          <label class="flex cursor-pointer items-center gap-2">
-            <input v-model="form.wantKaffee" type="checkbox" class="size-4 accent-waldhonig-500" />
-            <span class="text-sm font-medium text-sage-800">Kaffee</span>
-          </label>
-          <div v-if="form.wantKaffee" class="mt-3 flex flex-wrap gap-2 pl-6">
-            <label
-              v-for="milk in milkOptions"
-              :key="milk.id"
-              class="flex cursor-pointer items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs"
-              :class="form.milkType === milk.id ? 'border-sage-400 bg-white' : 'border-sage-200'"
-            >
-              <input
-                v-model="form.milkType"
-                type="radio"
-                name="milch"
-                :value="milk.id"
-                class="accent-waldhonig-500"
-              />
-              <span class="text-sage-800">{{ milk.label }}</span>
-              <span v-if="milk.extra > 0" class="text-waldhonig-600">(+{{ milk.extra }} €)</span>
-            </label>
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-sage-800">{{ drink.label }}</span>
+            <div class="flex items-center gap-2">
+              <button
+                type="button"
+                class="flex size-8 items-center justify-center rounded-full border border-sage-300 text-sage-600 transition-colors hover:bg-sage-100 disabled:opacity-30"
+                :disabled="(form.drinks[drink.id] ?? 0) <= 0"
+                @click="form.drinks[drink.id] = (form.drinks[drink.id] ?? 0) - 1"
+              >
+                −
+              </button>
+              <span class="w-6 text-center text-sm font-semibold text-sage-900">
+                {{ form.drinks[drink.id] ?? 0 }}
+              </span>
+              <button
+                type="button"
+                class="flex size-8 items-center justify-center rounded-full border border-sage-300 text-sage-600 transition-colors hover:bg-sage-100 disabled:opacity-30"
+                :disabled="drinksRemaining <= 0"
+                @click="form.drinks[drink.id] = (form.drinks[drink.id] ?? 0) + 1"
+              >
+                +
+              </button>
+            </div>
           </div>
-        </div>
-
-        <!-- Tee -->
-        <div
-          class="rounded-lg border p-4"
-          :class="form.wantTee ? 'border-sage-400 bg-sage-50' : 'border-sage-200'"
-        >
-          <label class="flex cursor-pointer items-center gap-2">
-            <input v-model="form.wantTee" type="checkbox" class="size-4 accent-waldhonig-500" />
-            <span class="text-sm font-medium text-sage-800">Tee</span>
-          </label>
-          <div v-if="form.wantTee" class="mt-3 pl-6">
+          <!-- Kaffee-Variante Dropdown -->
+          <div
+            v-if="isBrunch && drink.id === 'kaffee' && (form.drinks['kaffee'] ?? 0) > 0"
+            class="mt-3"
+          >
             <select
-              v-model="form.teaType"
+              v-model="form.kaffeeType"
               class="w-full rounded-lg border border-sage-300 px-3 py-2 text-sm focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none sm:w-56"
             >
-              <option v-for="tea in teaOptions" :key="tea.id" :value="tea.id">
-                {{ tea.label }}
+              <option v-for="v in kaffeeVarianten" :key="v.id" :value="v.id">
+                {{ v.label }}
+              </option>
+            </select>
+          </div>
+          <!-- Tee-Variante Dropdown -->
+          <div v-if="isBrunch && drink.id === 'tee' && (form.drinks['tee'] ?? 0) > 0" class="mt-3">
+            <select
+              v-model="form.teeType"
+              class="w-full rounded-lg border border-sage-300 px-3 py-2 text-sm focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none sm:w-56"
+            >
+              <option v-for="v in teeVarianten" :key="v.id" :value="v.id">
+                {{ v.label }}
               </option>
             </select>
           </div>
@@ -395,7 +505,7 @@ async function handleSubmit() {
       </legend>
       <div class="grid gap-3 sm:grid-cols-2">
         <label
-          v-for="extra in extrasOptions"
+          v-for="extra in filteredExtras"
           :key="extra.id"
           class="flex cursor-pointer items-start gap-3 rounded-lg border border-sage-200 p-3 hover:bg-sage-50"
           :class="{ 'border-sage-400 bg-sage-50': form.extras.includes(extra.id) }"
@@ -432,7 +542,6 @@ async function handleSubmit() {
             type="text"
             name="name"
             required
-            aria-required="true"
             autocomplete="name"
             class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
           />
@@ -445,7 +554,6 @@ async function handleSubmit() {
             type="email"
             name="email"
             required
-            aria-required="true"
             autocomplete="email"
             class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
           />
@@ -501,9 +609,9 @@ async function handleSubmit() {
             {{ kidsTotal.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €
           </dd>
         </div>
-        <div v-if="milkExtra > 0" class="flex justify-between text-sage-600">
-          <dt>Pflanzenmilch</dt>
-          <dd>+ {{ milkExtra.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €</dd>
+        <div v-if="drinksExtra > 0" class="flex justify-between text-sage-600">
+          <dt>Hafermilch-Aufpreis</dt>
+          <dd>+ {{ drinksExtra.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €</dd>
         </div>
         <div
           v-for="extra in selectedExtrasWithCost"
@@ -513,16 +621,15 @@ async function handleSubmit() {
           <dt>{{ extra.label }}</dt>
           <dd>+ {{ extra.cost.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €</dd>
         </div>
-        <div class="flex justify-between text-sage-500">
-          <dt>Korbpfand bei Abholung (bar oder Autoschlüssel)</dt>
-          <dd>100 €</dd>
-        </div>
         <div class="flex justify-between border-t border-waldhonig-200 pt-2">
-          <dt class="font-semibold text-sage-900">Gesamt</dt>
+          <dt class="font-semibold text-sage-900">Zu zahlen (per PayPal)</dt>
           <dd class="text-base font-bold text-waldhonig-700">
-            {{ (grandTotal + 100).toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €
+            {{ grandTotal.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €
           </dd>
         </div>
+        <p class="mt-2 text-xs text-sage-500">
+          Zusätzlich: 100 € Korbpfand in bar bei Abholung (wird bei Rückgabe erstattet).
+        </p>
       </dl>
     </div>
 
@@ -538,13 +645,22 @@ async function handleSubmit() {
       48&#8201;h vorher.
     </p>
 
-    <!-- Absenden -->
-    <button
-      type="submit"
-      :disabled="isSubmitting"
-      class="w-full rounded-lg bg-waldhonig-500 px-8 py-4 text-lg font-semibold text-white transition-colors hover:bg-waldhonig-600 disabled:cursor-not-allowed disabled:opacity-50"
+    <!-- PayPal Button -->
+    <div v-if="paypalReady" ref="paypalContainer" class="min-h-[55px]"/>
+    <div v-else class="rounded-lg bg-sage-100 p-4 text-center text-sm text-sage-600">
+      <p>PayPal wird geladen...</p>
+    </div>
+    <p v-if="paypalReady && !isFormValid" class="text-center text-sm text-sage-500">
+      Bitte füllen Sie alle Pflichtfelder aus, um bezahlen zu können.
+    </p>
+
+    <!-- Loading overlay after payment -->
+    <div
+      v-if="isSubmitting"
+      class="rounded-lg bg-waldhonig-50 p-4 text-center text-sm text-sage-700"
     >
-      {{ isSubmitting ? 'Wird gesendet...' : 'Anfrage absenden' }}
-    </button>
-  </form>
+      <Icon name="ph:spinner" class="mr-2 inline-block size-4 animate-spin" />
+      Buchung wird verarbeitet...
+    </div>
+  </div>
 </template>
