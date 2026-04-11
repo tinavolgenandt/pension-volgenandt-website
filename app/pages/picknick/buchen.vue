@@ -1,12 +1,12 @@
 <script setup lang="ts">
 definePageMeta({
-  breadcrumb: { label: 'Korb anfragen' },
+  breadcrumb: { label: 'Korb buchen' },
 })
 
 useSeoMeta({
-  title: 'Picknick-Korb anfragen – Pension Volgenandt',
+  title: 'Picknick-Korb buchen – Pension Volgenandt',
   description:
-    'Jetzt Ihren Picknick-Korb anfragen: Datum, Paket und Personen auswählen – wir melden uns innerhalb von 24 Stunden.',
+    'Picknick-Korb buchen: Datum, Paket und Personen auswählen und direkt per PayPal bezahlen.',
   robots: 'noindex',
 })
 </script>
@@ -22,9 +22,9 @@ useSeoMeta({
       Zurück zum Picknick-Korb
     </NuxtLink>
 
-    <h1 class="font-serif text-3xl font-bold text-sage-900">Korb anfragen</h1>
+    <h1 class="font-serif text-3xl font-bold text-sage-900">Korb buchen</h1>
     <p class="mt-2 text-sage-600">
-      Füllen Sie das Formular aus – wir melden uns innerhalb von 24 Stunden zur Bestätigung.
+      Füllen Sie das Formular aus und bezahlen Sie direkt online.
     </p>
 
     <!-- Pfand-Hinweis -->
@@ -32,8 +32,8 @@ useSeoMeta({
       <Icon name="ph:info-duotone" class="mt-0.5 size-5 shrink-0 text-sage-500" />
       <div>
         <strong class="font-medium text-sage-900">Hinweis zum Korbpfand:</strong>
-        Für den handgefertigten Weidenkorb erheben wir ein Pfand von 100 €. Dieses wird vollständig
-        erstattet, sobald der Korb (inkl. Zubehör) zurückgebracht wird.
+        Bei Abholung hinterlegen Sie 100 € in bar als Korbpfand. Bei Rückgabe des Korbes
+        sowie des vollständigen Inhalts erhalten Sie das Pfand sofort zurück.
       </div>
     </div>
 

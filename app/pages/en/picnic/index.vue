@@ -82,7 +82,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
       </p>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
         From <strong class="text-waldhonig-600">19 EUR per person</strong>. Basket deposit 100 EUR
-        (fully refunded upon return).
+        cash at pickup (returned upon return).
       </p>
     </section>
 
@@ -99,7 +99,6 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
             :subtitle="pkg.subtitle"
             :time-slot="pkg.timeSlot"
             :price-per-person="pkg.pricePerPerson"
-            :description="pkg.description"
             :includes="pkg.includes"
             :image="pkg.image"
             :image-alt="pkg.imageAlt"
@@ -280,7 +279,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
           Request a basket
         </NuxtLink>
         <p class="mt-4 text-sm text-sage-500">
-          From 19 EUR / person · Basket deposit 100 EUR (refundable)
+          From 19 EUR / person · Basket deposit 100 EUR cash (returned upon return)
         </p>
       </div>
     </section>

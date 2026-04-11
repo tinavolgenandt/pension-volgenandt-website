@@ -1,6 +1,7 @@
 export default defineAppConfig({
   siteName: 'Pension Volgenandt',
   contactFormUrl: 'https://api.pension-volgenandt.de/send-mail.php',
+  picknickBookingUrl: 'https://api.pension-volgenandt.de/picknick-booking.php',
   beds24: {
     propId: 261258,
     baseUrl: 'https://beds24.com/booking2.php',
