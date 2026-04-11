@@ -11,16 +11,16 @@ extras:
     price: 0
   - id: kinder
     label: 'Kinder-Korb'
-    description: 'Kleinere Portionen, Saft statt Sekt'
+    description: 'Kleinere Portionen für kleine Genießer'
     price: 0
   - id: sekt-extra
-    label: 'Extra Sekt / Prosecco'
+    label: 'Extra Sekt'
     description: 'Eine zusätzliche Flasche'
     price: 3
     unit: 'pro Person'
   - id: decke-extra
     label: 'Extra Decke'
-    description: 'Für kühlere Tage oder größere Gruppen'
+    description: 'Für kühlere Tage'
     price: 2
     unit: 'pro Stück'
   - id: blumenstrauss

@@ -24,7 +24,7 @@ useSeoMeta({
 
     <h1 class="font-serif text-3xl font-bold text-sage-900">Korb buchen</h1>
     <p class="mt-2 text-sage-600">
-      Füllen Sie das Formular aus und bezahlen Sie direkt per PayPal.
+      Füllen Sie das Formular aus und bezahlen Sie direkt online.
     </p>
 
     <!-- Pfand-Hinweis -->

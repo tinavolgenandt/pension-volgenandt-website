@@ -9,7 +9,7 @@ items:
       - 'Frische Brötchen (2 pro Person)'
       - 'Hausgemachte Marmelade mit Obst aus dem eigenen Garten'
       - 'Aufstriche nach Muttis Rezepten'
-      - 'Käseaufschnitt'
+      - 'Käse- & Wurstaufschnitt'
       - 'Hartgekochtes Ei (1 pro Person)'
       - 'Joghurt'
       - 'Orangensaft'
@@ -28,7 +28,7 @@ items:
     minPersons: 2
     includes:
       - 'Regionale Käse-Wurst-Platte'
-      - 'Brezeln'
+      - 'Brezeln (2 pro Person)'
       - 'Hausgemachte Aufstriche'
       - 'Saisonales Obst'
       - 'Sekt, Wein oder Bier'
