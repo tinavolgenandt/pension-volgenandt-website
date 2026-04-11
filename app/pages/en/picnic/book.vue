@@ -44,8 +44,8 @@ useSeoMeta({
       <Icon name="ph:info-duotone" class="mt-0.5 size-5 shrink-0 text-sage-500" />
       <div>
         <strong class="font-medium text-sage-900">Basket deposit notice:</strong>
-        We charge a deposit of 100 EUR for the handmade wicker basket. This is fully refunded once
-        the basket (incl. accessories) is returned.
+        A deposit of 100 EUR in cash is required upon pickup. You will receive it back when the
+        complete basket contents are returned.
       </div>
     </div>
 

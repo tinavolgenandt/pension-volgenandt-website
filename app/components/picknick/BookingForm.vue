@@ -4,6 +4,7 @@ const router = useRouter()
 const { isReady: paypalReady } = usePayPal()
 
 const KIDS_PRICE = 9.5
+const EXTRA_DRINK_PRICE = 3
 
 // Load package data from YAML for ingredient display
 const { data: packagesData } = await useAsyncData('booking-packages', () =>
@@ -128,7 +129,8 @@ watch(
 )
 
 const totalDrinks = computed(() => Object.values(form.drinks).reduce((sum, n) => sum + n, 0))
-const drinksRemaining = computed(() => form.adults - totalDrinks.value)
+const includedDrinks = computed(() => form.adults)
+const extraDrinkCount = computed(() => Math.max(0, totalDrinks.value - includedDrinks.value))
 
 const isSubmitting = ref(false)
 const errorMessage = ref('')
@@ -139,8 +141,11 @@ const selectedPackage = computed(
 
 const adultsTotal = computed(() => (selectedPackage.value?.price ?? 19) * form.adults)
 const kidsTotal = computed(() => KIDS_PRICE * form.kids)
-const drinksExtra = computed(() =>
+const hafermilchExtra = computed(() =>
   form.kaffeeType === 'hafermilch' ? (form.drinks['kaffee'] ?? 0) : 0,
+)
+const drinksExtra = computed(
+  () => hafermilchExtra.value + extraDrinkCount.value * EXTRA_DRINK_PRICE,
 )
 const baseTotal = computed(() => adultsTotal.value + kidsTotal.value + drinksExtra.value)
 const totalPersons = computed(() => form.adults + form.kids)
@@ -159,7 +164,7 @@ const isFormValid = computed(
     form.name.trim() !== '' &&
     form.email.trim() !== '' &&
     form.phone.trim() !== '' &&
-    totalDrinks.value === form.adults &&
+    totalDrinks.value >= form.adults &&
     grandTotal.value > 0,
 )
 
@@ -201,7 +206,10 @@ function buildMessageText(): string {
     form.kids > 0
       ? `Kinder: ${form.kids} × ${KIDS_PRICE.toLocaleString('de-DE', { minimumFractionDigits: 2 })} € = ${kidsTotal.value.toLocaleString('de-DE', { minimumFractionDigits: 2 })} €`
       : null,
-    drinksExtra.value > 0 ? `Hafermilch-Aufpreis: +${drinksExtra.value} €` : null,
+    extraDrinkCount.value > 0
+      ? `Extra-Getränke: ${extraDrinkCount.value} × ${EXTRA_DRINK_PRICE} € = +${extraDrinkCount.value * EXTRA_DRINK_PRICE} €`
+      : null,
+    hafermilchExtra.value > 0 ? `Hafermilch-Aufpreis: +${hafermilchExtra.value} €` : null,
     extrasTotal.value > 0 ? `Extras: ${extrasTotal.value} €` : null,
     `Gesamt: ${grandTotal.value.toLocaleString('de-DE', { minimumFractionDigits: 2 })} €`,
     '',
@@ -428,12 +436,15 @@ if (import.meta.client) {
     <fieldset class="space-y-4">
       <legend class="font-serif text-lg font-semibold text-sage-900">Getränke</legend>
       <p class="text-sm text-sage-500">
-        Im Paket enthalten. Wählen Sie pro Person ein Getränk
-        <span v-if="drinksRemaining > 0" class="font-medium text-waldhonig-600">
-          (noch {{ drinksRemaining }} offen)
+        1 Getränk pro Person inklusive. Jedes weitere +{{ EXTRA_DRINK_PRICE }} €.
+        <span v-if="totalDrinks < form.adults" class="font-medium text-waldhonig-600">
+          (noch {{ form.adults - totalDrinks }} wählen)
         </span>
-        <span v-else-if="drinksRemaining === 0" class="font-medium text-sage-600">
-          (alle vergeben)
+        <span v-if="extraDrinkCount > 0" class="font-medium text-waldhonig-600">
+          ({{ extraDrinkCount }} Extra = +{{
+            (extraDrinkCount * EXTRA_DRINK_PRICE).toLocaleString('de-DE')
+          }}
+          €)
         </span>
       </p>
       <div class="space-y-2">
@@ -462,7 +473,6 @@ if (import.meta.client) {
               <button
                 type="button"
                 class="flex size-8 items-center justify-center rounded-full border border-sage-300 text-sage-600 transition-colors hover:bg-sage-100 disabled:opacity-30"
-                :disabled="drinksRemaining <= 0"
                 @click="form.drinks[drink.id] = (form.drinks[drink.id] ?? 0) + 1"
               >
                 +
@@ -609,9 +619,21 @@ if (import.meta.client) {
             {{ kidsTotal.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €
           </dd>
         </div>
-        <div v-if="drinksExtra > 0" class="flex justify-between text-sage-600">
+        <div v-if="extraDrinkCount > 0" class="flex justify-between text-sage-600">
+          <dt>{{ extraDrinkCount }} Extra-Getränke (à {{ EXTRA_DRINK_PRICE }} €)</dt>
+          <dd>
+            +
+            {{
+              (extraDrinkCount * EXTRA_DRINK_PRICE).toLocaleString('de-DE', {
+                minimumFractionDigits: 2,
+              })
+            }}
+            €
+          </dd>
+        </div>
+        <div v-if="hafermilchExtra > 0" class="flex justify-between text-sage-600">
           <dt>Hafermilch-Aufpreis</dt>
-          <dd>+ {{ drinksExtra.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €</dd>
+          <dd>+ {{ hafermilchExtra.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €</dd>
         </div>
         <div
           v-for="extra in selectedExtrasWithCost"
@@ -628,7 +650,7 @@ if (import.meta.client) {
           </dd>
         </div>
         <p class="mt-2 text-xs text-sage-500">
-          Zusätzlich: 100 € Korbpfand in bar bei Abholung (wird bei Rückgabe erstattet).
+          Zusätzlich: 100 € Korbpfand in bar bei Abholung (bei Rückgabe zurück).
         </p>
       </dl>
     </div>
@@ -646,7 +668,7 @@ if (import.meta.client) {
     </p>
 
     <!-- PayPal Button -->
-    <div v-if="paypalReady" ref="paypalContainer" class="min-h-[55px]"/>
+    <div v-if="paypalReady" ref="paypalContainer" class="min-h-[55px]" />
     <div v-else class="rounded-lg bg-sage-100 p-4 text-center text-sm text-sage-600">
       <p>PayPal wird geladen...</p>
     </div>

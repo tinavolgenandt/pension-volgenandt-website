@@ -64,8 +64,8 @@ const txn = computed(() => String(route.query.txn || ''))
     <div class="mt-6 rounded-lg bg-sage-50 p-4 text-left text-sm text-sage-700">
       <p>
         <strong class="font-medium text-sage-900">Basket deposit (100 €):</strong>
-        The deposit is collected in cash upon pickup and fully refunded when the complete basket
-        contents are returned.
+        A deposit of 100 € in cash is required upon pickup. You will receive it back when the
+        complete basket contents are returned.
       </p>
     </div>
 

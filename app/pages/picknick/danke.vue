@@ -60,8 +60,8 @@ const txn = computed(() => String(route.query.txn || ''))
     <div class="mt-6 rounded-lg bg-sage-50 p-4 text-left text-sm text-sage-700">
       <p>
         <strong class="font-medium text-sage-900">Korbpfand (100 €):</strong>
-        Das Pfand wird bei Abholung in bar hinterlegt und bei Rückgabe des vollständigen
-        Korb-Inhalts sofort erstattet.
+        Bei Abholung hinterlegen Sie 100 € in bar. Bei Rückgabe des vollständigen
+        Korb-Inhalts erhalten Sie das Pfand sofort zurück.
       </p>
     </div>
 
