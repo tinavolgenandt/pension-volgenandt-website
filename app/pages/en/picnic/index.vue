@@ -50,8 +50,9 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
         src="/img/garten/garten-haengekorb-blumen.webp"
         alt="Hanging flower basket in the garden of Pension Volgenandt"
         class="absolute inset-0 h-full w-full object-cover"
+        width="1600"
+        height="1060"
         loading="eager"
-        sizes="100vw"
       />
       <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
       <div
@@ -188,8 +189,9 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
         src="/img/garten/garten-panorama-felder-fruehling.webp"
         alt="Wide view over the spring fields around Pension Volgenandt"
         class="absolute inset-0 h-full w-full object-cover"
+        width="1600"
+        height="1060"
         loading="lazy"
-        sizes="100vw"
       />
     </div>
 
