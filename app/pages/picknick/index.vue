@@ -37,7 +37,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
       <NuxtImg
         src="/img/picknick/header-picknick.webp"
         alt="Picknickkorb mit Geschirr und Blumen auf der Wiese"
-        class="absolute inset-0 h-full w-full object-cover"
+        class="absolute inset-0 h-full w-full object-cover" style="object-position: center 60%"
         loading="eager"
         sizes="100vw"
       />
@@ -237,7 +237,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
               </p>
             </div>
             <a
-              href="https://www.google.com/maps/place/Pension+Volgenandt/@51.4124,10.322,15z"
+              href="https://maps.app.goo.gl/5BuHhrNp5buK8pKp8"
               target="_blank"
               rel="noopener noreferrer"
               class="mt-2 inline-flex items-center gap-2 rounded-lg bg-waldhonig-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-waldhonig-600"
@@ -250,7 +250,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
         <!-- Google Maps Embed -->
         <div class="mt-8 overflow-hidden rounded-lg shadow-sm">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d10.322!3d51.4124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a4d5b5a5a5a5a5%3A0x0!2sOtto-Reuter-Stra%C3%9Fe+28%2C+37327+Leinefelde-Worbis!5e0!3m2!1sde!2sde!4v1"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d10.322024!3d51.4122668!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a4e7f6898bd1e7%3A0xba82640946e15fd5!2sPension%20Volgenandt!5e0!3m2!1sde!2sde!4v1"
             class="h-64 w-full md:h-80"
             style="border: 0"
             allowfullscreen

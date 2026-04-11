@@ -157,7 +157,7 @@ watch(
 )
 
 const totalDrinks = computed(() => Object.values(form.drinks).reduce((sum, n) => sum + n, 0))
-const includedDrinks = computed(() => form.adults)
+const includedDrinks = computed(() => isBrunch.value ? form.adults : form.adults * 2)
 const extraDrinkCount = computed(() => Math.max(0, totalDrinks.value - includedDrinks.value))
 
 const isSubmitting = ref(false)
@@ -197,7 +197,7 @@ const isFormValid = computed(
     form.name.trim() !== '' &&
     form.email.trim() !== '' &&
     form.phone.trim() !== '' &&
-    totalDrinks.value >= form.adults &&
+    totalDrinks.value >= includedDrinks.value &&
     grandTotal.value > 0,
 )
 
@@ -495,9 +495,12 @@ if (import.meta.client) {
     <fieldset class="space-y-4">
       <legend class="font-serif text-lg font-semibold text-sage-900">Getränke</legend>
       <p class="text-sm text-sage-500">
-        1 Getränk pro Person inklusive. Jedes weitere +{{ EXTRA_DRINK_PRICE }} €.
-        <span v-if="totalDrinks < form.adults" class="font-medium text-waldhonig-600">
-          (noch {{ form.adults - totalDrinks }} wählen)
+        {{ isBrunch ? '1 Getränk' : '2 Getränke' }} pro Person inklusive. Jedes weitere +{{
+          EXTRA_DRINK_PRICE
+        }}
+        €.
+        <span v-if="totalDrinks < includedDrinks" class="font-medium text-waldhonig-600">
+          (noch {{ includedDrinks - totalDrinks }} wählen)
         </span>
         <span v-if="extraDrinkCount > 0" class="font-medium text-waldhonig-600">
           ({{ extraDrinkCount }} Extra = +{{
