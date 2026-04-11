@@ -21,15 +21,19 @@ const txn = computed(() => String(route.query.txn || ''))
 
     <h1 class="mt-6 font-serif text-3xl font-bold text-sage-900">Vielen Dank!</h1>
     <p class="mt-3 text-lg text-sage-700">
-      Ihre Buchung ist bestätigt und die Zahlung eingegangen.
+      Ihre Anfrage ist eingegangen und die Zahlung wurde verarbeitet.
+    </p>
+    <p class="mt-2 text-sm text-sage-600">
+      Wir prüfen die Verfügbarkeit und melden uns innerhalb von
+      <strong>24 Stunden</strong> bei Ihnen zur Bestätigung.
     </p>
     <p class="mt-2 text-sm text-sage-500">
-      Eine Bestätigungs-E-Mail wurde an Ihre E-Mail-Adresse gesendet.
+      Eine Zusammenfassung wurde an Ihre E-Mail-Adresse gesendet.
     </p>
 
     <!-- Buchungszusammenfassung -->
     <div v-if="betrag > 0" class="mt-10 rounded-xl bg-waldhonig-50 p-6 text-left">
-      <h2 class="font-serif text-xl font-semibold text-sage-900">Ihre Buchung</h2>
+      <h2 class="font-serif text-xl font-semibold text-sage-900">Ihre Anfrage</h2>
       <dl class="mt-4 space-y-2 text-sm">
         <div v-if="paket" class="flex justify-between">
           <dt class="text-sage-600">Paket</dt>
