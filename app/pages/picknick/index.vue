@@ -37,9 +37,11 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
       <NuxtImg
         src="/img/picknick/header-picknick.webp"
         alt="Picknickkorb mit Geschirr und Blumen auf der Wiese"
-        class="absolute inset-0 h-full w-full object-cover" style="object-position: center 60%"
+        class="absolute inset-0 h-full w-full object-cover"
+        style="object-position: center 60%"
+        width="1920"
+        height="1280"
         loading="eager"
-        sizes="100vw"
       />
       <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
       <div
@@ -64,9 +66,9 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
     <!-- 2. Intro -->
     <section class="mx-auto max-w-3xl px-6 py-12 text-center md:py-16">
       <p class="text-lg leading-relaxed text-sage-800">
-        Wir packen für Sie einen Picknickkorb mit hausgemachten Produkten, echter
-        Picknickdecke, Geschirr und Besteck. Sie suchen sich Ihren Lieblingsplatz aus – im Garten
-        direkt an der Pension oder irgendwo in der wunderschönen Umgebung.
+        Wir packen für Sie einen Picknickkorb mit hausgemachten Produkten, echter Picknickdecke,
+        Geschirr und Besteck. Sie suchen sich Ihren Lieblingsplatz aus – im Garten direkt an der
+        Pension oder irgendwo in der wunderschönen Umgebung.
       </p>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
         Ab <strong class="text-waldhonig-600">19 € pro Person</strong>. Korbpfand 100 € in bar bei
@@ -174,8 +176,9 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
         src="/img/garten/garten-panorama-felder-fruehling.webp"
         alt="Weiter Blick über die Frühlingsfelder rund um die Pension Volgenandt"
         class="absolute inset-0 h-full w-full object-cover"
+        width="1600"
+        height="1060"
         loading="lazy"
-        sizes="100vw"
       />
     </div>
 
@@ -216,7 +219,8 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
             <NuxtImg
               src="/img/garten/gebaeude-eingang-parkplatz.webp"
               alt="Einfahrt und Parkplatz der Pension Volgenandt"
-              class="h-64 w-full object-cover md:h-72" style="object-position: center 80%"
+              class="h-64 w-full object-cover md:h-72"
+              style="object-position: center 80%"
               loading="lazy"
               sizes="100vw md:50vw"
             />
@@ -274,7 +278,9 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
         >
           Korb anfragen
         </NuxtLink>
-        <p class="mt-4 text-sm text-sage-500">Ab 19 € / Person · Korbpfand 100 € bar (bei Rückgabe zurück)</p>
+        <p class="mt-4 text-sm text-sage-500">
+          Ab 19 € / Person · Korbpfand 100 € bar (bei Rückgabe zurück)
+        </p>
       </div>
     </section>
   </div>

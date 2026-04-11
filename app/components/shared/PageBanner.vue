@@ -16,8 +16,9 @@ const { onImgError } = useImageFallback()
       :src="image"
       :alt="imageAlt"
       class="absolute inset-0 h-full w-full object-cover"
+      width="1920"
+      height="1080"
       loading="eager"
-      sizes="100vw"
       @error="onImgError"
     />
 
