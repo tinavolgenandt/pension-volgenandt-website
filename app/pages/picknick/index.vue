@@ -35,8 +35,8 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
     <!-- 1. Hero -->
     <section class="relative h-[55vh] min-h-[380px] overflow-hidden">
       <NuxtImg
-        src="/img/garten/garten-haengekorb-blumen.webp"
-        alt="Hängender Blumenkorb im Garten der Pension Volgenandt"
+        src="/img/picknick/header-picknick.webp"
+        alt="Picknickkorb mit Geschirr und Blumen auf der Wiese"
         class="absolute inset-0 h-full w-full object-cover"
         loading="eager"
         sizes="100vw"
