@@ -6,6 +6,12 @@ const { isReady: paypalReady } = usePayPal()
 const KIDS_PRICE = 9.5
 const EXTRA_DRINK_PRICE = 3
 
+const timeSlots = Array.from({ length: 49 }, (_, i) => {
+  const h = Math.floor(i / 4) + 8
+  const m = (i % 4) * 15
+  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`
+}).filter((t) => t <= '20:00')
+
 // Load package data from YAML for ingredient display
 const { data: packagesData } = await useAsyncData('booking-packages', () =>
   queryCollection('picknickPackages').first(),
@@ -41,7 +47,7 @@ const teeVarianten = [
 ]
 
 const abendDrinkOptions = [
-  { id: 'sekt', label: 'Sekt / Prosecco' },
+  { id: 'sekt', label: 'Sekt' },
   { id: 'weiss-wein', label: 'Weißwein' },
   { id: 'rot-wein', label: 'Rotwein' },
   { id: 'bier', label: 'Bier' },
@@ -56,11 +62,17 @@ const kidsKorbInhalt = [
   'Apfelschorle',
   'Obstspieß (saisonal)',
   '1 hartgekochtes Ei',
-  'Kleiner Keks oder Waffel',
+  'Kleine Überraschung',
 ]
 
 const extrasOptions = [
-  { id: 'vegetarisch', label: 'Vegetarisch', price: 0, perPerson: false, brunchOnly: false },
+  {
+    id: 'vegetarisch',
+    label: 'Ausschließlich vegetarische Auswahl',
+    price: 0,
+    perPerson: false,
+    brunchOnly: false,
+  },
   { id: 'hummus', label: 'Hausgemachter Hummus', price: 2, perPerson: false, brunchOnly: false },
   {
     id: 'lachs',
@@ -69,8 +81,15 @@ const extrasOptions = [
     perPerson: true,
     brunchOnly: false,
   },
-  { id: 'croissants', label: 'Croissant', price: 2, perPerson: true, brunchOnly: false },
-  { id: 'sekt', label: 'Sekt / Prosecco', price: 3, perPerson: true, brunchOnly: true },
+  {
+    id: 'croissants',
+    label: 'Croissant',
+    price: 2,
+    perPerson: false,
+    brunchOnly: false,
+    unit: 'Stück',
+  },
+  { id: 'sekt', label: 'Sekt', price: 3, perPerson: true, brunchOnly: true },
   { id: 'decke-extra', label: 'Extra Decke', price: 2, perPerson: false, brunchOnly: false },
   {
     id: 'blumenstrauss',
@@ -86,6 +105,7 @@ const filteredExtras = computed(() => extrasOptions.filter((e) => !e.brunchOnly 
 function extraPriceLabel(extra: (typeof extrasOptions)[0]): string {
   if (extra.price === 0) return 'kostenlos'
   if (extra.perPerson) return `+${extra.price} € / Person`
+  if ('unit' in extra && extra.unit) return `+${extra.price} € / ${extra.unit}`
   return `+${extra.price} €`
 }
 
@@ -103,8 +123,21 @@ if (import.meta.client) {
   minDate.value = d.toISOString().slice(0, 10)
 }
 
+// Load blocked dates (days with 2+ confirmed baskets)
+const blockedDates = ref<string[]>([])
+if (import.meta.client) {
+  fetch('https://api.pension-volgenandt.de/get-blocked-dates.php')
+    .then((r) => r.json())
+    .then((data) => {
+      blockedDates.value = data.blockedDates ?? []
+    })
+    .catch(() => {})
+}
+const isDateBlocked = computed(() => blockedDates.value.includes(form.date))
+
 const form = reactive({
   date: '',
+  time: '',
   packageId: 'brunch',
   adults: 2,
   kids: 0,
@@ -161,6 +194,8 @@ const grandTotal = computed(() => baseTotal.value + extrasTotal.value)
 const isFormValid = computed(
   () =>
     form.date !== '' &&
+    !isDateBlocked.value &&
+    form.time !== '' &&
     form.name.trim() !== '' &&
     form.email.trim() !== '' &&
     form.phone.trim() !== '' &&
@@ -195,6 +230,7 @@ function buildMessageText(): string {
 
   return [
     `Datum: ${form.date}`,
+    `Uhrzeit: ${form.time} Uhr`,
     `Paket: ${selectedPackage.value?.name} (${selectedPackage.value?.timeSlot})`,
     `Erwachsene: ${form.adults}`,
     form.kids > 0 ? `Kinder: ${form.kids}` : null,
@@ -266,6 +302,7 @@ function renderPayPalButton() {
             body: JSON.stringify({
               paypalOrderId: data.orderID,
               amount: grandTotal.value,
+              bookingDate: form.date,
               name: form.name,
               email: form.email,
               phone: form.phone,
@@ -336,7 +373,7 @@ if (import.meta.client) {
     <fieldset class="space-y-5">
       <legend class="font-serif text-lg font-semibold text-sage-900">Ihr Wunschtermin</legend>
 
-      <div class="grid gap-5 sm:grid-cols-2">
+      <div class="grid gap-5 sm:grid-cols-3">
         <div>
           <label for="pk-date" class="block text-sm font-medium text-sage-800">Datum *</label>
           <input
@@ -347,6 +384,22 @@ if (import.meta.client) {
             :min="minDate"
             class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
           />
+          <p v-if="isDateBlocked" class="mt-1 text-xs font-medium text-red-600">
+            Dieses Datum ist leider ausgebucht. Bitte wählen Sie einen anderen Tag.
+          </p>
+        </div>
+
+        <div>
+          <label for="pk-time" class="block text-sm font-medium text-sage-800">Uhrzeit *</label>
+          <select
+            id="pk-time"
+            v-model="form.time"
+            name="time"
+            class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
+          >
+            <option value="" disabled>Bitte wählen</option>
+            <option v-for="t in timeSlots" :key="t" :value="t">{{ t }} Uhr</option>
+          </select>
         </div>
 
         <div>
@@ -364,6 +417,7 @@ if (import.meta.client) {
         </div>
       </div>
 
+      <p class="text-xs text-sage-500">Max. 4 Personen pro Korb (inkl. Kinder).</p>
       <div class="grid gap-5 sm:grid-cols-2">
         <div>
           <label for="pk-adults" class="block text-sm font-medium text-sage-800"
@@ -374,14 +428,14 @@ if (import.meta.client) {
             v-model.number="form.adults"
             type="number"
             name="erwachsene"
-            min="2"
-            max="12"
+            min="1"
+            :max="4 - form.kids"
             class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
           />
         </div>
         <div>
           <label for="pk-kids" class="block text-sm font-medium text-sage-800">
-            Kinder <span class="text-sage-400">(bis 12 Jahre)</span>
+            Kinder <span class="text-sage-400">(bis 6 Jahre)</span>
           </label>
           <input
             id="pk-kids"
@@ -389,7 +443,7 @@ if (import.meta.client) {
             type="number"
             name="kinder"
             min="0"
-            max="8"
+            :max="4 - form.adults"
             class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
           />
         </div>
@@ -644,7 +698,7 @@ if (import.meta.client) {
           <dd>+ {{ extra.cost.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €</dd>
         </div>
         <div class="flex justify-between border-t border-waldhonig-200 pt-2">
-          <dt class="font-semibold text-sage-900">Zu zahlen (per PayPal)</dt>
+          <dt class="font-semibold text-sage-900">Zu zahlen</dt>
           <dd class="text-base font-bold text-waldhonig-700">
             {{ grandTotal.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €
           </dd>

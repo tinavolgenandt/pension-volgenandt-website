@@ -226,24 +226,14 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
               <Icon name="ph:car-duotone" class="mt-0.5 size-5 shrink-0 text-waldhonig-500" />
               <p>
                 <strong class="font-medium text-sage-900">Ausreichend Parkplätze</strong> direkt auf
-                dem Pensionsgelände – kostenlos und übersichtlich.
+                dem Pensionsgelände.
               </p>
             </div>
             <div class="flex items-start gap-3">
               <Icon name="ph:map-pin-duotone" class="mt-0.5 size-5 shrink-0 text-waldhonig-500" />
               <p>
-                Vom Parkplatz aus ist die Abholung des Korbs nur wenige Schritte entfernt. Wir
-                erwarten Sie am Eingang.
-              </p>
-            </div>
-            <div class="flex items-start gap-3">
-              <Icon
-                name="ph:navigation-arrow-duotone"
-                class="mt-0.5 size-5 shrink-0 text-waldhonig-500"
-              />
-              <p>
-                Navigationsziel:
-                <span class="font-medium text-sage-900">Otto-Reuter-Straße 28, Breitenbach</span>
+                Wir erwarten Sie zur angegebenen Uhrzeit. Melden Sie sich einfach telefonisch oder
+                klingeln Sie, wenn Sie vor Ort sind.
               </p>
             </div>
             <a

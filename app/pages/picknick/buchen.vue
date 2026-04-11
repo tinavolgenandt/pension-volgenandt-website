@@ -32,8 +32,8 @@ useSeoMeta({
       <Icon name="ph:info-duotone" class="mt-0.5 size-5 shrink-0 text-sage-500" />
       <div>
         <strong class="font-medium text-sage-900">Hinweis zum Korbpfand:</strong>
-        Bei Abholung hinterlegen Sie 100 € in bar als Korbpfand. Bei Rückgabe des vollständigen
-        Korb-Inhalts erhalten Sie das Pfand sofort zurück.
+        Bei Abholung hinterlegen Sie 100 € in bar als Korbpfand. Bei Rückgabe des Korbes
+        sowie des vollständigen Inhalts erhalten Sie das Pfand sofort zurück.
       </div>
     </div>
 

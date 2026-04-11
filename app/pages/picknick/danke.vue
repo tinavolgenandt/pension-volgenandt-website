@@ -13,6 +13,13 @@ const betrag = computed(() => Number(route.query.betrag) || 0)
 const personen = computed(() => Number(route.query.personen) || 0)
 const paket = computed(() => String(route.query.paket || ''))
 const txn = computed(() => String(route.query.txn || ''))
+
+const { data: packagesData } = await useAsyncData('danke-packages', () =>
+  queryCollection('picknickPackages').first(),
+)
+const selectedPackage = computed(() =>
+  (packagesData.value?.items ?? []).find((p) => p.name === paket.value),
+)
 </script>
 
 <template>
@@ -43,6 +50,31 @@ const txn = computed(() => String(route.query.txn || ''))
           <dt class="text-sage-600">Personen</dt>
           <dd class="font-medium text-sage-900">{{ personen }}</dd>
         </div>
+        <div
+          v-if="selectedPackage?.timeSlot"
+          class="flex justify-between"
+        >
+          <dt class="text-sage-600">Zeitraum</dt>
+          <dd class="font-medium text-sage-900">{{ selectedPackage.timeSlot }}</dd>
+        </div>
+      </dl>
+
+      <!-- Paket-Inhalt -->
+      <div v-if="selectedPackage?.includes?.length" class="mt-4">
+        <h3 class="text-sm font-semibold text-sage-800">Im Paket enthalten</h3>
+        <ul class="mt-2 space-y-1">
+          <li
+            v-for="(item, i) in selectedPackage.includes"
+            :key="i"
+            class="flex items-start gap-2 text-sm text-sage-700"
+          >
+            <Icon name="ph:check-duotone" class="mt-0.5 size-4 shrink-0 text-sage-500" />
+            {{ item }}
+          </li>
+        </ul>
+      </div>
+
+      <dl class="mt-4 space-y-2 text-sm">
         <div class="flex justify-between border-t border-waldhonig-200 pt-2">
           <dt class="font-semibold text-sage-900">Bezahlt</dt>
           <dd class="font-bold text-waldhonig-700">
@@ -60,8 +92,8 @@ const txn = computed(() => String(route.query.txn || ''))
     <div class="mt-6 rounded-lg bg-sage-50 p-4 text-left text-sm text-sage-700">
       <p>
         <strong class="font-medium text-sage-900">Korbpfand (100 €):</strong>
-        Bei Abholung hinterlegen Sie 100 € in bar. Bei Rückgabe des vollständigen
-        Korb-Inhalts erhalten Sie das Pfand sofort zurück.
+        Bei Abholung hinterlegen Sie 100 € in bar. Bei Rückgabe des Korbes sowie des
+        vollständigen Inhalts erhalten Sie das Pfand sofort zurück.
       </p>
     </div>
 

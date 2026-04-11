@@ -20,8 +20,8 @@ items:
   - question: 'Wie funktioniert das Korbpfand?'
     answer: >-
       Bei der Abholung hinterlegen Sie ein Pfand von 100 € in bar.
-      Sobald der Korb mit allem Zubehör (Geschirr, Besteck, Decke)
-      zurückgebracht wird, erhalten Sie das Pfand sofort zurück.
+      Bei Rückgabe des Korbes sowie des vollständigen Inhalts
+      erhalten Sie das Pfand sofort zurück.
     category: picknick
     sortOrder: 3
 
