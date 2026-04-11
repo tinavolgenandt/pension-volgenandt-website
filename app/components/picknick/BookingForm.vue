@@ -70,47 +70,42 @@ const extrasOptions = [
     id: 'vegetarisch',
     label: 'Ausschließlich vegetarische Auswahl',
     price: 0,
-    perPerson: false,
+    unit: '',
     brunchOnly: false,
   },
-  { id: 'hummus', label: 'Hausgemachter Hummus', price: 2, perPerson: false, brunchOnly: false },
+  { id: 'hummus', label: 'Hausgemachter Hummus', price: 2, unit: '', brunchOnly: false },
   {
     id: 'lachs',
     label: 'Lachs mit Frischkäse & Dill',
     price: 4,
-    perPerson: true,
+    unit: 'Person',
     brunchOnly: false,
   },
-  {
-    id: 'croissants',
-    label: 'Croissant',
-    price: 2,
-    perPerson: false,
-    brunchOnly: false,
-    unit: 'Stück',
-  },
-  { id: 'sekt', label: 'Sekt', price: 3, perPerson: true, brunchOnly: true },
-  { id: 'decke-extra', label: 'Extra Decke', price: 2, perPerson: false, brunchOnly: false },
+  { id: 'croissants', label: 'Croissant', price: 2, unit: 'Stück', brunchOnly: false },
+  { id: 'sekt', label: 'Sekt', price: 3, unit: 'Person', brunchOnly: true },
+  { id: 'decke-extra', label: 'Extra Decke', price: 2, unit: 'Stück', brunchOnly: false },
   {
     id: 'blumenstrauss',
     label: 'Kleiner Blumenstrauß',
     price: 6,
-    perPerson: false,
+    unit: 'Stück',
     brunchOnly: false,
   },
 ]
+
+const isQuantifiable = (extra: (typeof extrasOptions)[0]) => extra.unit !== ''
 
 const filteredExtras = computed(() => extrasOptions.filter((e) => !e.brunchOnly || isBrunch.value))
 
 function extraPriceLabel(extra: (typeof extrasOptions)[0]): string {
   if (extra.price === 0) return 'kostenlos'
-  if (extra.perPerson) return `+${extra.price} € / Person`
-  if ('unit' in extra && extra.unit) return `+${extra.price} € / ${extra.unit}`
+  if (extra.unit) return `+${extra.price} € / ${extra.unit}`
   return `+${extra.price} €`
 }
 
-function extraCost(extra: (typeof extrasOptions)[0], adults: number): number {
-  return extra.perPerson ? extra.price * adults : extra.price
+function extraCost(extra: (typeof extrasOptions)[0], qty: number): number {
+  if (extra.unit === 'Person') return extra.price * qty
+  return extra.price * qty
 }
 
 // Compute min date on client only to avoid SSR/client hydration mismatch
@@ -144,7 +139,7 @@ const form = reactive({
   drinks: {} as Record<string, number>,
   kaffeeType: 'schwarz',
   teeType: 'fruechtetee',
-  extras: [] as string[],
+  extras: {} as Record<string, number>,
   name: '',
   email: '',
   phone: '',
@@ -185,8 +180,11 @@ const totalPersons = computed(() => form.adults + form.kids)
 
 const selectedExtrasWithCost = computed(() =>
   extrasOptions
-    .filter((e) => form.extras.includes(e.id) && e.price > 0)
-    .map((e) => ({ ...e, cost: extraCost(e, form.adults) })),
+    .filter((e) => (form.extras[e.id] ?? 0) > 0 && e.price > 0)
+    .map((e) => {
+      const qty = form.extras[e.id] ?? 0
+      return { ...e, qty, cost: extraCost(e, qty) }
+    }),
 )
 const extrasTotal = computed(() => selectedExtrasWithCost.value.reduce((sum, e) => sum + e.cost, 0))
 const grandTotal = computed(() => baseTotal.value + extrasTotal.value)
@@ -222,10 +220,17 @@ const beverageText = computed(() => {
 })
 
 function buildMessageText(): string {
-  const selectedExtras = extrasOptions.filter((e) => form.extras.includes(e.id))
+  const selectedExtras = extrasOptions.filter((e) => (form.extras[e.id] ?? 0) > 0)
   const extrasText =
     selectedExtras.length > 0
-      ? selectedExtras.map((e) => `${e.label} (${extraPriceLabel(e)})`).join(', ')
+      ? selectedExtras
+          .map((e) => {
+            const qty = form.extras[e.id] ?? 1
+            return qty > 1
+              ? `${qty}× ${e.label} (${extraPriceLabel(e)})`
+              : `${e.label} (${extraPriceLabel(e)})`
+          })
+          .join(', ')
       : 'keine'
 
   return [
@@ -568,28 +573,64 @@ if (import.meta.client) {
         Extras <span class="text-sm font-normal text-sage-500">(optional)</span>
       </legend>
       <div class="grid gap-3 sm:grid-cols-2">
-        <label
-          v-for="extra in filteredExtras"
-          :key="extra.id"
-          class="flex cursor-pointer items-start gap-3 rounded-lg border border-sage-200 p-3 hover:bg-sage-50"
-          :class="{ 'border-sage-400 bg-sage-50': form.extras.includes(extra.id) }"
-        >
-          <input
-            v-model="form.extras"
-            type="checkbox"
-            :value="extra.id"
-            class="mt-0.5 size-4 accent-waldhonig-500"
-          />
-          <span class="text-sm text-sage-800">
-            {{ extra.label }}
-            <span
-              class="ml-1 text-xs"
-              :class="extra.price === 0 ? 'text-sage-400' : 'text-waldhonig-600'"
-            >
-              ({{ extraPriceLabel(extra) }})
+        <template v-for="extra in filteredExtras" :key="extra.id">
+          <!-- Checkbox für ja/nein-Extras -->
+          <label
+            v-if="!isQuantifiable(extra)"
+            class="flex cursor-pointer items-start gap-3 rounded-lg border border-sage-200 p-3 hover:bg-sage-50"
+            :class="{ 'border-sage-400 bg-sage-50': (form.extras[extra.id] ?? 0) > 0 }"
+          >
+            <input
+              type="checkbox"
+              :checked="(form.extras[extra.id] ?? 0) > 0"
+              class="mt-0.5 size-4 accent-waldhonig-500"
+              @change="form.extras[extra.id] = (form.extras[extra.id] ?? 0) > 0 ? 0 : 1"
+            />
+            <span class="text-sm text-sage-800">
+              {{ extra.label }}
+              <span
+                class="ml-1 text-xs"
+                :class="extra.price === 0 ? 'text-sage-400' : 'text-waldhonig-600'"
+              >
+                ({{ extraPriceLabel(extra) }})
+              </span>
             </span>
-          </span>
-        </label>
+          </label>
+
+          <!-- +/− für Stück-Extras -->
+          <div
+            v-else
+            class="flex items-center justify-between rounded-lg border px-3 py-3"
+            :class="
+              (form.extras[extra.id] ?? 0) > 0 ? 'border-sage-400 bg-sage-50' : 'border-sage-200'
+            "
+          >
+            <span class="text-sm text-sage-800">
+              {{ extra.label }}
+              <span class="ml-1 text-xs text-waldhonig-600"> ({{ extraPriceLabel(extra) }}) </span>
+            </span>
+            <div class="flex items-center gap-2">
+              <button
+                type="button"
+                class="flex size-7 items-center justify-center rounded-full border border-sage-300 text-sage-600 transition-colors hover:bg-sage-100 disabled:opacity-30"
+                :disabled="(form.extras[extra.id] ?? 0) <= 0"
+                @click="form.extras[extra.id] = (form.extras[extra.id] ?? 0) - 1"
+              >
+                −
+              </button>
+              <span class="w-5 text-center text-sm font-semibold text-sage-900">
+                {{ form.extras[extra.id] ?? 0 }}
+              </span>
+              <button
+                type="button"
+                class="flex size-7 items-center justify-center rounded-full border border-sage-300 text-sage-600 transition-colors hover:bg-sage-100"
+                @click="form.extras[extra.id] = (form.extras[extra.id] ?? 0) + 1"
+              >
+                +
+              </button>
+            </div>
+          </div>
+        </template>
       </div>
     </fieldset>
 
@@ -694,7 +735,7 @@ if (import.meta.client) {
           :key="extra.id"
           class="flex justify-between text-sage-600"
         >
-          <dt>{{ extra.label }}</dt>
+          <dt>{{ extra.qty > 1 ? `${extra.qty}× ` : '' }}{{ extra.label }}</dt>
           <dd>+ {{ extra.cost.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €</dd>
         </div>
         <div class="flex justify-between border-t border-waldhonig-200 pt-2">
