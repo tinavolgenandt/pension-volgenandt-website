@@ -35,31 +35,15 @@ pricing:
 
 startingPrice: 73
 
-heroImage: /img/rooms/emils-kuhwiese-schlafzimmer-2.webp
-heroImageAlt: "Holiday Apartment Emil's Kuhwiese – Bedroom with double bed and accent wall"
+heroImage: /img/rooms/emils-kuhwiese-schlafzimmer.webp
+heroImageAlt: "Holiday Apartment Emil's Kuhwiese – Bedroom with double bed"
 gallery:
-  - src: /img/rooms/emils-kuhwiese-schlafzimmer.webp
-    alt: "Emil's Kuhwiese – Bedroom with double bed"
-  - src: /img/rooms/emils-kuhwiese-wohnbereich-2.webp
-    alt: 'Living area with sofa, plant shelf and window'
   - src: /img/rooms/emils-kuhwiese-wohnbereich.webp
     alt: 'Living area with sofa and coffee table'
-  - src: /img/rooms/emils-kuhwiese-kueche-2.webp
-    alt: 'Fully equipped kitchen with stove, microwave and dining table'
   - src: /img/rooms/emils-kuhwiese-kueche.webp
     alt: 'Kitchen with dining table'
-  - src: /img/rooms/emils-kuhwiese-bad-2.webp
-    alt: 'Spacious bathroom with walk-in shower'
   - src: /img/rooms/emils-kuhwiese-bad.webp
     alt: 'Bright bathroom with walk-in shower'
-  - src: /img/rooms/emils-kuhwiese-schlafzimmer-3.webp
-    alt: "Emil's Kuhwiese – Bedroom with double bed and green accent wall"
-  - src: /img/rooms/emils-kuhwiese-wohnbereich-3.webp
-    alt: "Emil's Kuhwiese – Living area with sofa and garden view"
-  - src: /img/rooms/emils-kuhwiese-kueche-3.webp
-    alt: "Emil's Kuhwiese – Kitchen with stone wallpaper, stove and dining area"
-  - src: /img/rooms/emils-kuhwiese-bad-3.webp
-    alt: "Emil's Kuhwiese – Bright bathroom with walk-in shower and WC"
 
 amenities:
   - wifi

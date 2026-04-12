@@ -36,13 +36,9 @@ pricing:
 
 startingPrice: 50
 
-heroImage: /img/rooms/einzelzimmer-zimmer-2.webp
+heroImage: /img/rooms/einzelzimmer-zimmer.webp
 heroImageAlt: 'Einzelzimmer mit Einzelbett, Schrank und Fenster'
 gallery:
-  - src: /img/rooms/einzelzimmer-zimmer.webp
-    alt: 'Einzelzimmer – zweite Perspektive'
-  - src: /img/rooms/einzelzimmer-zimmer-3.webp
-    alt: 'Einzelzimmer mit Einzelbett, Holzschrank und hellem Fenster'
   - src: /img/rooms/zimmer-badezimmer.png
     alt: 'Privates Badezimmer mit Dusche'
   - src: /img/rooms/zimmer-gemeinschaftskueche-5.webp

@@ -40,14 +40,8 @@ startingPrice: 126
 heroImage: /img/rooms/schoene-aussicht-schlafzimmer.webp
 heroImageAlt: 'Holiday Apartment Schöne Aussicht – Bedroom with double bed under sloped ceiling'
 gallery:
-  - src: /img/rooms/schoene-aussicht-schlafzimmer-2.webp
-    alt: 'Schöne Aussicht – Bedroom with skylight and green accent wall'
-  - src: /img/rooms/schoene-aussicht-wohnbereich-2.webp
-    alt: 'Living area with sofa and skylight'
   - src: /img/rooms/schoene-aussicht-wohnbereich.webp
     alt: 'Living area with sofa and TV'
-  - src: /img/rooms/schoene-aussicht-bad-2.webp
-    alt: 'Bathroom with shower under sloped ceiling and skylight'
   - src: /img/rooms/schoene-aussicht-bad.webp
     alt: 'Bathroom with shower under sloped ceiling'
   - src: /img/rooms/schoene-aussicht-1.webp
@@ -62,12 +56,6 @@ gallery:
     alt: 'Schöne Aussicht – Open-plan kitchen-living room with dining area and play corner'
   - src: /img/rooms/schoene-aussicht-kueche.webp
     alt: 'Schöne Aussicht – Kitchen with stove, oven, microwave and sink'
-  - src: /img/rooms/schoene-aussicht-schlafzimmer-3.webp
-    alt: 'Schöne Aussicht – Bright bedroom with double bed under sloped ceiling'
-  - src: /img/rooms/schoene-aussicht-wohnbereich-3.webp
-    alt: 'Schöne Aussicht – Living area with sofa and skylight'
-  - src: /img/rooms/schoene-aussicht-bad-3.webp
-    alt: 'Schöne Aussicht – Bright bathroom with skylight and shower'
 
 amenities:
   - wifi

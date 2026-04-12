@@ -38,26 +38,14 @@ startingPrice: 65
 heroImage: /img/rooms/wohlfuehl-appartement-zimmer.webp
 heroImageAlt: 'Comfort Apartment – Sleeping and living area with double bed'
 gallery:
-  - src: /img/rooms/wohlfuehl-appartement-zimmer-2.webp
-    alt: 'Comfort Apartment – Sleeping and living area with TV'
-  - src: /img/rooms/wohlfuehl-appartement-kueche-2.webp
-    alt: 'Kitchenette with kettle, refrigerator and sink'
   - src: /img/rooms/wohlfuehl-appartement-kueche.webp
     alt: 'Kitchen area with view towards bathroom'
-  - src: /img/rooms/wohlfuehl-appartement-bad-2.webp
-    alt: 'Private bathroom with round shower'
   - src: /img/rooms/wohlfuehl-appartement-bad.webp
     alt: 'Bathroom with shower'
   - src: /img/rooms/wohlfuehl-appartement-balkon-1.webp
     alt: 'Balcony with table and view towards terrace'
   - src: /img/rooms/wohlfuehl-appartement-balkon-2.webp
     alt: 'Balcony with birdhouse and garden panorama'
-  - src: /img/rooms/wohlfuehl-appartement-zimmer-3.webp
-    alt: 'Comfort Apartment – Spacious living-sleeping area with double bed and TV'
-  - src: /img/rooms/wohlfuehl-appartement-bad-3.webp
-    alt: 'Comfort Apartment – Bathroom with round shower and washbasin'
-  - src: /img/rooms/wohlfuehl-appartement-kueche-3.webp
-    alt: 'Comfort Apartment – Small kitchenette with kettle and refrigerator'
 
 amenities:
   - wifi
