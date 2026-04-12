@@ -15,7 +15,7 @@ export default defineAppConfig({
     mobileDisplay: '0160 97719112',
     email: 'kontakt@pension-volgenandt.de',
     address: {
-      street: 'Otto-Reuter-Straße 28',
+      street: 'Otto-Reutter-Straße 28',
       city: '37327 Leinefelde-Worbis OT Breitenbach',
       country: 'Deutschland',
     },

@@ -29,6 +29,7 @@ const packages = computed(() =>
 const brunchDrinkOptions = [
   { id: 'kaffee', label: 'Kaffee' },
   { id: 'tee', label: 'Tee' },
+  { id: 'apfelschorle', label: 'Apfelschorle' },
 ]
 
 const kaffeeVarianten = [
@@ -57,10 +58,11 @@ const abendDrinkOptions = [
 ]
 
 const kidsKorbInhalt = [
-  '1 Brötchen mit Marmelade oder Nutella',
-  'Mini-Joghurt',
-  'Apfelschorle',
-  'Obstspieß (saisonal)',
+  '1 Brötchen',
+  'Hausgemachte Marmelade mit Obst aus dem eigenen Garten',
+  'Joghurt',
+  'Tee oder Apfelschorle',
+  'Frisches, saisonales Obst',
   '1 hartgekochtes Ei',
   'Kleine Überraschung',
 ]
@@ -157,7 +159,9 @@ watch(
 )
 
 const totalDrinks = computed(() => Object.values(form.drinks).reduce((sum, n) => sum + n, 0))
-const includedDrinks = computed(() => isBrunch.value ? form.adults : form.adults * 2)
+const includedDrinks = computed(() =>
+  isBrunch.value ? form.adults + form.kids : form.adults * 2 + form.kids,
+)
 const extraDrinkCount = computed(() => Math.max(0, totalDrinks.value - includedDrinks.value))
 
 const isSubmitting = ref(false)
@@ -208,8 +212,10 @@ const beverageText = computed(() => {
   if (isBrunch.value) {
     const kaffeeLabel = kaffeeVarianten.find((k) => k.id === form.kaffeeType)?.label ?? 'Schwarz'
     const teeLabel = teeVarianten.find((t) => t.id === form.teeType)?.label ?? form.teeType
+    const apfelschorleCount = form.drinks['apfelschorle'] ?? 0
     if (kaffeeCount > 0) parts.push(`${kaffeeCount}× Kaffee (${kaffeeLabel})`)
     if (teeCount > 0) parts.push(`${teeCount}× Tee (${teeLabel})`)
+    if (apfelschorleCount > 0) parts.push(`${apfelschorleCount}× Apfelschorle`)
   } else {
     for (const d of abendDrinkOptions) {
       const count = form.drinks[d.id] ?? 0
@@ -495,9 +501,8 @@ if (import.meta.client) {
     <fieldset class="space-y-4">
       <legend class="font-serif text-lg font-semibold text-sage-900">Getränke</legend>
       <p class="text-sm text-sage-500">
-        {{ isBrunch ? '1 Getränk' : '2 Getränke' }} pro Person inklusive. Jedes weitere +{{
-          EXTRA_DRINK_PRICE
-        }}
+        {{ isBrunch ? '1 Getränk' : '2 Getränke' }} pro Erwachsener, 1 Getränk pro Kind inklusive.
+        Jedes weitere +{{ EXTRA_DRINK_PRICE }}
         €.
         <span v-if="totalDrinks < includedDrinks" class="font-medium text-waldhonig-600">
           (noch {{ includedDrinks - totalDrinks }} wählen)
