@@ -225,7 +225,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
       <div class="mx-auto max-w-5xl">
         <h2 class="mb-2 font-serif text-2xl font-semibold text-sage-900">Directions & Parking</h2>
         <p class="mb-8 text-sage-600">
-          Otto-Reuter-Straße 28 · 37327 Leinefelde-Worbis OT Breitenbach
+          Otto-Reutter-Straße 28 · 37327 Leinefelde-Worbis OT Breitenbach
         </p>
         <div class="grid gap-8 md:grid-cols-2 md:items-center">
           <div class="overflow-hidden rounded-lg shadow-sm">
@@ -259,7 +259,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
               />
               <p>
                 Navigation destination:
-                <span class="font-medium text-sage-900">Otto-Reuter-Straße 28, Breitenbach</span>
+                <span class="font-medium text-sage-900">Otto-Reutter-Straße 28, Breitenbach</span>
               </p>
             </div>
           </div>

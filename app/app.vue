@@ -40,7 +40,7 @@ useSchemaOrg([
     email: 'kontakt@pension-volgenandt.de',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Otto-Reuter-Straße 28',
+      streetAddress: 'Otto-Reutter-Straße 28',
       addressLocality: 'Leinefelde-Worbis OT Breitenbach',
       postalCode: '37327',
       addressRegion: 'Thüringen',

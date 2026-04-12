@@ -35,7 +35,7 @@ const pensionCoords = [51.4124, 10.322] as [number, number]
     <LMarker :lat-lng="pensionCoords">
       <LPopup>
         <strong>Pension Volgenandt</strong><br />
-        Otto-Reuter-Straße 28<br />
+        Otto-Reutter-Straße 28<br />
         37327 Breitenbach
       </LPopup>
     </LMarker>
