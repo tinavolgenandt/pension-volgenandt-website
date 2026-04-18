@@ -11,6 +11,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const appConfig = useAppConfig()
+const { trackEvent } = useAnalytics()
 
 const formData = reactive({
   name: '',
@@ -44,6 +45,7 @@ async function handleSubmit() {
 
     if (response.ok && data.ok) {
       isSubmitted.value = true
+      trackEvent('generate_lead')
     } else if (data.errors) {
       errorMessage.value = data.errors.map((e: { message: string }) => e.message).join(', ')
     } else {

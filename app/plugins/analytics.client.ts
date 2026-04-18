@@ -37,6 +37,18 @@ export default defineNuxtPlugin(() => {
     script.src = `https://www.googletagmanager.com/gtag/js?id=${primaryId}`
     script.async = true
     document.head.appendChild(script)
+
+    // Track Beds24 booking widget form submissions as booking interest
+    document.addEventListener(
+      'submit',
+      (e) => {
+        const form = e.target as HTMLFormElement
+        if (form?.action?.includes('beds24.com') && window.gtag) {
+          window.gtag('event', 'Buchungsinteressierte')
+        }
+      },
+      true,
+    )
   }
 
   watch(
