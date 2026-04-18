@@ -81,11 +81,11 @@ const TOTAL_UNITS = Object.keys(ROOM_NAMES).length
 
 /** Map apiSource to a readable channel category */
 function mapChannel(apiSource) {
-  if (!apiSource || apiSource === '' || apiSource === 'manual') return 'Manuell'
+  if (!apiSource || apiSource === '' || apiSource === 'manual') return 'Direktbuchungen'
   if (apiSource.toLowerCase().includes('bookingcom') || apiSource === 'BookingCom') return 'Booking.com'
   if (apiSource.toLowerCase().includes('airbnb')) return 'Airbnb'
   if (apiSource === 'Beds24' || apiSource.toLowerCase().includes('beds24')) return 'Website'
-  return apiSource
+  return 'Direktbuchungen'
 }
 
 /**
@@ -144,7 +144,7 @@ function aggregateBookings(bookings, rangeStart, rangeEnd, totalUnits) {
   let totalRevenue = 0
   let totalNightsInRange = 0
   const byRoom = {}
-  const byChannel = { Manuell: 0, 'Booking.com': 0, Website: 0, Airbnb: 0, Sonstige: 0 }
+  const byChannel = { Direktbuchungen: 0, 'Booking.com': 0, Website: 0, Airbnb: 0 }
 
   for (const b of bookings) {
     totalBookings++
@@ -171,7 +171,7 @@ function aggregateBookings(bookings, rangeStart, rangeEnd, totalUnits) {
     // By channel
     const channel = mapChannel(b.apiSource)
     if (channel in byChannel) byChannel[channel]++
-    else byChannel['Sonstige']++
+    else byChannel['Direktbuchungen']++
   }
 
   const confirmedBookings = totalBookings - cancellations
@@ -294,6 +294,10 @@ async function collectGA4Data() {
 
   const currentRow = (currentOverallRes.data.rows || [])[0]
   const prevRow = (prevOverallRes.data.rows || [])[0]
+
+  console.log(`GA4 property: ${GA4_PROPERTY_ID}, dateRange: ${startDate}–${endDate}`)
+  console.log('GA4 currentRow raw:', JSON.stringify(currentRow?.metricValues))
+  console.log('GA4 prevRow raw:', JSON.stringify(prevRow?.metricValues))
 
   const sessions = parseInt(currentRow?.metricValues?.[0]?.value || '0')
   const pageviews = parseInt(currentRow?.metricValues?.[1]?.value || '0')
@@ -419,7 +423,7 @@ async function pushToGoogleSheet(current, prevYear, outlook, ga4) {
     'Nächte im Haus', 'Buchungen', 'Stornierungen', 'Storno-Rate', 'Umsatz (€)',
     'Auslastung', 'Ø Aufenthalt (Nächte)',
     // Buchungskanäle
-    'Manuell', 'Booking.com', 'Website', 'Airbnb',
+    'Direktbuchungen', 'Booking.com', 'Website', 'Airbnb',
     // Beds24 Vorjahr
     'VJ Nächte', 'VJ Buchungen', 'VJ Umsatz (€)', 'VJ Auslastung',
     // Website GA4
@@ -441,7 +445,7 @@ async function pushToGoogleSheet(current, prevYear, outlook, ga4) {
     current?.occupancyRate ? `${current.occupancyRate}%` : '0%',
     current?.avgStay ?? '0',
     // Channels
-    current?.byChannel?.Manuell ?? 0,
+    current?.byChannel?.Direktbuchungen ?? 0,
     current?.byChannel?.['Booking.com'] ?? 0,
     current?.byChannel?.Website ?? 0,
     current?.byChannel?.Airbnb ?? 0,
@@ -548,22 +552,17 @@ function buildEmailHtml(current, prevYear, outlook, ga4) {
 
   let kpis = '<table style="width:100%;border-spacing:8px;"><tr>'
   kpis += kpi('Nächte im Haus', currNights, prevNights != null ? `VJ: ${prevNights}` : '')
-  kpis += kpi('Buchungen', current?.confirmedBookings ?? '–', prevYear ? `VJ: ${prevYear.confirmedBookings}` : '')
   kpis += kpi('Umsatz', currRev, prevYear?.totalRevenue ? `VJ: ${parseFloat(prevYear.totalRevenue).toLocaleString('de-DE', { minimumFractionDigits: 0 })} €` : '')
   kpis += kpi('Auslastung', currOcc, prevOcc ? `VJ: ${prevOcc}%` : '')
-  kpis += kpi('Sessions', ga4?.sessions ?? '–', ga4?.sessionsPY ? `VJ: ${ga4.sessionsPY}` : '')
+  kpis += kpi('Sitzungen (Website)', ga4?.sessions ?? '–', ga4?.sessionsPY ? `VJ: ${ga4.sessionsPY}` : '')
   kpis += '</tr></table>'
 
   // --- Buchungen section ---
   let bookingsHtml = ''
   if (current) {
     let rows = ''
-    rows += tableRow('Übernachtungen im Haus', currNights, prevNights != null ? `VJ: ${prevNights}` : '')
-    rows += tableRow('Bestätigte Buchungen', current.confirmedBookings, prevYear ? `VJ: ${prevYear.confirmedBookings}` : '')
     rows += tableRow('Stornierungen', `${current.cancellations} (${current.cancellationRate}%)`)
-    rows += tableRow('Gesamtumsatz (proratiert)', `${currRev}`, prevYear?.totalRevenue ? `VJ: ${parseFloat(prevYear.totalRevenue).toLocaleString('de-DE', { minimumFractionDigits: 0 })} €` : '')
     rows += tableRow('Ø Aufenthalt', `${current.avgStay} Nächte`)
-    rows += tableRow('Auslastung', currOcc, prevOcc ? `VJ: ${prevOcc}%` : '')
     rows += tableRow('Beliebtestes Zimmer', current.topRoom)
 
     // Channel split
@@ -584,7 +583,7 @@ function buildEmailHtml(current, prevYear, outlook, ga4) {
       }
     }
 
-    bookingsHtml = section('Buchungen & Umsatz', `<table style="width:100%;">${rows}</table>`)
+    bookingsHtml = section('Buchungen', `<table style="width:100%;">${rows}</table>`)
   }
 
   // --- Outlook section ---
@@ -618,23 +617,21 @@ function buildEmailHtml(current, prevYear, outlook, ga4) {
   let websiteHtml = ''
   if (ga4) {
     let rows = ''
-    rows += tableRow('Sessions', ga4.sessions, ga4.sessionsPY ? `VJ: ${ga4.sessionsPY}` : '')
     rows += tableRow('Seitenaufrufe', ga4.pageviews, ga4.pageviewsPY ? `VJ: ${ga4.pageviewsPY}` : '')
     rows += tableRow('Absprungrate', `${ga4.bounceRate}%`)
     rows += tableRow('Ø Sitzungsdauer', `${ga4.avgSessionDuration}s`)
+    rows += tableRow('Google Ads (Paid Search Sitzungen)', ga4.paidSearchSessions)
+    rows += tableRow('Buchungsinteressierte (Formular abgeschickt)', ga4.buchungsinteressierte)
 
     if (ga4.sources.length > 0) {
-      rows += '<tr><td colspan="2" style="padding-top:10px;padding-bottom:2px;font-weight:600;color:#4a6741;font-size:13px;">Traffic-Quellen:</td></tr>'
+      rows += '<tr><td colspan="2" style="padding-top:10px;padding-bottom:2px;font-weight:600;color:#4a6741;font-size:13px;">Herkunft der Besucher:</td></tr>'
       for (const s of ga4.sources.slice(0, 6)) {
-        rows += tableRow(`  ${s.source}`, `${s.sessions} Sessions`)
+        rows += tableRow(`  ${s.source}`, `${s.sessions} Sitzungen`)
       }
     }
 
-    rows += tableRow('Paid Search Sessions (Google Ads)', ga4.paidSearchSessions)
-    rows += tableRow('Buchungsinteressierte (Beds24 Widget)', ga4.buchungsinteressierte)
-
     if (ga4.topPages.length > 0) {
-      rows += '<tr><td colspan="2" style="padding-top:10px;padding-bottom:2px;font-weight:600;color:#4a6741;font-size:13px;">Top Seiten:</td></tr>'
+      rows += '<tr><td colspan="2" style="padding-top:10px;padding-bottom:2px;font-weight:600;color:#4a6741;font-size:13px;">Meistbesuchte Seiten:</td></tr>'
       for (const p of ga4.topPages.slice(0, 6)) {
         rows += tableRow(`  ${p.page}`, `${p.views} Aufrufe`)
       }
