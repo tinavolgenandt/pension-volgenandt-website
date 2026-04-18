@@ -37,6 +37,10 @@ useHead({
       <HomeWelcome />
     </UiScrollReveal>
 
+    <ClientOnly>
+      <HomeLgsTeaser />
+    </ClientOnly>
+
     <UiScrollReveal>
       <HomeGartenGallery />
     </UiScrollReveal>

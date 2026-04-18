@@ -38,14 +38,25 @@ export default defineNuxtPlugin(() => {
     script.async = true
     document.head.appendChild(script)
 
-    // Track Beds24 booking widget form submissions as booking interest
+    // Track Beds24 booking widget interactions as booking interest.
+    // submit catches native form submissions; click catches jQuery-triggered submits.
+    const fireBuchungsinteressierte = () => window.gtag?.('event', 'Buchungsinteressierte')
+
     document.addEventListener(
       'submit',
       (e) => {
         const form = e.target as HTMLFormElement
-        if (form?.action?.includes('beds24.com') && window.gtag) {
-          window.gtag('event', 'Buchungsinteressierte')
-        }
+        if (form?.action?.includes('beds24.com')) fireBuchungsinteressierte()
+      },
+      true,
+    )
+
+    document.addEventListener(
+      'click',
+      (e) => {
+        const btn = (e.target as HTMLElement).closest('button, input[type="submit"]')
+        const form = btn?.closest('form') as HTMLFormElement | null
+        if (form?.action?.includes('beds24.com')) fireBuchungsinteressierte()
       },
       true,
     )
