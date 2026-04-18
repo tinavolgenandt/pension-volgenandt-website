@@ -12,7 +12,7 @@ useSeoMeta({
   <div class="mx-auto max-w-screen-xl px-4 py-12">
     <div class="prose-content">
       <h1 class="mb-6 font-serif text-3xl font-bold text-sage-900">Datenschutzerklärung</h1>
-      <p class="mb-8 text-sage-600">Stand: Februar 2026</p>
+      <p class="mb-8 text-sage-600">Stand: April 2026</p>
 
       <!-- 1. Datenschutz auf einen Blick -->
       <section>
@@ -341,12 +341,18 @@ useSeoMeta({
           (Einwilligung) und § 25 Abs. 1 TDDDG.
         </p>
 
-        <p class="mt-4 font-semibold">Statistik (Einwilligung erforderlich)</p>
+        <p class="mt-4 font-semibold">Statistik (teilweise ohne Einwilligung)</p>
         <p>
-          Diese Cookies ermöglichen die anonyme Auswertung der Websitenutzung mit Google Analytics
-          zur Verbesserung unseres Angebots. Ohne Ihre Einwilligung werden keine Analysedaten
-          erhoben und es werden keine Daten an Google übermittelt. Rechtsgrundlage: Art. 6 Abs. 1
-          lit. a DSGVO (Einwilligung) und § 25 Abs. 1 TDDDG.
+          Diese Website nutzt Google Analytics 4 mit Google Consent Mode v2. Das Google-Tag
+          (gtag.js) wird für alle Besucher geladen und übermittelt dabei Ihre IP-Adresse an Google.
+          <strong>Ohne Ihre Einwilligung</strong> werden ausschließlich cookiefreie, anonyme
+          Signale übertragen – es werden keine Cookies gesetzt, keine persistenten Kennungen
+          vergeben und keine personenbezogenen Daten gespeichert. Google verwendet diese Signale
+          ausschließlich für aggregierte statistische Modellierung. Rechtsgrundlage hierfür ist
+          Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO (berechtigtes Interesse an der Reichweitenmes­sung).
+          <strong>Mit Ihrer Einwilligung</strong> (Kategorie „Statistik") wird die vollständige
+          Analyse mit Cookies aktiviert. Rechtsgrundlage: Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a DSGVO
+          und § 25 Abs.&nbsp;1 TDDDG.
         </p>
 
         <h3 class="mt-6 mb-3 font-serif text-lg font-semibold text-sage-800">
@@ -362,40 +368,68 @@ useSeoMeta({
         </p>
       </section>
 
-      <!-- 6. Webanalyse mit Google Analytics 4 -->
+      <!-- 6. Webanalyse mit Google Analytics 4 und Google Ads -->
       <section>
         <h2 class="mt-8 mb-4 font-serif text-xl font-semibold text-sage-800">
-          6. Webanalyse mit Google Analytics 4
+          6. Webanalyse mit Google Analytics 4 und Google Ads
         </h2>
+
+        <h3 class="mt-6 mb-3 font-serif text-lg font-semibold text-sage-800">
+          Google Analytics 4 mit Consent Mode v2
+        </h3>
         <p>
-          Diese Website nutzt Google Analytics 4, einen Webanalysedienst der Google Ireland Limited
-          („Google"), Gordon House, Barrow Street, Dublin 4, Irland. Google Analytics verwendet
-          Cookies, die eine Analyse der Benutzung der Website ermöglichen. Die durch das Cookie
-          erzeugten Informationen über Ihre Benutzung dieser Website werden in der Regel an einen
-          Server von Google in der EU übertragen und dort gespeichert.
+          Diese Website nutzt Google Analytics 4 (GA4), einen Webanalysedienst der Google Ireland
+          Limited („Google"), Gordon House, Barrow Street, Dublin 4, Irland. Wir setzen dabei
+          <strong>Google Consent Mode v2 (Basic Mode)</strong> ein.
+        </p>
+
+        <p class="mt-4 font-semibold">Ohne Ihre Einwilligung (cookiefreie Modellierung)</p>
+        <p>
+          Das Google-Tag (gtag.js) wird beim Seitenaufruf für alle Besucher geladen. Dabei wird
+          Ihre IP-Adresse an Server von Google übertragen. Es werden jedoch <strong>keine Cookies
+          gesetzt</strong>, keine persistenten Kennungen vergeben und keine personenbezogenen Daten
+          dauerhaft gespeichert. Google erhält lediglich anonyme, aggregierte Signale
+          (sog.&nbsp;cookiefreie Pings), die ausschließlich zur statistischen Modellierung der
+          Reichweite unserer Website verwendet werden. Eine Identifizierung einzelner Personen ist
+          dabei nicht möglich.
         </p>
         <p class="mt-2">
-          <strong>IP-Anonymisierung:</strong> Wir nutzen die Funktion zur IP-Anonymisierung. Ihre
-          IP-Adresse wird von Google innerhalb von Mitgliedstaaten der Europäischen Union oder in
-          anderen Vertragsstaaten des Abkommens über den Europäischen Wirtschaftsraum vor der
-          Übermittlung gekürzt.
+          <strong>Rechtsgrundlage:</strong> Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO (berechtigtes
+          Interesse an anonymer Reichweitenmessung zur Optimierung unseres Webangebots). Eine
+          Speicherung personenbezogener Daten oder das Setzen von Cookies nach § 25 TDDDG findet
+          ohne Ihre Einwilligung nicht statt.
+        </p>
+
+        <p class="mt-4 font-semibold">Mit Ihrer Einwilligung (vollständige Analyse)</p>
+        <p>
+          Wenn Sie die Cookie-Kategorie „Statistik" akzeptieren, wird die vollständige
+          GA4-Analyse aktiviert. Google Analytics setzt dann Cookies und erfasst:
+          besuchte Seiten, Sitzungsdauer, verwendetes Gerät und Betriebssystem, Herkunft des
+          Besuchs (Suchmaschine, Direktaufruf, Verweis) sowie den ungefähren Standort (Land/Stadt).
+          Die IP-Adresse wird vor Speicherung gekürzt (IP-Anonymisierung). Daten werden in der
+          Regel auf Servern von Google in der EU gespeichert.
         </p>
         <p class="mt-2">
-          <strong>Erfasste Daten:</strong> Besuchte Seiten, Sitzungsdauer, verwendetes Gerät und
-          Betriebssystem, Herkunft des Besuchs (Suchmaschine, Direktaufruf, Verweis), ungefährer
-          Standort (Land/Stadt), Spracheinstellungen des Browsers.
+          <strong>Rechtsgrundlage:</strong> Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a DSGVO (Einwilligung)
+          und § 25 Abs.&nbsp;1 TDDDG. <strong>Speicherdauer:</strong> 14 Monate. Sie können Ihre
+          Einwilligung jederzeit über die Cookie-Einstellungen in der Fußzeile widerrufen.
         </p>
-        <p class="mt-2"><strong>Zweck:</strong> Analyse und Optimierung unseres Webangebots.</p>
-        <p class="mt-2">
-          <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung) und § 25 Abs.
-          1 TDDDG. Google Analytics wird erst nach Ihrer ausdrücklichen Einwilligung über unsere
-          Cookie-Einstellungen (Kategorie „Statistik") geladen.
+
+        <h3 class="mt-6 mb-3 font-serif text-lg font-semibold text-sage-800">Google Ads</h3>
+        <p>
+          Diese Website verwendet Google Ads (Google Ireland Limited), um die Wirksamkeit unserer
+          Werbeanzeigen zu messen. Der Google-Ads-Tag (AW-17985162041) wird zusammen mit dem
+          Google-Tag geladen und unterliegt denselben Consent-Mode-v2-Regeln: Ohne Ihre
+          Einwilligung werden keine Cookies für Werbezwecke gesetzt und keine
+          Konversionsmessungen durchgeführt. Mit Ihrer Einwilligung (Kategorie „Statistik") kann
+          Google messen, ob ein Klick auf unsere Anzeige zu einer Buchungsanfrage geführt hat.
         </p>
         <p class="mt-2">
-          <strong>Speicherdauer:</strong> 14 Monate. Sie können Ihre Einwilligung jederzeit über die
-          Cookie-Einstellungen in der Fußzeile unserer Website widerrufen.
+          <strong>Rechtsgrundlage:</strong> Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a DSGVO (Einwilligung)
+          und § 25 Abs.&nbsp;1 TDDDG.
         </p>
-        <p class="mt-2">
+
+        <p class="mt-4">
           Weitere Informationen zum Datenschutz bei Google finden Sie unter
           <a
             href="https://policies.google.com/privacy"
@@ -403,7 +437,15 @@ useSeoMeta({
             rel="noopener noreferrer"
             class="text-waldhonig-600 underline hover:text-waldhonig-700"
           >
-            https://policies.google.com/privacy </a
+            https://policies.google.com/privacy</a
+          >. Informationen zu Google Consent Mode:
+          <a
+            href="https://support.google.com/analytics/answer/9976101"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-waldhonig-600 underline hover:text-waldhonig-700"
+          >
+            support.google.com/analytics/answer/9976101</a
           >.
         </p>
       </section>
