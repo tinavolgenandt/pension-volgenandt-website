@@ -274,27 +274,26 @@ async function collectGA4Data() {
   })
   const analyticsData = google.analyticsdata({ version: 'v1beta', auth })
 
-  // --- 4a. Overall sessions + year-over-year comparison ---
-  const overallRes = await analyticsData.properties.runReport({
-    property: `properties/${GA4_PROPERTY_ID}`,
-    requestBody: {
-      dateRanges: [
-        { startDate, endDate, name: 'current' },
-        { startDate: prevStartDate, endDate: prevEndDate, name: 'previous_year' },
-      ],
-      metrics: [
-        { name: 'sessions' },
-        { name: 'screenPageViews' },
-        { name: 'bounceRate' },
-        { name: 'averageSessionDuration' },
-      ],
-      dimensions: [{ name: 'dateRange' }],
-    },
-  })
+  // --- 4a. Overall sessions + year-over-year (two separate calls) ---
+  const overallMetrics = [
+    { name: 'sessions' },
+    { name: 'screenPageViews' },
+    { name: 'bounceRate' },
+    { name: 'averageSessionDuration' },
+  ]
+  const [currentOverallRes, prevOverallRes] = await Promise.all([
+    analyticsData.properties.runReport({
+      property: `properties/${GA4_PROPERTY_ID}`,
+      requestBody: { dateRanges: [{ startDate, endDate }], metrics: overallMetrics },
+    }),
+    analyticsData.properties.runReport({
+      property: `properties/${GA4_PROPERTY_ID}`,
+      requestBody: { dateRanges: [{ startDate: prevStartDate, endDate: prevEndDate }], metrics: overallMetrics },
+    }).catch(() => ({ data: { rows: [] } })),
+  ])
 
-  const overallRows = overallRes.data.rows || []
-  const currentRow = overallRows.find((r) => r.dimensionValues[0].value === 'current')
-  const prevRow = overallRows.find((r) => r.dimensionValues[0].value === 'previous_year')
+  const currentRow = (currentOverallRes.data.rows || [])[0]
+  const prevRow = (prevOverallRes.data.rows || [])[0]
 
   const sessions = parseInt(currentRow?.metricValues?.[0]?.value || '0')
   const pageviews = parseInt(currentRow?.metricValues?.[1]?.value || '0')
@@ -485,8 +484,18 @@ async function pushToGoogleSheet(current, prevYear, outlook, ga4) {
     requestBody: { values: [row] },
   })
 
-  // --- Tab 2: Ausblick (overwrite each month) ---
+  // --- Tab 2: Ausblick (overwrite each month, auto-create tab if missing) ---
   if (outlook && outlook.length > 0) {
+    const sheetMeta = await sheets.spreadsheets.get({ spreadsheetId: GOOGLE_SHEETS_ID })
+    const ausblickExists = (sheetMeta.data.sheets || []).some((s) => s.properties?.title === 'Ausblick')
+    if (!ausblickExists) {
+      await sheets.spreadsheets.batchUpdate({
+        spreadsheetId: GOOGLE_SHEETS_ID,
+        requestBody: { requests: [{ addSheet: { properties: { title: 'Ausblick' } } }] },
+      })
+      console.log('Created "Ausblick" sheet tab')
+    }
+
     const outlookHeaders = ['Monat', 'Buchungen', 'Nächte gebucht', 'Auslastung', 'Stand']
     const outlookRows = outlook.map((o) => [
       o.monthLabel,
