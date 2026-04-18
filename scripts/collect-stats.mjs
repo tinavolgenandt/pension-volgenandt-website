@@ -3,12 +3,11 @@
  * Monthly statistics collection for Pension Volgenandt.
  *
  * Collects data from:
- *   1. Beds24 API v2 (bookings, revenue, occupancy)
- *   2. Google Analytics 4 Data API (website traffic)
- *   3. IONOS inquiry log (contact form submissions)
+ *   1. Beds24 API v2 — stays overlapping the month (not just arrivals)
+ *   2. Google Analytics 4 Data API — website traffic, Picknick, Paid Search
  *
  * Then:
- *   - Pushes aggregated data to a Google Sheet
+ *   - Pushes aggregated data to Google Sheets (tab "Monatsdaten" + tab "Ausblick")
  *   - Sends a monthly HTML email summary
  *
  * Run via: node scripts/collect-stats.mjs
@@ -19,15 +18,14 @@ import { google } from 'googleapis'
 import { createTransport } from 'nodemailer'
 
 // ---------------------------------------------------------------------------
-// Configuration from environment variables
+// Config
 // ---------------------------------------------------------------------------
 const {
   BEDS24_REFRESH_TOKEN,
   BEDS24_PROPERTY_ID = '261258',
   GA4_PROPERTY_ID,
-  GOOGLE_SERVICE_ACCOUNT_KEY, // base64-encoded JSON
+  GOOGLE_SERVICE_ACCOUNT_KEY,
   GOOGLE_SHEETS_ID,
-  IONOS_LOG_API_KEY,
   SMTP_HOST = 'smtp.ionos.de',
   SMTP_PORT = '587',
   SMTP_USER,
@@ -36,14 +34,27 @@ const {
   LOOKER_STUDIO_URL = '',
 } = process.env
 
-// Calculate previous month date range
+// ---------------------------------------------------------------------------
+// Date helpers
+// ---------------------------------------------------------------------------
 const now = new Date()
-const year = now.getMonth() === 0 ? now.getFullYear() - 1 : now.getFullYear()
-const month = now.getMonth() === 0 ? 12 : now.getMonth() // 1-indexed
-const monthStr = `${year}-${String(month).padStart(2, '0')}`
-const startDate = `${monthStr}-01`
+// Allow override via env for testing: REPORT_MONTH=4 REPORT_YEAR=2026
+const year = process.env.REPORT_YEAR
+  ? parseInt(process.env.REPORT_YEAR)
+  : now.getMonth() === 0 ? now.getFullYear() - 1 : now.getFullYear()
+const month = process.env.REPORT_MONTH
+  ? parseInt(process.env.REPORT_MONTH)
+  : now.getMonth() === 0 ? 12 : now.getMonth() // 1-indexed
 const daysInMonth = new Date(year, month, 0).getDate()
-const endDate = `${monthStr}-${String(daysInMonth).padStart(2, '0')}`
+const startDate = `${year}-${String(month).padStart(2, '0')}-01`
+const endDate = `${year}-${String(month).padStart(2, '0')}-${String(daysInMonth).padStart(2, '0')}`
+const monthEndPlusOne = new Date(`${year}-${String(month).padStart(2, '0')}-${String(daysInMonth).padStart(2, '0')}T00:00:00`)
+monthEndPlusOne.setDate(monthEndPlusOne.getDate() + 1)
+
+const prevReportYear = year - 1
+const prevStartDate = `${prevReportYear}-${String(month).padStart(2, '0')}-01`
+const prevDaysInMonth = new Date(prevReportYear, month, 0).getDate()
+const prevEndDate = `${prevReportYear}-${String(month).padStart(2, '0')}-${String(prevDaysInMonth).padStart(2, '0')}`
 
 const MONTH_NAMES_DE = [
   '', 'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
@@ -53,7 +64,7 @@ const monthLabel = `${MONTH_NAMES_DE[month]} ${year}`
 
 console.log(`Collecting statistics for ${monthLabel} (${startDate} to ${endDate})`)
 
-// Room name mapping
+// Room units and occupancy base
 const ROOM_NAMES = {
   548066: 'Balkonzimmer',
   549252: 'Rosengarten',
@@ -65,107 +76,118 @@ const ROOM_NAMES = {
 const TOTAL_UNITS = Object.keys(ROOM_NAMES).length
 
 // ---------------------------------------------------------------------------
-// 1. Beds24 API
+// Beds24 helpers
 // ---------------------------------------------------------------------------
-async function collectBeds24Data() {
-  if (!BEDS24_REFRESH_TOKEN) {
-    console.warn('BEDS24_REFRESH_TOKEN not set, skipping Beds24 data')
-    return null
-  }
 
-  // Get access token
-  const tokenRes = await fetch('https://api.beds24.com/v2/authentication/token', {
+/** Map apiSource to a readable channel category */
+function mapChannel(apiSource) {
+  if (!apiSource || apiSource === '' || apiSource === 'manual') return 'Manuell'
+  if (apiSource.toLowerCase().includes('bookingcom') || apiSource === 'BookingCom') return 'Booking.com'
+  if (apiSource.toLowerCase().includes('airbnb')) return 'Airbnb'
+  if (apiSource === 'Beds24' || apiSource.toLowerCase().includes('beds24')) return 'Website'
+  return apiSource
+}
+
+/**
+ * Fetch Beds24 access token.
+ * Returns token string or null on failure.
+ */
+async function getBeds24Token() {
+  if (!BEDS24_REFRESH_TOKEN) return null
+  const res = await fetch('https://api.beds24.com/v2/authentication/token', {
     headers: { refreshToken: BEDS24_REFRESH_TOKEN },
   })
-  const tokenData = await tokenRes.json()
-  if (!tokenData.token) {
-    console.error('Beds24 token exchange failed:', tokenData)
+  const data = await res.json()
+  if (!data.token) {
+    console.error('Beds24 token exchange failed:', data)
     return null
   }
-  const token = tokenData.token
+  return data.token
+}
 
-  // Fetch bookings for the month
+/**
+ * Fetch bookings from Beds24 that overlap a given date range.
+ * Returns raw booking array or null.
+ */
+async function fetchBeds24Bookings(token, fromDate, toDate) {
+  // arrivalTo + departureFrom = stays overlapping the date window
   const params = new URLSearchParams({
     propertyId: BEDS24_PROPERTY_ID,
-    arrivalFrom: startDate,
-    arrivalTo: endDate,
+    arrivalTo: toDate,
+    departureFrom: fromDate,
     includeInvoice: 'true',
   })
-  const bookingsRes = await fetch(`https://api.beds24.com/v2/bookings?${params}`, {
+  const res = await fetch(`https://api.beds24.com/v2/bookings?${params}`, {
     headers: { token },
   })
-  const bookingsBody = await bookingsRes.json()
-
-  // Beds24 v2 wraps results: { success, data: [...] }
-  const bookings = Array.isArray(bookingsBody) ? bookingsBody : bookingsBody.data
+  const body = await res.json()
+  const bookings = Array.isArray(body) ? body : body.data
   if (!Array.isArray(bookings)) {
-    console.error('Beds24 bookings response unexpected:', bookingsBody)
+    console.error('Beds24 unexpected response:', body)
     return null
   }
+  return bookings
+}
 
-  // Calculate metrics
+/**
+ * Aggregate booking metrics for a set of raw Beds24 bookings overlapping a month.
+ * Revenue is prorated to the nights that fall within [rangeStart, rangeEnd].
+ */
+function aggregateBookings(bookings, rangeStart, rangeEnd, totalUnits) {
+  if (!bookings) return null
+
+  const rangeStartMs = new Date(`${rangeStart}T00:00:00`).getTime()
+  const rangeEndMs = new Date(`${rangeEnd}T00:00:00`).getTime() + 86400000 // exclusive next day
+
   let totalBookings = 0
   let cancellations = 0
   let totalRevenue = 0
-  let totalNights = 0
-  let totalBookedRoomNights = 0
+  let totalNightsInRange = 0
   const byRoom = {}
-  const byChannel = {}
-  const guestCountries = {}
+  const byChannel = { Manuell: 0, 'Booking.com': 0, Website: 0, Airbnb: 0, Sonstige: 0 }
 
   for (const b of bookings) {
     totalBookings++
+    if (b.cancelTime) { cancellations++; continue }
 
-    // Beds24 v2: cancelTime is set for cancelled bookings
-    if (b.cancelTime) {
-      cancellations++
-      continue
-    }
+    const arrival = new Date(b.arrival).getTime()
+    const departure = new Date(b.departure).getTime()
+    const totalNights = Math.max(1, Math.round((departure - arrival) / 86400000))
 
-    // Revenue from price field
-    if (b.price) {
-      totalRevenue += parseFloat(b.price) || 0
-    }
+    // Prorate: count only nights within the range
+    const clampedStart = Math.max(arrival, rangeStartMs)
+    const clampedEnd = Math.min(departure, rangeEndMs)
+    const nightsInRange = Math.max(0, Math.round((clampedEnd - clampedStart) / 86400000))
+    totalNightsInRange += nightsInRange
 
-    // Nights
-    const arrival = new Date(b.arrival)
-    const departure = new Date(b.departure)
-    const nights = Math.max(1, Math.round((departure - arrival) / 86400000))
-    totalNights += nights
-    totalBookedRoomNights += nights
+    // Prorated revenue
+    const fullPrice = parseFloat(b.price) || 0
+    totalRevenue += (nightsInRange / totalNights) * fullPrice
 
-    // By room (Beds24 v2: roomId = unit ID, unitId = sub-unit index)
-    const roomId = String(b.roomId || 'unknown')
-    const roomName = ROOM_NAMES[roomId] || roomId
+    // By room
+    const roomName = ROOM_NAMES[String(b.roomId)] || 'Unbekannt'
     byRoom[roomName] = (byRoom[roomName] || 0) + 1
 
-    // By channel (Beds24 v2: apiSource or referer)
-    const channel = b.apiSource || b.referer || 'Direkt'
-    byChannel[channel] = (byChannel[channel] || 0) + 1
-
-    // Guest country
-    const country = b.country || 'Unbekannt'
-    if (country && country !== 'Unbekannt') {
-      guestCountries[country] = (guestCountries[country] || 0) + 1
-    }
+    // By channel
+    const channel = mapChannel(b.apiSource)
+    if (channel in byChannel) byChannel[channel]++
+    else byChannel['Sonstige']++
   }
 
   const confirmedBookings = totalBookings - cancellations
-  const avgStay = confirmedBookings > 0 ? (totalNights / confirmedBookings).toFixed(1) : '0'
-  const totalAvailableRoomNights = TOTAL_UNITS * daysInMonth
-  const occupancyRate = totalAvailableRoomNights > 0
-    ? ((totalBookedRoomNights / totalAvailableRoomNights) * 100).toFixed(1)
+  const daysInRange = Math.round((rangeEndMs - rangeStartMs) / 86400000)
+  const totalAvailableNights = totalUnits * daysInRange
+  const occupancyRate = totalAvailableNights > 0
+    ? ((totalNightsInRange / totalAvailableNights) * 100).toFixed(1)
+    : '0'
+  const avgStay = confirmedBookings > 0
+    ? (totalNightsInRange / confirmedBookings).toFixed(1)
     : '0'
   const cancellationRate = totalBookings > 0
     ? ((cancellations / totalBookings) * 100).toFixed(1)
     : '0'
 
-  // Top room
   const topRoom = Object.entries(byRoom).sort((a, b) => b[1] - a[1])[0]
-  // Top channel
-  const topChannel = Object.entries(byChannel).sort((a, b) => b[1] - a[1])[0]
-  // Top country
-  const topCountry = Object.entries(guestCountries).sort((a, b) => b[1] - a[1])[0]
 
   return {
     totalBookings,
@@ -173,19 +195,71 @@ async function collectBeds24Data() {
     cancellations,
     cancellationRate,
     totalRevenue: totalRevenue.toFixed(2),
+    totalNightsInRange,
     avgStay,
     occupancyRate,
-    topRoom: topRoom ? topRoom[0] : '–',
-    topChannel: topChannel ? topChannel[0] : '–',
-    topCountry: topCountry ? topCountry[0] : '–',
     byRoom,
     byChannel,
-    guestCountries,
+    topRoom: topRoom ? topRoom[0] : '–',
   }
 }
 
 // ---------------------------------------------------------------------------
-// 2. Google Analytics 4 Data API
+// 1. Beds24 — current month
+// ---------------------------------------------------------------------------
+async function collectBeds24Current(token) {
+  if (!token) return null
+  const bookings = await fetchBeds24Bookings(token, startDate, endDate)
+  return aggregateBookings(bookings, startDate, endDate, TOTAL_UNITS)
+}
+
+// ---------------------------------------------------------------------------
+// 2. Beds24 — same month previous year
+// ---------------------------------------------------------------------------
+async function collectBeds24PreviousYear(token) {
+  if (!token) return null
+  const bookings = await fetchBeds24Bookings(token, prevStartDate, prevEndDate)
+  // Gracefully return null if empty (Beds24 migration started mid-2025)
+  if (!bookings || bookings.length === 0) return null
+  return aggregateBookings(bookings, prevStartDate, prevEndDate, TOTAL_UNITS)
+}
+
+// ---------------------------------------------------------------------------
+// 3. Beds24 — outlook: remaining months of current year
+// ---------------------------------------------------------------------------
+async function collectBeds24Outlook(token) {
+  if (!token) return []
+
+  const currentCalendarYear = now.getFullYear()
+
+  // Collect future months from the month after the report month until December
+  const futureMths = []
+  for (let m = month + 1; m <= 12; m++) {
+    futureMths.push({ year: currentCalendarYear, month: m })
+  }
+  // If report month is December, no outlook
+  if (futureMths.length === 0) return []
+
+  const results = await Promise.all(
+    futureMths.map(async ({ year: y, month: m }) => {
+      const days = new Date(y, m, 0).getDate()
+      const from = `${y}-${String(m).padStart(2, '0')}-01`
+      const to = `${y}-${String(m).padStart(2, '0')}-${String(days).padStart(2, '0')}`
+      const bookings = await fetchBeds24Bookings(token, from, to).catch(() => null)
+      const agg = aggregateBookings(bookings, from, to, TOTAL_UNITS)
+      return {
+        monthLabel: `${MONTH_NAMES_DE[m]} ${y}`,
+        confirmedBookings: agg?.confirmedBookings ?? 0,
+        totalNights: agg?.totalNightsInRange ?? 0,
+        occupancyRate: agg?.occupancyRate ?? '0',
+      }
+    }),
+  )
+  return results
+}
+
+// ---------------------------------------------------------------------------
+// 4. Google Analytics 4
 // ---------------------------------------------------------------------------
 async function collectGA4Data() {
   if (!GA4_PROPERTY_ID || !GOOGLE_SERVICE_ACCOUNT_KEY) {
@@ -198,33 +272,39 @@ async function collectGA4Data() {
     credentials: keyJson,
     scopes: ['https://www.googleapis.com/auth/analytics.readonly'],
   })
-
   const analyticsData = google.analyticsdata({ version: 'v1beta', auth })
 
-  // Run report
-  const res = await analyticsData.properties.runReport({
+  // --- 4a. Overall sessions + year-over-year comparison ---
+  const overallRes = await analyticsData.properties.runReport({
     property: `properties/${GA4_PROPERTY_ID}`,
     requestBody: {
-      dateRanges: [{ startDate, endDate }],
+      dateRanges: [
+        { startDate, endDate, name: 'current' },
+        { startDate: prevStartDate, endDate: prevEndDate, name: 'previous_year' },
+      ],
       metrics: [
         { name: 'sessions' },
-        { name: 'totalUsers' },
         { name: 'screenPageViews' },
         { name: 'bounceRate' },
         { name: 'averageSessionDuration' },
       ],
-      dimensions: [],
+      dimensions: [{ name: 'dateRange' }],
     },
   })
 
-  const row = res.data.rows?.[0]
-  const sessions = row?.metricValues?.[0]?.value || '0'
-  const users = row?.metricValues?.[1]?.value || '0'
-  const pageviews = row?.metricValues?.[2]?.value || '0'
-  const bounceRate = parseFloat(row?.metricValues?.[3]?.value || '0').toFixed(1)
-  const avgSessionDuration = parseFloat(row?.metricValues?.[4]?.value || '0').toFixed(0)
+  const overallRows = overallRes.data.rows || []
+  const currentRow = overallRows.find((r) => r.dimensionValues[0].value === 'current')
+  const prevRow = overallRows.find((r) => r.dimensionValues[0].value === 'previous_year')
 
-  // Top pages
+  const sessions = parseInt(currentRow?.metricValues?.[0]?.value || '0')
+  const pageviews = parseInt(currentRow?.metricValues?.[1]?.value || '0')
+  const bounceRate = parseFloat(currentRow?.metricValues?.[2]?.value || '0').toFixed(1)
+  const avgSessionDuration = parseFloat(currentRow?.metricValues?.[3]?.value || '0').toFixed(0)
+
+  const sessionsPY = parseInt(prevRow?.metricValues?.[0]?.value || '0')
+  const pageviewsPY = parseInt(prevRow?.metricValues?.[1]?.value || '0')
+
+  // --- 4b. Top pages ---
   const pagesRes = await analyticsData.properties.runReport({
     property: `properties/${GA4_PROPERTY_ID}`,
     requestBody: {
@@ -232,16 +312,15 @@ async function collectGA4Data() {
       metrics: [{ name: 'screenPageViews' }],
       dimensions: [{ name: 'pagePath' }],
       orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
-      limit: 10,
+      limit: 8,
     },
   })
-
   const topPages = (pagesRes.data.rows || []).map((r) => ({
     page: r.dimensionValues[0].value,
-    views: r.metricValues[0].value,
+    views: parseInt(r.metricValues[0].value),
   }))
 
-  // Traffic sources
+  // --- 4c. Traffic sources ---
   const sourcesRes = await analyticsData.properties.runReport({
     property: `properties/${GA4_PROPERTY_ID}`,
     requestBody: {
@@ -249,98 +328,81 @@ async function collectGA4Data() {
       metrics: [{ name: 'sessions' }],
       dimensions: [{ name: 'sessionDefaultChannelGroup' }],
       orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
-      limit: 10,
+      limit: 8,
     },
   })
-
   const sources = (sourcesRes.data.rows || []).map((r) => ({
     source: r.dimensionValues[0].value,
-    sessions: r.metricValues[0].value,
+    sessions: parseInt(r.metricValues[0].value),
   }))
 
-  // Device categories
-  const devicesRes = await analyticsData.properties.runReport({
+  // Paid Search sessions specifically
+  const paidSearchRow = sources.find((s) => s.source === 'Paid Search')
+  const paidSearchSessions = paidSearchRow?.sessions ?? 0
+
+  // --- 4d. Conversion events (Buchungsinteressierte = Beds24 widget submit) ---
+  const eventsRes = await analyticsData.properties.runReport({
     property: `properties/${GA4_PROPERTY_ID}`,
     requestBody: {
       dateRanges: [{ startDate, endDate }],
-      metrics: [{ name: 'sessions' }],
-      dimensions: [{ name: 'deviceCategory' }],
+      metrics: [{ name: 'eventCount' }],
+      dimensions: [{ name: 'eventName' }],
     },
-  })
+  }).catch(() => ({ data: { rows: [] } }))
+  const eventRows = eventsRes.data.rows || []
+  const buchungsinteressierte = parseInt(
+    eventRows.find((r) => r.dimensionValues[0].value === 'Buchungsinteressierte')?.metricValues[0].value || '0',
+  )
 
-  const devices = (devicesRes.data.rows || []).map((r) => ({
-    device: r.dimensionValues[0].value,
-    sessions: r.metricValues[0].value,
-  }))
-
-  // Countries
-  const countriesRes = await analyticsData.properties.runReport({
+  // --- 4e. Picknick-specific page views ---
+  const picknickPagesRes = await analyticsData.properties.runReport({
     property: `properties/${GA4_PROPERTY_ID}`,
     requestBody: {
       dateRanges: [{ startDate, endDate }],
-      metrics: [{ name: 'sessions' }],
-      dimensions: [{ name: 'country' }],
-      orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
-      limit: 10,
+      metrics: [{ name: 'screenPageViews' }],
+      dimensions: [{ name: 'pagePath' }],
+      dimensionFilter: {
+        orGroup: {
+          expressions: [
+            { filter: { fieldName: 'pagePath', stringFilter: { matchType: 'BEGINS_WITH', value: '/picknick' } } },
+            { filter: { fieldName: 'pagePath', stringFilter: { matchType: 'BEGINS_WITH', value: '/en/picnic' } } },
+          ],
+        },
+      },
     },
-  })
+  }).catch(() => ({ data: { rows: [] } }))
 
-  const countries = (countriesRes.data.rows || []).map((r) => ({
-    country: r.dimensionValues[0].value,
-    sessions: r.metricValues[0].value,
-  }))
-
-  const topPage = topPages[0]?.page || '–'
-  const topSource = sources[0]?.source || '–'
+  let picknickLandingViews = 0
+  let picknickDankeViews = 0
+  for (const r of picknickPagesRes.data.rows || []) {
+    const path = r.dimensionValues[0].value
+    const views = parseInt(r.metricValues[0].value)
+    if (path.includes('/danke') || path.includes('/thanks')) picknickDankeViews += views
+    else picknickLandingViews += views
+  }
 
   return {
     sessions,
-    users,
     pageviews,
     bounceRate,
     avgSessionDuration,
+    sessionsPY,
+    pageviewsPY,
     topPages,
     sources,
-    devices,
-    countries,
-    topPage,
-    topSource,
+    paidSearchSessions,
+    buchungsinteressierte,
+    picknickLandingViews,
+    picknickDankeViews, // = completed picknick bookings
   }
 }
 
 // ---------------------------------------------------------------------------
-// 3. Email Inquiry Log
+// 5. Push to Google Sheets
 // ---------------------------------------------------------------------------
-async function collectInquiryData() {
-  if (!IONOS_LOG_API_KEY) {
-    console.warn('IONOS_LOG_API_KEY not set, skipping inquiry data')
-    return null
-  }
-
-  const url = `https://api.pension-volgenandt.de/get-inquiry-log.php?key=${IONOS_LOG_API_KEY}&month=${monthStr}`
-  const res = await fetch(url)
-  const data = await res.json()
-
-  if (!data.entries) return null
-
-  const entries = data.entries
-  const total = entries.length
-  const byType = {}
-
-  for (const e of entries) {
-    const type = e.type || 'Kontaktanfrage'
-    byType[type] = (byType[type] || 0) + 1
-  }
-
-  return { total, byType }
-}
-
-// ---------------------------------------------------------------------------
-// 4. Push to Google Sheet
-// ---------------------------------------------------------------------------
-async function pushToGoogleSheet(beds24, ga4, inquiries) {
+async function pushToGoogleSheet(current, prevYear, outlook, ga4) {
   if (!GOOGLE_SERVICE_ACCOUNT_KEY || !GOOGLE_SHEETS_ID) {
-    console.warn('Google Sheets credentials not set, skipping sheet update')
+    console.warn('Google Sheets not configured, skipping')
     return
   }
 
@@ -349,110 +411,166 @@ async function pushToGoogleSheet(beds24, ga4, inquiries) {
     credentials: keyJson,
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
   })
-
   const sheets = google.sheets({ version: 'v4', auth })
+
+  // --- Tab 1: Monatsdaten (time-series) ---
+  const headers = [
+    'Monat',
+    // Beds24 current
+    'Nächte im Haus', 'Buchungen', 'Stornierungen', 'Storno-Rate', 'Umsatz (€)',
+    'Auslastung', 'Ø Aufenthalt (Nächte)',
+    // Buchungskanäle
+    'Manuell', 'Booking.com', 'Website', 'Airbnb',
+    // Beds24 Vorjahr
+    'VJ Nächte', 'VJ Buchungen', 'VJ Umsatz (€)', 'VJ Auslastung',
+    // Website GA4
+    'Sessions', 'Seitenaufrufe', 'Absprungrate',
+    'VJ Sessions', 'VJ Seitenaufrufe',
+    'Paid Search Sessions', 'Buchungsinteressierte',
+    // Picknick
+    'Picknick-Aufrufe', 'Picknick-Buchungen',
+  ]
 
   const row = [
     monthLabel,
-    beds24?.confirmedBookings ?? '–',
-    beds24?.cancellations ?? '–',
-    beds24?.totalRevenue ?? '–',
-    beds24?.occupancyRate ? `${beds24.occupancyRate}%` : '–',
-    beds24?.avgStay ?? '–',
-    beds24?.cancellationRate ? `${beds24.cancellationRate}%` : '–',
-    beds24?.topRoom ?? '–',
-    beds24?.topChannel ?? '–',
-    beds24?.topCountry ?? '–',
-    ga4?.sessions ?? '–',
-    ga4?.users ?? '–',
-    ga4?.pageviews ?? '–',
-    ga4?.bounceRate ? `${ga4.bounceRate}%` : '–',
-    ga4?.topPage ?? '–',
-    ga4?.topSource ?? '–',
-    inquiries?.total ?? '–',
+    // Beds24 current
+    current?.totalNightsInRange ?? 0,
+    current?.confirmedBookings ?? 0,
+    current?.cancellations ?? 0,
+    current?.cancellationRate ?? '0',
+    current?.totalRevenue ?? '0',
+    current?.occupancyRate ? `${current.occupancyRate}%` : '0%',
+    current?.avgStay ?? '0',
+    // Channels
+    current?.byChannel?.Manuell ?? 0,
+    current?.byChannel?.['Booking.com'] ?? 0,
+    current?.byChannel?.Website ?? 0,
+    current?.byChannel?.Airbnb ?? 0,
+    // Vorjahr
+    prevYear?.totalNightsInRange ?? 0,
+    prevYear?.confirmedBookings ?? 0,
+    prevYear?.totalRevenue ?? '0',
+    prevYear?.occupancyRate ? `${prevYear.occupancyRate}%` : '0%',
+    // GA4 current
+    ga4?.sessions ?? 0,
+    ga4?.pageviews ?? 0,
+    ga4?.bounceRate ? `${ga4.bounceRate}%` : '0%',
+    ga4?.sessionsPY ?? 0,
+    ga4?.pageviewsPY ?? 0,
+    ga4?.paidSearchSessions ?? 0,
+    ga4?.buchungsinteressierte ?? 0,
+    // Picknick
+    ga4?.picknickLandingViews ?? 0,
+    ga4?.picknickDankeViews ?? 0,
   ]
 
-  // Check if header row exists
+  // Ensure header exists
   const existing = await sheets.spreadsheets.values.get({
     spreadsheetId: GOOGLE_SHEETS_ID,
-    range: 'Monatsdaten!A1:Q1',
+    range: 'Monatsdaten!A1:Z1',
   })
-
   if (!existing.data.values || existing.data.values.length === 0) {
-    // Write header row
     await sheets.spreadsheets.values.update({
       spreadsheetId: GOOGLE_SHEETS_ID,
       range: 'Monatsdaten!A1',
       valueInputOption: 'RAW',
-      requestBody: {
-        values: [[
-          'Monat', 'Buchungen', 'Stornierungen', 'Umsatz (€)', 'Auslastung',
-          'Ø Aufenthalt (Nächte)', 'Storno-Rate', 'Top Zimmer', 'Top Kanal',
-          'Top Land (Gäste)', 'Sessions', 'Nutzer', 'Seitenaufrufe',
-          'Absprungrate', 'Top Seite', 'Top Quelle', 'Anfragen',
-        ]],
-      },
+      requestBody: { values: [headers] },
     })
   }
 
-  // Append data row
   await sheets.spreadsheets.values.append({
     spreadsheetId: GOOGLE_SHEETS_ID,
-    range: 'Monatsdaten!A:Q',
+    range: 'Monatsdaten!A:Z',
     valueInputOption: 'RAW',
     requestBody: { values: [row] },
   })
 
-  console.log('Google Sheet updated successfully')
+  // --- Tab 2: Ausblick (overwrite each month) ---
+  if (outlook && outlook.length > 0) {
+    const outlookHeaders = ['Monat', 'Buchungen', 'Nächte gebucht', 'Auslastung', 'Stand']
+    const outlookRows = outlook.map((o) => [
+      o.monthLabel,
+      o.confirmedBookings,
+      o.totalNights,
+      `${o.occupancyRate}%`,
+      new Date().toLocaleDateString('de-DE'),
+    ])
+
+    await sheets.spreadsheets.values.update({
+      spreadsheetId: GOOGLE_SHEETS_ID,
+      range: 'Ausblick!A1',
+      valueInputOption: 'RAW',
+      requestBody: { values: [outlookHeaders, ...outlookRows] },
+    })
+  }
+
+  console.log('Google Sheets updated successfully')
 }
 
 // ---------------------------------------------------------------------------
-// 5. HTML Email
+// 6. Build HTML Email
 // ---------------------------------------------------------------------------
-function buildEmailHtml(beds24, ga4, inquiries) {
-  const kpi = (label, value) => `
-    <td style="padding:12px 16px;text-align:center;background:#f8f7f4;border-radius:8px;">
-      <div style="font-size:24px;font-weight:bold;color:#4a6741;">${value}</div>
-      <div style="font-size:12px;color:#6b7c68;margin-top:4px;">${label}</div>
+function buildEmailHtml(current, prevYear, outlook, ga4) {
+  const kpi = (label, value, sub = '') => `
+    <td style="padding:12px 16px;text-align:center;background:#f8f7f4;border-radius:8px;vertical-align:top;">
+      <div style="font-size:22px;font-weight:bold;color:#4a6741;">${value}</div>
+      ${sub ? `<div style="font-size:11px;color:#7a8c75;margin-top:2px;">${sub}</div>` : ''}
+      <div style="font-size:11px;color:#6b7c68;margin-top:4px;">${label}</div>
     </td>`
 
-  const tableRow = (label, value) => `
+  const tableRow = (label, value, note = '') => `
     <tr>
-      <td style="padding:6px 12px;color:#4a4a4a;">${label}</td>
-      <td style="padding:6px 12px;text-align:right;font-weight:600;color:#2d3b28;">${value}</td>
+      <td style="padding:5px 12px;color:#4a4a4a;">${label}</td>
+      <td style="padding:5px 12px;text-align:right;font-weight:600;color:#2d3b28;">${value}${note ? ` <span style="font-weight:400;color:#888;font-size:11px;">${note}</span>` : ''}</td>
     </tr>`
 
   const section = (title, content) => `
     <div style="margin-top:24px;">
-      <h2 style="font-size:18px;color:#2d3b28;border-bottom:2px solid #c9a84c;padding-bottom:8px;margin-bottom:16px;">${title}</h2>
+      <h2 style="font-size:17px;color:#2d3b28;border-bottom:2px solid #c9a84c;padding-bottom:6px;margin-bottom:14px;">${title}</h2>
       ${content}
     </div>`
 
-  // KPIs
+  // --- KPI row ---
+  const currNights = current?.totalNightsInRange ?? 0
+  const prevNights = prevYear?.totalNightsInRange ?? null
+  const currRev = current?.totalRevenue ? `${parseFloat(current.totalRevenue).toLocaleString('de-DE', { minimumFractionDigits: 0 })} €` : '–'
+  const currOcc = current?.occupancyRate ? `${current.occupancyRate}%` : '–'
+  const prevOcc = prevYear?.occupancyRate ?? null
+
   let kpis = '<table style="width:100%;border-spacing:8px;"><tr>'
-  kpis += kpi('Buchungen', beds24?.confirmedBookings ?? '–')
-  kpis += kpi('Umsatz', beds24?.totalRevenue ? `${beds24.totalRevenue} €` : '–')
-  kpis += kpi('Auslastung', beds24?.occupancyRate ? `${beds24.occupancyRate}%` : '–')
-  kpis += kpi('Besucher', ga4?.users ?? '–')
-  kpis += kpi('Anfragen', inquiries?.total ?? '–')
+  kpis += kpi('Nächte im Haus', currNights, prevNights != null ? `VJ: ${prevNights}` : '')
+  kpis += kpi('Buchungen', current?.confirmedBookings ?? '–', prevYear ? `VJ: ${prevYear.confirmedBookings}` : '')
+  kpis += kpi('Umsatz', currRev, prevYear?.totalRevenue ? `VJ: ${parseFloat(prevYear.totalRevenue).toLocaleString('de-DE', { minimumFractionDigits: 0 })} €` : '')
+  kpis += kpi('Auslastung', currOcc, prevOcc ? `VJ: ${prevOcc}%` : '')
+  kpis += kpi('Sessions', ga4?.sessions ?? '–', ga4?.sessionsPY ? `VJ: ${ga4.sessionsPY}` : '')
   kpis += '</tr></table>'
 
-  // Bookings section
+  // --- Buchungen section ---
   let bookingsHtml = ''
-  if (beds24) {
+  if (current) {
     let rows = ''
-    rows += tableRow('Bestätigte Buchungen', beds24.confirmedBookings)
-    rows += tableRow('Stornierungen', `${beds24.cancellations} (${beds24.cancellationRate}%)`)
-    rows += tableRow('Gesamtumsatz', `${beds24.totalRevenue} €`)
-    rows += tableRow('Ø Aufenthalt', `${beds24.avgStay} Nächte`)
-    rows += tableRow('Auslastung', `${beds24.occupancyRate}%`)
-    rows += tableRow('Beliebtestes Zimmer', beds24.topRoom)
-    rows += tableRow('Top Buchungskanal', beds24.topChannel)
-    rows += tableRow('Top Herkunftsland', beds24.topCountry)
+    rows += tableRow('Übernachtungen im Haus', currNights, prevNights != null ? `VJ: ${prevNights}` : '')
+    rows += tableRow('Bestätigte Buchungen', current.confirmedBookings, prevYear ? `VJ: ${prevYear.confirmedBookings}` : '')
+    rows += tableRow('Stornierungen', `${current.cancellations} (${current.cancellationRate}%)`)
+    rows += tableRow('Gesamtumsatz (proratiert)', `${currRev}`, prevYear?.totalRevenue ? `VJ: ${parseFloat(prevYear.totalRevenue).toLocaleString('de-DE', { minimumFractionDigits: 0 })} €` : '')
+    rows += tableRow('Ø Aufenthalt', `${current.avgStay} Nächte`)
+    rows += tableRow('Auslastung', currOcc, prevOcc ? `VJ: ${prevOcc}%` : '')
+    rows += tableRow('Beliebtestes Zimmer', current.topRoom)
 
-    if (Object.keys(beds24.byRoom).length > 0) {
-      rows += '<tr><td colspan="2" style="padding-top:12px;font-weight:600;color:#4a6741;">Nach Zimmer:</td></tr>'
-      for (const [room, count] of Object.entries(beds24.byRoom).sort((a, b) => b[1] - a[1])) {
+    // Channel split
+    const ch = current.byChannel
+    const total = current.confirmedBookings || 1
+    rows += '<tr><td colspan="2" style="padding-top:10px;padding-bottom:2px;font-weight:600;color:#4a6741;font-size:13px;">Buchungskanäle:</td></tr>'
+    for (const [name, count] of Object.entries(ch)) {
+      if (count === 0) continue
+      const pct = ((count / total) * 100).toFixed(0)
+      rows += tableRow(`  ${name}`, `${count} (${pct}%)`)
+    }
+
+    // By room breakdown
+    if (Object.keys(current.byRoom).length > 0) {
+      rows += '<tr><td colspan="2" style="padding-top:10px;padding-bottom:2px;font-weight:600;color:#4a6741;font-size:13px;">Nach Zimmer:</td></tr>'
+      for (const [room, count] of Object.entries(current.byRoom).sort((a, b) => b[1] - a[1])) {
         rows += tableRow(`  ${room}`, count)
       }
     }
@@ -460,41 +578,73 @@ function buildEmailHtml(beds24, ga4, inquiries) {
     bookingsHtml = section('Buchungen & Umsatz', `<table style="width:100%;">${rows}</table>`)
   }
 
-  // Website section
+  // --- Outlook section ---
+  let outlookHtml = ''
+  if (outlook && outlook.length > 0) {
+    let tableContent = `
+      <table style="width:100%;border-collapse:collapse;">
+        <tr style="background:#2d3b28;color:#fff;">
+          <th style="padding:8px 12px;text-align:left;font-size:13px;">Monat</th>
+          <th style="padding:8px 12px;text-align:center;font-size:13px;">Buchungen</th>
+          <th style="padding:8px 12px;text-align:center;font-size:13px;">Nächte</th>
+          <th style="padding:8px 12px;text-align:center;font-size:13px;">Auslastung</th>
+        </tr>`
+    for (const [i, o] of outlook.entries()) {
+      const bg = i % 2 === 0 ? '#f8f7f4' : '#fff'
+      const occNum = parseFloat(o.occupancyRate)
+      const occColor = occNum >= 70 ? '#4a6741' : occNum >= 40 ? '#c9a84c' : '#c0392b'
+      tableContent += `
+        <tr style="background:${bg};">
+          <td style="padding:7px 12px;font-weight:600;">${o.monthLabel}</td>
+          <td style="padding:7px 12px;text-align:center;">${o.confirmedBookings}</td>
+          <td style="padding:7px 12px;text-align:center;">${o.totalNights}</td>
+          <td style="padding:7px 12px;text-align:center;color:${occColor};font-weight:600;">${o.occupancyRate}%</td>
+        </tr>`
+    }
+    tableContent += '</table>'
+    outlookHtml = section(`Vorausschau bis Dezember ${year}`, tableContent)
+  }
+
+  // --- Website section ---
   let websiteHtml = ''
   if (ga4) {
     let rows = ''
-    rows += tableRow('Sessions', ga4.sessions)
-    rows += tableRow('Nutzer', ga4.users)
-    rows += tableRow('Seitenaufrufe', ga4.pageviews)
+    rows += tableRow('Sessions', ga4.sessions, ga4.sessionsPY ? `VJ: ${ga4.sessionsPY}` : '')
+    rows += tableRow('Seitenaufrufe', ga4.pageviews, ga4.pageviewsPY ? `VJ: ${ga4.pageviewsPY}` : '')
     rows += tableRow('Absprungrate', `${ga4.bounceRate}%`)
     rows += tableRow('Ø Sitzungsdauer', `${ga4.avgSessionDuration}s`)
 
-    if (ga4.topPages.length > 0) {
-      rows += '<tr><td colspan="2" style="padding-top:12px;font-weight:600;color:#4a6741;">Top Seiten:</td></tr>'
-      for (const p of ga4.topPages.slice(0, 5)) {
-        rows += tableRow(`  ${p.page}`, `${p.views} Aufrufe`)
+    if (ga4.sources.length > 0) {
+      rows += '<tr><td colspan="2" style="padding-top:10px;padding-bottom:2px;font-weight:600;color:#4a6741;font-size:13px;">Traffic-Quellen:</td></tr>'
+      for (const s of ga4.sources.slice(0, 6)) {
+        rows += tableRow(`  ${s.source}`, `${s.sessions} Sessions`)
       }
     }
 
-    if (ga4.sources.length > 0) {
-      rows += '<tr><td colspan="2" style="padding-top:12px;font-weight:600;color:#4a6741;">Traffic-Quellen:</td></tr>'
-      for (const s of ga4.sources.slice(0, 5)) {
-        rows += tableRow(`  ${s.source}`, `${s.sessions} Sessions`)
+    rows += tableRow('Paid Search Sessions (Google Ads)', ga4.paidSearchSessions)
+    rows += tableRow('Buchungsinteressierte (Beds24 Widget)', ga4.buchungsinteressierte)
+
+    if (ga4.topPages.length > 0) {
+      rows += '<tr><td colspan="2" style="padding-top:10px;padding-bottom:2px;font-weight:600;color:#4a6741;font-size:13px;">Top Seiten:</td></tr>'
+      for (const p of ga4.topPages.slice(0, 6)) {
+        rows += tableRow(`  ${p.page}`, `${p.views} Aufrufe`)
       }
     }
 
     websiteHtml = section('Website-Traffic', `<table style="width:100%;">${rows}</table>`)
   }
 
-  // Inquiries section
-  let inquiriesHtml = ''
-  if (inquiries && inquiries.total > 0) {
-    let rows = tableRow('Gesamt', inquiries.total)
-    for (const [type, count] of Object.entries(inquiries.byType)) {
-      rows += tableRow(`  ${type}`, count)
-    }
-    inquiriesHtml = section('Kontaktanfragen', `<table style="width:100%;">${rows}</table>`)
+  // --- Picknick section ---
+  let picknickHtml = ''
+  if (ga4 && (ga4.picknickLandingViews > 0 || ga4.picknickDankeViews > 0)) {
+    const convRate = ga4.picknickLandingViews > 0
+      ? ((ga4.picknickDankeViews / ga4.picknickLandingViews) * 100).toFixed(1)
+      : '0'
+    let rows = ''
+    rows += tableRow('Aufrufe /picknick/', ga4.picknickLandingViews)
+    rows += tableRow('Abgeschlossene Buchungen (/danke/)', ga4.picknickDankeViews)
+    rows += tableRow('Conversion-Rate', `${convRate}%`)
+    picknickHtml = section('Picknick-Korb', `<table style="width:100%;">${rows}</table>`)
   }
 
   const dashboardLink = LOOKER_STUDIO_URL
@@ -509,19 +659,20 @@ function buildEmailHtml(beds24, ga4, inquiries) {
 <!DOCTYPE html>
 <html lang="de">
 <head><meta charset="utf-8"></head>
-<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#333;">
-  <div style="text-align:center;padding:24px 0;border-bottom:3px solid #c9a84c;">
-    <h1 style="font-size:24px;color:#2d3b28;margin:0;">Pension Volgenandt</h1>
-    <p style="color:#6b7c68;margin:8px 0 0;">Monatsbericht ${monthLabel}</p>
+<body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;max-width:620px;margin:0 auto;padding:24px;color:#333;">
+  <div style="text-align:center;padding:20px 0;border-bottom:3px solid #c9a84c;">
+    <h1 style="font-size:22px;color:#2d3b28;margin:0;">Pension Volgenandt</h1>
+    <p style="color:#6b7c68;margin:6px 0 0;">Monatsbericht ${monthLabel}</p>
   </div>
 
   ${kpis}
   ${bookingsHtml}
+  ${outlookHtml}
   ${websiteHtml}
-  ${inquiriesHtml}
+  ${picknickHtml}
   ${dashboardLink}
 
-  <p style="text-align:center;color:#999;font-size:12px;margin-top:32px;border-top:1px solid #eee;padding-top:16px;">
+  <p style="text-align:center;color:#999;font-size:11px;margin-top:28px;border-top:1px solid #eee;padding-top:14px;">
     Automatisch erstellt am ${new Date().toLocaleDateString('de-DE')}
   </p>
 </body>
@@ -529,12 +680,11 @@ function buildEmailHtml(beds24, ga4, inquiries) {
 }
 
 // ---------------------------------------------------------------------------
-// 6. Send Email
+// 7. Send Email
 // ---------------------------------------------------------------------------
 async function sendEmail(html) {
   if (!SMTP_USER || !SMTP_PASS) {
-    console.warn('SMTP credentials not set, skipping email')
-    console.log('Email HTML preview saved (would have been sent)')
+    console.warn('SMTP credentials not set, skipping email send')
     return
   }
 
@@ -564,24 +714,41 @@ async function sendEmail(html) {
 async function main() {
   console.log('Starting monthly statistics collection...\n')
 
-  const [beds24, ga4, inquiries] = await Promise.all([
-    collectBeds24Data().catch((e) => { console.error('Beds24 error:', e.message); return null }),
+  // Get Beds24 token once, reuse for all calls
+  const token = await getBeds24Token().catch((e) => {
+    console.error('Beds24 auth error:', e.message)
+    return null
+  })
+
+  // Run all data collection in parallel
+  const [current, prevYear, outlook, ga4] = await Promise.all([
+    collectBeds24Current(token).catch((e) => { console.error('Beds24 current error:', e.message); return null }),
+    collectBeds24PreviousYear(token).catch((e) => { console.error('Beds24 VJ error:', e.message); return null }),
+    collectBeds24Outlook(token).catch((e) => { console.error('Beds24 outlook error:', e.message); return [] }),
     collectGA4Data().catch((e) => { console.error('GA4 error:', e.message); return null }),
-    collectInquiryData().catch((e) => { console.error('Inquiry error:', e.message); return null }),
   ])
 
   console.log('\n--- Results ---')
-  if (beds24) console.log(`Beds24: ${beds24.confirmedBookings} bookings, ${beds24.totalRevenue}€ revenue, ${beds24.occupancyRate}% occupancy`)
-  if (ga4) console.log(`GA4: ${ga4.sessions} sessions, ${ga4.users} users, ${ga4.pageviews} pageviews`)
-  if (inquiries) console.log(`Inquiries: ${inquiries.total} total`)
+  if (current) {
+    console.log(`Beds24 (aktuell): ${current.confirmedBookings} Buchungen, ${current.totalNightsInRange} Nächte, ${current.totalRevenue}€, ${current.occupancyRate}% Auslastung`)
+    console.log(`  Kanäle: Manuell=${current.byChannel.Manuell} Booking.com=${current.byChannel['Booking.com']} Website=${current.byChannel.Website}`)
+  }
+  if (prevYear) {
+    console.log(`Beds24 (VJ): ${prevYear.confirmedBookings} Buchungen, ${prevYear.totalNightsInRange} Nächte, ${prevYear.totalRevenue}€`)
+  }
+  if (outlook.length > 0) {
+    console.log(`Ausblick: ${outlook.length} Monate (${outlook[0].monthLabel} bis ${outlook[outlook.length - 1].monthLabel})`)
+  }
+  if (ga4) {
+    console.log(`GA4: ${ga4.sessions} Sessions, ${ga4.paidSearchSessions} Paid Search, ${ga4.buchungsinteressierte} Buchungsinteressierte`)
+    console.log(`  Picknick: ${ga4.picknickLandingViews} Aufrufe, ${ga4.picknickDankeViews} Buchungen`)
+  }
 
-  // Push to Google Sheet
-  await pushToGoogleSheet(beds24, ga4, inquiries).catch((e) => {
+  await pushToGoogleSheet(current, prevYear, outlook, ga4).catch((e) => {
     console.error('Google Sheets error:', e.message)
   })
 
-  // Build and send email
-  const html = buildEmailHtml(beds24, ga4, inquiries)
+  const html = buildEmailHtml(current, prevYear, outlook, ga4)
   await sendEmail(html).catch((e) => {
     console.error('Email error:', e.message)
   })

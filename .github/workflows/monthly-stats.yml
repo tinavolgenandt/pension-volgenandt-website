@@ -4,7 +4,16 @@ on:
   schedule:
     # 1st of each month at 07:00 UTC (08:00 CET / 09:00 CEST)
     - cron: '0 7 1 * *'
-  workflow_dispatch: # Allow manual trigger for testing
+  workflow_dispatch:
+    inputs:
+      report_month:
+        description: 'Month to report (1-12, leave empty for auto)'
+        required: false
+        default: ''
+      report_year:
+        description: 'Year to report (e.g. 2026, leave empty for auto)'
+        required: false
+        default: ''
 
 jobs:
   collect:
@@ -34,10 +43,11 @@ jobs:
           GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
           GOOGLE_SERVICE_ACCOUNT_KEY: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
           GOOGLE_SHEETS_ID: ${{ secrets.GOOGLE_SHEETS_ID }}
-          IONOS_LOG_API_KEY: ${{ secrets.IONOS_LOG_API_KEY }}
           SMTP_HOST: 'smtp.ionos.de'
           SMTP_PORT: '587'
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
           REPORT_RECIPIENTS: 'kontakt@pension-volgenandt.de,tina.volgenandt@googlemail.com'
           LOOKER_STUDIO_URL: ${{ secrets.LOOKER_STUDIO_URL }}
+          REPORT_MONTH: ${{ github.event.inputs.report_month }}
+          REPORT_YEAR: ${{ github.event.inputs.report_year }}
