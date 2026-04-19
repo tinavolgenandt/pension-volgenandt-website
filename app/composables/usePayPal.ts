@@ -43,34 +43,20 @@ function loadPayPalSdk(clientId: string): Promise<void> {
 export function usePayPal() {
   const runtimeConfig = useRuntimeConfig()
   const clientId = runtimeConfig.public.paypalClientId as string
-  const { isAllowed } = useCookieConsent()
   const isReady = ref(false)
 
   if (import.meta.client && clientId) {
-    const tryLoad = () => {
-      if (!isAllowed('booking')) return
-
-      if (!loadPromise) {
-        loadPromise = loadPayPalSdk(clientId)
-      }
-
-      loadPromise
-        .then(() => {
-          isReady.value = true
-        })
-        .catch((err) => {
-          console.error('[usePayPal] Failed to load SDK:', err)
-          loadPromise = null
-        })
+    if (!loadPromise) {
+      loadPromise = loadPayPalSdk(clientId)
     }
-
-    watch(
-      () => isAllowed('booking'),
-      (allowed) => {
-        if (allowed) tryLoad()
-      },
-      { immediate: true },
-    )
+    loadPromise
+      .then(() => {
+        isReady.value = true
+      })
+      .catch((err) => {
+        console.error('[usePayPal] Failed to load SDK:', err)
+        loadPromise = null
+      })
   }
 
   return {
