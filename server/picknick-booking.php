@@ -17,9 +17,9 @@ require_once __DIR__ . '/smtp.php';
 // ---------------------------------------------------------------------------
 // Config
 // ---------------------------------------------------------------------------
-$paypalSandbox  = true; // TODO: set false for production
-$paypalClientId = 'AeSUCucBCl8s7SYFuU_FUZVnRcN92udWQaXDHErOQXy9HkBKmtSTvwxenh5fiMN7EYR0zpH87auQx5kQ';
-$paypalSecret   = 'EHzo15t44own3iizROTpg_mTlkvDgEcjeVIlQ24japTJlckE7HsVS60THV5fqNOXfbXdP5DxLT4mAOo2';
+$paypalSandbox  = false;
+$paypalClientId = 'AQWKIcTJMC3AjNtUk29wJh3G1mxyoXaj7r1KNGjpAgX8K4b5-WQ_QnxU3TTbp1DvPUZhcOKlPeHWZVq7';
+$paypalSecret   = 'ED9cWuaHClQ02p2RqAox_icjC2OJhXVFwIvAQsTP5U1vb0MEOQXnhSK0zf4QlrwkegqA3yq1Lrf9QUdb';
 $paypalApiBase  = $paypalSandbox
     ? 'https://api-m.sandbox.paypal.com'
     : 'https://api-m.paypal.com';
