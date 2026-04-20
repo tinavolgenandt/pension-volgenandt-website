@@ -410,66 +410,7 @@ if (($booking['status'] ?? 'pending') !== 'pending') {
 $parsed = parseBookingMessage($booking['message'] ?? '');
 
 // ---------------------------------------------------------------------------
-// GET → show preview with confirm button (prevents email-scanner triggering)
-// ---------------------------------------------------------------------------
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    $guestName  = htmlspecialchars($booking['name'] ?? '', ENT_QUOTES, 'UTF-8');
-    $guestEmail = htmlspecialchars($booking['email'] ?? '', ENT_QUOTES, 'UTF-8');
-    $datum      = htmlspecialchars($parsed['datum'], ENT_QUOTES, 'UTF-8');
-    $paket      = htmlspecialchars($parsed['paket'], ENT_QUOTES, 'UTF-8');
-    $amount     = number_format($booking['amount'] ?? 0, 2, ',', '.') . ' €';
-
-    $btnLabel  = $action === 'accept' ? '✅ Jetzt bestätigen' : '❌ Jetzt ablehnen';
-    $btnColor  = $action === 'accept' ? '#3d5a3e' : '#c0392b';
-    $infoText  = $action === 'accept'
-        ? 'Es wird eine Buchungsbestätigung an den Gast gesendet.'
-        : 'Es wird eine Absage mit Hinweis auf Rückerstattung an den Gast gesendet.';
-
-    header('Content-Type: text/html; charset=UTF-8');
-    echo '<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Picknick-Anfrage bestätigen</title>
-    <style>body{font-family:Arial,sans-serif;background:#f7f5f0;display:flex;align-items:flex-start;
-    justify-content:center;min-height:100vh;margin:0;padding:24px 0;}
-    .box{background:#fff;border-radius:10px;padding:36px;max-width:500px;width:90%;
-    box-shadow:0 2px 12px rgba(0,0,0,.08);}
-    h1{color:#3d5a3e;margin:0 0 4px;font-size:20px;}
-    .sub{color:#888;font-size:13px;margin:0 0 24px;}
-    table{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:20px;}
-    td{padding:7px 0;border-top:1px solid #f0ede6;}td:first-child{color:#666;width:40%;}
-    td:last-child{font-weight:600;}
-    .info{background:#f7f5f0;border-radius:6px;padding:14px;font-size:14px;color:#555;
-    line-height:1.6;margin-bottom:24px;}
-    form{margin:0;}
-    button{display:block;width:100%;background:' . $btnColor . ';color:#fff;border:none;
-    border-radius:8px;padding:16px;font-size:17px;font-weight:700;cursor:pointer;
-    letter-spacing:0.3px;}
-    button:hover{opacity:.9;}
-    a.back{display:block;text-align:center;margin-top:16px;color:#aaa;font-size:13px;
-    text-decoration:none;}a.back:hover{color:#555;}
-    </style></head><body><div class="box">
-    <h1>Picknick-Anfrage</h1>
-    <p class="sub">Bitte überprüfen und dann bestätigen</p>
-    <table>
-      <tr><td>Gast</td><td>' . $guestName . '</td></tr>
-      <tr><td>E-Mail</td><td>' . $guestEmail . '</td></tr>
-      <tr><td>Datum</td><td>' . $datum . '</td></tr>
-      <tr><td>Paket</td><td>' . $paket . '</td></tr>
-      <tr><td>Bezahlt</td><td>' . $amount . '</td></tr>
-    </table>
-    <div class="info">' . $infoText . '</div>
-    <form method="POST">
-      <input type="hidden" name="token" value="' . htmlspecialchars($token, ENT_QUOTES, 'UTF-8') . '">
-      <input type="hidden" name="action" value="' . htmlspecialchars($action, ENT_QUOTES, 'UTF-8') . '">
-      <button type="submit">' . $btnLabel . '</button>
-    </form>
-    <a class="back" href="javascript:history.back()">← Zurück</a>
-    </div></body></html>';
-    exit;
-}
-
-// ---------------------------------------------------------------------------
-// POST → execute action
+// Execute action immediately (GET or POST)
 // ---------------------------------------------------------------------------
 if ($action === 'accept') {
     $emailHtml    = buildConfirmationEmail($booking, $parsed, $packageContents);
@@ -486,7 +427,7 @@ $result = sendSmtp(
     $emailSubject,
     $emailHtml,
     'Simone & Ralf Volgenandt', $adminEmail,
-    '', true
+    $adminEmail, true
 );
 
 if (!$result['ok']) {
