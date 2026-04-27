@@ -8,8 +8,10 @@ export default defineNuxtPlugin(() => {
 
   // Initialise dataLayer + gtag stub before any calls
   window.dataLayer = window.dataLayer || []
-  window.gtag = function (...args: unknown[]) {
-    window.dataLayer.push(args)
+  // Must use `arguments` (not rest params) so gtag.js recognises queued entries as gtag commands
+  window.gtag = function () {
+    // eslint-disable-next-line prefer-rest-params
+    window.dataLayer.push(arguments)
   }
 
   // Consent Mode v2 — deny everything by default before the script loads.
