@@ -384,6 +384,32 @@ async function collectGA4Data() {
     else picknickLandingViews += views
   }
 
+  // --- 4f. QR code scans from print materials (utm_medium=print) ---
+  const printQrRes = await analyticsData.properties.runReport({
+    property: `properties/${GA4_PROPERTY_ID}`,
+    requestBody: {
+      dateRanges: [{ startDate, endDate }],
+      metrics: [{ name: 'sessions' }],
+      dimensions: [{ name: 'sessionSource' }, { name: 'sessionCampaign' }],
+      dimensionFilter: {
+        filter: {
+          fieldName: 'sessionMedium',
+          stringFilter: { matchType: 'EXACT', value: 'print' },
+        },
+      },
+      orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+    },
+  }).catch(() => ({ data: { rows: [] } }))
+
+  const printQrScans = {}
+  let printQrTotal = 0
+  for (const r of printQrRes.data.rows || []) {
+    const source = r.dimensionValues[0].value
+    const count = parseInt(r.metricValues[0].value)
+    printQrScans[source] = (printQrScans[source] || 0) + count
+    printQrTotal += count
+  }
+
   return {
     sessions,
     pageviews,
@@ -397,6 +423,8 @@ async function collectGA4Data() {
     buchungsinteressierte,
     picknickLandingViews,
     picknickDankeViews, // = completed picknick bookings
+    printQrScans,       // { 'picknick-karte': N, 'aushang': N, ... }
+    printQrTotal,
   }
 }
 
@@ -432,6 +460,8 @@ async function pushToGoogleSheet(current, prevYear, outlook, ga4) {
     'Paid Search Sessions', 'Buchungsinteressierte',
     // Picknick
     'Picknick-Aufrufe', 'Picknick-Buchungen',
+    // QR-Code Scans (print)
+    'QR-Scans gesamt', 'QR: picknick-karte', 'QR: aushang', 'QR: handout', 'QR: visitenkarte',
   ]
 
   const row = [
@@ -465,6 +495,12 @@ async function pushToGoogleSheet(current, prevYear, outlook, ga4) {
     // Picknick
     ga4?.picknickLandingViews ?? 0,
     ga4?.picknickDankeViews ?? 0,
+    // QR-Code Scans
+    ga4?.printQrTotal ?? 0,
+    ga4?.printQrScans?.['picknick-karte'] ?? 0,
+    ga4?.printQrScans?.['aushang'] ?? 0,
+    ga4?.printQrScans?.['handout'] ?? 0,
+    ga4?.printQrScans?.['visitenkarte'] ?? 0,
   ]
 
   // Ensure header exists
@@ -653,6 +689,23 @@ function buildEmailHtml(current, prevYear, outlook, ga4) {
     picknickHtml = section('Picknick-Korb', `<table style="width:100%;">${rows}</table>`)
   }
 
+  // --- QR-Code Scans (print materials) ---
+  let printQrHtml = ''
+  if (ga4 && ga4.printQrTotal > 0) {
+    const labels = {
+      'picknick-karte': 'Picknick-Karte (85×55 mm)',
+      'aushang': 'Aushang EDEKA Glahn (A4)',
+      'handout': 'Handout A6',
+      'visitenkarte': 'Visitenkarte',
+    }
+    let rows = tableRow('Gesamt QR-Scans (Druckmaterial)', ga4.printQrTotal)
+    for (const [source, count] of Object.entries(ga4.printQrScans).sort((a, b) => b[1] - a[1])) {
+      const label = labels[source] || source
+      rows += tableRow(`  ${label}`, count)
+    }
+    printQrHtml = section('QR-Code Scans (Druckmaterial)', `<table style="width:100%;">${rows}</table>`)
+  }
+
   const dashboardLink = LOOKER_STUDIO_URL
     ? `<p style="text-align:center;margin-top:24px;">
         <a href="${LOOKER_STUDIO_URL}" style="display:inline-block;padding:12px 24px;background:#c9a84c;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">
@@ -676,6 +729,7 @@ function buildEmailHtml(current, prevYear, outlook, ga4) {
   ${outlookHtml}
   ${websiteHtml}
   ${picknickHtml}
+  ${printQrHtml}
   ${dashboardLink}
 
   <p style="text-align:center;color:#999;font-size:11px;margin-top:28px;border-top:1px solid #eee;padding-top:14px;">
