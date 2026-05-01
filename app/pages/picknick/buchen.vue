@@ -8,6 +8,15 @@ useSeoMeta({
   description:
     'Picknick-Korb buchen: Datum, Paket und Personen auswählen und direkt per PayPal bezahlen.',
 })
+
+useHead({
+  link: [
+    { rel: 'canonical', href: 'https://www.pension-volgenandt.de/picknick/buchen/' },
+    { rel: 'alternate', hreflang: 'de', href: 'https://www.pension-volgenandt.de/picknick/buchen/' },
+    { rel: 'alternate', hreflang: 'en', href: 'https://www.pension-volgenandt.de/en/picnic/book/' },
+    { rel: 'alternate', hreflang: 'x-default', href: 'https://www.pension-volgenandt.de/picknick/buchen/' },
+  ],
+})
 </script>
 
 <template>
