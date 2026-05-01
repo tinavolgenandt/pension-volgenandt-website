@@ -137,11 +137,7 @@ useSeoMeta({
                 <td class="px-4 py-3">50 % des Gesamtpreises</td>
               </tr>
               <tr class="border-b border-sage-200">
-                <td class="px-4 py-3">7 bis 2 Tage vor Anreise</td>
-                <td class="px-4 py-3">80 % des Gesamtpreises</td>
-              </tr>
-              <tr class="border-b border-sage-200">
-                <td class="px-4 py-3">Weniger als 2 Tage vor Anreise oder Nichtanreise</td>
+                <td class="px-4 py-3">Weniger als 7 Tage vor Anreise oder Nichtanreise</td>
                 <td class="px-4 py-3">100 % des Gesamtpreises</td>
               </tr>
             </tbody>
