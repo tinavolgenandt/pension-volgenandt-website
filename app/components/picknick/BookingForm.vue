@@ -242,7 +242,7 @@ function buildMessageText(): string {
   return [
     `Datum: ${form.date}`,
     `Uhrzeit: ${form.time} Uhr`,
-    `Paket: ${selectedPackage.value?.name} (${selectedPackage.value?.timeSlot})`,
+    `Paket: ${selectedPackage.value?.name}`,
     `Erwachsene: ${form.adults}`,
     form.kids > 0 ? `Kinder: ${form.kids}` : null,
     `Getränke: ${beverageText.value}`,
