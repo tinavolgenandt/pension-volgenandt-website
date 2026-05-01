@@ -175,7 +175,42 @@ function attractionLink(slug: string) {
       </div>
     </section>
 
-    <!-- 5. Booking CTA -->
+    <!-- 5. Picknick-Korb -->
+    <section class="bg-waldhonig-50 px-6 py-12 md:py-16">
+      <div class="mx-auto max-w-5xl">
+        <div class="flex flex-col items-center gap-8 md:flex-row md:items-center md:gap-12">
+          <div class="shrink-0 overflow-hidden rounded-xl md:w-80">
+            <NuxtImg
+              src="/img/picknick/header-picknick.webp"
+              alt="Picknickkorb mit Inhalt auf der Wiese"
+              class="h-52 w-full object-cover"
+              style="object-position: center 60%"
+              loading="lazy"
+              sizes="100vw md:320px"
+              width="640"
+              height="416"
+            />
+          </div>
+          <div>
+            <h2 class="font-serif text-2xl font-semibold text-sage-900">
+              {{ t('activities.picnicHeading', locale) }}
+            </h2>
+            <p class="mt-3 leading-relaxed text-sage-700">
+              {{ t('activities.picnicText', locale) }}
+            </p>
+            <NuxtLink
+              :to="locale === 'en' ? '/en/picnic/' : '/picknick/'"
+              class="mt-5 inline-flex items-center gap-1 font-semibold text-waldhonig-600 transition-colors hover:text-waldhonig-700 hover:underline"
+            >
+              {{ t('activities.picnicLink', locale) }}
+              <Icon name="ph:arrow-right" class="size-4" />
+            </NuxtLink>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Booking CTA -->
     <SharedBookingCta :text="t('activities.planActive', locale)" />
   </div>
 </template>

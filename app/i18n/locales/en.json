@@ -8,6 +8,7 @@
     "families": "For Families",
     "activities": "Activities",
     "news": "News",
+    "picnic": "Picnic",
     "sustainability": "Sustainability",
     "contact": "Contact"
   },
@@ -118,6 +119,7 @@
       "roomsPrices": "Rooms & Prices",
       "forFamilies": "For Families",
       "activities": "Activities",
+      "picnic": "Picnic Basket",
       "sustainability": "Sustainability",
       "attractions": "Attractions",
       "contactDirections": "Contact & Directions"
@@ -230,7 +232,10 @@
     "cycling": {
       "title": "Cycling",
       "description": "Whether a leisurely ride along the Leine or a sporty route through the hills – there is something for everyone."
-    }
+    },
+    "picnicHeading": "Picnic Basket – Your Outing with a Twist",
+    "picnicText": "Take our homemade picnic basket along on your trip – to Burg Hanstein, Seeburger See, or simply the garden. Local, seasonal, with real crockery. From €19 per person.",
+    "picnicLink": "Discover Picnic Basket"
   },
   "attractions": {
     "title": "Attractions",

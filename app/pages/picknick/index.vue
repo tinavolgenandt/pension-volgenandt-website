@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Not in nav or sitemap until go-live
 definePageMeta({
   breadcrumb: { label: 'Picknick-Korb' },
 })
@@ -11,8 +10,17 @@ useSeoMeta({
     'Hausgemacht, regional, mit Herz gepackt. Buchen Sie Ihren Picknick-Korb für den Garten oder die Umgebung – ab 19 € pro Person.',
   ogDescription:
     'Hausgemacht, regional, mit Herz gepackt. Buchen Sie Ihren Picknick-Korb für den Garten oder die Umgebung – ab 19 € pro Person.',
-  ogImage: '/img/garten/garten-sitzbank-apfelbaum-bluete.webp',
+  ogImage: '/img/picknick/header-picknick.webp',
   ogType: 'website',
+})
+
+useHead({
+  link: [
+    { rel: 'canonical', href: 'https://www.pension-volgenandt.de/picknick/' },
+    { rel: 'alternate', hreflang: 'de', href: 'https://www.pension-volgenandt.de/picknick/' },
+    { rel: 'alternate', hreflang: 'en', href: 'https://www.pension-volgenandt.de/en/picnic/' },
+    { rel: 'alternate', hreflang: 'x-default', href: 'https://www.pension-volgenandt.de/picknick/' },
+  ],
 })
 
 const { data: packagesData } = await useAsyncData('picknick-packages', () =>

@@ -7,7 +7,6 @@ useSeoMeta({
   title: 'Picknick-Korb buchen – Pension Volgenandt',
   description:
     'Picknick-Korb buchen: Datum, Paket und Personen auswählen und direkt per PayPal bezahlen.',
-  robots: 'noindex',
 })
 </script>
 
