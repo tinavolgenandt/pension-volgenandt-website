@@ -2,9 +2,7 @@
 defineProps<{
   name: string
   subtitle: string
-  timeSlot: string
   pricePerPerson: number
-
   includes: string[]
   image: string
   imageAlt: string
@@ -14,7 +12,6 @@ defineProps<{
 
 <template>
   <div class="overflow-hidden rounded-lg bg-white shadow-sm">
-    <!-- Image with time slot overlay -->
     <div class="relative aspect-video overflow-hidden">
       <NuxtImg
         :src="image"

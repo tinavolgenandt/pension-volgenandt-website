@@ -99,7 +99,6 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
             :key="pkg.id"
             :name="pkg.name"
             :subtitle="pkg.subtitle"
-            :time-slot="pkg.timeSlot"
             :price-per-person="pkg.pricePerPerson"
             :includes="pkg.includes"
             :image="pkg.image"
@@ -272,7 +271,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
             allowfullscreen
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
+          />
         </div>
       </div>
     </section>

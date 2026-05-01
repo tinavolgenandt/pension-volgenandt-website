@@ -20,7 +20,6 @@ const packages = computed(() =>
   (packagesData.value?.items ?? []).map((p) => ({
     id: p.id,
     name: p.name,
-    timeSlot: p.timeSlot,
     price: p.pricePerPerson,
     includes: p.includes,
   })),
