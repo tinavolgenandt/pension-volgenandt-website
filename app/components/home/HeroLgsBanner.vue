@@ -1,10 +1,6 @@
 <script setup lang="ts">
-import { t } from '~/utils/translations'
-
 const { locale } = useLocale()
-const { daysUntil, isLive, showBanner, countdownText, linkTarget } = useLgsCountdown(
-  computed(() => locale.value),
-)
+const { showBanner } = useLgsCountdown(computed(() => locale.value))
 </script>
 
 <template>

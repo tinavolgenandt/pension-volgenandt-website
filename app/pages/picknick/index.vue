@@ -19,7 +19,11 @@ useHead({
     { rel: 'canonical', href: 'https://www.pension-volgenandt.de/picknick/' },
     { rel: 'alternate', hreflang: 'de', href: 'https://www.pension-volgenandt.de/picknick/' },
     { rel: 'alternate', hreflang: 'en', href: 'https://www.pension-volgenandt.de/en/picnic/' },
-    { rel: 'alternate', hreflang: 'x-default', href: 'https://www.pension-volgenandt.de/picknick/' },
+    {
+      rel: 'alternate',
+      hreflang: 'x-default',
+      href: 'https://www.pension-volgenandt.de/picknick/',
+    },
   ],
 })
 
