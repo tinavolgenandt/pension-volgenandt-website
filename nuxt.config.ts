@@ -127,6 +127,8 @@ export default defineNuxtConfig({
         // Phase 4 content pages
         '/familie/',
         '/nachhaltigkeit/',
+        '/picknick/',
+        '/picknick/buchen/',
         '/aktivitaeten/',
         '/kontakt/',
         // Phase 4 attraction pages

@@ -427,7 +427,7 @@ $result = sendSmtp(
     $emailSubject,
     $emailHtml,
     'Simone & Ralf Volgenandt', $adminEmail,
-    $adminEmail, true
+    '', true
 );
 
 if (!$result['ok']) {
@@ -456,6 +456,56 @@ if ($action === 'decline' && !empty($booking['bookingDate'])) {
             file_put_contents($blockedFile, json_encode($blockedData, JSON_PRETTY_PRINT));
         }
     }
+}
+
+// After acceptance: send admin a separate notification with cancel link
+if ($action === 'accept') {
+    $cancelUrl     = 'https://api.pension-volgenandt.de/picknick-cancel.php?token=' . urlencode($booking['token']);
+    $guestName     = htmlspecialchars($booking['name'], ENT_QUOTES, 'UTF-8');
+    $guestEmail    = htmlspecialchars($booking['email'], ENT_QUOTES, 'UTF-8');
+    $guestPhone    = htmlspecialchars($booking['phone'] ?? '', ENT_QUOTES, 'UTF-8');
+    $bookingDatum  = htmlspecialchars($parsed['datum'] ?: ($booking['bookingDate'] ?? ''), ENT_QUOTES, 'UTF-8');
+    $bookingPaket  = htmlspecialchars($parsed['paket_name'] ?: $parsed['paket'], ENT_QUOTES, 'UTF-8');
+    $adminNoteHtml = '<!DOCTYPE html>
+<html lang="de"><head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#333;background:#f7f5f0;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f7f5f0;padding:24px 0;">
+<tr><td align="center">
+<table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:8px;overflow:hidden;max-width:600px;">
+  <tr><td style="background:#3d5a3e;padding:20px 32px;text-align:center;">
+    <h1 style="margin:0;color:#fff;font-size:18px;font-weight:700;">&#10003; Buchung best&auml;tigt</h1>
+    <p style="margin:4px 0 0;color:#c8d8c0;font-size:13px;">Best&auml;tigungsmail wurde an den Gast gesendet.</p>
+  </td></tr>
+  <tr><td style="padding:24px 32px;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;border-collapse:collapse;margin:0 0 24px;">
+      <tr><td style="padding:6px 0;color:#666;width:35%;">Gast</td><td style="padding:6px 0;font-weight:700;">' . $guestName . '</td></tr>
+      <tr style="border-top:1px solid #f0ede6;"><td style="padding:6px 0;color:#666;">E-Mail</td><td style="padding:6px 0;"><a href="mailto:' . $guestEmail . '" style="color:#3d5a3e;">' . $guestEmail . '</a></td></tr>
+      <tr style="border-top:1px solid #f0ede6;"><td style="padding:6px 0;color:#666;">Telefon</td><td style="padding:6px 0;">' . $guestPhone . '</td></tr>
+      <tr style="border-top:1px solid #f0ede6;"><td style="padding:6px 0;color:#666;">Datum</td><td style="padding:6px 0;font-weight:600;">' . $bookingDatum . '</td></tr>
+      <tr style="border-top:1px solid #f0ede6;"><td style="padding:6px 0;color:#666;">Paket</td><td style="padding:6px 0;">' . $bookingPaket . '</td></tr>
+    </table>
+    <p style="margin:0 0 14px;font-size:13px;color:#888;">Falls du die Buchung sp&auml;ter stornieren musst:</p>
+    <a href="' . htmlspecialchars($cancelUrl, ENT_QUOTES, 'UTF-8') . '"
+       style="display:inline-block;background:#7f8c8d;color:#fff;text-decoration:none;
+              padding:12px 22px;border-radius:6px;font-size:14px;font-weight:700;">
+      &#128683; Buchung stornieren
+    </a>
+    <p style="margin:16px 0 0;font-size:12px;color:#aaa;">Oder geh zur <a href="https://api.pension-volgenandt.de/picknick-admin.php" style="color:#3d5a3e;">Picknick-&Uuml;bersicht</a>.</p>
+  </td></tr>
+</table>
+</td></tr>
+</table>
+</body></html>';
+
+    sendSmtp(
+        $smtpHost, $smtpPort, $smtpUser, $smtpPass,
+        $adminEmail,
+        $adminEmail,
+        '&#10003; Best&auml;tigt: ' . ($booking['name'] ?? '') . ' &ndash; ' . ($booking['bookingDate'] ?? ''),
+        $adminNoteHtml,
+        'Picknick-System', $adminEmail,
+        '', true
+    );
 }
 
 // Success page for admin

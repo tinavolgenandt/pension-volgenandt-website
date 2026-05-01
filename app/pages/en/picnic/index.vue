@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const siteUrl = 'https://www.pension-volgenandt.de'
 
-// Not in nav or sitemap until go-live
 definePageMeta({
   breadcrumb: { label: 'Picnic Basket' },
 })
@@ -23,7 +22,7 @@ useSeoMeta({
     'Homemade, regional, packed with love. Book your picnic basket for the garden or the surrounding area – from 19 EUR per person.',
   ogDescription:
     'Homemade, regional, packed with love. Book your picnic basket for the garden or the surrounding area – from 19 EUR per person.',
-  ogImage: '/img/garten/garten-sitzbank-apfelbaum-bluete.webp',
+  ogImage: '/img/picknick/header-picknick.webp',
   ogType: 'website',
 })
 

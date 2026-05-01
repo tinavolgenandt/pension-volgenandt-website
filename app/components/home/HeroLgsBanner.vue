@@ -1,34 +1,30 @@
 <script setup lang="ts">
-import { t } from '~/utils/translations'
-
 const { locale } = useLocale()
-const { daysUntil, isLive, showBanner, countdownText, linkTarget } = useLgsCountdown(
-  computed(() => locale.value),
-)
+const { showBanner } = useLgsCountdown(computed(() => locale.value))
 </script>
 
 <template>
-  <!-- Desktop overlay (inside hero) -->
-  <NuxtLink
+  <!-- Desktop overlay (inside hero) — LGS + Picknick stacked -->
+  <div
     v-if="showBanner"
-    :to="linkTarget"
-    class="hero-animate group absolute right-6 bottom-24 z-20 hidden flex-col items-center rounded-xl border border-white/20 bg-white/15 px-5 py-4 text-center backdrop-blur-md transition-transform hover:scale-[1.03] md:flex lg:right-12"
+    class="hero-animate absolute right-6 bottom-24 z-20 hidden flex-col gap-2 md:flex lg:right-12"
     style="animation-delay: 2000ms"
   >
-    <span class="text-xs font-semibold tracking-wide text-white/80 uppercase">
-      {{ t('lgs.bannerTitle', locale) }}
-    </span>
-    <span v-if="!isLive" class="mt-1 font-serif text-3xl font-bold text-waldhonig-400">
-      {{ daysUntil }}
-    </span>
-    <span class="mt-1 text-sm font-medium text-white">
-      {{ countdownText }}
-    </span>
-    <span
-      class="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-waldhonig-400 transition-colors group-hover:text-waldhonig-300"
+    <!-- Picknick card -->
+    <NuxtLink
+      to="/picknick/"
+      class="group flex items-center gap-3 rounded-xl border border-white/20 bg-white/15 px-4 py-3 backdrop-blur-md transition-transform hover:scale-[1.03]"
     >
-      {{ t('lgs.linkText', locale) }}
-      <Icon name="ph:arrow-right" class="size-3.5" />
-    </span>
-  </NuxtLink>
+      <Icon name="ph:basket" class="size-5 shrink-0 text-waldhonig-300" />
+      <div>
+        <p class="text-xs font-semibold tracking-wide text-white/80 uppercase">Neu bei uns</p>
+        <p class="text-sm font-semibold text-white">Picknick-Korb</p>
+        <p class="text-xs text-white/70">ab 19 € pro Person</p>
+      </div>
+      <Icon
+        name="ph:arrow-right"
+        class="ml-1 size-3.5 shrink-0 text-waldhonig-400 transition-colors group-hover:text-waldhonig-300"
+      />
+    </NuxtLink>
+  </div>
 </template>

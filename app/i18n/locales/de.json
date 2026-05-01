@@ -5,9 +5,10 @@
   },
   "nav": {
     "rooms": "Zimmer",
-    "families": "Für Familien",
+    "families": "Familien",
     "activities": "Aktivitäten",
     "news": "Aktuelles",
+    "picnic": "Picknick",
     "sustainability": "Nachhaltigkeit",
     "contact": "Kontakt"
   },
@@ -118,6 +119,7 @@
       "roomsPrices": "Zimmer & Preise",
       "forFamilies": "Für Familien",
       "activities": "Aktivitäten",
+      "picnic": "Picknick-Korb",
       "sustainability": "Nachhaltigkeit",
       "attractions": "Ausflugsziele",
       "contactDirections": "Kontakt & Anfahrt"
@@ -230,7 +232,10 @@
     "cycling": {
       "title": "Radfahren",
       "description": "Ob gemütliche Radtour entlang der Leine oder sportliche Route durch die Hügel – hier ist für jeden etwas dabei."
-    }
+    },
+    "picnicHeading": "Picknick-Korb – Der Ausflug mit Genuss",
+    "picnicText": "Nehmen Sie unseren hausgemachten Picknick-Korb auf Ihre Tour mit – ob zur Burg Hanstein, an den Seeburger See oder einfach in den Garten. Regional, saisonal, mit echtem Geschirr. Ab 19 € pro Person.",
+    "picnicLink": "Picknick-Korb entdecken"
   },
   "attractions": {
     "title": "Ausflugsziele",
