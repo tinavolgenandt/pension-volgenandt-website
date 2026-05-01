@@ -34,9 +34,9 @@ useSchemaOrg([
     description:
       'Familiär geführte Pension in Breitenbach, Eichsfeld. Ferienwohnungen und Zimmer mit Blick ins Grüne.',
     url: 'https://www.pension-volgenandt.de',
-    logo: 'https://www.pension-volgenandt.de/img/hero/hero-poster.webp',
+    logo: 'https://www.pension-volgenandt.de/favicon.svg',
     image: 'https://www.pension-volgenandt.de/img/hero/hero-poster.webp',
-    telephone: '+49 3605 542775',
+    telephone: '+49 160 97719112',
     email: 'kontakt@pension-volgenandt.de',
     address: {
       '@type': 'PostalAddress',
@@ -60,6 +60,18 @@ useSchemaOrg([
     priceRange: 'EUR 38-89',
     checkinTime: '15:00',
     checkoutTime: '10:00',
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        opens: '08:00',
+        closes: '22:00',
+      },
+    ],
+    sameAs: [
+      'https://maps.app.goo.gl/pGocG9jFPzXkpvGbA',
+      'https://www.booking.com/hotel/de/pension-volgenandt.de.html',
+    ],
   },
 ])
 </script>

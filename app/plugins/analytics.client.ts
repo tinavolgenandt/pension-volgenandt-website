@@ -59,24 +59,49 @@ export default defineNuxtPlugin(() => {
   if (consent.value !== null) syncConsent()
 
   // Re-sync whenever the user changes their choice
-  watch(() => consent.value, (val) => {
-    if (val !== null) syncConsent()
-  })
+  watch(
+    () => consent.value,
+    (val) => {
+      if (val !== null) syncConsent()
+    },
+  )
 
   // Track Beds24 form submissions as booking interest.
   // submit catches native form submissions; click catches jQuery-triggered submits.
   const fireBuchungsinteressierte = () => window.gtag?.('event', 'Buchungsinteressierte')
 
-  document.addEventListener('submit', (e) => {
-    const form = e.target as HTMLFormElement
-    if (form?.action?.includes('beds24.com')) fireBuchungsinteressierte()
-  }, true)
+  document.addEventListener(
+    'submit',
+    (e) => {
+      const form = e.target as HTMLFormElement
+      if (form?.action?.includes('beds24.com')) fireBuchungsinteressierte()
+    },
+    true,
+  )
 
-  document.addEventListener('click', (e) => {
-    const btn = (e.target as HTMLElement).closest('button, input[type="submit"]')
-    const form = btn?.closest('form') as HTMLFormElement | null
-    if (form?.action?.includes('beds24.com')) fireBuchungsinteressierte()
-  }, true)
+  document.addEventListener(
+    'click',
+    (e) => {
+      const btn = (e.target as HTMLElement).closest('button, input[type="submit"]')
+      const form = btn?.closest('form') as HTMLFormElement | null
+      if (form?.action?.includes('beds24.com')) fireBuchungsinteressierte()
+    },
+    true,
+  )
+
+  // Track phone link clicks
+  document.addEventListener(
+    'click',
+    (e) => {
+      const link = (e.target as HTMLElement).closest('a[href^="tel:"]') as HTMLAnchorElement | null
+      if (link) {
+        window.gtag?.('event', 'phone_click', {
+          phone_number: link.href.replace('tel:', ''),
+        })
+      }
+    },
+    true,
+  )
 
   // Track route changes — Consent Mode handles whether events are stored
   const router = useRouter()

@@ -201,6 +201,9 @@ export default defineNuxtConfig({
         '/en/picnic/',
         '/en/picnic/book/',
         '/en/picnic/thanks/',
+        // About / Willkommen pages
+        '/willkommen/',
+        '/en/about/',
       ],
       failOnError: false,
     },

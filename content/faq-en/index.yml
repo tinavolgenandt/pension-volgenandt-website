@@ -1,0 +1,78 @@
+items:
+  - question: 'How can I book a room?'
+    answer: >-
+      You can book directly via our website, send us an email at
+      kontakt@pension-volgenandt.de or call us on
+      +49 160 97719112. We will get back to you as soon as possible.
+    category: buchung
+    sortOrder: 1
+
+  - question: 'What are the check-in and check-out times?'
+    answer: >-
+      Check-in is from 3:00 pm, check-out by 10:00 am. If you need
+      different times, please let us know – we are happy to find a
+      solution.
+    category: buchung
+    sortOrder: 2
+
+  - question: 'Can I cancel my booking?'
+    answer: >-
+      Yes, cancellations are possible. For the exact conditions please
+      refer to our Terms & Conditions or contact us directly.
+    category: buchung
+    sortOrder: 3
+
+  - question: 'Is there free parking?'
+    answer: >-
+      Yes, there is plenty of free parking directly in front of the
+      guesthouse. No reservation required.
+    category: ausstattung
+    sortOrder: 4
+
+  - question: 'Do you offer breakfast?'
+    answer: >-
+      Yes! Our breakfast with bread rolls, spreads, home-made jam,
+      coffee or tea is available for €10 per person.
+      The Gourmet Breakfast for €15 per person also includes regional
+      charcuterie, seasonal fruit and fresh juice. Please let us know
+      when booking.
+    category: ausstattung
+    sortOrder: 5
+
+  - question: 'Are dogs allowed?'
+    answer: >-
+      Yes, dogs are welcome in certain rooms. Please let us know when
+      booking so we can prepare the right room for you. A surcharge of
+      €5 per night applies.
+    category: ausstattung
+    sortOrder: 6
+
+  - question: 'Is the guesthouse family-friendly?'
+    answer: >-
+      Absolutely! We have a large garden with a sandpit and children's
+      ride-on toys. Cots and high chairs are available on request.
+    category: ausstattung
+    sortOrder: 7
+
+  - question: 'How do I get to the guesthouse?'
+    answer: >-
+      From the A38 motorway, take the Leinefelde exit and follow signs
+      towards Breitenbach. The drive from the motorway takes about
+      10 minutes. From Leinefelde station it is 4 km – we are happy
+      to pick you up!
+    category: anreise
+    sortOrder: 8
+
+  - question: 'What is there to do in the area?'
+    answer: >-
+      The Eichsfeld region has a lot to offer: Bärenpark Worbis bear
+      park (6 km), Burg Hanstein castle (40 km), the Hainich treetop
+      walk (54 km) and wonderful hiking trails nearby.
+    category: umgebung
+    sortOrder: 9
+
+  - question: 'Is there Wi-Fi?'
+    answer: >-
+      Yes, free Wi-Fi is available throughout all rooms and apartments.
+    category: ausstattung
+    sortOrder: 10

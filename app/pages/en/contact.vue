@@ -3,6 +3,21 @@ import { t } from '~/utils/translations'
 
 const siteUrl = 'https://www.pension-volgenandt.de'
 
+const { data: faqData } = await useAsyncData('faq-en', () => queryCollection('faqEn').first())
+const faqItems = computed(() => faqData.value?.items ?? [])
+
+useSchemaOrg([
+  defineWebPage({
+    '@type': 'FAQPage',
+  }),
+  ...(faqData.value?.items ?? []).map((item) =>
+    defineQuestion({
+      name: item.question,
+      acceptedAnswer: item.answer.replace(/<[^>]*>/g, ''),
+    }),
+  ),
+])
+
 useHead({
   htmlAttrs: { lang: 'en' },
   link: [
@@ -201,6 +216,16 @@ const appConfig = useAppConfig()
             <ContactDirectionsMap />
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- Section 4: FAQ accordion -->
+    <section class="px-6 py-12 md:py-16">
+      <div class="mx-auto max-w-3xl">
+        <h2 class="mb-8 text-center font-serif text-2xl font-semibold text-sage-900">
+          {{ t('faq.heading', 'en') }}
+        </h2>
+        <ContactFaqAccordion v-if="faqItems.length" :items="faqItems" />
       </div>
     </section>
 

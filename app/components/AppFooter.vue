@@ -14,6 +14,7 @@ const footerNav = computed(() => {
       { label: t('footer.nav.sustainability', 'en'), to: '/en/sustainability' },
       { label: t('footer.nav.attractions', 'en'), to: '/en/attractions' },
       { label: t('footer.nav.contactDirections', 'en'), to: '/en/contact' },
+      { label: t('footer.nav.about', 'en'), to: '/en/about' },
     ]
   }
   return [
@@ -24,6 +25,7 @@ const footerNav = computed(() => {
     { label: t('footer.nav.sustainability', 'de'), to: '/nachhaltigkeit' },
     { label: t('footer.nav.attractions', 'de'), to: '/ausflugsziele' },
     { label: t('footer.nav.contactDirections', 'de'), to: '/kontakt' },
+    { label: t('footer.nav.about', 'de'), to: '/willkommen' },
   ]
 })
 

@@ -323,6 +323,13 @@ export default defineContentConfig({
         items: z.array(faqItemSchema),
       }),
     }),
+    faqEn: defineCollection({
+      type: 'data',
+      source: 'faq-en/index.yml',
+      schema: z.object({
+        items: z.array(faqItemSchema),
+      }),
+    }),
     picknickPackages: defineCollection({
       type: 'data',
       source: 'picknick/packages.yml',
