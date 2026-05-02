@@ -128,7 +128,7 @@ async function getBeds24Token() {
  * Fetch bookings from Beds24 that overlap a given date range.
  * Returns raw booking array or null.
  */
-async function fetchBeds24Bookings(token, fromDate, toDate) {
+async function fetchBeds24Bookings(token, fromDate, toDate, status = null) {
   // arrivalTo + departureFrom = stays overlapping the date window
   const params = new URLSearchParams({
     propertyId: BEDS24_PROPERTY_ID,
@@ -136,6 +136,7 @@ async function fetchBeds24Bookings(token, fromDate, toDate) {
     departureFrom: fromDate,
     includeInvoice: 'true',
   })
+  if (status) params.set('status', status)
   const res = await fetch(`https://api.beds24.com/v2/bookings?${params}`, {
     headers: { token },
   })
@@ -167,8 +168,9 @@ function aggregateBookings(bookings, rangeStart, rangeEnd, totalUnits) {
 
   for (const b of bookings) {
     totalBookings++
-    // Beds24 v2 may signal cancellation via cancelTime (timestamp) or status field
+    // _forceCancelled = came from a separate status=cancelled API call
     const isCancelled =
+      b._forceCancelled ||
       (b.cancelTime && b.cancelTime !== 0 && b.cancelTime !== '0') ||
       (typeof b.status === 'string' && b.status.toLowerCase().includes('cancel'))
     if (isCancelled) {
@@ -231,20 +233,32 @@ function aggregateBookings(bookings, rangeStart, rangeEnd, totalUnits) {
 // ---------------------------------------------------------------------------
 async function collectBeds24Current(token) {
   if (!token) return null
-  const bookings = await fetchBeds24Bookings(token, startDate, endDate)
-  if (bookings) {
-    const uniqueSources = [...new Set(bookings.map((b) => JSON.stringify(b.apiSource ?? null)))]
+  // Beds24 v2 excludes cancelled bookings from the default response — fetch separately
+  const [bookings, cancelled] = await Promise.all([
+    fetchBeds24Bookings(token, startDate, endDate),
+    fetchBeds24Bookings(token, startDate, endDate, 'cancelled').catch(() => []),
+  ])
+  // Tag cancelled ones so aggregateBookings treats them correctly regardless of field names
+  const allBookings = [
+    ...(bookings ?? []),
+    ...(cancelled ?? []).map((b) => ({ ...b, _forceCancelled: true })),
+  ]
+  if (allBookings.length > 0) {
+    const uniqueSources = [...new Set(allBookings.map((b) => JSON.stringify(b.apiSource ?? null)))]
     console.log('Beds24 unique apiSource values:', uniqueSources.join(', '))
     const uniqueStatuses = [
       ...new Set(
-        bookings.map((b) =>
+        allBookings.map((b) =>
           JSON.stringify({ status: b.status ?? null, cancelTime: b.cancelTime ?? null }),
         ),
       ),
     ]
     console.log('Beds24 unique status/cancelTime combos:', uniqueStatuses.join(' | '))
+    console.log(
+      `Beds24 bookings: ${bookings?.length ?? 0} active + ${cancelled?.length ?? 0} cancelled`,
+    )
   }
-  return aggregateBookings(bookings, startDate, endDate, TOTAL_UNITS)
+  return aggregateBookings(allBookings, startDate, endDate, TOTAL_UNITS)
 }
 
 // ---------------------------------------------------------------------------
