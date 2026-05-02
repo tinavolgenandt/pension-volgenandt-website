@@ -167,7 +167,11 @@ function aggregateBookings(bookings, rangeStart, rangeEnd, totalUnits) {
 
   for (const b of bookings) {
     totalBookings++
-    if (b.cancelTime) {
+    // Beds24 v2 may signal cancellation via cancelTime (timestamp) or status field
+    const isCancelled =
+      (b.cancelTime && b.cancelTime !== 0 && b.cancelTime !== '0') ||
+      (typeof b.status === 'string' && b.status.toLowerCase().includes('cancel'))
+    if (isCancelled) {
       cancellations++
       continue
     }
@@ -231,6 +235,14 @@ async function collectBeds24Current(token) {
   if (bookings) {
     const uniqueSources = [...new Set(bookings.map((b) => JSON.stringify(b.apiSource ?? null)))]
     console.log('Beds24 unique apiSource values:', uniqueSources.join(', '))
+    const uniqueStatuses = [
+      ...new Set(
+        bookings.map((b) =>
+          JSON.stringify({ status: b.status ?? null, cancelTime: b.cancelTime ?? null }),
+        ),
+      ),
+    ]
+    console.log('Beds24 unique status/cancelTime combos:', uniqueStatuses.join(' | '))
   }
   return aggregateBookings(bookings, startDate, endDate, TOTAL_UNITS)
 }
@@ -782,15 +794,16 @@ function buildEmailHtml(current, prevYear, outlook, ga4) {
   }
 
   // --- Website section ---
+  // Paid Search is already listed as its own dedicated row above the channel breakdown,
+  // so we exclude it from the Herkunft list to avoid showing Google Ads twice.
   const GA4_CHANNEL_LABELS = {
-    'Organic Search': 'Organische Suche (Google, Bing & Co.)',
+    'Organic Search': 'Google, Bing & Co.',
     Direct: 'Direktzugriff (URL direkt eingegeben oder Lesezeichen)',
     Referral: 'Verlinkung (Besucher kam über Link einer anderen Website)',
-    'Paid Search': 'Google Anzeigen (bezahlte Klicks)',
     'Organic Social': 'Social Media (Facebook, Instagram etc.)',
     Email: 'E-Mail-Link',
     Unassigned: 'Nicht zugeordnet',
-    'Cross-network': 'Cross-Netzwerk (Performance Max Kampagnen)',
+    'Cross-network': 'Google Performance Max (automatische Anzeigen auf allen Google-Kanälen)',
   }
 
   const PAGE_LABELS = {
@@ -810,10 +823,16 @@ function buildEmailHtml(current, prevYear, outlook, ga4) {
   if (ga4) {
     let rows = ''
     rows += tableRow(
-      'Seitenaufrufe gesamt',
+      `Seitenaufrufe gesamt (${startDate} bis ${endDate})`,
       ga4.pageviews,
       ga4.pageviewsPY ? `VJ: ${ga4.pageviewsPY}${trendBadge(ga4.pageviews, ga4.pageviewsPY)}` : '',
     )
+    rows += tableRow(
+      'Sitzungen (Website-Besuche)',
+      ga4.sessions,
+      ga4.sessionsPY ? `VJ: ${ga4.sessionsPY}${trendBadge(ga4.sessions, ga4.sessionsPY)}` : '',
+    )
+    rows += `<tr><td colspan="2" style="padding:2px 12px 8px;color:#888;font-size:11px;font-style:italic;">Eine Sitzung = ein Besuch auf der Website, unabhängig davon, wie viele Seiten dabei aufgerufen wurden.</td></tr>`
     rows += tableRow('Absprungrate', `${ga4.bounceRate}%`)
     rows += `<tr><td colspan="2" style="padding:2px 12px 8px;color:#888;font-size:11px;font-style:italic;">Anteil der Besucher, die nur eine einzige Seite aufgerufen und die Website sofort wieder verlassen haben.</td></tr>`
     rows += tableRow('Ø Sitzungsdauer', formatDuration(ga4.avgSessionDuration))
@@ -823,7 +842,8 @@ function buildEmailHtml(current, prevYear, outlook, ga4) {
     if (ga4.sources.length > 0) {
       rows +=
         '<tr><td colspan="2" style="padding-top:10px;padding-bottom:2px;font-weight:600;color:#4a6741;font-size:13px;">Herkunft der Besucher:</td></tr>'
-      for (const s of ga4.sources.slice(0, 6)) {
+      // Exclude Paid Search — already shown as the dedicated Google Ads row above
+      for (const s of ga4.sources.filter((s) => s.source !== 'Paid Search').slice(0, 6)) {
         const label = GA4_CHANNEL_LABELS[s.source] || s.source
         rows += tableRow(`  ${label}`, `${s.sessions} Sitzungen`)
       }
@@ -838,7 +858,10 @@ function buildEmailHtml(current, prevYear, outlook, ga4) {
       }
     }
 
-    websiteHtml = section('Website-Traffic', `<table style="width:100%;">${rows}</table>`)
+    websiteHtml = section(
+      `Website-Traffic ${MONTH_NAMES_DE[month]} ${year}`,
+      `<table style="width:100%;">${rows}</table>`,
+    )
   }
 
   // --- Picknick section ---
@@ -850,9 +873,9 @@ function buildEmailHtml(current, prevYear, outlook, ga4) {
         : '0'
     let rows = ''
     rows += tableRow('Besuche der Picknick-Seite', ga4.picknickLandingViews)
-    rows += tableRow('Abgeschlossene Buchungen (PayPal-Zahlung bestätigt)', ga4.picknickDankeViews)
+    rows += tableRow('Angefragte Buchungen', ga4.picknickDankeViews)
     rows += tableRow('Conversion-Rate', `${convRate}%`)
-    rows += `<tr><td colspan="2" style="padding:2px 12px 8px;color:#888;font-size:11px;font-style:italic;">${convRate}% der Besucher der Picknick-Seite haben eine Buchung per PayPal abgeschlossen.</td></tr>`
+    rows += `<tr><td colspan="2" style="padding:2px 12px 8px;color:#888;font-size:11px;font-style:italic;">${convRate}% der Besucher der Picknick-Seite haben eine Anfrage per PayPal abgeschickt.</td></tr>`
     picknickHtml = section('Picknick-Korb', `<table style="width:100%;">${rows}</table>`)
   }
 
