@@ -41,14 +41,20 @@ const now = new Date()
 // Allow override via env for testing: REPORT_MONTH=4 REPORT_YEAR=2026
 const year = process.env.REPORT_YEAR
   ? parseInt(process.env.REPORT_YEAR)
-  : now.getMonth() === 0 ? now.getFullYear() - 1 : now.getFullYear()
+  : now.getMonth() === 0
+    ? now.getFullYear() - 1
+    : now.getFullYear()
 const month = process.env.REPORT_MONTH
   ? parseInt(process.env.REPORT_MONTH)
-  : now.getMonth() === 0 ? 12 : now.getMonth() // 1-indexed
+  : now.getMonth() === 0
+    ? 12
+    : now.getMonth() // 1-indexed
 const daysInMonth = new Date(year, month, 0).getDate()
 const startDate = `${year}-${String(month).padStart(2, '0')}-01`
 const endDate = `${year}-${String(month).padStart(2, '0')}-${String(daysInMonth).padStart(2, '0')}`
-const monthEndPlusOne = new Date(`${year}-${String(month).padStart(2, '0')}-${String(daysInMonth).padStart(2, '0')}T00:00:00`)
+const monthEndPlusOne = new Date(
+  `${year}-${String(month).padStart(2, '0')}-${String(daysInMonth).padStart(2, '0')}T00:00:00`,
+)
 monthEndPlusOne.setDate(monthEndPlusOne.getDate() + 1)
 
 const prevReportYear = year - 1
@@ -57,8 +63,19 @@ const prevDaysInMonth = new Date(prevReportYear, month, 0).getDate()
 const prevEndDate = `${prevReportYear}-${String(month).padStart(2, '0')}-${String(prevDaysInMonth).padStart(2, '0')}`
 
 const MONTH_NAMES_DE = [
-  '', 'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
-  'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember',
+  '',
+  'Januar',
+  'Februar',
+  'März',
+  'April',
+  'Mai',
+  'Juni',
+  'Juli',
+  'August',
+  'September',
+  'Oktober',
+  'November',
+  'Dezember',
 ]
 const monthLabel = `${MONTH_NAMES_DE[month]} ${year}`
 
@@ -82,9 +99,11 @@ const TOTAL_UNITS = Object.keys(ROOM_NAMES).length
 /** Map apiSource to a readable channel category */
 function mapChannel(apiSource) {
   if (!apiSource || apiSource === '' || apiSource === 'manual') return 'Direktbuchungen'
-  if (apiSource.toLowerCase().includes('bookingcom') || apiSource === 'BookingCom') return 'Booking.com'
-  if (apiSource.toLowerCase().includes('airbnb')) return 'Airbnb'
-  if (apiSource === 'Beds24' || apiSource.toLowerCase().includes('beds24')) return 'Website'
+  // Normalize: lowercase + strip dots/spaces/dashes so "Booking.com", "booking.com", "bookingcom" all match
+  const n = apiSource.toLowerCase().replace(/[.\s-]/g, '')
+  if (n.includes('bookingcom')) return 'Booking.com'
+  if (n.includes('airbnb')) return 'Airbnb'
+  if (n.includes('beds24')) return 'Website'
   return 'Direktbuchungen'
 }
 
@@ -109,7 +128,7 @@ async function getBeds24Token() {
  * Fetch bookings from Beds24 that overlap a given date range.
  * Returns raw booking array or null.
  */
-async function fetchBeds24Bookings(token, fromDate, toDate) {
+async function fetchBeds24Bookings(token, fromDate, toDate, status = null) {
   // arrivalTo + departureFrom = stays overlapping the date window
   const params = new URLSearchParams({
     propertyId: BEDS24_PROPERTY_ID,
@@ -117,6 +136,7 @@ async function fetchBeds24Bookings(token, fromDate, toDate) {
     departureFrom: fromDate,
     includeInvoice: 'true',
   })
+  if (status) params.set('status', status)
   const res = await fetch(`https://api.beds24.com/v2/bookings?${params}`, {
     headers: { token },
   })
@@ -148,7 +168,15 @@ function aggregateBookings(bookings, rangeStart, rangeEnd, totalUnits) {
 
   for (const b of bookings) {
     totalBookings++
-    if (b.cancelTime) { cancellations++; continue }
+    // _forceCancelled = came from a separate status=cancelled API call
+    const isCancelled =
+      b._forceCancelled ||
+      (b.cancelTime && b.cancelTime !== 0 && b.cancelTime !== '0') ||
+      (typeof b.status === 'string' && b.status.toLowerCase().includes('cancel'))
+    if (isCancelled) {
+      cancellations++
+      continue
+    }
 
     const arrival = new Date(b.arrival).getTime()
     const departure = new Date(b.departure).getTime()
@@ -177,15 +205,11 @@ function aggregateBookings(bookings, rangeStart, rangeEnd, totalUnits) {
   const confirmedBookings = totalBookings - cancellations
   const daysInRange = Math.round((rangeEndMs - rangeStartMs) / 86400000)
   const totalAvailableNights = totalUnits * daysInRange
-  const occupancyRate = totalAvailableNights > 0
-    ? ((totalNightsInRange / totalAvailableNights) * 100).toFixed(1)
-    : '0'
-  const avgStay = confirmedBookings > 0
-    ? (totalNightsInRange / confirmedBookings).toFixed(1)
-    : '0'
-  const cancellationRate = totalBookings > 0
-    ? ((cancellations / totalBookings) * 100).toFixed(1)
-    : '0'
+  const occupancyRate =
+    totalAvailableNights > 0 ? ((totalNightsInRange / totalAvailableNights) * 100).toFixed(1) : '0'
+  const avgStay = confirmedBookings > 0 ? (totalNightsInRange / confirmedBookings).toFixed(1) : '0'
+  const cancellationRate =
+    totalBookings > 0 ? ((cancellations / totalBookings) * 100).toFixed(1) : '0'
 
   const topRoom = Object.entries(byRoom).sort((a, b) => b[1] - a[1])[0]
 
@@ -209,8 +233,32 @@ function aggregateBookings(bookings, rangeStart, rangeEnd, totalUnits) {
 // ---------------------------------------------------------------------------
 async function collectBeds24Current(token) {
   if (!token) return null
-  const bookings = await fetchBeds24Bookings(token, startDate, endDate)
-  return aggregateBookings(bookings, startDate, endDate, TOTAL_UNITS)
+  // Beds24 v2 excludes cancelled bookings from the default response — fetch separately
+  const [bookings, cancelled] = await Promise.all([
+    fetchBeds24Bookings(token, startDate, endDate),
+    fetchBeds24Bookings(token, startDate, endDate, 'cancelled').catch(() => []),
+  ])
+  // Tag cancelled ones so aggregateBookings treats them correctly regardless of field names
+  const allBookings = [
+    ...(bookings ?? []),
+    ...(cancelled ?? []).map((b) => ({ ...b, _forceCancelled: true })),
+  ]
+  if (allBookings.length > 0) {
+    const uniqueSources = [...new Set(allBookings.map((b) => JSON.stringify(b.apiSource ?? null)))]
+    console.log('Beds24 unique apiSource values:', uniqueSources.join(', '))
+    const uniqueStatuses = [
+      ...new Set(
+        allBookings.map((b) =>
+          JSON.stringify({ status: b.status ?? null, cancelTime: b.cancelTime ?? null }),
+        ),
+      ),
+    ]
+    console.log('Beds24 unique status/cancelTime combos:', uniqueStatuses.join(' | '))
+    console.log(
+      `Beds24 bookings: ${bookings?.length ?? 0} active + ${cancelled?.length ?? 0} cancelled`,
+    )
+  }
+  return aggregateBookings(allBookings, startDate, endDate, TOTAL_UNITS)
 }
 
 // ---------------------------------------------------------------------------
@@ -286,10 +334,15 @@ async function collectGA4Data() {
       property: `properties/${GA4_PROPERTY_ID}`,
       requestBody: { dateRanges: [{ startDate, endDate }], metrics: overallMetrics },
     }),
-    analyticsData.properties.runReport({
-      property: `properties/${GA4_PROPERTY_ID}`,
-      requestBody: { dateRanges: [{ startDate: prevStartDate, endDate: prevEndDate }], metrics: overallMetrics },
-    }).catch(() => ({ data: { rows: [] } })),
+    analyticsData.properties
+      .runReport({
+        property: `properties/${GA4_PROPERTY_ID}`,
+        requestBody: {
+          dateRanges: [{ startDate: prevStartDate, endDate: prevEndDate }],
+          metrics: overallMetrics,
+        },
+      })
+      .catch(() => ({ data: { rows: [] } })),
   ])
 
   const currentRow = (currentOverallRes.data.rows || [])[0]
@@ -344,36 +397,51 @@ async function collectGA4Data() {
   const paidSearchSessions = paidSearchRow?.sessions ?? 0
 
   // --- 4d. Conversion events (Buchungsinteressierte = Beds24 widget submit) ---
-  const eventsRes = await analyticsData.properties.runReport({
-    property: `properties/${GA4_PROPERTY_ID}`,
-    requestBody: {
-      dateRanges: [{ startDate, endDate }],
-      metrics: [{ name: 'eventCount' }],
-      dimensions: [{ name: 'eventName' }],
-    },
-  }).catch(() => ({ data: { rows: [] } }))
+  const eventsRes = await analyticsData.properties
+    .runReport({
+      property: `properties/${GA4_PROPERTY_ID}`,
+      requestBody: {
+        dateRanges: [{ startDate, endDate }],
+        metrics: [{ name: 'eventCount' }],
+        dimensions: [{ name: 'eventName' }],
+      },
+    })
+    .catch(() => ({ data: { rows: [] } }))
   const eventRows = eventsRes.data.rows || []
   const buchungsinteressierte = parseInt(
-    eventRows.find((r) => r.dimensionValues[0].value === 'Buchungsinteressierte')?.metricValues[0].value || '0',
+    eventRows.find((r) => r.dimensionValues[0].value === 'Buchungsinteressierte')?.metricValues[0]
+      .value || '0',
   )
 
   // --- 4e. Picknick-specific page views ---
-  const picknickPagesRes = await analyticsData.properties.runReport({
-    property: `properties/${GA4_PROPERTY_ID}`,
-    requestBody: {
-      dateRanges: [{ startDate, endDate }],
-      metrics: [{ name: 'screenPageViews' }],
-      dimensions: [{ name: 'pagePath' }],
-      dimensionFilter: {
-        orGroup: {
-          expressions: [
-            { filter: { fieldName: 'pagePath', stringFilter: { matchType: 'BEGINS_WITH', value: '/picknick' } } },
-            { filter: { fieldName: 'pagePath', stringFilter: { matchType: 'BEGINS_WITH', value: '/en/picnic' } } },
-          ],
+  const picknickPagesRes = await analyticsData.properties
+    .runReport({
+      property: `properties/${GA4_PROPERTY_ID}`,
+      requestBody: {
+        dateRanges: [{ startDate, endDate }],
+        metrics: [{ name: 'screenPageViews' }],
+        dimensions: [{ name: 'pagePath' }],
+        dimensionFilter: {
+          orGroup: {
+            expressions: [
+              {
+                filter: {
+                  fieldName: 'pagePath',
+                  stringFilter: { matchType: 'BEGINS_WITH', value: '/picknick' },
+                },
+              },
+              {
+                filter: {
+                  fieldName: 'pagePath',
+                  stringFilter: { matchType: 'BEGINS_WITH', value: '/en/picnic' },
+                },
+              },
+            ],
+          },
         },
       },
-    },
-  }).catch(() => ({ data: { rows: [] } }))
+    })
+    .catch(() => ({ data: { rows: [] } }))
 
   let picknickLandingViews = 0
   let picknickDankeViews = 0
@@ -385,21 +453,23 @@ async function collectGA4Data() {
   }
 
   // --- 4f. QR code scans from print materials (utm_medium=print) ---
-  const printQrRes = await analyticsData.properties.runReport({
-    property: `properties/${GA4_PROPERTY_ID}`,
-    requestBody: {
-      dateRanges: [{ startDate, endDate }],
-      metrics: [{ name: 'sessions' }],
-      dimensions: [{ name: 'sessionSource' }, { name: 'sessionCampaign' }],
-      dimensionFilter: {
-        filter: {
-          fieldName: 'sessionMedium',
-          stringFilter: { matchType: 'EXACT', value: 'print' },
+  const printQrRes = await analyticsData.properties
+    .runReport({
+      property: `properties/${GA4_PROPERTY_ID}`,
+      requestBody: {
+        dateRanges: [{ startDate, endDate }],
+        metrics: [{ name: 'sessions' }],
+        dimensions: [{ name: 'sessionSource' }, { name: 'sessionCampaign' }],
+        dimensionFilter: {
+          filter: {
+            fieldName: 'sessionMedium',
+            stringFilter: { matchType: 'EXACT', value: 'print' },
+          },
         },
+        orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
       },
-      orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
-    },
-  }).catch(() => ({ data: { rows: [] } }))
+    })
+    .catch(() => ({ data: { rows: [] } }))
 
   const printQrScans = {}
   let printQrTotal = 0
@@ -423,7 +493,7 @@ async function collectGA4Data() {
     buchungsinteressierte,
     picknickLandingViews,
     picknickDankeViews, // = completed picknick bookings
-    printQrScans,       // { 'picknick-karte': N, 'aushang': N, ... }
+    printQrScans, // { 'picknick-karte': N, 'aushang': N, ... }
     printQrTotal,
   }
 }
@@ -448,20 +518,40 @@ async function pushToGoogleSheet(current, prevYear, outlook, ga4) {
   const headers = [
     'Monat',
     // Beds24 current
-    'Nächte im Haus', 'Buchungen', 'Stornierungen', 'Storno-Rate', 'Umsatz (€)',
-    'Auslastung', 'Ø Aufenthalt (Nächte)',
+    'Nächte im Haus',
+    'Buchungen',
+    'Stornierungen',
+    'Storno-Rate',
+    'Umsatz (€)',
+    'Auslastung',
+    'Ø Aufenthalt (Nächte)',
     // Buchungskanäle
-    'Direktbuchungen', 'Booking.com', 'Website', 'Airbnb',
+    'Direktbuchungen',
+    'Booking.com',
+    'Website',
+    'Airbnb',
     // Beds24 Vorjahr
-    'VJ Nächte', 'VJ Buchungen', 'VJ Umsatz (€)', 'VJ Auslastung',
+    'VJ Nächte',
+    'VJ Buchungen',
+    'VJ Umsatz (€)',
+    'VJ Auslastung',
     // Website GA4
-    'Sessions', 'Seitenaufrufe', 'Absprungrate',
-    'VJ Sessions', 'VJ Seitenaufrufe',
-    'Paid Search Sessions', 'Buchungsinteressierte',
+    'Sessions',
+    'Seitenaufrufe',
+    'Absprungrate',
+    'VJ Sessions',
+    'VJ Seitenaufrufe',
+    'Paid Search Sessions',
+    'Buchungsinteressierte',
     // Picknick
-    'Picknick-Aufrufe', 'Picknick-Buchungen',
+    'Picknick-Aufrufe',
+    'Picknick-Buchungen',
     // QR-Code Scans (print)
-    'QR-Scans gesamt', 'QR: picknick-karte', 'QR: aushang', 'QR: handout', 'QR: visitenkarte',
+    'QR-Scans gesamt',
+    'QR: picknick-karte',
+    'QR: aushang',
+    'QR: handout',
+    'QR: visitenkarte',
   ]
 
   const row = [
@@ -527,7 +617,9 @@ async function pushToGoogleSheet(current, prevYear, outlook, ga4) {
   // --- Tab 2: Ausblick (overwrite each month, auto-create tab if missing) ---
   if (outlook && outlook.length > 0) {
     const sheetMeta = await sheets.spreadsheets.get({ spreadsheetId: GOOGLE_SHEETS_ID })
-    const ausblickExists = (sheetMeta.data.sheets || []).some((s) => s.properties?.title === 'Ausblick')
+    const ausblickExists = (sheetMeta.data.sheets || []).some(
+      (s) => s.properties?.title === 'Ausblick',
+    )
     if (!ausblickExists) {
       await sheets.spreadsheets.batchUpdate({
         spreadsheetId: GOOGLE_SHEETS_ID,
@@ -559,6 +651,16 @@ async function pushToGoogleSheet(current, prevYear, outlook, ga4) {
 // ---------------------------------------------------------------------------
 // 6. Build HTML Email
 // ---------------------------------------------------------------------------
+
+function formatDuration(seconds) {
+  const s = Math.round(parseFloat(seconds) || 0)
+  const m = Math.floor(s / 60)
+  const rem = s % 60
+  if (m === 0) return `${rem} Sek`
+  if (rem === 0) return `${m} Min`
+  return `${m} Min ${rem} Sek`
+}
+
 function buildEmailHtml(current, prevYear, outlook, ga4) {
   const kpi = (label, value, sub = '') => `
     <td style="padding:12px 16px;text-align:center;background:#f8f7f4;border-radius:8px;vertical-align:top;">
@@ -579,32 +681,87 @@ function buildEmailHtml(current, prevYear, outlook, ga4) {
       ${content}
     </div>`
 
+  const trendBadge = (curr, prev) => {
+    if (prev == null || prev === 0 || curr == null) return ''
+    const pct = ((curr - prev) / prev) * 100
+    const sign = pct >= 0 ? '+' : ''
+    const color = pct >= 0 ? '#4a6741' : '#c0392b'
+    const arrow = pct >= 0 ? '↑' : '↓'
+    return `<span style="font-size:10px;color:${color};font-weight:700;margin-left:4px;">${arrow}&thinsp;${sign}${pct.toFixed(0)}%</span>`
+  }
+
+  const noteBox = (text) =>
+    `<p style="background:#fff8e7;border-left:3px solid #c9a84c;border-radius:4px;padding:8px 12px;margin:12px 0 0;font-size:12px;color:#6b5c00;">${text}</p>`
+
+  const prevYearAvailable = prevYear != null && prevYear.confirmedBookings >= 3
+
   // --- KPI row ---
   const currNights = current?.totalNightsInRange ?? 0
   const prevNights = prevYear?.totalNightsInRange ?? null
-  const currRev = current?.totalRevenue ? `${parseFloat(current.totalRevenue).toLocaleString('de-DE', { minimumFractionDigits: 0 })} €` : '–'
-  const currOcc = current?.occupancyRate ? `${current.occupancyRate}%` : '–'
-  const prevOcc = prevYear?.occupancyRate ?? null
+  const currRevNum = current?.totalRevenue ? parseFloat(current.totalRevenue) : null
+  const prevRevNum = prevYear?.totalRevenue ? parseFloat(prevYear.totalRevenue) : null
+  const currRevStr =
+    currRevNum != null
+      ? `${currRevNum.toLocaleString('de-DE', { minimumFractionDigits: 0 })} €`
+      : '–'
+  const currOccNum = current?.occupancyRate ? parseFloat(current.occupancyRate) : null
+  const prevOccNum = prevYear?.occupancyRate ? parseFloat(prevYear.occupancyRate) : null
 
   let kpis = '<table style="width:100%;border-spacing:8px;"><tr>'
-  kpis += kpi('Nächte im Haus', currNights, prevNights != null ? `VJ: ${prevNights}` : '')
-  kpis += kpi('Umsatz', currRev, prevYear?.totalRevenue ? `VJ: ${parseFloat(prevYear.totalRevenue).toLocaleString('de-DE', { minimumFractionDigits: 0 })} €` : '')
-  kpis += kpi('Auslastung', currOcc, prevOcc ? `VJ: ${prevOcc}%` : '')
-  kpis += kpi('Sitzungen (Website)', ga4?.sessions ?? '–', ga4?.sessionsPY ? `VJ: ${ga4.sessionsPY}` : '')
+  kpis += kpi(
+    'Nächte im Haus',
+    currNights,
+    prevNights != null ? `VJ: ${prevNights}${trendBadge(currNights, prevNights)}` : '',
+  )
+  kpis += kpi(
+    'Umsatz',
+    currRevStr,
+    prevRevNum != null
+      ? `VJ: ${prevRevNum.toLocaleString('de-DE', { minimumFractionDigits: 0 })} €${trendBadge(currRevNum, prevRevNum)}`
+      : '',
+  )
+  kpis += kpi(
+    'Auslastung',
+    currOccNum != null ? `${current.occupancyRate}%` : '–',
+    prevOccNum != null ? `VJ: ${prevOccNum}%${trendBadge(currOccNum, prevOccNum)}` : '',
+  )
+  kpis += kpi(
+    'Sitzungen (Website)',
+    ga4?.sessions ?? '–',
+    ga4?.sessionsPY ? `VJ: ${ga4.sessionsPY}${trendBadge(ga4.sessions, ga4.sessionsPY)}` : '',
+  )
   kpis += '</tr></table>'
+
+  const prevYearNoteHtml = !prevYearAvailable
+    ? noteBox(
+        `<strong>Hinweis Vorjahresvergleich:</strong> Für ${MONTH_NAMES_DE[month]} ${prevReportYear} liegen keine vollständigen Buchungsdaten vor – Beds24 war zu diesem Zeitpunkt noch nicht vollständig im Einsatz. Der Vergleich mit dem Vorjahr ist daher nur eingeschränkt aussagekräftig.`,
+      )
+    : ''
 
   // --- Buchungen section ---
   let bookingsHtml = ''
   if (current) {
     let rows = ''
+    rows += tableRow(
+      'Bestätigte Buchungen',
+      current.confirmedBookings,
+      prevYearAvailable
+        ? `VJ: ${prevYear.confirmedBookings}${trendBadge(current.confirmedBookings, prevYear.confirmedBookings)}`
+        : '',
+    )
     rows += tableRow('Stornierungen', `${current.cancellations} (${current.cancellationRate}%)`)
     rows += tableRow('Ø Aufenthalt', `${current.avgStay} Nächte`)
     rows += tableRow('Beliebtestes Zimmer', current.topRoom)
 
+    if (month === 10 && currOccNum != null && currOccNum > 50) {
+      rows += `<tr><td colspan="2">${noteBox('Die hohe Auslastung im Oktober ist typischerweise auf gesperrte Wochen für Betriebsurlaub zurückzuführen – geblockte Zimmer zählen im System als belegte Nächte und erhöhen den Auslastungswert.')}</td></tr>`
+    }
+
     // Channel split
     const ch = current.byChannel
     const total = current.confirmedBookings || 1
-    rows += '<tr><td colspan="2" style="padding-top:10px;padding-bottom:2px;font-weight:600;color:#4a6741;font-size:13px;">Buchungskanäle:</td></tr>'
+    rows +=
+      '<tr><td colspan="2" style="padding-top:10px;padding-bottom:2px;font-weight:600;color:#4a6741;font-size:13px;">Buchungskanäle:</td></tr>'
     for (const [name, count] of Object.entries(ch)) {
       if (count === 0) continue
       const pct = ((count / total) * 100).toFixed(0)
@@ -613,7 +770,8 @@ function buildEmailHtml(current, prevYear, outlook, ga4) {
 
     // By room breakdown
     if (Object.keys(current.byRoom).length > 0) {
-      rows += '<tr><td colspan="2" style="padding-top:10px;padding-bottom:2px;font-weight:600;color:#4a6741;font-size:13px;">Nach Zimmer:</td></tr>'
+      rows +=
+        '<tr><td colspan="2" style="padding-top:10px;padding-bottom:2px;font-weight:600;color:#4a6741;font-size:13px;">Nach Zimmer:</td></tr>'
       for (const [room, count] of Object.entries(current.byRoom).sort((a, b) => b[1] - a[1])) {
         rows += tableRow(`  ${room}`, count)
       }
@@ -650,60 +808,112 @@ function buildEmailHtml(current, prevYear, outlook, ga4) {
   }
 
   // --- Website section ---
+  // Paid Search is already listed as its own dedicated row above the channel breakdown,
+  // so we exclude it from the Herkunft list to avoid showing Google Ads twice.
+  const GA4_CHANNEL_LABELS = {
+    'Organic Search': 'Google, Bing & Co.',
+    Direct: 'Direktzugriff (URL direkt eingegeben oder Lesezeichen)',
+    Referral: 'Verlinkung (Besucher kam über Link einer anderen Website)',
+    'Organic Social': 'Social Media (Facebook, Instagram etc.)',
+    Email: 'E-Mail-Link',
+    Unassigned: 'Nicht zugeordnet',
+    'Cross-network': 'Google Performance Max (automatische Anzeigen auf allen Google-Kanälen)',
+  }
+
+  const PAGE_LABELS = {
+    '/': 'Startseite',
+    '/zimmer/': 'Zimmer-Übersicht',
+    '/picknick/': 'Picknick-Korb',
+    '/kontakt/': 'Kontakt',
+    '/anfahrt/': 'Anfahrt & Lage',
+    '/faq/': 'Häufige Fragen (FAQ)',
+    '/galerie/': 'Galerie',
+    '/en/': 'Startseite (EN)',
+    '/en/rooms/': 'Zimmer-Übersicht (EN)',
+    '/en/picnic/': 'Picknick-Korb (EN)',
+  }
+
   let websiteHtml = ''
   if (ga4) {
     let rows = ''
-    rows += tableRow('Seitenaufrufe', ga4.pageviews, ga4.pageviewsPY ? `VJ: ${ga4.pageviewsPY}` : '')
+    rows += tableRow(
+      `Seitenaufrufe gesamt (${startDate} bis ${endDate})`,
+      ga4.pageviews,
+      ga4.pageviewsPY ? `VJ: ${ga4.pageviewsPY}${trendBadge(ga4.pageviews, ga4.pageviewsPY)}` : '',
+    )
+    rows += tableRow(
+      'Sitzungen (Website-Besuche)',
+      ga4.sessions,
+      ga4.sessionsPY ? `VJ: ${ga4.sessionsPY}${trendBadge(ga4.sessions, ga4.sessionsPY)}` : '',
+    )
+    rows += `<tr><td colspan="2" style="padding:2px 12px 8px;color:#888;font-size:11px;font-style:italic;">Eine Sitzung = ein Besuch auf der Website, unabhängig davon, wie viele Seiten dabei aufgerufen wurden.</td></tr>`
     rows += tableRow('Absprungrate', `${ga4.bounceRate}%`)
-    rows += tableRow('Ø Sitzungsdauer', `${ga4.avgSessionDuration}s`)
+    rows += `<tr><td colspan="2" style="padding:2px 12px 8px;color:#888;font-size:11px;font-style:italic;">Anteil der Besucher, die nur eine einzige Seite aufgerufen und die Website sofort wieder verlassen haben.</td></tr>`
+    rows += tableRow('Ø Sitzungsdauer', formatDuration(ga4.avgSessionDuration))
     rows += tableRow('Google Ads (Paid Search Sitzungen)', ga4.paidSearchSessions)
     rows += tableRow('Buchungsinteressierte (Formular abgeschickt)', ga4.buchungsinteressierte)
 
     if (ga4.sources.length > 0) {
-      rows += '<tr><td colspan="2" style="padding-top:10px;padding-bottom:2px;font-weight:600;color:#4a6741;font-size:13px;">Herkunft der Besucher:</td></tr>'
-      for (const s of ga4.sources.slice(0, 6)) {
-        rows += tableRow(`  ${s.source}`, `${s.sessions} Sitzungen`)
+      rows +=
+        '<tr><td colspan="2" style="padding-top:10px;padding-bottom:2px;font-weight:600;color:#4a6741;font-size:13px;">Herkunft der Besucher:</td></tr>'
+      // Exclude Paid Search — already shown as the dedicated Google Ads row above
+      for (const s of ga4.sources.filter((s) => s.source !== 'Paid Search').slice(0, 6)) {
+        const label = GA4_CHANNEL_LABELS[s.source] || s.source
+        rows += tableRow(`  ${label}`, `${s.sessions} Sitzungen`)
       }
     }
 
     if (ga4.topPages.length > 0) {
-      rows += '<tr><td colspan="2" style="padding-top:10px;padding-bottom:2px;font-weight:600;color:#4a6741;font-size:13px;">Meistbesuchte Seiten:</td></tr>'
+      rows +=
+        '<tr><td colspan="2" style="padding-top:10px;padding-bottom:2px;font-weight:600;color:#4a6741;font-size:13px;">Meistbesuchte Seiten:</td></tr>'
       for (const p of ga4.topPages.slice(0, 6)) {
-        rows += tableRow(`  ${p.page}`, `${p.views} Aufrufe`)
+        const label = PAGE_LABELS[p.page] || p.page
+        rows += tableRow(`  ${label}`, `${p.views} Aufrufe`)
       }
     }
 
-    websiteHtml = section('Website-Traffic', `<table style="width:100%;">${rows}</table>`)
+    websiteHtml = section(
+      `Website-Traffic ${MONTH_NAMES_DE[month]} ${year}`,
+      `<table style="width:100%;">${rows}</table>`,
+    )
   }
 
   // --- Picknick section ---
   let picknickHtml = ''
   if (ga4 && (ga4.picknickLandingViews > 0 || ga4.picknickDankeViews > 0)) {
-    const convRate = ga4.picknickLandingViews > 0
-      ? ((ga4.picknickDankeViews / ga4.picknickLandingViews) * 100).toFixed(1)
-      : '0'
+    const convRate =
+      ga4.picknickLandingViews > 0
+        ? ((ga4.picknickDankeViews / ga4.picknickLandingViews) * 100).toFixed(1)
+        : '0'
     let rows = ''
-    rows += tableRow('Aufrufe /picknick/', ga4.picknickLandingViews)
-    rows += tableRow('Abgeschlossene Buchungen (/danke/)', ga4.picknickDankeViews)
+    rows += tableRow('Besuche der Picknick-Seite', ga4.picknickLandingViews)
+    rows += tableRow('Angefragte Buchungen', ga4.picknickDankeViews)
     rows += tableRow('Conversion-Rate', `${convRate}%`)
+    rows += `<tr><td colspan="2" style="padding:2px 12px 8px;color:#888;font-size:11px;font-style:italic;">${convRate}% der Besucher der Picknick-Seite haben eine Anfrage per PayPal abgeschickt.</td></tr>`
     picknickHtml = section('Picknick-Korb', `<table style="width:100%;">${rows}</table>`)
   }
 
   // --- QR-Code Scans (print materials) ---
   let printQrHtml = ''
-  if (ga4 && ga4.printQrTotal > 0) {
+  if (ga4) {
     const labels = {
       'picknick-karte': 'Picknick-Karte (85×55 mm)',
-      'aushang': 'Aushang EDEKA Glahn (A4)',
-      'handout': 'Handout A6',
-      'visitenkarte': 'Visitenkarte',
+      aushang: 'Aushang EDEKA Glahn (A4)',
+      handout: 'Handout A6',
+      visitenkarte: 'Visitenkarte',
     }
     let rows = tableRow('Gesamt QR-Scans (Druckmaterial)', ga4.printQrTotal)
     for (const [source, count] of Object.entries(ga4.printQrScans).sort((a, b) => b[1] - a[1])) {
       const label = labels[source] || source
       rows += tableRow(`  ${label}`, count)
     }
-    printQrHtml = section('QR-Code Scans (Druckmaterial)', `<table style="width:100%;">${rows}</table>`)
+    if (ga4.printQrTotal === 0) {
+      rows += `<tr><td colspan="2" style="padding:2px 12px 8px;color:#888;font-size:11px;font-style:italic;">Noch keine Scans in diesem Monat — Tracking ist aktiv.</td></tr>`
+    }
+    printQrHtml = section(
+      'QR-Code Scans (Druckmaterial)',
+      `<table style="width:100%;">${rows}</table>`,
+    )
   }
 
   const dashboardLink = LOOKER_STUDIO_URL
@@ -725,6 +935,7 @@ function buildEmailHtml(current, prevYear, outlook, ga4) {
   </div>
 
   ${kpis}
+  ${prevYearNoteHtml}
   ${bookingsHtml}
   ${outlookHtml}
   ${websiteHtml}
@@ -782,26 +993,50 @@ async function main() {
 
   // Run all data collection in parallel
   const [current, prevYear, outlook, ga4] = await Promise.all([
-    collectBeds24Current(token).catch((e) => { console.error('Beds24 current error:', e.message); return null }),
-    collectBeds24PreviousYear(token).catch((e) => { console.error('Beds24 VJ error:', e.message); return null }),
-    collectBeds24Outlook(token).catch((e) => { console.error('Beds24 outlook error:', e.message); return [] }),
-    collectGA4Data().catch((e) => { console.error('GA4 error:', e.message); return null }),
+    collectBeds24Current(token).catch((e) => {
+      console.error('Beds24 current error:', e.message)
+      return null
+    }),
+    collectBeds24PreviousYear(token).catch((e) => {
+      console.error('Beds24 VJ error:', e.message)
+      return null
+    }),
+    collectBeds24Outlook(token).catch((e) => {
+      console.error('Beds24 outlook error:', e.message)
+      return []
+    }),
+    collectGA4Data().catch((e) => {
+      console.error('GA4 error:', e.message)
+      return null
+    }),
   ])
 
   console.log('\n--- Results ---')
   if (current) {
-    console.log(`Beds24 (aktuell): ${current.confirmedBookings} Buchungen, ${current.totalNightsInRange} Nächte, ${current.totalRevenue}€, ${current.occupancyRate}% Auslastung`)
-    console.log(`  Kanäle: Manuell=${current.byChannel.Manuell} Booking.com=${current.byChannel['Booking.com']} Website=${current.byChannel.Website}`)
+    console.log(
+      `Beds24 (aktuell): ${current.confirmedBookings} Buchungen, ${current.totalNightsInRange} Nächte, ${current.totalRevenue}€, ${current.occupancyRate}% Auslastung`,
+    )
+    console.log(
+      `  Kanäle: Direktbuchungen=${current.byChannel.Direktbuchungen} Booking.com=${current.byChannel['Booking.com']} Website=${current.byChannel.Website} Airbnb=${current.byChannel.Airbnb}`,
+    )
   }
   if (prevYear) {
-    console.log(`Beds24 (VJ): ${prevYear.confirmedBookings} Buchungen, ${prevYear.totalNightsInRange} Nächte, ${prevYear.totalRevenue}€`)
+    console.log(
+      `Beds24 (VJ): ${prevYear.confirmedBookings} Buchungen, ${prevYear.totalNightsInRange} Nächte, ${prevYear.totalRevenue}€`,
+    )
   }
   if (outlook.length > 0) {
-    console.log(`Ausblick: ${outlook.length} Monate (${outlook[0].monthLabel} bis ${outlook[outlook.length - 1].monthLabel})`)
+    console.log(
+      `Ausblick: ${outlook.length} Monate (${outlook[0].monthLabel} bis ${outlook[outlook.length - 1].monthLabel})`,
+    )
   }
   if (ga4) {
-    console.log(`GA4: ${ga4.sessions} Sessions, ${ga4.paidSearchSessions} Paid Search, ${ga4.buchungsinteressierte} Buchungsinteressierte`)
-    console.log(`  Picknick: ${ga4.picknickLandingViews} Aufrufe, ${ga4.picknickDankeViews} Buchungen`)
+    console.log(
+      `GA4: ${ga4.sessions} Sessions, ${ga4.paidSearchSessions} Paid Search, ${ga4.buchungsinteressierte} Buchungsinteressierte`,
+    )
+    console.log(
+      `  Picknick: ${ga4.picknickLandingViews} Aufrufe, ${ga4.picknickDankeViews} Buchungen`,
+    )
   }
 
   await pushToGoogleSheet(current, prevYear, outlook, ga4).catch((e) => {
