@@ -895,7 +895,7 @@ function buildEmailHtml(current, prevYear, outlook, ga4) {
 
   // --- QR-Code Scans (print materials) ---
   let printQrHtml = ''
-  if (ga4 && ga4.printQrTotal > 0) {
+  if (ga4) {
     const labels = {
       'picknick-karte': 'Picknick-Karte (85×55 mm)',
       aushang: 'Aushang EDEKA Glahn (A4)',
@@ -906,6 +906,9 @@ function buildEmailHtml(current, prevYear, outlook, ga4) {
     for (const [source, count] of Object.entries(ga4.printQrScans).sort((a, b) => b[1] - a[1])) {
       const label = labels[source] || source
       rows += tableRow(`  ${label}`, count)
+    }
+    if (ga4.printQrTotal === 0) {
+      rows += `<tr><td colspan="2" style="padding:2px 12px 8px;color:#888;font-size:11px;font-style:italic;">Noch keine Scans in diesem Monat — Tracking ist aktiv.</td></tr>`
     }
     printQrHtml = section(
       'QR-Code Scans (Druckmaterial)',
