@@ -54,9 +54,11 @@ const weekStart = addDays(today, -7) // 7 days ago (last Fri)
 const prevWeekEnd = addDays(today, -8)
 const prevWeekStart = addDays(today, -14)
 
-// Next week: Mon → Sun  (Mon = today + 3 days when today is Fri)
-const nextWeekStart = addDays(today, 3) // Mon
-const nextWeekEnd = addDays(today, 9) // Sun
+// Next week: Mon → Sun (day-of-week aware so manual runs also show correct dates)
+const dayOfWeek = today.getDay() // 0=Sun, 1=Mon, ..., 6=Sat
+const daysUntilNextMonday = dayOfWeek === 0 ? 1 : dayOfWeek === 1 ? 7 : 8 - dayOfWeek
+const nextWeekStart = addDays(today, daysUntilNextMonday) // Mon
+const nextWeekEnd = addDays(nextWeekStart, 6) // Sun
 
 const fmt = (d) => d.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' })
 const weekLabel = `${fmt(weekStart)} – ${fmt(weekEnd)}`
@@ -179,32 +181,36 @@ async function getGA4Data() {
   })
   const analyticsData = google.analyticsdata({ version: 'v1beta', auth })
 
-  // Sessions: this week vs previous week
-  const sessionsRes = await analyticsData.properties
-    .runReport({
-      property: `properties/${GA4_PROPERTY_ID}`,
-      requestBody: {
-        dateRanges: [
-          { startDate: toIsoDate(weekStart), endDate: toIsoDate(weekEnd), name: 'thisWeek' },
-          {
-            startDate: toIsoDate(prevWeekStart),
-            endDate: toIsoDate(prevWeekEnd),
-            name: 'prevWeek',
-          },
-        ],
-        dimensions: [{ name: 'dateRange' }],
-        metrics: [{ name: 'sessions' }],
-      },
-    })
-    .catch(() => ({ data: { rows: [] } }))
+  // Sessions: this week vs previous week (two separate calls — avoids named-dateRange parsing issues)
+  const [sessionsThisRes, sessionsPrevRes] = await Promise.all([
+    analyticsData.properties
+      .runReport({
+        property: `properties/${GA4_PROPERTY_ID}`,
+        requestBody: {
+          dateRanges: [{ startDate: toIsoDate(weekStart), endDate: toIsoDate(weekEnd) }],
+          metrics: [{ name: 'sessions' }],
+        },
+      })
+      .catch((e) => {
+        console.error('GA4 sessions (this week) error:', e.message)
+        return { data: { rows: [] } }
+      }),
+    analyticsData.properties
+      .runReport({
+        property: `properties/${GA4_PROPERTY_ID}`,
+        requestBody: {
+          dateRanges: [{ startDate: toIsoDate(prevWeekStart), endDate: toIsoDate(prevWeekEnd) }],
+          metrics: [{ name: 'sessions' }],
+        },
+      })
+      .catch((e) => {
+        console.error('GA4 sessions (prev week) error:', e.message)
+        return { data: { rows: [] } }
+      }),
+  ])
 
-  let sessionsThis = 0
-  let sessionsPrev = 0
-  for (const r of sessionsRes.data.rows || []) {
-    const val = parseInt(r.metricValues[0].value)
-    if (r.dimensionValues[0].value === 'thisWeek') sessionsThis += val
-    else sessionsPrev += val
-  }
+  const sessionsThis = parseInt(sessionsThisRes.data.rows?.[0]?.metricValues?.[0]?.value ?? '0')
+  const sessionsPrev = parseInt(sessionsPrevRes.data.rows?.[0]?.metricValues?.[0]?.value ?? '0')
 
   // Picknick pages: landing + danke (= completed bookings)
   const picknickRes = await analyticsData.properties
