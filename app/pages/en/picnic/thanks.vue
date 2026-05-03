@@ -31,9 +31,7 @@ const txn = computed(() => String(route.query.txn || ''))
       We will check availability and get back to you within
       <strong>24 hours</strong> to confirm.
     </p>
-    <p class="mt-2 text-sm text-sage-500">
-      A summary has been sent to your email address.
-    </p>
+    <p class="mt-2 text-sm text-sage-500">A summary has been sent to your email address.</p>
 
     <!-- Booking summary -->
     <div v-if="betrag > 0" class="mt-10 rounded-xl bg-waldhonig-50 p-6 text-left">

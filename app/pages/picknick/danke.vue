@@ -50,10 +50,7 @@ const selectedPackage = computed(() =>
           <dt class="text-sage-600">Personen</dt>
           <dd class="font-medium text-sage-900">{{ personen }}</dd>
         </div>
-        <div
-          v-if="selectedPackage?.timeSlot"
-          class="flex justify-between"
-        >
+        <div v-if="selectedPackage?.timeSlot" class="flex justify-between">
           <dt class="text-sage-600">Zeitraum</dt>
           <dd class="font-medium text-sage-900">{{ selectedPackage.timeSlot }}</dd>
         </div>
@@ -92,8 +89,8 @@ const selectedPackage = computed(() =>
     <div class="mt-6 rounded-lg bg-sage-50 p-4 text-left text-sm text-sage-700">
       <p>
         <strong class="font-medium text-sage-900">Korbpfand (100 €):</strong>
-        Bei Abholung hinterlegen Sie 100 € in bar. Bei Rückgabe des Korbes sowie des
-        vollständigen Inhalts erhalten Sie das Pfand sofort zurück.
+        Bei Abholung hinterlegen Sie 100 € in bar. Bei Rückgabe des Korbes sowie des vollständigen
+        Inhalts erhalten Sie das Pfand sofort zurück.
       </p>
     </div>
 

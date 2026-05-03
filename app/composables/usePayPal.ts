@@ -7,7 +7,6 @@
 
 declare global {
   interface Window {
-     
     paypal?: {
       Buttons: (options: Record<string, unknown>) => {
         render: (container: string | HTMLElement) => Promise<void>

@@ -345,11 +345,11 @@ useSeoMeta({
         <p>
           Diese Website nutzt Google Analytics 4 mit Google Consent Mode v2. Das Google-Tag
           (gtag.js) wird für alle Besucher geladen und übermittelt dabei Ihre IP-Adresse an Google.
-          <strong>Ohne Ihre Einwilligung</strong> werden ausschließlich cookiefreie, anonyme
-          Signale übertragen – es werden keine Cookies gesetzt, keine persistenten Kennungen
-          vergeben und keine personenbezogenen Daten gespeichert. Google verwendet diese Signale
-          ausschließlich für aggregierte statistische Modellierung. Rechtsgrundlage hierfür ist
-          Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO (berechtigtes Interesse an der Reichweitenmes­sung).
+          <strong>Ohne Ihre Einwilligung</strong> werden ausschließlich cookiefreie, anonyme Signale
+          übertragen – es werden keine Cookies gesetzt, keine persistenten Kennungen vergeben und
+          keine personenbezogenen Daten gespeichert. Google verwendet diese Signale ausschließlich
+          für aggregierte statistische Modellierung. Rechtsgrundlage hierfür ist Art.&nbsp;6
+          Abs.&nbsp;1 lit.&nbsp;f DSGVO (berechtigtes Interesse an der Reichweitenmes­sung).
           <strong>Mit Ihrer Einwilligung</strong> (Kategorie „Statistik") wird die vollständige
           Analyse mit Cookies aktiviert. Rechtsgrundlage: Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a DSGVO
           und § 25 Abs.&nbsp;1 TDDDG.
@@ -385,13 +385,13 @@ useSeoMeta({
 
         <p class="mt-4 font-semibold">Ohne Ihre Einwilligung (cookiefreie Modellierung)</p>
         <p>
-          Das Google-Tag (gtag.js) wird beim Seitenaufruf für alle Besucher geladen. Dabei wird
-          Ihre IP-Adresse an Server von Google übertragen. Es werden jedoch <strong>keine Cookies
-          gesetzt</strong>, keine persistenten Kennungen vergeben und keine personenbezogenen Daten
-          dauerhaft gespeichert. Google erhält lediglich anonyme, aggregierte Signale
-          (sog.&nbsp;cookiefreie Pings), die ausschließlich zur statistischen Modellierung der
-          Reichweite unserer Website verwendet werden. Eine Identifizierung einzelner Personen ist
-          dabei nicht möglich.
+          Das Google-Tag (gtag.js) wird beim Seitenaufruf für alle Besucher geladen. Dabei wird Ihre
+          IP-Adresse an Server von Google übertragen. Es werden jedoch
+          <strong>keine Cookies gesetzt</strong>, keine persistenten Kennungen vergeben und keine
+          personenbezogenen Daten dauerhaft gespeichert. Google erhält lediglich anonyme,
+          aggregierte Signale (sog.&nbsp;cookiefreie Pings), die ausschließlich zur statistischen
+          Modellierung der Reichweite unserer Website verwendet werden. Eine Identifizierung
+          einzelner Personen ist dabei nicht möglich.
         </p>
         <p class="mt-2">
           <strong>Rechtsgrundlage:</strong> Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO (berechtigtes
@@ -402,12 +402,12 @@ useSeoMeta({
 
         <p class="mt-4 font-semibold">Mit Ihrer Einwilligung (vollständige Analyse)</p>
         <p>
-          Wenn Sie die Cookie-Kategorie „Statistik" akzeptieren, wird die vollständige
-          GA4-Analyse aktiviert. Google Analytics setzt dann Cookies und erfasst:
-          besuchte Seiten, Sitzungsdauer, verwendetes Gerät und Betriebssystem, Herkunft des
-          Besuchs (Suchmaschine, Direktaufruf, Verweis) sowie den ungefähren Standort (Land/Stadt).
-          Die IP-Adresse wird vor Speicherung gekürzt (IP-Anonymisierung). Daten werden in der
-          Regel auf Servern von Google in der EU gespeichert.
+          Wenn Sie die Cookie-Kategorie „Statistik" akzeptieren, wird die vollständige GA4-Analyse
+          aktiviert. Google Analytics setzt dann Cookies und erfasst: besuchte Seiten,
+          Sitzungsdauer, verwendetes Gerät und Betriebssystem, Herkunft des Besuchs (Suchmaschine,
+          Direktaufruf, Verweis) sowie den ungefähren Standort (Land/Stadt). Die IP-Adresse wird vor
+          Speicherung gekürzt (IP-Anonymisierung). Daten werden in der Regel auf Servern von Google
+          in der EU gespeichert.
         </p>
         <p class="mt-2">
           <strong>Rechtsgrundlage:</strong> Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a DSGVO (Einwilligung)
@@ -419,10 +419,10 @@ useSeoMeta({
         <p>
           Diese Website verwendet Google Ads (Google Ireland Limited), um die Wirksamkeit unserer
           Werbeanzeigen zu messen. Der Google-Ads-Tag (AW-17985162041) wird zusammen mit dem
-          Google-Tag geladen und unterliegt denselben Consent-Mode-v2-Regeln: Ohne Ihre
-          Einwilligung werden keine Cookies für Werbezwecke gesetzt und keine
-          Konversionsmessungen durchgeführt. Mit Ihrer Einwilligung (Kategorie „Statistik") kann
-          Google messen, ob ein Klick auf unsere Anzeige zu einer Buchungsanfrage geführt hat.
+          Google-Tag geladen und unterliegt denselben Consent-Mode-v2-Regeln: Ohne Ihre Einwilligung
+          werden keine Cookies für Werbezwecke gesetzt und keine Konversionsmessungen durchgeführt.
+          Mit Ihrer Einwilligung (Kategorie „Statistik") kann Google messen, ob ein Klick auf unsere
+          Anzeige zu einer Buchungsanfrage geführt hat.
         </p>
         <p class="mt-2">
           <strong>Rechtsgrundlage:</strong> Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a DSGVO (Einwilligung)
