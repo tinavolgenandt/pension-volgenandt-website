@@ -58,8 +58,8 @@ useSchemaOrg([
     ],
     petsAllowed: true,
     priceRange: 'EUR 38-89',
-    checkinTime: '15:00',
-    checkoutTime: '10:00',
+    checkinTime: '14:00',
+    checkoutTime: '11:00',
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',

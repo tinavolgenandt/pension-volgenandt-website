@@ -163,7 +163,7 @@ useSeoMeta({
       <section>
         <h2 class="mt-8 mb-4 font-serif text-xl font-semibold text-sage-800">6. An- und Abreise</h2>
         <p>
-          Das gebuchte Zimmer steht dem Gast ab <strong>15:00 Uhr</strong> (Check-in) des
+          Das gebuchte Zimmer steht dem Gast ab <strong>14:00 Uhr</strong> (Check-in) des
           vereinbarten Anreisetages zur Verfügung. Ein früherer Check-in ist nach Verfügbarkeit und
           vorheriger Absprache möglich.
         </p>

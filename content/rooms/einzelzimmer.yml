@@ -63,11 +63,11 @@ highlights:
 
 extras:
   - name: 'Frühstück'
-    description: 'Brötchen, Brotbelag, hausgemachte Marmelade & Kaffee oder Tee'
+    description: '2 Brötchen, Käse- & Wurst Aufschnitt, Ei oder Joghurt'
     price: 10
     unit: 'pro Person / Nacht'
   - name: 'Genießer-Frühstück'
-    description: 'Brötchen, regionale Wurstspezialitäten, hausgemachte Marmelade, saisonales Obst, frischer Saft & Kaffee oder Tee'
+    description: '3 Brötchen, Käse- & Wurst Aufschnitt, Ei & Joghurt, hausgemachte Marmelade, saisonales Obst, frischer Saft & Kaffee oder Tee'
     price: 15
     unit: 'pro Person / Nacht'
   - name: 'Grill-Set'

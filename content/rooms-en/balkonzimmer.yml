@@ -69,11 +69,11 @@ highlights:
 
 extras:
   - name: 'Breakfast'
-    description: 'Rolls, cold cuts, homemade jam & coffee or tea'
+    description: '2 rolls, cheese & cold cuts, egg or yoghurt'
     price: 10
     unit: 'per person / night'
   - name: 'Gourmet breakfast'
-    description: 'Rolls, regional cold cuts, homemade jam, seasonal fruit, fresh juice & coffee or tea'
+    description: '3 rolls, cheese & cold cuts, egg & yoghurt, homemade jam, seasonal fruit, fresh juice & coffee or tea'
     price: 15
     unit: 'per person / night'
   - name: 'Dog'

@@ -32,7 +32,7 @@ const zimmerTarget = computed(() => (locale.value === 'en' ? '/en/rooms/' : '/zi
             <div
               class="inline-flex items-center gap-2 rounded-full bg-waldhonig-500 px-4 py-1.5 text-sm font-semibold text-white"
             >
-              <span class="size-2 animate-pulse rounded-full bg-white"></span>
+              <span class="size-2 animate-pulse rounded-full bg-white" />
               {{ t('lgs.liveNow', locale) }}
             </div>
           </div>
