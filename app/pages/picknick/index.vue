@@ -4,7 +4,7 @@ definePageMeta({
 })
 
 useSeoMeta({
-  title: 'Picknick-Korb – Genießer Frühstück to go',
+  title: 'Picknick-Korb ab 19 € | Pension Volgenandt Eichsfeld',
   ogTitle: 'Picknick-Korb | Pension Volgenandt',
   description:
     'Hausgemacht, regional, mit Herz gepackt. Buchen Sie Ihren Picknick-Korb für den Garten oder die Umgebung – ab 19 € pro Person.',
@@ -23,6 +23,30 @@ useHead({
       rel: 'alternate',
       hreflang: 'x-default',
       href: 'https://www.pension-volgenandt.de/picknick/',
+    },
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: 'Picknick-Korb',
+        description:
+          'Hausgemachter Picknick-Korb mit regionalen Produkten, Picknickdecke, Geschirr und Besteck. Verschiedene Pakete ab 19 € pro Person.',
+        offers: {
+          '@type': 'Offer',
+          price: '19.00',
+          priceCurrency: 'EUR',
+          availability: 'https://schema.org/InStock',
+          url: 'https://www.pension-volgenandt.de/picknick/',
+        },
+        provider: {
+          '@type': 'BedAndBreakfast',
+          name: 'Pension Volgenandt',
+          url: 'https://www.pension-volgenandt.de',
+        },
+      }),
     },
   ],
 })
