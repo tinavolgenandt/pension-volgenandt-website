@@ -2,6 +2,7 @@
 const appConfig = useAppConfig()
 const router = useRouter()
 const { isReady: paypalReady } = usePayPal()
+const { trackEvent } = useAnalytics()
 
 const KIDS_PRICE = 9.5
 const EXTRA_DRINK_PRICE = 3
@@ -154,6 +155,24 @@ watch(
   () => form.packageId,
   () => {
     form.drinks = {}
+    const pkg = packages.value.find((p) => p.id === form.packageId)
+    if (pkg) {
+      trackEvent('view_item', {
+        items: [{ item_name: pkg.name, price: pkg.price }],
+        currency: 'EUR',
+      })
+    }
+  },
+)
+
+const leadTracked = ref(false)
+watch(
+  () => form.name,
+  (val) => {
+    if (val && !leadTracked.value) {
+      leadTracked.value = true
+      trackEvent('generate_lead')
+    }
   },
 )
 
@@ -289,6 +308,11 @@ function renderPayPalButton() {
             'Bitte füllen Sie alle Pflichtfelder aus und wählen Sie die Getränke.'
           return Promise.reject(new Error('Form invalid'))
         }
+        trackEvent('begin_checkout', {
+          value: grandTotal.value,
+          currency: 'EUR',
+          items: [{ item_name: selectedPackage.value?.name, quantity: totalPersons.value }],
+        })
         return actions.order.create({
           purchase_units: [
             {
@@ -324,6 +348,18 @@ function renderPayPalButton() {
           const result = await response.json()
 
           if (response.ok && result.ok) {
+            trackEvent('purchase', {
+              transaction_id: result.transactionId ?? data.orderID,
+              value: grandTotal.value,
+              currency: 'EUR',
+              items: [
+                {
+                  item_name: selectedPackage.value?.name ?? '',
+                  quantity: totalPersons.value,
+                  price: grandTotal.value,
+                },
+              ],
+            })
             await router.push({
               path: '/picknick/danke/',
               query: {
