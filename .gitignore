@@ -31,8 +31,15 @@ Thumbs.db
 # Archived utility scripts
 .archive/
 
-# Server (contains SMTP credentials – never commit)
-server/
+# Server — credentials and runtime data stay gitignored
+server/config.php
+server/vendor/
+server/invoices/drafts/
+server/invoices/sent/
+server/invoices/logs/
+server/data/invoice-counter.json
+server/data/processed-bookings.json
+server/data/customers.json
 
 # Beds24 sync scripts & screenshots
 sync_*.mjs
