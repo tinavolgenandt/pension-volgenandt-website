@@ -79,6 +79,22 @@ const appConfig = useAppConfig()
               </div>
             </div>
 
+            <!-- WhatsApp -->
+            <div class="flex items-start gap-4">
+              <Icon name="ph:whatsapp-logo" class="mt-0.5 size-6 shrink-0 text-sage-600" />
+              <div>
+                <p class="font-semibold text-sage-900">{{ t('contact.whatsapp', 'en') }}</p>
+                <a
+                  :href="appConfig.contact.whatsapp"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-lg text-sage-700 transition-colors hover:text-sage-900"
+                >
+                  {{ appConfig.contact.mobileDisplay }}
+                </a>
+              </div>
+            </div>
+
             <!-- Landline -->
             <div class="flex items-start gap-4">
               <Icon name="ph:phone" class="mt-0.5 size-6 shrink-0 text-sage-600" />

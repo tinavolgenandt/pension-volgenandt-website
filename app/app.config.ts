@@ -13,6 +13,7 @@ export default defineAppConfig({
     landlineDisplay: '03605 542775',
     mobile: '+49 160 97719112',
     mobileDisplay: '0160 97719112',
+    whatsapp: 'https://wa.me/4916097719112',
     email: 'kontakt@pension-volgenandt.de',
     address: {
       street: 'Otto-Reutter-Straße 28',
