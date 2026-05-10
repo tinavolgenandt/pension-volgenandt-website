@@ -355,10 +355,21 @@ async function main() {
 
   const [bookings, nextArrivals, ga4] = await Promise.all([
     token
-      ? getNewBookings(token, weekStart, weekEnd)
+      ? getNewBookings(token, weekStart, weekEnd).catch((e) => {
+          console.error('Beds24 new bookings error:', e.message)
+          return { confirmed: 0, revenue: 0, byChannel: {} }
+        })
       : Promise.resolve({ confirmed: 0, revenue: 0, byChannel: {} }),
-    token ? getArrivals(token, nextWeekStart, nextWeekEnd) : Promise.resolve(0),
-    getGA4Data(),
+    token
+      ? getArrivals(token, nextWeekStart, nextWeekEnd).catch((e) => {
+          console.error('Beds24 arrivals error:', e.message)
+          return 0
+        })
+      : Promise.resolve(0),
+    getGA4Data().catch((e) => {
+      console.error('GA4 error:', e.message)
+      return null
+    }),
   ])
 
   console.log(`New bookings: ${bookings.confirmed} (€${bookings.revenue.toFixed(0)})`)
@@ -370,11 +381,17 @@ async function main() {
 
   const html = buildEmail({ bookings, nextArrivals, ga4 })
 
+  if (!SMTP_USER || !SMTP_PASS) {
+    console.warn('SMTP credentials not set, skipping email send')
+    return
+  }
+
   const transporter = createTransport({
     host: SMTP_HOST,
     port: parseInt(SMTP_PORT),
     secure: false,
     auth: { user: SMTP_USER, pass: SMTP_PASS },
+    tls: { rejectUnauthorized: false },
   })
 
   const recipients = REPORT_RECIPIENTS.split(',').map((s) => s.trim())
