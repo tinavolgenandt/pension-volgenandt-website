@@ -50,3 +50,6 @@ define('PAYPAL_ME_URL', 'https://paypal.me/pensionvolgenandt');
 
 // Picknick admin panel password — set a strong password here
 define('PICKNICK_ADMIN_PW', 'CHANGE_ME');
+
+// Inquiry log API key — random secret for get-inquiry-log.php
+define('INQUIRY_LOG_API_KEY', 'CHANGE_ME');

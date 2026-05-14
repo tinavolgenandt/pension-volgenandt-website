@@ -4,12 +4,14 @@
  * Deploy to IONOS alongside send-mail.php.
  */
 
+require_once __DIR__ . '/config.php';
+
 header('Content-Type: application/json; charset=utf-8');
 
 $apiKey      = $_GET['key'] ?? '';
-$expectedKey = getenv('INQUIRY_LOG_API_KEY');
+$expectedKey = INQUIRY_LOG_API_KEY;
 
-if ($apiKey === '' || $expectedKey === false || $expectedKey === '' || $apiKey !== $expectedKey) {
+if ($apiKey === '' || $apiKey !== $expectedKey) {
     http_response_code(403);
     echo json_encode(['error' => 'Unauthorized']);
     exit;
