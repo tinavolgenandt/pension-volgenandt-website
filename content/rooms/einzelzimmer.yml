@@ -39,7 +39,7 @@ startingPrice: 50
 heroImage: /img/rooms/einzelzimmer-zimmer.webp
 heroImageAlt: 'Einzelzimmer mit Einzelbett, Schrank und Fenster'
 gallery:
-  - src: /img/rooms/zimmer-badezimmer.png
+  - src: /img/rooms/zimmer-badezimmer.webp
     alt: 'Privates Badezimmer mit Dusche'
   - src: /img/rooms/zimmer-gemeinschaftskueche-5.webp
     alt: 'Gemeinschaftsküche mit Frühstückstischen und stimmungsvoller Beleuchtung'
