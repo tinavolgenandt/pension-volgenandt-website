@@ -37,7 +37,7 @@ startingPrice: 50
 heroImage: /img/rooms/einzelzimmer-zimmer.webp
 heroImageAlt: 'Single room with single bed, wardrobe and window'
 gallery:
-  - src: /img/rooms/zimmer-badezimmer.png
+  - src: /img/rooms/zimmer-badezimmer.webp
     alt: 'Private bathroom with shower'
   - src: /img/rooms/zimmer-gemeinschaftskueche-5.webp
     alt: 'Shared kitchen with breakfast tables and warm lighting'
