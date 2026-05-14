@@ -9,7 +9,7 @@
 
 session_start();
 
-define('ADMIN_PW', 'Mutz2912!!(');
+require_once __DIR__ . '/config.php';
 
 $bookingsDir = __DIR__ . '/bookings';
 $confirmBase = 'https://api.pension-volgenandt.de/picknick-confirm.php';
@@ -17,7 +17,7 @@ $cancelBase  = 'https://api.pension-volgenandt.de/picknick-cancel.php';
 
 // --- Auth ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['pw'])) {
-    if (hash_equals(ADMIN_PW, $_POST['pw'])) {
+    if (hash_equals(PICKNICK_ADMIN_PW, $_POST['pw'])) {
         $_SESSION['pk_admin'] = true;
     } else {
         $loginError = true;
