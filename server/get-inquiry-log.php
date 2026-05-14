@@ -6,10 +6,10 @@
 
 header('Content-Type: application/json; charset=utf-8');
 
-$apiKey = $_GET['key'] ?? '';
-$expectedKey = getenv('INQUIRY_LOG_API_KEY') ?: 'fTPjS1hQK_HvMglmz7gMXBs-gIs3RZteN-3Fxx66Xc0';
+$apiKey      = $_GET['key'] ?? '';
+$expectedKey = getenv('INQUIRY_LOG_API_KEY');
 
-if ($apiKey === '' || $apiKey !== $expectedKey) {
+if ($apiKey === '' || $expectedKey === false || $expectedKey === '' || $apiKey !== $expectedKey) {
     http_response_code(403);
     echo json_encode(['error' => 'Unauthorized']);
     exit;

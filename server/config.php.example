@@ -1,0 +1,52 @@
+<?php
+/**
+ * Central configuration for all server-side secrets.
+ * This file is gitignored — never commit it.
+ * Copy to config.php on the IONOS server and fill in real values.
+ */
+
+// SMTP (IONOS)
+define('SMTP_HOST', 'smtp.ionos.de');
+define('SMTP_PORT', 587);
+define('SMTP_USER', 'kontakt@pension-volgenandt.de');
+define('SMTP_PASS', 'CHANGE_ME');
+
+// Beds24 API v2
+define('BEDS24_REFRESH_TOKEN', 'CHANGE_ME'); // Beds24 Long Life Token (all:read scope)
+define('BEDS24_PROPERTY_ID', '261258');
+
+// Invoice webhook — shared secret sent by Beds24 in X-Invoice-Secret header
+define('INVOICE_WEBHOOK_SECRET', 'CHANGE_ME');
+
+// Admin email — receives draft-review notifications
+define('ADMIN_EMAIL',    'kontakt@pension-volgenandt.de');
+define('MAIL_FROM_NAME', 'Simone & Ralf Volgenandt');
+
+// Base URL of the server-side API (no trailing slash)
+define('INVOICE_BASE_URL', 'https://api.pension-volgenandt.de');
+
+// Room name map: Beds24 roomId → display name on invoices
+define('BEDS24_ROOM_NAMES', [
+    548066 => 'Balkonzimmer',
+    549252 => 'Rosengarten Zimmer',
+    549319 => 'Wohlfühl-Appartement',
+    656178 => 'Einzelzimmer',
+    656179 => "Ferienwohnung Emil's Kuhwiese",
+    656180 => 'Ferienwohnung Schöne Aussicht',
+]);
+
+// Bank details (Kreissparkasse Eichsfeld)
+define('BANK_NAME', 'Kreissparkasse Eichsfeld');
+define('BANK_IBAN', 'DE28820570701106230767');
+define('BANK_BIC',  'HELADEF1EIC');
+
+// PayPal Live credentials
+define('PAYPAL_SANDBOX',   false);
+define('PAYPAL_CLIENT_ID', 'CHANGE_ME');
+define('PAYPAL_SECRET',    'CHANGE_ME');
+
+// PayPal.me URL for invoice payments (no trailing slash)
+define('PAYPAL_ME_URL', 'https://paypal.me/pensionvolgenandt');
+
+// Picknick admin panel password — set a strong password here
+define('PICKNICK_ADMIN_PW', 'CHANGE_ME');

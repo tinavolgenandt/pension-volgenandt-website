@@ -12,21 +12,18 @@
  *  6. Admin clicks a link → picknick-confirm.php sends the guest confirmation.
  */
 
-require_once __DIR__ . '/smtp.php';
+require_once __DIR__ . '/smtp.php'; // also loads config.php
 
 // ---------------------------------------------------------------------------
-// Config
+// Config (credentials come from config.php via smtp.php)
 // ---------------------------------------------------------------------------
-$paypalSandbox  = false;
-$paypalClientId = 'AQWKIcTJMC3AjNtUk29wJh3G1mxyoXaj7r1KNGjpAgX8K4b5-WQ_QnxU3TTbp1DvPUZhcOKlPeHWZVq7';
-$paypalSecret   = 'ED9cWuaHClQ02p2RqAox_icjC2OJhXVFwIvAQsTP5U1vb0MEOQXnhSK0zf4QlrwkegqA3yq1Lrf9QUdb';
-$paypalApiBase  = $paypalSandbox
+$paypalApiBase = PAYPAL_SANDBOX
     ? 'https://api-m.sandbox.paypal.com'
     : 'https://api-m.paypal.com';
 
-$adminEmail   = 'kontakt@pension-volgenandt.de';
-$confirmBase  = 'https://api.pension-volgenandt.de/picknick-confirm.php';
-$bookingsDir  = __DIR__ . '/bookings';
+$adminEmail  = ADMIN_EMAIL;
+$confirmBase = 'https://api.pension-volgenandt.de/picknick-confirm.php';
+$bookingsDir = __DIR__ . '/bookings';
 
 // ---------------------------------------------------------------------------
 // CORS
@@ -73,7 +70,10 @@ if ($paypalOrderId === '') $errors[] = ['field' => 'paypalOrderId', 'message' =>
 if ($name === '') $errors[] = ['field' => 'name', 'message' => 'Name fehlt.'];
 if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = ['field' => 'email', 'message' => 'Ungültige E-Mail-Adresse.'];
 if ($message === '') $errors[] = ['field' => 'message', 'message' => 'Buchungsdetails fehlen.'];
-if ($amount <= 0) $errors[] = ['field' => 'amount', 'message' => 'Ungültiger Betrag.'];
+// Minimum reflects the cheapest possible booking (1 adult, base package ≈ €19)
+if ($amount < 10.0) $errors[] = ['field' => 'amount', 'message' => 'Ungültiger Betrag.'];
+// Sanity ceiling: max 4 persons × highest package + extras ≈ €200
+if ($amount > 250.0) $errors[] = ['field' => 'amount', 'message' => 'Betrag liegt außerhalb des gültigen Bereichs.'];
 
 if (!empty($errors)) {
     http_response_code(422);
@@ -101,7 +101,7 @@ function paypalRequest(string $url, string $method, ?string $body, array $header
     return ['ok' => true, 'data' => json_decode($response, true)];
 }
 
-$authHeader  = 'Authorization: Basic ' . base64_encode("$paypalClientId:$paypalSecret");
+$authHeader  = 'Authorization: Basic ' . base64_encode(PAYPAL_CLIENT_ID . ':' . PAYPAL_SECRET);
 $tokenResult = paypalRequest(
     "$paypalApiBase/v1/oauth2/token", 'POST',
     'grant_type=client_credentials',

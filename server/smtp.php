@@ -40,6 +40,12 @@ function setCorsHeaders(array $allowedOrigins): void {
  * Send an email via SMTP with STARTTLS + AUTH LOGIN.
  */
 function sendSmtp(string $host, int $port, string $user, string $pass, string $from, string $to, string $subject, string $body, string $replyToName, string $replyToEmail, string $cc = '', bool $html = false): array {
+    // Strip CRLF to prevent header injection
+    $replyToName  = str_replace(["\r", "\n"], '', $replyToName);
+    $replyToEmail = str_replace(["\r", "\n"], '', $replyToEmail);
+    $to           = str_replace(["\r", "\n"], '', $to);
+    $cc           = str_replace(["\r", "\n"], '', $cc);
+
     $errno = 0;
     $errstr = '';
     $conn = @stream_socket_client("tcp://$host:$port", $errno, $errstr, 15);
