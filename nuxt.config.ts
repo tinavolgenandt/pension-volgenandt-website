@@ -218,6 +218,7 @@ export default defineNuxtConfig({
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'google-site-verification', content: 'ITqY-AGnrWeTeIoqq4benxxcLHWig6-niLio2SfJ30o' },
         { name: 'geo.region', content: 'DE-TH' },
         { name: 'geo.placename', content: 'Leinefelde-Worbis' },
         { name: 'geo.position', content: '51.4124;10.322' },
