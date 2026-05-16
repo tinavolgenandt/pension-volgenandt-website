@@ -156,6 +156,7 @@ async function getNewBookings(token, rangeStart, rangeEnd) {
 
   let confirmed = 0
   let revenue = 0
+  let zeroPriceCount = 0
   const byChannel = {}
 
   for (const b of all) {
@@ -169,10 +170,15 @@ async function getNewBookings(token, rangeStart, rangeEnd) {
     confirmed++
     const ch = mapChannel(b.apiSource)
     byChannel[ch] = (byChannel[ch] || 0) + 1
-    revenue += parseFloat(b.price) || 0
+    const price = parseFloat(b.price) || 0
+    if (price === 0) {
+      zeroPriceCount++
+      console.warn(`New booking with €0 price: ID=${b.id}, arrival=${b.arrival}, room=${b.roomId}`)
+    }
+    revenue += price
   }
 
-  return { confirmed, revenue, byChannel }
+  return { confirmed, revenue, zeroPriceCount, byChannel }
 }
 
 // Confirmed arrivals in [rangeStart, rangeEnd]
@@ -199,6 +205,7 @@ function aggregateBookings(bookings, rangeStart, rangeEnd) {
   let cancellations = 0
   let totalRevenue = 0
   let totalNightsInRange = 0
+  let zeroPriceBookings = 0
   const byRoom = {}
   const byChannel = { Direkt: 0, 'Booking.com': 0, Website: 0, Airbnb: 0 }
 
@@ -222,6 +229,10 @@ function aggregateBookings(bookings, rangeStart, rangeEnd) {
     totalNightsInRange += nightsInRange
 
     const fullPrice = parseFloat(b.price) || 0
+    if (fullPrice === 0) {
+      zeroPriceBookings++
+      console.warn(`Booking with €0 price: ID=${b.id}, arrival=${b.arrival}, room=${ROOM_NAMES[String(b.roomId)] || b.roomId}`)
+    }
     totalRevenue += (nightsInRange / totalNights) * fullPrice
 
     const roomName = ROOM_NAMES[String(b.roomId)] || 'Unbekannt'
@@ -250,6 +261,7 @@ function aggregateBookings(bookings, rangeStart, rangeEnd) {
     totalNightsInRange,
     avgStay,
     occupancyRate,
+    zeroPriceBookings,
     byRoom,
     byChannel,
     topRoom: topRoom ? topRoom[0] : '–',
@@ -323,7 +335,7 @@ async function getGA4Data() {
       .runReport({ property: `properties/${GA4_PROPERTY_ID}`, requestBody })
       .catch(() => ({ data: { rows: [] } }))
 
-  const [weekThisRes, weekPrevRes, mtdRes, mtdPrevRes, picknickRes] = await Promise.all([
+  const [weekThisRes, weekPrevRes, mtdRes, mtdPrevRes, picknickRes, picknickPrevRes, qrThisRes, qrPrevRes] = await Promise.all([
     // Weekly sessions (this week)
     run({
       dateRanges: [{ startDate: toIsoDate(weekStart), endDate: toIsoDate(weekEnd) }],
@@ -368,6 +380,52 @@ async function getGA4Data() {
         },
       },
     }),
+    // Picknick pages previous week (for trend)
+    run({
+      dateRanges: [{ startDate: toIsoDate(prevWeekStart), endDate: toIsoDate(prevWeekEnd) }],
+      dimensions: [{ name: 'pagePath' }],
+      metrics: [{ name: 'screenPageViews' }],
+      dimensionFilter: {
+        orGroup: {
+          expressions: [
+            {
+              filter: {
+                fieldName: 'pagePath',
+                stringFilter: { matchType: 'BEGINS_WITH', value: '/picknick' },
+              },
+            },
+            {
+              filter: {
+                fieldName: 'pagePath',
+                stringFilter: { matchType: 'BEGINS_WITH', value: '/en/picnic' },
+              },
+            },
+          ],
+        },
+      },
+    }),
+    // QR code scans this week (utm_medium=print)
+    run({
+      dateRanges: [{ startDate: toIsoDate(weekStart), endDate: toIsoDate(weekEnd) }],
+      metrics: [{ name: 'sessions' }],
+      dimensionFilter: {
+        filter: {
+          fieldName: 'sessionMedium',
+          stringFilter: { matchType: 'EXACT', value: 'print' },
+        },
+      },
+    }),
+    // QR code scans previous week
+    run({
+      dateRanges: [{ startDate: toIsoDate(prevWeekStart), endDate: toIsoDate(prevWeekEnd) }],
+      metrics: [{ name: 'sessions' }],
+      dimensionFilter: {
+        filter: {
+          fieldName: 'sessionMedium',
+          stringFilter: { matchType: 'EXACT', value: 'print' },
+        },
+      },
+    }),
   ])
 
   const sessionsThis = parseInt(weekThisRes.data.rows?.[0]?.metricValues?.[0]?.value ?? '0')
@@ -385,6 +443,18 @@ async function getGA4Data() {
     else picknickLanding += views
   }
 
+  let picknickLandingPrev = 0
+  let picknickDankePrev = 0
+  for (const r of picknickPrevRes.data.rows || []) {
+    const path = r.dimensionValues[0].value
+    const views = parseInt(r.metricValues[0].value)
+    if (path.includes('/danke') || path.includes('/thanks')) picknickDankePrev += views
+    else picknickLandingPrev += views
+  }
+
+  const qrScansThis = parseInt(qrThisRes.data.rows?.[0]?.metricValues?.[0]?.value ?? '0')
+  const qrScansPrev = parseInt(qrPrevRes.data.rows?.[0]?.metricValues?.[0]?.value ?? '0')
+
   return {
     sessionsThis,
     sessionsPrev,
@@ -393,6 +463,10 @@ async function getGA4Data() {
     mtdSessionsPY,
     picknickLanding,
     picknickDanke,
+    picknickLandingPrev,
+    picknickDankePrev,
+    qrScansThis,
+    qrScansPrev,
   }
 }
 
@@ -434,19 +508,25 @@ function buildEmail({ bookings, nextArrivals, mtd, prevMtd, outlook, ga4 }) {
     ? `<span style="color:${trendColor};font-weight:700;">${trendSign} ${Math.abs(sessionsDiff)}</span> vs. Vorwoche`
     : '&nbsp;'
 
+  const picknickDankeBadge = ga4 ? trendBadge(ga4.picknickDanke, ga4.picknickDankePrev) : ''
+  const picknickLandingBadge = ga4 ? trendBadge(ga4.picknickLanding, ga4.picknickLandingPrev) : ''
   const picknickSub =
-    ga4 && ga4.picknickLanding > 0 ? `${ga4.picknickLanding} Besuche der Picknick-Seite` : ''
+    ga4 && (ga4.picknickLanding > 0 || ga4.picknickLandingPrev > 0)
+      ? `${ga4.picknickLanding} Besuche${picknickLandingBadge}`
+      : ''
+
+  const newBookingsSub =
+    bookings.confirmed > 0
+      ? fmtEur(bookings.revenue) +
+        ' Gesamtwert' +
+        (bookings.zeroPriceCount > 0 ? ` · ${bookings.zeroPriceCount} ohne Preis` : '')
+      : '&nbsp;'
 
   const weeklyCards = `
     <table width="100%" cellpadding="0" cellspacing="0">
       <tr>
-        ${card(
-          '🏠',
-          bookings.confirmed,
-          'Neue Buchungen',
-          bookings.confirmed > 0 ? fmtEur(bookings.revenue) + ' Gesamtwert' : '&nbsp;',
-        )}
-        ${card('🧺', ga4?.picknickDanke ?? '–', 'Picknick-Buchungen', picknickSub)}
+        ${card('🏠', bookings.confirmed, 'Neue Buchungen', newBookingsSub)}
+        ${card('🧺', `${ga4?.picknickDanke ?? '–'}${picknickDankeBadge}`, 'Picknick-Buchungen', picknickSub)}
       </tr>
       <tr>
         ${card('🌐', ga4?.sessionsThis ?? '–', 'Website-Besucher', sessionsTrend)}
@@ -476,6 +556,22 @@ function buildEmail({ bookings, nextArrivals, mtd, prevMtd, outlook, ga4 }) {
     <tr><td style="padding:0 24px 20px;">
       <p style="margin:0 0 8px;font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.8px;">Buchungsherkunft diese Woche</p>
       <table width="100%" cellpadding="0" cellspacing="0">${rows}</table>
+    </td></tr>`
+  }
+
+  // QR code scan row (only shown when either week had scans)
+  let qrHtml = ''
+  if (ga4 && (ga4.qrScansThis > 0 || ga4.qrScansPrev > 0)) {
+    const qrBadge = trendBadge(ga4.qrScansThis, ga4.qrScansPrev)
+    qrHtml = `
+    <tr><td style="padding:0 24px 20px;">
+      <p style="margin:0 0 8px;font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.8px;">QR-Code Scans (Druckmaterial)</p>
+      <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="padding:4px 0;color:#666;font-size:13px;">Scans diese Woche</td>
+          <td style="padding:4px 0;font-size:13px;font-weight:700;color:#3d5a3e;text-align:right;">${ga4.qrScansThis}${qrBadge}</td>
+        </tr>
+      </table>
     </td></tr>`
   }
 
@@ -519,6 +615,13 @@ function buildEmail({ bookings, nextArrivals, mtd, prevMtd, outlook, ga4 }) {
       ? `VJ: ${prevRev.toLocaleString('de-DE', { minimumFractionDigits: 0 })} €${trendBadge(currRev, prevRev)}`
       : '',
   )
+  if (mtd.zeroPriceBookings > 0) {
+    mtdRows += tblRow(
+      '&#x26A0;&#xFE0F; Buchungen ohne Preisangabe',
+      mtd.zeroPriceBookings,
+      'bitte in Beds24 prüfen',
+    )
+  }
   mtdRows += tblRow('Stornierungen', `${mtd.cancellations} (${mtd.cancellationRate}%)`)
   mtdRows += tblRow('Ø Aufenthalt', `${mtd.avgStay} Nächte`)
   mtdRows += tblRow('Beliebtestes Zimmer', mtd.topRoom)
@@ -607,6 +710,8 @@ function buildEmail({ bookings, nextArrivals, mtd, prevMtd, outlook, ga4 }) {
   </td></tr>
 
   ${channelHtml}
+
+  ${qrHtml}
 
   <tr><td style="height:8px;"></td></tr>
 
