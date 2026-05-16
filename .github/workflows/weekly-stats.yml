@@ -30,8 +30,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-      - name: Collect and send weekly statistics
-        run: node scripts/weekly-stats.mjs
+      - name: Collect and send combined statistics
+        run: node scripts/combined-stats.mjs
         env:
           BEDS24_REFRESH_TOKEN: ${{ secrets.BEDS24_REFRESH_TOKEN }}
           BEDS24_PROPERTY_ID: '261258'
