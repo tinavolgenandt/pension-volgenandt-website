@@ -67,6 +67,11 @@ extras:
     description: '3 rolls, cheese & cold cuts, egg & yoghurt, homemade jam, seasonal fruit, fresh juice & coffee or tea'
     price: 15
     unit: 'per person / night'
+  - name: 'Picnic basket'
+    description: 'Regional & homemade, with crockery and blanket. Relax in the pension garden, take it on a day trip, or discover your own favourite spot in the Eichsfeld countryside – we pack everything for you. Find inspiration on our trips & activities page.'
+    price: 19
+    pricePrefix: 'from '
+    unit: 'per person'
   - name: 'BBQ set'
     description: 'Incl. barbecue utensils and pans'
     price: 10

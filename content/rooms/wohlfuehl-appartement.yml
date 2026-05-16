@@ -79,6 +79,11 @@ extras:
     description: 'Zusätzlicher Schlafplatz auf dem Schlafsofa'
     price: 10
     unit: 'pro Person / Nacht'
+  - name: 'Picknick-Korb'
+    description: 'Regional & hausgemacht, mit Geschirr und Decke. Im Garten der Pension entspannen, auf einen Ausflug mitnehmen oder einen Lieblingsplatz in der Eichsfelder Natur suchen – wir packen alles ein. Ausflugstipps gibt es auf unserer Website.'
+    price: 19
+    pricePrefix: 'ab '
+    unit: 'pro Person'
   - name: 'Grill-Set'
     description: 'Inkl. Grillbesteck und -pfannen'
     price: 10
