@@ -1,4 +1,4 @@
-name: 'Ferienwohnung Schöne Aussicht'
+﻿name: 'Ferienwohnung Schöne Aussicht'
 slug: schoene-aussicht
 seoTitle: 'Ferienwohnung Schöne Aussicht | Pension Volgenandt'
 seoDescription: 'Großzügige Ferienwohnung mit Panoramablick im Eichsfeld. 2 Schlafzimmer, Küche, bis 6 Gäste. Ab 126 €/Nacht.'
@@ -75,11 +75,11 @@ highlights:
 
 extras:
   - name: 'Frühstück'
-    description: '2 Brötchen, Käse- & Wurst Aufschnitt, Ei oder Joghurt'
+    description: '2 Brötchen, Käse- & Wurst-Aufschnitt, Ei oder Joghurt, hausgemachte Marmelade, Kaffee oder Tee'
     price: 10
     unit: 'pro Person / Nacht'
   - name: 'Genießer-Frühstück'
-    description: '3 Brötchen, Käse- & Wurst Aufschnitt, Ei & Joghurt, hausgemachte Marmelade, saisonales Obst, frischer Saft & Kaffee oder Tee'
+    description: '3 Brötchen, Käse- & Wurst-Aufschnitt, Ei oder Joghurt, hausgemachte Marmelade, saisonales Obst, frischer Saft & Kaffee oder Tee'
     price: 15
     unit: 'pro Person / Nacht'
   - name: 'Aufbettung'

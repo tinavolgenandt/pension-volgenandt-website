@@ -81,7 +81,7 @@ function buildHtml() {
 
       <!-- Greeting -->
       <p style="margin:0 0 8px;font-size:18px;color:#1a2e1a;">
-        Herzlich willkommen, ${guestName}!
+        Liebe/-r ${guestName},
       </p>
       <p style="margin:0 0 28px;font-size:15px;line-height:1.7;color:#4a5e4a;">
         Wir freuen uns sehr auf Ihren Besuch. In dieser E-Mail finden Sie alle wichtigen
@@ -110,14 +110,18 @@ function buildHtml() {
             <p style="margin:0 0 6px;font-size:15px;font-weight:bold;color:#1a2e1a;">📍 Adresse</p>
             <p style="margin:0;font-size:14px;line-height:1.7;color:#4a5e4a;">
               Pension Volgenandt<br />
-              Breitenbach<br />
-              37308 Heilbad Heiligenstadt
+              Otto-Reuter-Straße 28<br />
+              37327 Leinefelde-Worbis OT Breitenbach
             </p>
+            <a href="https://www.google.com/maps/search/?api=1&query=Pension+Volgenandt+Otto-Reuter-Straße+28+37327+Leinefelde-Worbis"
+               style="display:inline-block;margin-top:8px;font-size:13px;color:#2d4a2d;font-weight:600;text-decoration:underline;">
+              In Google Maps öffnen →
+            </a>
           </td>
           <td style="vertical-align:top;width:50%;">
             <p style="margin:0 0 6px;font-size:15px;font-weight:bold;color:#1a2e1a;">🚗 Anfahrt</p>
             <p style="margin:0;font-size:14px;line-height:1.7;color:#4a5e4a;">
-              A38 Ausfahrt Leinefelde, Richtung Breitenbach.<br />
+              A38 Ausfahrt Leinefelde, Richtung Breitenbach – ca. 5 Minuten.<br />
               Kostenlose Parkplätze direkt vor dem Haus.
             </p>
           </td>
@@ -144,23 +148,25 @@ function buildHtml() {
       <!-- Frühstück -->
       <p style="margin:0 0 6px;font-size:15px;font-weight:bold;color:#1a2e1a;">🥐 Frühstück</p>
       <p style="margin:0 0 12px;font-size:14px;line-height:1.7;color:#4a5e4a;">
-        Frühstück können Sie jederzeit bis zum Vorabend dazubuchen – einfach kurz per Nachricht
-        oder telefonisch Bescheid geben.
+        Frühstück bitte mindestens <strong>1 Tag vor der Anreise</strong> dazubuchen –
+        einfach kurz per Nachricht oder telefonisch Bescheid geben.
       </p>
       <table cellpadding="0" cellspacing="0" style="width:100%;margin-bottom:28px;">
         <tr>
           <td style="font-size:14px;color:#4a5e4a;padding:8px 0;border-bottom:1px solid #e5ebe5;">
-            Frühstück <span style="color:#9ca3af;">(2 Brötchen, Aufschnitt, Ei oder Joghurt)</span>
+            <strong style="color:#1a2e1a;">Frühstück</strong>
+            <span style="display:block;color:#9ca3af;font-size:13px;margin-top:2px;">2 Brötchen, Käse- &amp; Wurst-Aufschnitt, Ei oder Joghurt, hausgemachte Marmelade, Kaffee oder Tee</span>
           </td>
-          <td style="font-size:14px;font-weight:600;color:#1a2e1a;text-align:right;padding:8px 0;border-bottom:1px solid #e5ebe5;">
+          <td style="font-size:14px;font-weight:600;color:#1a2e1a;text-align:right;vertical-align:top;padding:8px 0;border-bottom:1px solid #e5ebe5;white-space:nowrap;">
             10 € / Person
           </td>
         </tr>
         <tr>
           <td style="font-size:14px;color:#4a5e4a;padding:8px 0;">
-            Genießer-Frühstück <span style="color:#9ca3af;">(inkl. Marmelade, Obst &amp; Saft)</span>
+            <strong style="color:#1a2e1a;">Genießer-Frühstück</strong>
+            <span style="display:block;color:#9ca3af;font-size:13px;margin-top:2px;">3 Brötchen, Käse- &amp; Wurst-Aufschnitt, Ei oder Joghurt, hausgemachte Marmelade, saisonales Obst, frischer Saft &amp; Kaffee oder Tee</span>
           </td>
-          <td style="font-size:14px;font-weight:600;color:#1a2e1a;text-align:right;padding:8px 0;">
+          <td style="font-size:14px;font-weight:600;color:#1a2e1a;text-align:right;vertical-align:top;padding:8px 0;white-space:nowrap;">
             15 € / Person
           </td>
         </tr>
@@ -180,9 +186,6 @@ function buildHtml() {
               nehmen Sie den Korb auf einen Ausflug ins Eichsfeld mit oder genießen Sie Ihr
               Lieblingsplätzchen in der Natur – wir packen alles für Sie ein.
             </p>
-            <p style="margin:0 0 12px;font-size:14px;color:#4a5e4a;">
-              Gerne auch für Tagesbesucher buchbar – bitte rechtzeitig vorbestellen.
-            </p>
             <a href="https://www.pension-volgenandt.de/picknick/"
                style="display:inline-block;background:#c07d2a;color:#ffffff;font-size:14px;font-weight:600;text-decoration:none;padding:10px 20px;border-radius:8px;">
               Picknick-Korb bestellen →
@@ -195,17 +198,12 @@ function buildHtml() {
       <table cellpadding="0" cellspacing="0" style="width:100%;background:#f4f7f4;border-radius:10px;margin-bottom:32px;">
         <tr>
           <td style="padding:20px 24px;">
-            <p style="margin:0 0 4px;font-size:16px;font-weight:bold;color:#1a2e1a;">
+            <p style="margin:0 0 8px;font-size:16px;font-weight:bold;color:#1a2e1a;">
               🗺 Ausflugstipps fürs Eichsfeld
-            </p>
-            <p style="margin:0 0 12px;font-size:14px;line-height:1.7;color:#4a5e4a;">
-              Bärenpark Worbis (6 km), Burg Hanstein, Seeburger See, Baumkronenpfad Hainich –
-              auf unserer Website finden Sie alle Ausflugsziele mit Entfernungsangaben und
-              Beschreibungen.
             </p>
             <a href="https://www.pension-volgenandt.de/ausflugsziele/"
                style="display:inline-block;color:#2d4a2d;font-size:14px;font-weight:600;text-decoration:underline;">
-              Alle Ausflugstipps ansehen →
+              Alle Ausflugsziele mit Beschreibungen ansehen →
             </a>
           </td>
         </tr>
