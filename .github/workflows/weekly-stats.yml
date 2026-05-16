@@ -25,7 +25,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: Collect and send weekly statistics
         run: node scripts/weekly-stats.mjs
