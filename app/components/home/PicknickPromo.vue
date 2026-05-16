@@ -42,56 +42,84 @@ function dismiss() {
 
 <template>
   <Transition
-    enter-from-class="translate-y-8 opacity-0"
-    enter-active-class="transition-all duration-500 ease-out"
-    leave-to-class="translate-y-8 opacity-0"
-    leave-active-class="transition-all duration-300 ease-in"
+    enter-from-class="scale-95 opacity-0"
+    enter-active-class="transition-all duration-400 ease-out"
+    leave-to-class="scale-95 opacity-0"
+    leave-active-class="transition-all duration-200 ease-in"
   >
     <div
       v-if="show && !isPicknickPage"
-      class="fixed right-4 bottom-4 z-50 w-72 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black/10 md:right-6 md:bottom-6"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4"
     >
-      <!-- Close button -->
-      <button
-        class="absolute top-2 right-2 z-10 flex size-7 items-center justify-center rounded-full bg-black/25 text-white transition-colors hover:bg-black/40"
-        aria-label="Schließen"
-        @click="dismiss"
-      >
-        <Icon name="lucide:x" :size="13" />
-      </button>
+      <!-- Backdrop -->
+      <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" @click="dismiss" />
 
-      <!-- Image -->
-      <NuxtImg
-        src="/img/picknick/header-picknick.webp"
-        alt="Picknick-Korb mit regionalen Produkten"
-        class="h-32 w-full object-cover"
-        style="object-position: center 55%"
-        width="288"
-        height="128"
-        loading="lazy"
-      />
-
-      <!-- Body -->
-      <div class="p-4">
-        <div class="flex items-center gap-2">
-          <h3 class="font-serif text-base font-bold leading-tight text-sage-900">Picknick-Korb</h3>
-          <span
-            class="ml-auto shrink-0 rounded-full bg-waldhonig-100 px-2.5 py-0.5 text-xs font-semibold text-waldhonig-700"
-          >
-            ab 19 €
-          </span>
-        </div>
-        <p class="mt-1.5 text-xs leading-relaxed text-sage-600">
-          Regional &amp; hausgemacht – im Garten genießen oder auf Ausflug mitnehmen. Wir packen
-          alles ein.
-        </p>
-        <NuxtLink
-          to="/picknick/"
-          class="mt-3 block rounded-lg bg-waldhonig-500 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-waldhonig-600"
+      <!-- Card -->
+      <div class="relative w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl">
+        <!-- Close button -->
+        <button
+          class="absolute top-3 right-3 z-10 flex size-8 items-center justify-center rounded-full bg-black/30 text-white transition-colors hover:bg-black/50"
+          aria-label="Schließen"
           @click="dismiss"
         >
-          Mehr erfahren →
-        </NuxtLink>
+          <Icon name="lucide:x" :size="15" />
+        </button>
+
+        <!-- Image -->
+        <NuxtImg
+          src="/img/picknick/header-picknick.webp"
+          alt="Picknick-Korb mit regionalen Produkten"
+          class="h-48 w-full object-cover"
+          style="object-position: center 55%"
+          width="448"
+          height="192"
+          loading="lazy"
+        />
+
+        <!-- Body -->
+        <div class="p-5">
+          <div class="flex items-start gap-3">
+            <div class="flex-1">
+              <h3 class="font-serif text-lg leading-tight font-bold text-sage-900">
+                Picknick-Korb
+              </h3>
+              <p class="mt-0.5 text-xs text-sage-500">
+                Regional &amp; hausgemacht · mit Geschirr und Decke
+              </p>
+            </div>
+            <span
+              class="shrink-0 rounded-full bg-waldhonig-100 px-3 py-1 text-sm font-semibold text-waldhonig-700"
+            >
+              ab 19 €
+            </span>
+          </div>
+
+          <p class="mt-3 text-sm leading-relaxed text-sage-600">
+            Im Garten der Pension entspannen oder auf einen Ausflug ins Eichsfeld mitnehmen – wir
+            packen alles ein. Ausflugstipps gibt es auf unserer Website.
+          </p>
+
+          <!-- Day guest highlight -->
+          <div
+            class="mt-3 flex items-center gap-2 rounded-lg bg-sage-50 px-3 py-2.5 text-sm text-sage-700"
+          >
+            <Icon
+              name="lucide:sun"
+              :size="16"
+              class="shrink-0 text-waldhonig-500"
+              aria-hidden="true"
+            />
+            <span>Auch ohne Zimmerbuchung – <strong>Tagesgäste herzlich willkommen.</strong></span>
+          </div>
+
+          <NuxtLink
+            to="/picknick/"
+            class="mt-4 block rounded-xl bg-waldhonig-500 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-waldhonig-600"
+            @click="dismiss"
+          >
+            Mehr erfahren →
+          </NuxtLink>
+        </div>
       </div>
     </div>
   </Transition>
