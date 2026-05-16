@@ -89,6 +89,46 @@ const activityCards = computed(() => [
       </div>
     </section>
 
+    <!-- Picknick-Korb Teaser -->
+    <section class="bg-waldhonig-50 px-6 py-12 md:py-14">
+      <div class="mx-auto max-w-5xl">
+        <div class="flex flex-col items-center gap-8 md:flex-row md:items-center md:gap-12">
+          <div class="w-full shrink-0 overflow-hidden rounded-xl md:w-80">
+            <NuxtImg
+              src="/img/picknick/header-picknick.webp"
+              alt="Picknick-Korb mit regionalen Produkten im Gras"
+              class="h-52 w-full object-cover"
+              style="object-position: center 60%"
+              loading="lazy"
+              sizes="100vw md:320px"
+              width="640"
+              height="416"
+            />
+          </div>
+          <div>
+            <h2 class="font-serif text-2xl font-semibold text-sage-900">
+              Picknick-Korb – Ausflug mit Genuss
+            </h2>
+            <p class="mt-3 leading-relaxed text-sage-700">
+              Nehmen Sie unseren hausgemachten Picknick-Korb auf Ihren Ausflug mit – zur Burg
+              Hanstein, an den Seeburger See oder einfach in unseren Garten. Regional, saisonal, mit
+              echtem Geschirr. Ab 19 € pro Person.
+            </p>
+            <p class="mt-2 text-sm text-sage-500">
+              Auch für Tagesgäste buchbar – kein Zimmer nötig.
+            </p>
+            <NuxtLink
+              to="/picknick/"
+              class="mt-4 inline-flex items-center gap-1 font-semibold text-waldhonig-600 transition-colors hover:text-waldhonig-700 hover:underline"
+            >
+              Picknick-Korb entdecken
+              <Icon name="ph:arrow-right" class="size-4" />
+            </NuxtLink>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Attraction card grid -->
     <section class="px-6 py-12 md:py-16">
       <div class="mx-auto max-w-6xl">
