@@ -64,5 +64,9 @@ useHead({
     <UiScrollReveal>
       <HomeLocationMap />
     </UiScrollReveal>
+
+    <ClientOnly>
+      <HomePicknickPromo />
+    </ClientOnly>
   </div>
 </template>

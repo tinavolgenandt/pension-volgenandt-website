@@ -6,6 +6,7 @@ interface Extra {
   name: string
   description?: string
   price: number
+  pricePrefix?: string
   unit: string
 }
 
@@ -24,11 +25,13 @@ const extraIcons: Record<string, string> = {
   Hund: 'lucide:dog',
   Aufbettung: 'lucide:bed-single',
   'Grill-Set': 'lucide:flame',
+  'Picknick-Korb': 'ph:basket',
   Breakfast: 'lucide:egg-fried',
   'Gourmet breakfast': 'lucide:croissant',
   Dog: 'lucide:dog',
   'Extra bed': 'lucide:bed-single',
   'BBQ set': 'lucide:flame',
+  'Picnic basket': 'ph:basket',
 }
 
 function getExtraIcon(name: string): string {
@@ -63,7 +66,7 @@ function getExtraIcon(name: string): string {
           </div>
         </div>
         <span class="shrink-0 text-sm font-semibold text-sage-700">
-          {{ extra.price }} EUR {{ extra.unit }}
+          {{ extra.pricePrefix ?? '' }}{{ extra.price }} EUR {{ extra.unit }}
         </span>
       </li>
     </ul>
