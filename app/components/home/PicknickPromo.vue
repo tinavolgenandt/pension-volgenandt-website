@@ -6,12 +6,16 @@ const isPicknickPage = computed(
   () => route.path.startsWith('/picknick') || route.path.startsWith('/en/picnic'),
 )
 
+// Bump the version suffix whenever the popup is redesigned so returning
+// visitors who dismissed an earlier version see the new one again.
+const DISMISS_KEY = 'picknick-promo-dismissed-v2'
+
 let cleanupScroll: (() => void) | null = null
 
 onMounted(() => {
   if (isPicknickPage.value) return
   try {
-    if (localStorage.getItem('picknick-promo-dismissed')) return
+    if (localStorage.getItem(DISMISS_KEY)) return
   } catch {
     return
   }
@@ -33,7 +37,7 @@ onUnmounted(() => cleanupScroll?.())
 function dismiss() {
   show.value = false
   try {
-    localStorage.setItem('picknick-promo-dismissed', '1')
+    localStorage.setItem(DISMISS_KEY, '1')
   } catch {
     // ignore – private browsing or storage full
   }
