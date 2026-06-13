@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useJsonLd } from '~/composables/useJsonLd'
+
 const baseURL = useRuntimeConfig().app.baseURL
 
 useHead({
@@ -20,60 +22,63 @@ useSeoMeta({
   ogSiteName: 'Pension Volgenandt',
 })
 
-useSchemaOrg([
-  {
-    '@type': 'WebSite',
-    name: 'Pension Volgenandt',
-    url: 'https://www.pension-volgenandt.de',
-    inLanguage: 'de-DE',
-  },
-  {
-    '@type': 'BedAndBreakfast',
-    '@id': 'https://www.pension-volgenandt.de/#identity',
-    name: 'Pension Volgenandt',
-    description:
-      'Familiär geführte Pension in Breitenbach, Eichsfeld. Ferienwohnungen und Zimmer mit Blick ins Grüne.',
-    url: 'https://www.pension-volgenandt.de',
-    logo: 'https://www.pension-volgenandt.de/favicon.svg',
-    image: 'https://www.pension-volgenandt.de/img/hero/hero-poster.webp',
-    telephone: '+49 160 97719112',
-    email: 'kontakt@pension-volgenandt.de',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: 'Otto-Reutter-Straße 28',
-      addressLocality: 'Leinefelde-Worbis OT Breitenbach',
-      postalCode: '37327',
-      addressRegion: 'Thüringen',
-      addressCountry: 'DE',
+useJsonLd(
+  [
+    {
+      '@type': 'WebSite',
+      name: 'Pension Volgenandt',
+      url: 'https://www.pension-volgenandt.de',
+      inLanguage: 'de-DE',
     },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: 51.4124,
-      longitude: 10.322,
-    },
-    amenityFeature: [
-      { '@type': 'LocationFeatureSpecification', name: 'WiFi', value: true },
-      { '@type': 'LocationFeatureSpecification', name: 'Parking', value: true },
-      { '@type': 'LocationFeatureSpecification', name: 'Breakfast', value: true },
-    ],
-    petsAllowed: true,
-    priceRange: 'EUR 38-89',
-    checkinTime: '14:00',
-    checkoutTime: '11:00',
-    openingHoursSpecification: [
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-        opens: '08:00',
-        closes: '22:00',
+    {
+      '@type': 'BedAndBreakfast',
+      '@id': 'https://www.pension-volgenandt.de/#identity',
+      name: 'Pension Volgenandt',
+      description:
+        'Familiär geführte Pension in Breitenbach, Eichsfeld. Ferienwohnungen und Zimmer mit Blick ins Grüne.',
+      url: 'https://www.pension-volgenandt.de',
+      logo: 'https://www.pension-volgenandt.de/favicon.svg',
+      image: 'https://www.pension-volgenandt.de/img/hero/hero-poster.webp',
+      telephone: '+49 160 97719112',
+      email: 'kontakt@pension-volgenandt.de',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Otto-Reutter-Straße 28',
+        addressLocality: 'Leinefelde-Worbis OT Breitenbach',
+        postalCode: '37327',
+        addressRegion: 'Thüringen',
+        addressCountry: 'DE',
       },
-    ],
-    sameAs: [
-      'https://maps.app.goo.gl/pGocG9jFPzXkpvGbA',
-      'https://www.booking.com/hotel/de/pension-volgenandt.de.html',
-    ],
-  },
-])
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 51.4124,
+        longitude: 10.322,
+      },
+      amenityFeature: [
+        { '@type': 'LocationFeatureSpecification', name: 'WiFi', value: true },
+        { '@type': 'LocationFeatureSpecification', name: 'Parking', value: true },
+        { '@type': 'LocationFeatureSpecification', name: 'Breakfast', value: true },
+      ],
+      petsAllowed: true,
+      priceRange: 'EUR 38-89',
+      checkinTime: '14:00',
+      checkoutTime: '11:00',
+      openingHoursSpecification: [
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+          opens: '08:00',
+          closes: '22:00',
+        },
+      ],
+      sameAs: [
+        'https://maps.app.goo.gl/pGocG9jFPzXkpvGbA',
+        'https://www.booking.com/hotel/de/pension-volgenandt.de.html',
+      ],
+    },
+  ],
+  'global-structured-data',
+)
 </script>
 
 <template>

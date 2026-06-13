@@ -1,22 +1,28 @@
 <script setup lang="ts">
 import { t } from '~/utils/translations'
+import { useJsonLd } from '~/composables/useJsonLd'
 
 const siteUrl = 'https://www.pension-volgenandt.de'
 
 const { data: faqData } = await useAsyncData('faq-en', () => queryCollection('faqEn').first())
 const faqItems = computed(() => faqData.value?.items ?? [])
 
-useSchemaOrg([
-  defineWebPage({
+useJsonLd(
+  {
     '@type': 'FAQPage',
-  }),
-  ...(faqData.value?.items ?? []).map((item) =>
-    defineQuestion({
+    '@id': `${siteUrl}/en/contact/#faq`,
+    url: `${siteUrl}/en/contact/`,
+    mainEntity: (faqData.value?.items ?? []).map((item) => ({
+      '@type': 'Question',
       name: item.question,
-      acceptedAnswer: item.answer.replace(/<[^>]*>/g, ''),
-    }),
-  ),
-])
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer.replace(/<[^>]*>/g, ''),
+      },
+    })),
+  },
+  'contact-faq-schema-en',
+)
 
 useHead({
   htmlAttrs: { lang: 'en' },

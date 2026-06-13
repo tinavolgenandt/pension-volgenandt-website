@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useJsonLd } from '~/composables/useJsonLd'
+
 const route = useRoute()
 const slug = route.params.slug as string
 
@@ -49,16 +51,18 @@ useHead({
 })
 
 // TouristAttraction structured data
-useSchemaOrg([
+useJsonLd(
   {
     '@type': 'TouristAttraction',
+    '@id': `https://www.pension-volgenandt.de/en/attractions/${attraction.value.slug}/#attraction`,
     name: attraction.value.name,
     description: attraction.value.seoDescription,
-    image: `https://www.pension-volgenandt.de${attraction.value.heroImage}`,
+    image: [`https://www.pension-volgenandt.de${attraction.value.heroImage}`],
     url: `https://www.pension-volgenandt.de/en/attractions/${attraction.value.slug}/`,
     ...(attraction.value.website ? { sameAs: attraction.value.website } : {}),
   },
-])
+  `attraction-schema-en-${slug}`,
+)
 
 // Breadcrumb with dynamic label
 definePageMeta({
