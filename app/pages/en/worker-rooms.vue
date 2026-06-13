@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { t } from '~/utils/translations'
+import { useJsonLd } from '~/composables/useJsonLd'
 
 const siteUrl = 'https://www.pension-volgenandt.de'
 
@@ -25,17 +26,22 @@ useHead({
   ],
 })
 
-useSchemaOrg([
+useJsonLd(
   {
     '@type': 'LodgingBusiness',
+    '@id': `${siteUrl}/en/worker-rooms/#lodging`,
     name: 'Pension Volgenandt – Worker Accommodation',
     description:
       'Worker and business rooms in Leinefelde-Worbis. Affordable, comfortable, with WiFi and parking.',
     url: `${siteUrl}/en/worker-rooms/`,
+    image: [`${siteUrl}/img/hero/hero-poster.webp`],
+    containedInPlace: {
+      '@id': `${siteUrl}/#identity`,
+    },
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Breitenbach 12',
-      addressLocality: 'Leinefelde-Worbis',
+      streetAddress: 'Otto-Reutter-Straße 28',
+      addressLocality: 'Leinefelde-Worbis OT Breitenbach',
       postalCode: '37327',
       addressRegion: 'Thuringia',
       addressCountry: 'DE',
@@ -45,7 +51,8 @@ useSchemaOrg([
       audienceType: 'Business travelers',
     },
   },
-])
+  'worker-rooms-schema-en',
+)
 
 const { data: rooms } = await useAsyncData('monteurzimmer-en', () =>
   queryCollection('roomsEn').order('sortOrder', 'ASC').all(),

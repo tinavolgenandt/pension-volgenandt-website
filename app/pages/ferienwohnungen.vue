@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { t } from '~/utils/translations'
+import { useJsonLd } from '~/composables/useJsonLd'
 
 const { locale } = useLocale()
 const siteUrl = 'https://www.pension-volgenandt.de'
@@ -25,23 +26,29 @@ useHead({
   ],
 })
 
-useSchemaOrg([
+useJsonLd(
   {
     '@type': 'LodgingBusiness',
+    '@id': `${siteUrl}/ferienwohnungen/#lodging`,
     name: 'Pension Volgenandt – Ferienwohnungen',
     description:
       'Ferienwohnungen im Eichsfeld bei Leinefelde-Worbis mit Küche, Terrasse und 25.000 m² Garten.',
     url: `${siteUrl}/ferienwohnungen/`,
+    image: [`${siteUrl}/img/rooms/schoene-aussicht-wohnkueche.webp`],
+    containedInPlace: {
+      '@id': `${siteUrl}/#identity`,
+    },
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Breitenbach 12',
-      addressLocality: 'Leinefelde-Worbis',
+      streetAddress: 'Otto-Reutter-Straße 28',
+      addressLocality: 'Leinefelde-Worbis OT Breitenbach',
       postalCode: '37327',
       addressRegion: 'Thüringen',
       addressCountry: 'DE',
     },
   },
-])
+  'holiday-apartments-schema-de',
+)
 
 const { data: rooms } = await useAsyncData('ferienwohnungen', () =>
   queryCollection('rooms').where('type', '=', 'ferienwohnung').order('sortOrder', 'ASC').all(),

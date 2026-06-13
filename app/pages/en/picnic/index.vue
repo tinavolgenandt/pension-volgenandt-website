@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useJsonLd } from '~/composables/useJsonLd'
+
 const siteUrl = 'https://www.pension-volgenandt.de'
 
 definePageMeta({
@@ -25,6 +27,35 @@ useSeoMeta({
   ogImage: '/img/picknick/header-picknick.webp',
   ogType: 'website',
 })
+
+useJsonLd(
+  {
+    '@type': 'Product',
+    '@id': `${siteUrl}/en/picnic/#product`,
+    name: 'Picnic Basket',
+    url: `${siteUrl}/en/picnic/`,
+    image: [`${siteUrl}/img/picknick/header-picknick.webp`],
+    description:
+      'Homemade picnic basket with regional products, picnic blanket, dishes and cutlery. Several packages from 19 EUR per person.',
+    brand: {
+      '@type': 'Brand',
+      name: 'Pension Volgenandt',
+    },
+    category: 'Picnic basket',
+    offers: {
+      '@type': 'Offer',
+      price: '19.00',
+      priceCurrency: 'EUR',
+      availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/NewCondition',
+      url: `${siteUrl}/en/picnic/`,
+      seller: {
+        '@id': 'https://www.pension-volgenandt.de/#identity',
+      },
+    },
+  },
+  'picnic-product-schema-en',
+)
 
 const { data: packagesData } = await useAsyncData('picknick-packages', () =>
   queryCollection('picknickPackages').first(),

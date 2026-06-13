@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { t } from '~/utils/translations'
 import { getAmenityLabel } from '~/utils/amenities'
+import { useJsonLd } from '~/composables/useJsonLd'
 
 const route = useRoute()
 const slug = route.params.slug as string
@@ -89,12 +90,17 @@ useSeoMeta({
 })
 
 // HotelRoom + Offer Schema.org structured data (English)
-useSchemaOrg([
+useJsonLd(
   {
-    '@type': ['HotelRoom', 'Product'],
+    '@type': 'HotelRoom',
+    '@id': `${siteUrl}/en/rooms/${room.value.slug}/#room`,
     name: room.value.name,
+    url: `${siteUrl}/en/rooms/${room.value.slug}/`,
     description: room.value.shortDescription,
-    image: `${siteUrl}${room.value.heroImage}`,
+    image: [`${siteUrl}${room.value.heroImage}`],
+    containedInPlace: {
+      '@id': `${siteUrl}/#identity`,
+    },
     occupancy: {
       '@type': 'QuantitativeValue',
       maxValue: room.value.maxGuests,
@@ -113,12 +119,10 @@ useSchemaOrg([
         period.rates.map((rate) => ({
           '@type': 'Offer',
           name: `${room.value!.name} - ${period.label}`,
-          priceSpecification: {
-            '@type': 'UnitPriceSpecification',
-            price: rate.pricePerNight,
-            priceCurrency: 'EUR',
-            unitCode: 'DAY',
-          },
+          price: String(rate.pricePerNight),
+          priceCurrency: 'EUR',
+          availability: 'https://schema.org/InStock',
+          url: `${siteUrl}/en/rooms/${room.value!.slug}/`,
           businessFunction: 'http://purl.org/goodrelations/v1#LeaseOut',
           eligibleQuantity: {
             '@type': 'QuantitativeValue',
@@ -128,7 +132,8 @@ useSchemaOrg([
         })),
     ),
   },
-])
+  `room-schema-en-${slug}`,
+)
 </script>
 
 <template>

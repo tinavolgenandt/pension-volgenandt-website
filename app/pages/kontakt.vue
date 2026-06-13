@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { t } from '~/utils/translations'
+import { useJsonLd } from '~/composables/useJsonLd'
 
 const { locale } = useLocale()
 
@@ -49,17 +50,22 @@ const { data: faqData } = await useAsyncData('faq', () => queryCollection('faq')
 // FAQPage structured data
 const faqItems = computed(() => faqData.value?.items ?? [])
 
-useSchemaOrg([
-  defineWebPage({
+useJsonLd(
+  {
     '@type': 'FAQPage',
-  }),
-  ...(faqData.value?.items ?? []).map((item) =>
-    defineQuestion({
+    '@id': 'https://www.pension-volgenandt.de/kontakt/#faq',
+    url: 'https://www.pension-volgenandt.de/kontakt/',
+    mainEntity: (faqData.value?.items ?? []).map((item) => ({
+      '@type': 'Question',
       name: item.question,
-      acceptedAnswer: item.answer.replace(/<[^>]*>/g, ''),
-    }),
-  ),
-])
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer.replace(/<[^>]*>/g, ''),
+      },
+    })),
+  },
+  'contact-faq-schema-de',
+)
 </script>
 
 <template>

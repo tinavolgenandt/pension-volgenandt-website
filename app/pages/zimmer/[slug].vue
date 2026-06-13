@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { t } from '~/utils/translations'
 import { getAmenityLabel } from '~/utils/amenities'
+import { useJsonLd } from '~/composables/useJsonLd'
 
 const { locale } = useLocale()
 const route = useRoute()
@@ -79,12 +80,17 @@ useHead({
 })
 
 // HotelRoom + Offer Schema.org structured data
-useSchemaOrg([
+useJsonLd(
   {
-    '@type': ['HotelRoom', 'Product'],
+    '@type': 'HotelRoom',
+    '@id': `https://www.pension-volgenandt.de/zimmer/${room.value.slug}/#room`,
     name: room.value.name,
+    url: `https://www.pension-volgenandt.de/zimmer/${room.value.slug}/`,
     description: room.value.shortDescription,
-    image: `https://www.pension-volgenandt.de${room.value.heroImage}`,
+    image: [`https://www.pension-volgenandt.de${room.value.heroImage}`],
+    containedInPlace: {
+      '@id': 'https://www.pension-volgenandt.de/#identity',
+    },
     occupancy: {
       '@type': 'QuantitativeValue',
       maxValue: room.value.maxGuests,
@@ -103,12 +109,10 @@ useSchemaOrg([
         period.rates.map((rate) => ({
           '@type': 'Offer',
           name: `${room.value!.name} - ${period.label}`,
-          priceSpecification: {
-            '@type': 'UnitPriceSpecification',
-            price: rate.pricePerNight,
-            priceCurrency: 'EUR',
-            unitCode: 'DAY',
-          },
+          price: String(rate.pricePerNight),
+          priceCurrency: 'EUR',
+          availability: 'https://schema.org/InStock',
+          url: `https://www.pension-volgenandt.de/zimmer/${room.value!.slug}/`,
           businessFunction: 'http://purl.org/goodrelations/v1#LeaseOut',
           eligibleQuantity: {
             '@type': 'QuantitativeValue',
@@ -118,7 +122,8 @@ useSchemaOrg([
         })),
     ),
   },
-])
+  `room-schema-de-${slug}`,
+)
 </script>
 
 <template>

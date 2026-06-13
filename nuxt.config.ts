@@ -34,6 +34,16 @@ export default defineNuxtConfig({
     defaultLocale: 'de',
   },
 
+  // Structured data: keep nuxt-schema-org enabled (BreadcrumbNav relies on
+  // useBreadcrumbItems({ schemaOrg: true })), but disable its default
+  // WebPage/WebSite/Identity nodes. We emit those by hand via the useJsonLd
+  // composable so there is a single authoritative graph — this avoids
+  // duplicate WebSite entities and inconsistent (trailing-slash) canonical
+  // URLs in the generated output.
+  schemaOrg: {
+    defaults: false,
+  },
+
   // Sitemap configuration
   sitemap: {
     // Auto-discovers all prerendered routes
@@ -218,7 +228,10 @@ export default defineNuxtConfig({
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'google-site-verification', content: 'ITqY-AGnrWeTeIoqq4benxxcLHWig6-niLio2SfJ30o' },
+        {
+          name: 'google-site-verification',
+          content: 'ITqY-AGnrWeTeIoqq4benxxcLHWig6-niLio2SfJ30o',
+        },
         { name: 'geo.region', content: 'DE-TH' },
         { name: 'geo.placename', content: 'Leinefelde-Worbis' },
         { name: 'geo.position', content: '51.4124;10.322' },

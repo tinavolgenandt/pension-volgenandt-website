@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { t } from '~/utils/translations'
+import { useJsonLd } from '~/composables/useJsonLd'
 
 useHead({
   htmlAttrs: { lang: 'en' },
@@ -26,31 +27,39 @@ useSeoMeta({
   ogType: 'profile',
 })
 
-useSchemaOrg([
-  defineWebPage({
-    '@type': 'AboutPage',
-  }),
-  {
-    '@type': 'Person',
-    name: 'Simone Volgenandt',
-    jobTitle: 'Host',
-    worksFor: {
-      '@id': 'https://www.pension-volgenandt.de/#identity',
+useJsonLd(
+  [
+    {
+      '@type': 'AboutPage',
+      '@id': 'https://www.pension-volgenandt.de/en/about/#about-page',
+      url: 'https://www.pension-volgenandt.de/en/about/',
+      name: 'About Us – Simone & Ralf Volgenandt',
+      description:
+        'Meet your hosts: Simone & Ralf Volgenandt run their guesthouse in Breitenbach with warmth and a love of nature.',
     },
-    url: 'https://www.pension-volgenandt.de/en/about/',
-    image: 'https://www.pension-volgenandt.de/img/content/gastgeber-portrait.webp',
-  },
-  {
-    '@type': 'Person',
-    name: 'Ralf Volgenandt',
-    jobTitle: 'Host',
-    worksFor: {
-      '@id': 'https://www.pension-volgenandt.de/#identity',
+    {
+      '@type': 'Person',
+      name: 'Simone Volgenandt',
+      jobTitle: 'Host',
+      worksFor: {
+        '@id': 'https://www.pension-volgenandt.de/#identity',
+      },
+      url: 'https://www.pension-volgenandt.de/en/about/',
+      image: 'https://www.pension-volgenandt.de/img/content/gastgeber-portrait.webp',
     },
-    url: 'https://www.pension-volgenandt.de/en/about/',
-    image: 'https://www.pension-volgenandt.de/img/content/gastgeber-portrait.webp',
-  },
-])
+    {
+      '@type': 'Person',
+      name: 'Ralf Volgenandt',
+      jobTitle: 'Host',
+      worksFor: {
+        '@id': 'https://www.pension-volgenandt.de/#identity',
+      },
+      url: 'https://www.pension-volgenandt.de/en/about/',
+      image: 'https://www.pension-volgenandt.de/img/content/gastgeber-portrait.webp',
+    },
+  ],
+  'about-schema-en',
+)
 </script>
 
 <template>

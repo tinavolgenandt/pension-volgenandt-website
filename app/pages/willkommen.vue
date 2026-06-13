@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { t } from '~/utils/translations'
+import { useJsonLd } from '~/composables/useJsonLd'
 
 definePageMeta({
   breadcrumb: { label: 'Über uns' },
@@ -29,31 +30,39 @@ useHead({
   ],
 })
 
-useSchemaOrg([
-  defineWebPage({
-    '@type': 'AboutPage',
-  }),
-  {
-    '@type': 'Person',
-    name: 'Simone Volgenandt',
-    jobTitle: 'Gastgeberin',
-    worksFor: {
-      '@id': 'https://www.pension-volgenandt.de/#identity',
+useJsonLd(
+  [
+    {
+      '@type': 'AboutPage',
+      '@id': 'https://www.pension-volgenandt.de/willkommen/#about-page',
+      url: 'https://www.pension-volgenandt.de/willkommen/',
+      name: 'Über uns – Simone & Ralf Volgenandt',
+      description:
+        'Lernen Sie Ihre Gastgeber kennen: Simone & Ralf Volgenandt führen ihre Pension in Breitenbach mit Herzlichkeit und Liebe zur Natur.',
     },
-    url: 'https://www.pension-volgenandt.de/willkommen/',
-    image: 'https://www.pension-volgenandt.de/img/content/gastgeber-portrait.webp',
-  },
-  {
-    '@type': 'Person',
-    name: 'Ralf Volgenandt',
-    jobTitle: 'Gastgeber',
-    worksFor: {
-      '@id': 'https://www.pension-volgenandt.de/#identity',
+    {
+      '@type': 'Person',
+      name: 'Simone Volgenandt',
+      jobTitle: 'Gastgeberin',
+      worksFor: {
+        '@id': 'https://www.pension-volgenandt.de/#identity',
+      },
+      url: 'https://www.pension-volgenandt.de/willkommen/',
+      image: 'https://www.pension-volgenandt.de/img/content/gastgeber-portrait.webp',
     },
-    url: 'https://www.pension-volgenandt.de/willkommen/',
-    image: 'https://www.pension-volgenandt.de/img/content/gastgeber-portrait.webp',
-  },
-])
+    {
+      '@type': 'Person',
+      name: 'Ralf Volgenandt',
+      jobTitle: 'Gastgeber',
+      worksFor: {
+        '@id': 'https://www.pension-volgenandt.de/#identity',
+      },
+      url: 'https://www.pension-volgenandt.de/willkommen/',
+      image: 'https://www.pension-volgenandt.de/img/content/gastgeber-portrait.webp',
+    },
+  ],
+  'about-schema-de',
+)
 
 const { locale } = useLocale()
 </script>

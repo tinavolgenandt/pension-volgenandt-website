@@ -59,3 +59,31 @@
   AddOutputFilterByType DEFLATE application/xml application/xhtml+xml
   AddOutputFilterByType DEFLATE image/svg+xml
 </IfModule>
+
+# ─── 301 Redirects (legacy URLs from the previous site) ──────────
+# These old paths still 404 in Google Search Console. Redirect each to its
+# current equivalent to preserve link equity and clear the crawl errors.
+# REQUEST_URI is not URL-decoded, so the umlaut is matched as %C3%A4.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # /aktivitäten/ (umlaut) → /aktivitaeten/
+  RewriteCond %{REQUEST_URI} ^/aktivit%C3%A4ten/?$ [NC]
+  RewriteRule ^ /aktivitaeten/ [R=301,L]
+
+  # HTML sitemap guess → real XML sitemap
+  RewriteCond %{REQUEST_URI} ^/sitemap/?$ [NC]
+  RewriteRule ^ /sitemap.xml [R=301,L]
+
+  # /ferienwohnungen-zimmer/ → /ferienwohnungen/
+  RewriteCond %{REQUEST_URI} ^/ferienwohnungen-zimmer/?$ [NC]
+  RewriteRule ^ /ferienwohnungen/ [R=301,L]
+
+  # /kind-kegel/ → /familie/
+  RewriteCond %{REQUEST_URI} ^/kind-kegel/?$ [NC]
+  RewriteRule ^ /familie/ [R=301,L]
+
+  # /ein-kleiner-umweltgedanke/ → /nachhaltigkeit/
+  RewriteCond %{REQUEST_URI} ^/ein-kleiner-umweltgedanke/?$ [NC]
+  RewriteRule ^ /nachhaltigkeit/ [R=301,L]
+</IfModule>

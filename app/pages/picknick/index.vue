@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useJsonLd } from '~/composables/useJsonLd'
+
 definePageMeta({
   breadcrumb: { label: 'Picknick-Korb' },
 })
@@ -25,31 +27,36 @@ useHead({
       href: 'https://www.pension-volgenandt.de/picknick/',
     },
   ],
-  script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'Product',
-        name: 'Picknick-Korb',
-        description:
-          'Hausgemachter Picknick-Korb mit regionalen Produkten, Picknickdecke, Geschirr und Besteck. Verschiedene Pakete ab 19 € pro Person.',
-        offers: {
-          '@type': 'Offer',
-          price: '19.00',
-          priceCurrency: 'EUR',
-          availability: 'https://schema.org/InStock',
-          url: 'https://www.pension-volgenandt.de/picknick/',
-        },
-        provider: {
-          '@type': 'BedAndBreakfast',
-          name: 'Pension Volgenandt',
-          url: 'https://www.pension-volgenandt.de',
-        },
-      }),
-    },
-  ],
 })
+
+useJsonLd(
+  {
+    '@type': 'Product',
+    '@id': 'https://www.pension-volgenandt.de/picknick/#product',
+    name: 'Picknick-Korb',
+    url: 'https://www.pension-volgenandt.de/picknick/',
+    image: ['https://www.pension-volgenandt.de/img/picknick/header-picknick.webp'],
+    description:
+      'Hausgemachter Picknick-Korb mit regionalen Produkten, Picknickdecke, Geschirr und Besteck. Verschiedene Pakete ab 19 € pro Person.',
+    brand: {
+      '@type': 'Brand',
+      name: 'Pension Volgenandt',
+    },
+    category: 'Picnic basket',
+    offers: {
+      '@type': 'Offer',
+      price: '19.00',
+      priceCurrency: 'EUR',
+      availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/NewCondition',
+      url: 'https://www.pension-volgenandt.de/picknick/',
+      seller: {
+        '@id': 'https://www.pension-volgenandt.de/#identity',
+      },
+    },
+  },
+  'picnic-product-schema-de',
+)
 
 const { data: packagesData } = await useAsyncData('picknick-packages', () =>
   queryCollection('picknickPackages').first(),

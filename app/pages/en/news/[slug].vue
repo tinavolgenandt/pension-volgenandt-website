@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { t } from '~/utils/translations'
+import { useJsonLd } from '~/composables/useJsonLd'
 
 const route = useRoute()
 const slug = route.params.slug as string
@@ -58,13 +59,19 @@ useHead({
 const schemaItems: Record<string, unknown>[] = [
   {
     '@type': 'NewsArticle',
+    '@id': `https://www.pension-volgenandt.de/en/news/${article.value.slug}/#article`,
     headline: article.value.seoTitle,
+    url: `https://www.pension-volgenandt.de/en/news/${article.value.slug}/`,
+    mainEntityOfPage: `https://www.pension-volgenandt.de/en/news/${article.value.slug}/`,
     description: article.value.seoDescription,
-    image: `https://www.pension-volgenandt.de${article.value.heroImage}`,
+    image: [`https://www.pension-volgenandt.de${article.value.heroImage}`],
     datePublished: article.value.publishedDate,
     author: {
       '@type': 'Organization',
       name: 'Pension Volgenandt',
+    },
+    publisher: {
+      '@id': 'https://www.pension-volgenandt.de/#identity',
     },
   },
 ]
@@ -73,7 +80,11 @@ const schemaItems: Record<string, unknown>[] = [
 if (article.value.eventStartDate && article.value.eventEndDate) {
   schemaItems.push({
     '@type': 'Event',
+    '@id': `https://www.pension-volgenandt.de/en/news/${article.value.slug}/#event`,
     name: article.value.title,
+    url: `https://www.pension-volgenandt.de/en/news/${article.value.slug}/`,
+    description: article.value.seoDescription,
+    image: [`https://www.pension-volgenandt.de${article.value.heroImage}`],
     startDate: article.value.eventStartDate,
     endDate: article.value.eventEndDate,
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
@@ -93,18 +104,10 @@ if (article.value.eventStartDate && article.value.eventEndDate) {
       name: 'Landesgartenschau Leinefelde-Worbis 2026 gGmbH',
       url: 'https://www.lgs-leinefelde-worbis.de/',
     },
-    offers: {
-      '@type': 'Offer',
-      name: 'Accommodation for the State Garden Show 2026',
-      url: `https://www.pension-volgenandt.de/en/news/${article.value.slug}/`,
-      priceCurrency: 'EUR',
-      price: '50',
-      availability: 'https://schema.org/InStock',
-    },
   })
 }
 
-useSchemaOrg(schemaItems)
+useJsonLd(schemaItems, `news-schema-en-${slug}`)
 
 definePageMeta({
   breadcrumb: { label: 'Article' },

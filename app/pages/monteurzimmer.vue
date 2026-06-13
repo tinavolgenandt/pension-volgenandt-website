@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { t } from '~/utils/translations'
+import { useJsonLd } from '~/composables/useJsonLd'
 
 const { locale } = useLocale()
 const siteUrl = 'https://www.pension-volgenandt.de'
@@ -25,17 +26,22 @@ useHead({
   ],
 })
 
-useSchemaOrg([
+useJsonLd(
   {
     '@type': 'LodgingBusiness',
+    '@id': `${siteUrl}/monteurzimmer/#lodging`,
     name: 'Pension Volgenandt – Monteurzimmer',
     description:
       'Monteurzimmer und Firmenzimmer in Leinefelde-Worbis. Günstig, komfortabel, mit WLAN und Parkplatz.',
     url: `${siteUrl}/monteurzimmer/`,
+    image: [`${siteUrl}/img/hero/hero-poster.webp`],
+    containedInPlace: {
+      '@id': `${siteUrl}/#identity`,
+    },
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Breitenbach 12',
-      addressLocality: 'Leinefelde-Worbis',
+      streetAddress: 'Otto-Reutter-Straße 28',
+      addressLocality: 'Leinefelde-Worbis OT Breitenbach',
       postalCode: '37327',
       addressRegion: 'Thüringen',
       addressCountry: 'DE',
@@ -45,7 +51,8 @@ useSchemaOrg([
       audienceType: 'Business travelers',
     },
   },
-])
+  'worker-rooms-schema-de',
+)
 
 const { data: rooms } = await useAsyncData('monteurzimmer', () =>
   queryCollection('rooms').order('sortOrder', 'ASC').all(),

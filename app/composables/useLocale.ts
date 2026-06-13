@@ -24,12 +24,16 @@ const enToDe: Record<string, string> = Object.fromEntries(
 // German paths that have English counterparts
 const translatedDePaths = Object.keys(deToEn)
 
-// Special sub-route mappings (DE slug → EN slug)
+// Special page mappings (DE slug → EN slug) for standalone pages whose slugs
+// don't share a common base prefix. Covers sub-routes plus top-level page pairs
+// like Über uns/About and the booking thank-you pages.
 const subRouteMappings: Record<string, string> = {
   '/aktivitaeten/wandern': '/activities/hiking',
   '/aktivitaeten/radfahren': '/activities/cycling',
   '/picknick/buchen': '/picnic/book',
   '/picknick/danke': '/picnic/thanks',
+  '/willkommen': '/about',
+  '/buchung-danke': '/booking-thank-you',
 }
 
 const subRouteMappingsReverse: Record<string, string> = Object.fromEntries(
