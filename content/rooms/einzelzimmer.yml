@@ -1,4 +1,4 @@
-name: 'Einzelzimmer'
+﻿name: 'Einzelzimmer'
 slug: einzelzimmer
 seoTitle: 'Einzelzimmer Leinefelde | Pension Volgenandt'
 seoDescription: 'Komfortables Einzelzimmer für Geschäftsreisende & Alleinreisende in Breitenbach, Eichsfeld. Ab 50 €/Nacht.'
@@ -63,11 +63,11 @@ highlights:
 
 extras:
   - name: 'Frühstück'
-    description: '2 Brötchen, Käse- & Wurst Aufschnitt, Ei oder Joghurt'
+    description: '2 Brötchen, Käse- & Wurst-Aufschnitt, Ei oder Joghurt, hausgemachte Marmelade, Kaffee oder Tee'
     price: 10
     unit: 'pro Person / Nacht'
   - name: 'Genießer-Frühstück'
-    description: '3 Brötchen, Käse- & Wurst Aufschnitt, Ei & Joghurt, hausgemachte Marmelade, saisonales Obst, frischer Saft & Kaffee oder Tee'
+    description: '3 Brötchen, Käse- & Wurst-Aufschnitt, Ei oder Joghurt, hausgemachte Marmelade, saisonales Obst, frischer Saft & Kaffee oder Tee'
     price: 15
     unit: 'pro Person / Nacht'
   - name: 'Picknick-Korb'
