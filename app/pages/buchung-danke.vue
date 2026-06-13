@@ -30,7 +30,7 @@ const txn = computed(() => String(route.query.tx ?? route.query.txn ?? ''))
     </p>
     <p class="mt-2 text-sm text-sage-600">
       Eine <strong>Buchungsbestätigung</strong> mit allen Details haben wir Ihnen per E-Mail
-      gesendet. Ihre Rechnung erhalten Sie separat per E-Mail.
+      gesendet.
     </p>
 
     <!-- Optionale Zahlungszusammenfassung -->
