@@ -44,6 +44,19 @@ export default defineNuxtConfig({
     defaults: false,
   },
 
+  // 301 redirects for legacy URLs from the previous site (still 404 in Google
+  // Search Console). Hosted on GitHub Pages, which ignores .htaccess, so these
+  // are emitted as static meta-refresh redirect pages by the Nitro static
+  // preset. The matching paths are added to nitro.prerender.routes below so a
+  // redirect file is generated for each.
+  routeRules: {
+    '/aktivitäten/': { redirect: { to: '/aktivitaeten/', statusCode: 301 } },
+    '/ferienwohnungen-zimmer/': { redirect: { to: '/ferienwohnungen/', statusCode: 301 } },
+    '/kind-kegel/': { redirect: { to: '/familie/', statusCode: 301 } },
+    '/ein-kleiner-umweltgedanke/': { redirect: { to: '/nachhaltigkeit/', statusCode: 301 } },
+    '/sitemap/': { redirect: { to: '/sitemap.xml', statusCode: 301 } },
+  },
+
   // Sitemap configuration
   sitemap: {
     // Auto-discovers all prerendered routes
@@ -214,6 +227,14 @@ export default defineNuxtConfig({
         // About / Willkommen pages
         '/willkommen/',
         '/en/about/',
+        // Legacy URLs from the previous site — prerendered so the routeRules
+        // above emit a static redirect file for each (GitHub Pages has no
+        // server-side redirects).
+        '/aktivitäten/',
+        '/ferienwohnungen-zimmer/',
+        '/kind-kegel/',
+        '/ein-kleiner-umweltgedanke/',
+        '/sitemap/',
       ],
       failOnError: false,
     },
