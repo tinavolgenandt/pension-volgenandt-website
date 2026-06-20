@@ -1,36 +1,57 @@
 # Feiern im Garten – Konfiguration des Preisrechners
 #
 # WICHTIG: Alle Preise sind vorläufige RICHTWERTE auf Basis einer Marktrecherche
-# (Stand 2026). Vor dem Live-Gang müssen Simone & Ralf die echten Preise sowie
-# die tatsächliche Gästekapazität des Gartens bestätigen. Diese Datei lässt sich
-# ohne Code-Änderung anpassen – einfach Werte ändern und neu veröffentlichen.
+# (Stand 2026). Vor dem Live-Gang müssen die echten Preise (v.a. Caterer,
+# Versicherung) bestätigt werden. Diese Datei lässt sich ohne Code-Änderung
+# anpassen – einfach Werte ändern und neu veröffentlichen.
 
 guestRange:
   min: 10
   max: 80
   default: 40
 
-# Das Wochenend-Fest setzt die EXKLUSIVE Buchung der gesamten Pension voraus
-# (alle Zimmer & Ferienwohnungen, gesamtes Wochenende). Dadurch gehört das ganze
-# Anwesen für das Wochenende den Gästen, und Simone & Ralf können verreisen.
-# Richtwert Zimmerblock: 6 Einheiten × ~430 €/Nacht × 2 Nächte ≈ 860 €
-# zzgl. Eventkoordination/Organisation.
+# Dauer der Feier in Stunden – bestimmt die Getränkepauschale (pro Person/Stunde).
+partyDuration:
+  min: 3
+  max: 12
+  default: 6
+
+# BASISPREIS: exklusive Buchung der gesamten Pension fürs Wochenende inkl. aller
+# "immer enthaltenen" Leistungen (Festzelt, Endreinigung, Koordination,
+# Versicherung …). Banded nach Gästezahl, weil das enthaltene Festzelt mit der
+# Größe wächst. Richtwert-Kalkulation pro Stufe:
+#   Fixkern = Zimmerblock ~860 + Versicherung ~130 (Platzhalter) +
+#             Organisationspauschale ~800 + Endreinigung ~500 = ~2.290 €
+#   + Festzelt: ≤20 +500, ≤40 +1.000, ≤60 +1.500, ≤80 +2.200
 basePackage:
-  label: Exklusives Festwochenende
+  label: Basispreis – Exklusives Festwochenende
   description: >-
-    Das gesamte Anwesen gehört für ein ganzes Wochenende (Fr–So, 2 Nächte) Ihnen:
-    exklusive Buchung aller 6 Zimmer & Ferienwohnungen (bis zu 18 Übernachtungs­gäste),
-    persönliche Eventplanung und Koordination im Vorfeld, Tische und Bänke,
-    Stromversorgung für die Musik direkt aus dem Haus (per Verlängerungskabel),
-    Nutzung der Garage als Catering-Küche sowie der Sanitäranlagen über die
-    gebuchten Zimmer und eine Veranstaltungs-Haftpflichtversicherung. Während
-    Ihrer Feier sind keine Gastgeber vor Ort – Sie feiern völlig privat und ungestört.
-  price: 1790
+    Das gesamte Anwesen gehört für ein ganzes Wochenende (Fr–So, 2 Nächte) Ihnen.
+    Wir kümmern uns um die komplette Organisation und sind während Ihrer Feier für
+    Sie da. Im Basispreis ist bereits alles Folgende enthalten:
+  guestBands:
+    - maxGuests: 20
+      price: 2790
+    - maxGuests: 40
+      price: 3290
+    - maxGuests: 60
+      price: 3790
+    - maxGuests: 80
+      price: 4490
+  includes:
+    - >-
+      Exklusive Buchung der gesamten Pension fürs Wochenende – alle 6 Zimmer &
+      Ferienwohnungen für bis zu 18 Übernachtungsgäste
+    - Persönliche Eventplanung, Organisation und Koordination – wir sind für Sie da
+    - Festzelt mit schließbaren Seitenwänden und Beleuchtung (Ihr Schlechtwetter-Plan), passend zur Gästezahl
+    - Bestuhlung für alle Gäste
+    - Professionelle Endreinigung nach der Feier
+    - Stromversorgung für die Musik direkt aus dem Haus
+    - Garage als Catering-Küche & Sanitäranlagen über die gebuchten Zimmer
 
 # Catering läuft IMMER über unseren Partner-Caterer (kein hauseigenes Catering).
 # Preis pro Person als Kundenpreis – ein Aufschlag von ~15% auf den Caterer-Preis
-# ist bereits enthalten (Caterer-Richtwert: ~39/59/89 €). Markt 2026: 40–90 €
-# Essen, 80–150 € all-in.
+# ist bereits enthalten (Caterer-Richtwert: ~39/59/89 €).
 cateringTiers:
   - id: rustikal
     label: Rustikales Buffet
@@ -51,49 +72,120 @@ cateringTiers:
       eleganteste Variante unseres Partner-Caterers für besondere Anlässe.
     pricePerPerson: 105
 
-# Zusatzleistungen. unit: 'person' = Preis × Gäste, 'pauschale' = Festpreis je Feier.
-addons:
-  - id: zelt
-    label: Festzelt mit schließbaren Seitenwänden
+# Getränke laufen immer über uns: Selbstbedienung oder mit Service. Preis pro
+# Person PRO STUNDE – hängt von der Feierdauer ab. (Markt 2026: ~25–55 € pp für
+# ~6 h, ~6 € pp je weiterer Stunde → ~6 € self / ~9 € mit Service je Person/Stunde.)
+drinkOptions:
+  - id: selbstbedienung
+    label: Getränkepauschale – Selbstbedienung
     description: >-
-      Wetterfestes Festzelt mit Boden, Beleuchtung und schließbaren Seitenwänden –
-      Ihr Schlechtwetter-Plan bei Regen, zugleich Schatten an heißen Tagen. Die
-      Zeltgröße richtet sich nach Ihrer Gästezahl, daher pro Person kalkuliert.
-    price: 28
-    unit: person
-    icon: ph:tent-duotone
-    default: false
-  - id: dekoration
-    label: Florale Dekoration
-    description: Tisch- und Raumschmuck mit saisonalen Blumen aus der Region.
-    price: 350
-    unit: pauschale
-    icon: ph:flower-duotone
-    default: false
-  - id: musik
-    label: DJ / Musik
+      Getränkestation mit Auswahl an Softdrinks, Bier und Wein; Ihre Gäste bedienen
+      sich selbst. Abgerechnet pro Person und Stunde.
+    pricePerPersonPerHour: 6
+  - id: service
+    label: Getränkepauschale – mit Service
     description: >-
-      Professioneller DJ mit kompletter Anlage für die Abendgestaltung. Der Strom
-      kommt unkompliziert per Verlängerungskabel aus dem Haus. Gefeiert wird ohne
-      Sperrstunde.
+      Getränke werden von unserem Personal am Tisch und an der Bar serviert.
+      Abgerechnet pro Person und Stunde.
+    pricePerPersonPerHour: 9
+
+# Musik: keine / nur Anlage (eigene Playlist) / kompletter DJ. Fester Preis inkl.
+# Organisation, Lieferung/Aufbau und unserer Vermittlungsmarge.
+musicOptions:
+  - id: keine
+    label: Keine Musikanlage
+    description: Sie bringen Ihre eigene Musik und Technik mit.
+    price: 0
+  - id: anlage
+    label: Nur Musikanlage (eigene Playlist)
+    description: >-
+      Professionelle Musikanlage inkl. Lieferung, Aufbau und Anschluss Ihres eigenen
+      Geräts – Sie spielen Ihre eigene Playlist. Strom aus dem Haus.
+    price: 290
+  - id: dj
+    label: DJ komplett
+    description: >-
+      Professioneller DJ mit kompletter Anlage für die Abendgestaltung, inkl.
+      Organisation und Technik. Strom aus dem Haus.
     price: 1200
-    unit: pauschale
-    icon: ph:music-notes-duotone
-    default: false
-  - id: getraenke
-    label: Getränkepauschale
-    description: Auswahl an Getränken pro Gast für die gesamte Feier.
-    price: 19
-    unit: person
-    icon: ph:wine-duotone
-    default: false
-  - id: reinigung
-    label: Endreinigung
-    description: Komplette Reinigung nach der Feier – Sie müssen sich um nichts kümmern.
-    price: 180
-    unit: pauschale
-    icon: ph:broom-duotone
-    default: true
+
+# Mobiliar & Ausstattung – jeweils pro Person, erste Option = im Basispreis
+# enthalten/Standard. (Markt 2026: Stühle ~3 €, Hussen ~3,50 €, Biertischgarnitur
+# ~13 €, Banketttisch ~21 €, Mietgeschirr ~3–8 €/Person, Holzboden ~9,50 €/m².)
+tableOptions:
+  - id: biertisch
+    label: Biertischgarnituren (rustikal)
+    description: Klassische Holz-Biertischgarnituren mit Bänken – im Basispreis enthalten.
+    pricePerPerson: 0
+  - id: bankett
+    label: Eckige Bankett-Tische
+    description: Lange Tafeln mit Einzelstühlen – festlich und gesellig.
+    pricePerPerson: 5
+  - id: rund
+    label: Runde Festtische
+    description: Elegante runde Tische für 8–10 Personen – die klassische Hochzeitsbestuhlung.
+    pricePerPerson: 6
+
+chairCoverOptions:
+  - id: ohne
+    label: Ohne Stuhlhussen
+    description: Schlichte Bestuhlung ohne Hussen.
+    pricePerPerson: 0
+  - id: mit
+    label: Mit Stuhlhussen
+    description: Festliche Stuhlhussen für einen edlen, einheitlichen Look.
+    pricePerPerson: 4
+
+dishwareOptions:
+  - id: caterer
+    label: Geschirr über den Caterer
+    description: Teller, Gläser und Besteck stellt unser Partner-Caterer – im Catering enthalten.
+    pricePerPerson: 0
+  - id: mietgeschirr
+    label: Komplettes Mietgeschirr
+    description: Hochwertiges Mietgeschirr mit Tellern, Gläsern und Besteck inkl. Spülservice.
+    pricePerPerson: 8
+
+# Bodenbelag schützt den Rasen vor Beschädigung. Standard = Holz-Tanzfläche.
+flooringOptions:
+  - id: tanzflaeche
+    label: Holz-Tanzfläche
+    description: >-
+      Ausgelegte Holz-Tanzfläche – schützt den Rasen im Hauptbereich und schafft
+      eine schöne Fläche zum Tanzen.
+    pricePerPerson: 5
+  - id: komplett
+    label: Kompletter Holzboden im Zelt
+    description: >-
+      Durchgehender Holzboden im gesamten Zelt – maximaler Schutz für Ihren Rasen
+      und ein edles Ambiente, auch bei Nässe.
+    pricePerPerson: 12
+  - id: keiner
+    label: Kein Bodenbelag
+    description: Feier direkt auf dem Rasen (nur bei trockenem Wetter empfehlenswert).
+    pricePerPerson: 0
+
+# Florale Dekoration: Auswahl verschiedener Stufen, jeweils pro Person (skaliert
+# mit der Gästezahl). (Markt 2026: Tischdeko 50–200 €/Tisch, ~10 P/Tisch.)
+decorationOptions:
+  - id: keine
+    label: Keine Dekoration
+    description: Sie bringen Ihre eigene Dekoration mit.
+    pricePerPerson: 0
+  - id: schlicht
+    label: Schlichte Tischdekoration
+    description: Dezenter Blumenschmuck und Kerzen auf den Tischen – schlicht und stimmungsvoll.
+    pricePerPerson: 8
+  - id: klassisch
+    label: Klassische Festdekoration
+    description: Liebevolle Tisch- und Festdekoration mit frischen Blumen, passend zu Ihren Farbwünschen.
+    pricePerPerson: 13
+  - id: premium
+    label: Premium-Blumendekoration
+    description: >-
+      Aufwändige florale Gestaltung mit hochwertigen Arrangements für Tische, Zelt
+      und Eingang – das festliche Rundum-Paket.
+    pricePerPerson: 20
 
 # Anlässe (für die Auswahl im Rechner und die Anlass-Kacheln)
 occasions:
@@ -115,15 +207,17 @@ occasions:
     icon: ph:cake-duotone
   - id: jubilaeum
     label: Jubiläum / Familienfeier
-    description: Goldene Hochzeit, Firmenjubiläum oder einfach mal zusammenkommen.
+    description: Goldene Hochzeit, Jubiläum oder einfach mal zusammenkommen.
     icon: ph:confetti-duotone
-
-rangeBufferPercent: 15
+  - id: firmenfeier
+    label: Firmenfeier
+    description: Sommerfest, Teamevent oder Firmenjubiläum im Grünen – fernab vom Büroalltag.
+    icon: ph:briefcase-duotone
 
 disclaimer: >-
   Alle Preise sind unverbindliche Richtwerte und dienen der ersten Orientierung.
   Ein Wochenend-Fest setzt die exklusive Buchung der gesamten Pension für das
-  Wochenende voraus (im Grundpreis enthalten). Das Catering läuft über unseren
+  Wochenende voraus (im Basispreis enthalten). Das Catering läuft über unseren
   Partner-Caterer. Der finale Preis hängt von Ihren individuellen Wünschen, der
-  Gästezahl und der Saison ab. Sie erhalten von uns immer ein persönliches,
-  unverbindliches Angebot.
+  Gästezahl und der Dauer Ihrer Feier ab. Sie erhalten von uns immer ein
+  persönliches, unverbindliches Angebot.

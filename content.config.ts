@@ -268,15 +268,38 @@ const eventCateringTierSchema = z.object({
   pricePerPerson: z.number(),
 })
 
-const eventAddonSchema = z.object({
+// Drinks option (radio incl. "none"): priced per person PER HOUR — total scales
+// with both guest count and party duration.
+const eventDrinkOptionSchema = z.object({
+  id: z.string(),
+  label: z.string(),
+  description: z.string(),
+  pricePerPersonPerHour: z.number(),
+})
+
+// Fixed-price option (music: none / sound system only / full DJ)
+const eventFixedOptionSchema = z.object({
   id: z.string(),
   label: z.string(),
   description: z.string(),
   price: z.number(),
-  // 'person' → price × guests, 'pauschale' → flat per event
-  unit: z.enum(['person', 'pauschale']),
-  icon: z.string(),
-  default: z.boolean().default(false),
+})
+
+// Generic per-person choice (radio): used for decoration, tables, chair covers,
+// dishware and flooring. The first option is typically the included/basic one
+// (pricePerPerson 0); upgrades cost extra. Total = pricePerPerson × guests.
+const eventPerPersonChoiceSchema = z.object({
+  id: z.string(),
+  label: z.string(),
+  description: z.string(),
+  pricePerPerson: z.number(),
+})
+
+// Guest band — pick the first band whose maxGuests covers the selected guest
+// count. Used for the base price (which bundles the tent that scales with size).
+const eventGuestBandSchema = z.object({
+  maxGuests: z.number(),
+  price: z.number(),
 })
 
 const eventConfigSchema = z.object({
@@ -285,16 +308,34 @@ const eventConfigSchema = z.object({
     max: z.number(),
     default: z.number(),
   }),
+  // Party duration in hours (drives the per-hour drinks pauschale)
+  partyDuration: z.object({
+    min: z.number(),
+    max: z.number(),
+    default: z.number(),
+  }),
+  // Base price = exclusive whole-property weekend + everything in `includes`
+  // (tent, cleaning, coordination, insurance, …). Banded by guest count because
+  // the included tent scales with size. Inclusions are listed WITHOUT prices.
   basePackage: z.object({
     label: z.string(),
     description: z.string(),
-    price: z.number(),
+    guestBands: z.array(eventGuestBandSchema).min(1),
+    includes: z.array(z.string()).min(1),
   }),
   cateringTiers: z.array(eventCateringTierSchema).min(1),
-  addons: z.array(eventAddonSchema),
+  // Drinks: radio incl. a "Keine" option; priced per person per hour
+  drinkOptions: z.array(eventDrinkOptionSchema).min(1),
+  // Music: radio incl. a "Keine" option; fixed price
+  musicOptions: z.array(eventFixedOptionSchema).min(1),
+  // Furniture & equipment — each a per-person radio (first option = included/basic)
+  tableOptions: z.array(eventPerPersonChoiceSchema).min(1),
+  chairCoverOptions: z.array(eventPerPersonChoiceSchema).min(1),
+  dishwareOptions: z.array(eventPerPersonChoiceSchema).min(1),
+  flooringOptions: z.array(eventPerPersonChoiceSchema).min(1),
+  // Decoration: radio incl. a "Keine" option; priced per person
+  decorationOptions: z.array(eventPerPersonChoiceSchema).min(1),
   occasions: z.array(eventOccasionSchema).min(1),
-  // Multiplier applied to the point estimate to produce the upper bound of the range
-  rangeBufferPercent: z.number().default(15),
   disclaimer: z.string(),
 })
 
