@@ -51,6 +51,7 @@ const navItems = computed(() => {
     { label: t('nav.activities', 'de'), to: '/aktivitaeten' },
     { label: t('nav.news', 'de'), to: '/aktuelles' },
     { label: t('nav.picnic', 'de'), to: '/picknick' },
+    { label: t('nav.celebrations', 'de'), to: '/feiern' },
     { label: t('nav.sustainability', 'de'), to: '/nachhaltigkeit' },
     { label: t('nav.contact', 'de'), to: '/kontakt' },
   ]

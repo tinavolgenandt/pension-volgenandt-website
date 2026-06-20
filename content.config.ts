@@ -251,6 +251,53 @@ const basketExtraItemSchema = z.object({
   unit: z.string().optional(),
 })
 
+// Event-garden (Feiern im Garten) schemas — full-service celebration service.
+// All prices are provisional "Richtwerte" until the owners confirm; kept in YAML
+// so they can be edited without code changes.
+const eventOccasionSchema = z.object({
+  id: z.string(),
+  label: z.string(),
+  description: z.string(),
+  icon: z.string(),
+})
+
+const eventCateringTierSchema = z.object({
+  id: z.string(),
+  label: z.string(),
+  description: z.string(),
+  pricePerPerson: z.number(),
+})
+
+const eventAddonSchema = z.object({
+  id: z.string(),
+  label: z.string(),
+  description: z.string(),
+  price: z.number(),
+  // 'person' → price × guests, 'pauschale' → flat per event
+  unit: z.enum(['person', 'pauschale']),
+  icon: z.string(),
+  default: z.boolean().default(false),
+})
+
+const eventConfigSchema = z.object({
+  guestRange: z.object({
+    min: z.number(),
+    max: z.number(),
+    default: z.number(),
+  }),
+  basePackage: z.object({
+    label: z.string(),
+    description: z.string(),
+    price: z.number(),
+  }),
+  cateringTiers: z.array(eventCateringTierSchema).min(1),
+  addons: z.array(eventAddonSchema),
+  occasions: z.array(eventOccasionSchema).min(1),
+  // Multiplier applied to the point estimate to produce the upper bound of the range
+  rangeBufferPercent: z.number().default(15),
+  disclaimer: z.string(),
+})
+
 // FAQ item schema
 const faqItemSchema = z.object({
   question: z.string(),
@@ -343,6 +390,11 @@ export default defineContentConfig({
       schema: z.object({
         items: z.array(picknickSpotItemSchema),
       }),
+    }),
+    eventConfig: defineCollection({
+      type: 'data',
+      source: 'events/config.yml',
+      schema: eventConfigSchema,
     }),
     picknickBasket: defineCollection({
       type: 'data',

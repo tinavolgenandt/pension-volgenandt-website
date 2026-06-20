@@ -1,0 +1,129 @@
+# Feiern im Garten – Konfiguration des Preisrechners
+#
+# WICHTIG: Alle Preise sind vorläufige RICHTWERTE auf Basis einer Marktrecherche
+# (Stand 2026). Vor dem Live-Gang müssen Simone & Ralf die echten Preise sowie
+# die tatsächliche Gästekapazität des Gartens bestätigen. Diese Datei lässt sich
+# ohne Code-Änderung anpassen – einfach Werte ändern und neu veröffentlichen.
+
+guestRange:
+  min: 10
+  max: 80
+  default: 40
+
+# Das Wochenend-Fest setzt die EXKLUSIVE Buchung der gesamten Pension voraus
+# (alle Zimmer & Ferienwohnungen, gesamtes Wochenende). Dadurch gehört das ganze
+# Anwesen für das Wochenende den Gästen, und Simone & Ralf können verreisen.
+# Richtwert Zimmerblock: 6 Einheiten × ~430 €/Nacht × 2 Nächte ≈ 860 €
+# zzgl. Eventkoordination/Organisation.
+basePackage:
+  label: Exklusives Festwochenende
+  description: >-
+    Das gesamte Anwesen gehört für ein ganzes Wochenende (Fr–So, 2 Nächte) Ihnen:
+    exklusive Buchung aller 6 Zimmer & Ferienwohnungen (bis zu 18 Übernachtungs­gäste),
+    persönliche Eventplanung und Koordination im Vorfeld, Tische und Bänke,
+    Stromversorgung für die Musik direkt aus dem Haus (per Verlängerungskabel),
+    Nutzung der Garage als Catering-Küche sowie der Sanitäranlagen über die
+    gebuchten Zimmer und eine Veranstaltungs-Haftpflichtversicherung. Während
+    Ihrer Feier sind keine Gastgeber vor Ort – Sie feiern völlig privat und ungestört.
+  price: 1790
+
+# Catering läuft IMMER über unseren Partner-Caterer (kein hauseigenes Catering).
+# Preis pro Person als Kundenpreis – ein Aufschlag von ~15% auf den Caterer-Preis
+# ist bereits enthalten (Caterer-Richtwert: ~39/59/89 €). Markt 2026: 40–90 €
+# Essen, 80–150 € all-in.
+cateringTiers:
+  - id: rustikal
+    label: Rustikales Buffet
+    description: >-
+      Herzhaftes Buffet unseres Partner-Caterers mit regionalen, saisonalen
+      Gerichten – unkompliziert und reichhaltig. Ideal für entspannte Familienfeiern.
+    pricePerPerson: 45
+  - id: klassisch
+    label: Klassisches Festbuffet
+    description: >-
+      Vielfältiges Buffet mit warmen und kalten Speisen, Salaten und Dessert –
+      der beliebte Klassiker unseres Partner-Caterers für Hochzeiten und große Feste.
+    pricePerPerson: 69
+  - id: premium
+    label: Premium-Menü am Platz
+    description: >-
+      Mehrgängiges, serviertes Menü mit Service am Tisch – die festlichste und
+      eleganteste Variante unseres Partner-Caterers für besondere Anlässe.
+    pricePerPerson: 105
+
+# Zusatzleistungen. unit: 'person' = Preis × Gäste, 'pauschale' = Festpreis je Feier.
+addons:
+  - id: zelt
+    label: Festzelt mit schließbaren Seitenwänden
+    description: >-
+      Wetterfestes Festzelt mit Boden, Beleuchtung und schließbaren Seitenwänden –
+      Ihr Schlechtwetter-Plan bei Regen, zugleich Schatten an heißen Tagen. Die
+      Zeltgröße richtet sich nach Ihrer Gästezahl, daher pro Person kalkuliert.
+    price: 28
+    unit: person
+    icon: ph:tent-duotone
+    default: false
+  - id: dekoration
+    label: Florale Dekoration
+    description: Tisch- und Raumschmuck mit saisonalen Blumen aus der Region.
+    price: 350
+    unit: pauschale
+    icon: ph:flower-duotone
+    default: false
+  - id: musik
+    label: DJ / Musik
+    description: >-
+      Professioneller DJ mit kompletter Anlage für die Abendgestaltung. Der Strom
+      kommt unkompliziert per Verlängerungskabel aus dem Haus. Gefeiert wird ohne
+      Sperrstunde.
+    price: 1200
+    unit: pauschale
+    icon: ph:music-notes-duotone
+    default: false
+  - id: getraenke
+    label: Getränkepauschale
+    description: Auswahl an Getränken pro Gast für die gesamte Feier.
+    price: 19
+    unit: person
+    icon: ph:wine-duotone
+    default: false
+  - id: reinigung
+    label: Endreinigung
+    description: Komplette Reinigung nach der Feier – Sie müssen sich um nichts kümmern.
+    price: 180
+    unit: pauschale
+    icon: ph:broom-duotone
+    default: true
+
+# Anlässe (für die Auswahl im Rechner und die Anlass-Kacheln)
+occasions:
+  - id: hochzeit
+    label: Hochzeit
+    description: Heiraten im Grünen – intim, persönlich und unvergesslich.
+    icon: ph:heart-duotone
+  - id: jugendweihe
+    label: Jugendweihe / Konfirmation
+    description: Den großen Tag standesgemäß und entspannt feiern.
+    icon: ph:graduation-cap-duotone
+  - id: kommunion
+    label: Kommunion / Taufe
+    description: Familienfeste rund um die kirchlichen Höhepunkte.
+    icon: ph:bird-duotone
+  - id: geburtstag
+    label: Runder Geburtstag
+    description: Ein besonderes Jahr gebührend im Garten begehen.
+    icon: ph:cake-duotone
+  - id: jubilaeum
+    label: Jubiläum / Familienfeier
+    description: Goldene Hochzeit, Firmenjubiläum oder einfach mal zusammenkommen.
+    icon: ph:confetti-duotone
+
+rangeBufferPercent: 15
+
+disclaimer: >-
+  Alle Preise sind unverbindliche Richtwerte und dienen der ersten Orientierung.
+  Ein Wochenend-Fest setzt die exklusive Buchung der gesamten Pension für das
+  Wochenende voraus (im Grundpreis enthalten). Das Catering läuft über unseren
+  Partner-Caterer. Der finale Preis hängt von Ihren individuellen Wünschen, der
+  Gästezahl und der Saison ab. Sie erhalten von uns immer ein persönliches,
+  unverbindliches Angebot.
