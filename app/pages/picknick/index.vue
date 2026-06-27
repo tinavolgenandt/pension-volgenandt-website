@@ -114,8 +114,9 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
         Pension oder irgendwo in der wunderschönen Umgebung.
       </p>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
-        Ab <strong class="text-waldhonig-600">19 € pro Person</strong>. Korbpfand 100 € in bar bei
-        Abholung (bei Rückgabe zurück).
+        Ab <strong class="text-waldhonig-600">19 € pro Person</strong>. Korbpfand 50 € in bar bei
+        Abholung (bei Rückgabe zurück). Für unsere Übernachtungsgäste entfällt das Pfand – es gilt
+        nur für Tagesgäste.
       </p>
     </section>
 
@@ -321,7 +322,8 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
           Korb anfragen
         </NuxtLink>
         <p class="mt-4 text-sm text-sage-500">
-          Ab 19 € / Person · Korbpfand 100 € bar (bei Rückgabe zurück)
+          Ab 19 € / Person · Korbpfand 50 € bar (bei Rückgabe zurück) · für Übernachtungsgäste
+          entfällt es
         </p>
       </div>
     </section>

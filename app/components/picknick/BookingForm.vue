@@ -788,7 +788,8 @@ if (import.meta.client) {
           </dd>
         </div>
         <p class="mt-2 text-xs text-sage-500">
-          Zusätzlich: 100 € Korbpfand in bar bei Abholung (bei Rückgabe zurück).
+          Zusätzlich: 50 € Korbpfand in bar bei Abholung (bei Rückgabe zurück). Für
+          Übernachtungsgäste entfällt das Pfand.
         </p>
       </dl>
     </div>

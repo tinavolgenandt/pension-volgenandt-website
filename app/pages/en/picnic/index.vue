@@ -113,8 +113,9 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
         or somewhere in the beautiful surrounding countryside.
       </p>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
-        From <strong class="text-waldhonig-600">19 EUR per person</strong>. Basket deposit 100 EUR
-        cash at pickup (returned upon return).
+        From <strong class="text-waldhonig-600">19 EUR per person</strong>. Basket deposit 50 EUR
+        cash at pickup (returned upon return). Waived for our overnight guests – it only applies to
+        day guests.
       </p>
     </section>
 
@@ -322,7 +323,8 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
           Request a basket
         </NuxtLink>
         <p class="mt-4 text-sm text-sage-500">
-          From 19 EUR / person · Basket deposit 100 EUR cash (returned upon return)
+          From 19 EUR / person · Basket deposit 50 EUR cash (returned upon return) · waived for
+          overnight guests
         </p>
       </div>
     </section>

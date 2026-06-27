@@ -43,8 +43,9 @@ useSeoMeta({
       <Icon name="ph:info-duotone" class="mt-0.5 size-5 shrink-0 text-sage-500" />
       <div>
         <strong class="font-medium text-sage-900">Basket deposit notice:</strong>
-        A deposit of 100 EUR in cash is required upon pickup. You will receive it back when the
-        complete basket contents are returned.
+        A deposit of 50 EUR in cash is required upon pickup. You will receive it back when the
+        complete basket contents are returned. Waived for our overnight guests – it only applies to
+        day guests.
       </div>
     </div>
 
