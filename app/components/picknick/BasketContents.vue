@@ -34,22 +34,10 @@ defineProps<{
         <li v-for="extra in extras" :key="extra.id" class="flex items-start gap-3">
           <Icon name="ph:plus-circle-duotone" class="mt-0.5 size-5 shrink-0 text-sage-400" />
           <div>
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="text-sm font-medium text-sage-900">{{ extra.label }}</span>
-              <span
-                v-if="extra.price"
-                class="rounded-full bg-waldhonig-50 px-2 py-0.5 text-xs text-waldhonig-700"
-              >
-                +{{ extra.price }} € / {{ extra.unit }}
-              </span>
-              <span
-                v-else-if="extra.price === null"
-                class="rounded-full bg-sage-100 px-2 py-0.5 text-xs text-sage-600"
-              >
-                auf Anfrage
-              </span>
-            </div>
-            <p class="mt-0.5 text-xs text-sage-600">{{ extra.description }}</p>
+            <span class="text-sm font-medium text-sage-900">{{ extra.label }}</span>
+            <p v-if="extra.description" class="mt-0.5 text-xs text-sage-600">
+              {{ extra.description }}
+            </p>
           </div>
         </li>
       </ul>

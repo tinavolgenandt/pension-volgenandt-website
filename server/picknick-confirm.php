@@ -225,8 +225,11 @@ function buildConfirmationEmail(array $booking, array $parsed, array $packageCon
     <table width="100%" cellpadding="0" cellspacing="0" style="background:#fef9ee;border-radius:6px;margin:0 0 24px;">
       <tr><td style="padding:16px;">
         <p style="margin:0 0 8px;font-size:14px;line-height:1.6;">
-          Bei Abholung bitten wir Sie um <strong>100&nbsp;&euro; in bar</strong> als Pfand f&uuml;r Korb und Geschirr.
+          Bei Abholung bitten wir Sie um <strong>50&nbsp;&euro; in bar</strong> als Pfand f&uuml;r Korb und Geschirr.
           Das Geld erhalten Sie <strong>sofort bei R&uuml;ckgabe</strong> zur&uuml;ck &ndash; einfach den Korb vollst&auml;ndig zur&uuml;ckbringen.
+        </p>
+        <p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:#5a7a5c;">
+          <strong>Gut zu wissen:</strong> F&uuml;r unsere &Uuml;bernachtungsg&auml;ste entf&auml;llt das Pfand.
         </p>
         <p style="margin:0;font-size:13px;color:#888;">
           R&uuml;ckgabe bitte sp&auml;testens <strong>1 Stunde nach Ende Ihres Zeitfensters</strong>.
@@ -427,7 +430,7 @@ $result = sendSmtp(
     $emailSubject,
     $emailHtml,
     'Simone & Ralf Volgenandt', $adminEmail,
-    '', true
+    $adminEmail, true
 );
 
 if (!$result['ok']) {
