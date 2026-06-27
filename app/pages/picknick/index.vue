@@ -148,7 +148,7 @@ onBeforeUnmount(() => gardenObserver?.disconnect())
           to="/picknick/buchen/"
           class="mt-6 inline-block rounded-lg bg-waldhonig-500 px-8 py-3.5 text-base font-semibold text-white transition-colors hover:bg-waldhonig-600"
         >
-          Jetzt buchen
+          Jetzt anfragen
         </NuxtLink>
       </div>
     </section>
@@ -400,7 +400,7 @@ onBeforeUnmount(() => gardenObserver?.disconnect())
           to="/picknick/buchen/"
           class="mt-6 inline-block rounded-lg bg-waldhonig-500 px-8 py-4 text-lg font-semibold text-white transition-colors hover:bg-waldhonig-600"
         >
-          Korb anfragen
+          Jetzt anfragen
         </NuxtLink>
         <p class="mt-4 text-sm text-sage-500">
           Ab 19 € / Person · Korbpfand 50 € bar (bei Rückgabe zurück) · für Übernachtungsgäste

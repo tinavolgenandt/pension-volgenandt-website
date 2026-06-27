@@ -21,14 +21,19 @@ extras:
     price: 4
     unit: 'Person'
   - id: croissant
-    label: 'Croissant oder Brezel'
-    description: 'frisch aufgebacken'
+    label: 'Croissant'
+    description: 'Frisch aufgebacken – beim Brunch zubuchbar'
     price: 2
     unit: 'Stück'
   - id: getraenke
     label: 'Spritzige Getränke'
     description: 'z. B. Sekt, Aperol Spritz oder lokales Pils'
     price: null
+  - id: wasser
+    label: 'Flasche Wasser'
+    description: 'Wahlweise still oder mit Kohlensäure'
+    price: 3
+    unit: 'Flasche'
   - id: decke-extra
     label: 'Decke'
     description: ''
