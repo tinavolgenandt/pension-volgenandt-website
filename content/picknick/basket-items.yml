@@ -4,27 +4,38 @@ always:
   - label: 'Besteck, Teller & Gläser'
     note: 'echtes Geschirr, kein Plastik'
 
+# Curated for the landing page. The exact prices live in the booking form
+# (BookingForm.vue → extrasOptions) and are intentionally not shown here.
 extras:
   - id: vegetarisch
-    label: 'Vegetarisch'
-    description: 'Kein Fleisch – mehr Aufstriche, mehr Obst'
+    label: 'Ausschließlich vegetarische Auswahl'
+    description: 'Kein Fleisch – dafür mehr Aufstriche und frisches Obst'
     price: 0
-  - id: kinder
-    label: 'Kinder-Korb'
-    description: 'Kleinere Portionen für kleine Genießer'
-    price: 0
-  - id: sekt-extra
-    label: 'Extra Sekt'
-    description: 'Eine zusätzliche Flasche'
-    price: 3
-    unit: 'pro Person'
-  - id: decke-extra
-    label: 'Extra Decke'
-    description: 'Für kühlere Tage'
+  - id: hummus
+    label: 'Hausgemachter Hummus'
+    description: 'Cremig und frisch zubereitet'
     price: 2
-    unit: 'pro Stück'
+  - id: lachs
+    label: 'Lachs mit Frischkäse & Dill'
+    description: 'Für den besonderen Genuss'
+    price: 4
+    unit: 'Person'
+  - id: croissant
+    label: 'Croissant oder Brezel'
+    description: 'frisch aufgebacken'
+    price: 2
+    unit: 'Stück'
+  - id: getraenke
+    label: 'Spritzige Getränke'
+    description: 'z. B. Sekt, Aperol Spritz oder lokales Pils'
+    price: null
+  - id: decke-extra
+    label: 'Decke'
+    description: ''
+    price: 2
+    unit: 'Stück'
   - id: blumenstrauss
     label: 'Kleiner Blumenstrauß'
-    description: 'Als stille Überraschung im Korb – ideal für besondere Anlässe'
+    description: 'Als kleine Überraschung im Korb – ideal für besondere Anlässe'
     price: 6
-    unit: 'pro Stück'
+    unit: 'Stück'

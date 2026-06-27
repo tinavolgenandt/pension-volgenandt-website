@@ -51,7 +51,7 @@ const abendDrinkOptions = [
   { id: 'sekt', label: 'Sekt' },
   { id: 'weiss-wein', label: 'Weißwein' },
   { id: 'rot-wein', label: 'Rotwein' },
-  { id: 'bier', label: 'Bier' },
+  { id: 'bier', label: 'Lokales Pils' },
   { id: 'aperol', label: 'Aperol Spritz' },
   { id: 'sekt-alkoholfrei', label: 'Alkoholfreier Sekt' },
   { id: 'bier-alkoholfrei', label: 'Alkoholfreies Bier' },
@@ -83,8 +83,8 @@ const extrasOptions = [
     unit: 'Person',
     brunchOnly: false,
   },
-  { id: 'croissants', label: 'Croissant', price: 2, unit: 'Stück', brunchOnly: false },
-  { id: 'sekt', label: 'Sekt', price: 3, unit: 'Person', brunchOnly: true },
+  { id: 'croissants', label: 'Croissant oder Brezel', price: 2, unit: 'Stück', brunchOnly: false },
+  { id: 'sekt', label: 'Sekt', price: 3, unit: 'Person', brunchOnly: false },
   { id: 'decke-extra', label: 'Extra Decke', price: 2, unit: 'Stück', brunchOnly: false },
   {
     id: 'blumenstrauss',
@@ -519,7 +519,9 @@ if (import.meta.client) {
         Kinder-Korb ({{ KIDS_PRICE.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} € /
         Kind)
       </h3>
-      <p class="mt-1 text-xs text-sage-500">Kindgerechte Portionen für kleine Genießer</p>
+      <p class="mt-1 text-xs text-sage-500">
+        Eigens für unsere kleinen Gäste zusammengestellt – mit kleiner Überraschung
+      </p>
       <ul class="mt-3 space-y-1.5">
         <li
           v-for="(item, i) in kidsKorbInhalt"
