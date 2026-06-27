@@ -51,6 +51,9 @@ beds24_*.png
 public/img/source-uploads/
 public/img-originals/
 
+# Raw drone footage / source media (optimized derivatives go in public/, keep raw local)
+content/drone-shots/
+
 # Loose screenshots & images in project root
 *.png
 !public/favicon-48x48.png
