@@ -114,8 +114,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
       </p>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
         From <strong class="text-waldhonig-600">19 EUR per person</strong>. Basket deposit 50 EUR
-        cash at pickup (returned upon return). Waived for our overnight guests – it only applies to
-        day guests.
+        cash at pickup (returned upon return). Waived for our overnight guests.
       </p>
     </section>
 

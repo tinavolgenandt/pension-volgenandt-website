@@ -91,7 +91,7 @@ const selectedPackage = computed(() =>
         <strong class="font-medium text-sage-900">Korbpfand (50 €):</strong>
         Bei Abholung hinterlegen Sie 50 € in bar. Bei Rückgabe des Korbes sowie des vollständigen
         Inhalts erhalten Sie das Pfand sofort zurück. Für unsere Übernachtungsgäste entfällt das
-        Pfand – es gilt nur für Tagesgäste.
+        Pfand.
       </p>
     </div>
 

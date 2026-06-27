@@ -63,8 +63,7 @@ const txn = computed(() => String(route.query.txn || ''))
       <p>
         <strong class="font-medium text-sage-900">Basket deposit (50 €):</strong>
         A deposit of 50 € in cash is required upon pickup. You will receive it back when the
-        complete basket contents are returned. Waived for our overnight guests – it only applies to
-        day guests.
+        complete basket contents are returned. Waived for our overnight guests.
       </p>
     </div>
 

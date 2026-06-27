@@ -229,7 +229,7 @@ function buildConfirmationEmail(array $booking, array $parsed, array $packageCon
           Das Geld erhalten Sie <strong>sofort bei R&uuml;ckgabe</strong> zur&uuml;ck &ndash; einfach den Korb vollst&auml;ndig zur&uuml;ckbringen.
         </p>
         <p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:#5a7a5c;">
-          <strong>Gut zu wissen:</strong> F&uuml;r unsere &Uuml;bernachtungsg&auml;ste entf&auml;llt das Pfand &ndash; es gilt nur f&uuml;r Tagesg&auml;ste.
+          <strong>Gut zu wissen:</strong> F&uuml;r unsere &Uuml;bernachtungsg&auml;ste entf&auml;llt das Pfand.
         </p>
         <p style="margin:0;font-size:13px;color:#888;">
           R&uuml;ckgabe bitte sp&auml;testens <strong>1 Stunde nach Ende Ihres Zeitfensters</strong>.

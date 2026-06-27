@@ -48,7 +48,7 @@ useHead({
         <strong class="font-medium text-sage-900">Hinweis zum Korbpfand:</strong>
         Bei Abholung hinterlegen Sie 50 € in bar als Korbpfand. Bei Rückgabe des Korbes sowie des
         vollständigen Inhalts erhalten Sie das Pfand sofort zurück. Für unsere Übernachtungsgäste
-        entfällt das Pfand – es gilt nur für Tagesgäste.
+        entfällt das Pfand.
       </div>
     </div>
 

@@ -115,8 +115,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
       </p>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
         Ab <strong class="text-waldhonig-600">19 € pro Person</strong>. Korbpfand 50 € in bar bei
-        Abholung (bei Rückgabe zurück). Für unsere Übernachtungsgäste entfällt das Pfand – es gilt
-        nur für Tagesgäste.
+        Abholung (bei Rückgabe zurück). Für unsere Übernachtungsgäste entfällt das Pfand.
       </p>
     </section>
 
