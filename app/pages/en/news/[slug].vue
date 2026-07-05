@@ -104,6 +104,19 @@ if (article.value.eventStartDate && article.value.eventEndDate) {
       name: 'Landesgartenschau Leinefelde-Worbis 2026 gGmbH',
       url: 'https://www.lgs-leinefelde-worbis.de/',
     },
+    performer: {
+      '@type': 'Organization',
+      name: 'Landesgartenschau Leinefelde-Worbis 2026 gGmbH',
+    },
+    offers: {
+      '@type': 'Offer',
+      name: 'Day ticket',
+      url: 'https://www.lgs-leinefelde-worbis.de/besuch/tickets-kaufen/',
+      price: '22',
+      priceCurrency: 'EUR',
+      availability: 'https://schema.org/InStock',
+      validFrom: '2025-10-06',
+    },
   })
 }
 

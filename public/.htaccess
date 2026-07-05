@@ -1,3 +1,37 @@
+# ─── Redirects & canonical URLs ──────────────────────────────────
+# The site is a static Nuxt export: every page is served from
+# `<dir>/index.html`, so each page's canonical URL carries a trailing slash.
+# These rules make the server agree with those canonicals and clean up the old
+# site's legacy URLs — fixing the "Seite mit Weiterleitung" and
+# "Umleitungsfehler" items in Google Search Console (the legacy URLs were
+# previously meta-refresh pages, which Google could not follow cleanly).
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # 1. Legacy URLs from the previous website → real 301 redirects
+  RewriteRule ^ein-kleiner-umweltgedanke/?$  /nachhaltigkeit/   [R=301,L]
+  RewriteRule ^ferienwohnungen-zimmer/?$     /ferienwohnungen/  [R=301,L]
+  RewriteRule ^kind-kegel/?$                 /familie/          [R=301,L]
+
+  # Umlaut URL "/aktivitäten/" — match the raw and percent-encoded (%C3%A4) forms
+  RewriteCond %{THE_REQUEST} \s/aktivit(?:ä|%C3%A4)ten/?[\s?] [NC]
+  RewriteRule ^ /aktivitaeten/ [R=301,L]
+
+  # 2. Old HTML sitemap path → the XML sitemap
+  RewriteRule ^sitemap/?$ /sitemap.xml [R=301,L]
+
+  # 3. Drop /index.html down to the bare directory
+  RewriteRule ^(.*/)?index\.html$ /$1 [R=301,L]
+
+  # 4. Force a trailing slash on directory-style URLs. Skips real files
+  #    (images, .xml, .txt, …) and URLs that already end in a slash, so
+  #    /zimmer → /zimmer/ etc. match the page canonicals.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_URI} !/$
+  RewriteCond %{REQUEST_URI} !\.[a-zA-Z0-9]{2,5}$
+  RewriteRule ^(.+)$ /$1/ [R=301,L]
+</IfModule>
+
 # ─── Cache Control ────────────────────────────────────────────────
 # Hashed Nuxt build assets (immutable — filenames change on rebuild)
 <FilesMatch "^_nuxt/">
