@@ -55,6 +55,9 @@ export default defineNuxtConfig({
   // GitHub Pages, which has no server-side redirects and ignores .htaccess, and
   // Nitro's `routeRules: { redirect }` is not emitted as a file by the
   // github_pages preset — so physical stub pages are the reliable option.
+  // Exception: the old `/aktivitäten/` URL cannot get a stub because GitHub
+  // Pages' artifact deployment rejects non-ASCII (umlaut) file paths, so it
+  // stays a 404 (Google drops it over time).
 
   // Sitemap configuration
   sitemap: {
