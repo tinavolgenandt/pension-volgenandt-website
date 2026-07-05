@@ -225,7 +225,10 @@ useSeoMeta({
           Die Pension erhebt und verarbeitet personenbezogene Daten des Gastes im Rahmen der
           Vertragserfüllung und zur Wahrung eigener berechtigter Geschäftsinteressen. Näheres regelt
           unsere
-          <NuxtLink to="/datenschutz" class="text-waldhonig-600 underline hover:text-waldhonig-700">
+          <NuxtLink
+            to="/datenschutz/"
+            class="text-waldhonig-600 underline hover:text-waldhonig-700"
+          >
             Datenschutzerklärung</NuxtLink
           >.
         </p>

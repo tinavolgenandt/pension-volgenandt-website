@@ -76,6 +76,10 @@ export function useLocale() {
   /** Map from current page to its alternate-language equivalent */
   const alternateUrl = computed(() => {
     const path = route.path
+    // At prerender time route.path has no trailing slash, so the base-path
+    // mappings below can yield a slash-less result. Force a trailing slash to
+    // match the site's canonical URLs (site.trailingSlash).
+    const ensureSlash = (p: string) => (p.endsWith('/') ? p : p + '/')
 
     if (locale.value === 'en') {
       // EN → DE: strip /en prefix
@@ -93,7 +97,7 @@ export function useLocale() {
           break
         }
       }
-      return dePath
+      return ensureSlash(dePath)
     }
 
     // DE → EN: check special sub-routes first
@@ -112,7 +116,7 @@ export function useLocale() {
         break
       }
     }
-    return `/en${enPath}`
+    return ensureSlash(`/en${enPath}`)
   })
 
   return { locale, prefix, beds24Lang, alternateUrl, hasAlternate }
