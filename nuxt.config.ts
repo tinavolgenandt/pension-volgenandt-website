@@ -50,10 +50,11 @@ export default defineNuxtConfig({
     defaults: false,
   },
 
-  // Legacy URL redirects (from the previous site) are handled as real 301s in
-  // `public/.htaccess` on IONOS — see the "Redirects & canonical URLs" block
-  // there. They used to be Nitro meta-refresh pages, which Google Search Console
-  // flagged as "Umleitungsfehler".
+  // Legacy URL redirects (from the previous site) are static meta-refresh stubs
+  // under public/ (e.g. public/kind-kegel/index.html). The site is hosted on
+  // GitHub Pages, which has no server-side redirects and ignores .htaccess, and
+  // Nitro's `routeRules: { redirect }` is not emitted as a file by the
+  // github_pages preset — so physical stub pages are the reliable option.
 
   // Sitemap configuration
   sitemap: {
