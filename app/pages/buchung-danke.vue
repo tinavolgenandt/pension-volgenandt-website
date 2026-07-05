@@ -18,6 +18,9 @@ const { contact } = useAppConfig()
 const route = useRoute()
 const betrag = computed(() => Number(route.query.amt ?? route.query.betrag) || 0)
 const txn = computed(() => String(route.query.tx ?? route.query.txn ?? ''))
+
+// Report the completed booking to GA4 / Google Ads (purchase conversion)
+useBookingConversion()
 </script>
 
 <template>
