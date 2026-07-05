@@ -8,7 +8,7 @@ Nuxt 4 website for a family-run guesthouse in Eichsfeld, Thuringia. German is th
 - **Styling:** Tailwind CSS 4 (via @tailwindcss/vite)
 - **Content:** @nuxt/content 3 (YAML collections in `content/`)
 - **Booking:** Beds24 v2 API integration
-- **Hosting:** IONOS (static generation via `nuxt generate`)
+- **Hosting:** GitHub Pages (static, via `.github/workflows/deploy.yml`; custom domain `www.pension-volgenandt.de` in `public/CNAME`)
 - **Package manager:** pnpm
 
 ## Project Structure
@@ -112,7 +112,7 @@ scripts/          # CI/automation scripts (collect-stats.mjs)
 
 ### Deployment
 
-- Static site generated with `nuxt generate`
-- Hosted on IONOS — deploy by pushing to `main`
+- Hosted on **GitHub Pages** — pushing to `main` triggers `.github/workflows/deploy.yml`, which runs `nuxt build --preset github_pages` and publishes via `actions/deploy-pages`
+- GitHub Pages has **no server-side redirects** and ignores `.htaccess`. Legacy URL redirects are static meta-refresh stubs under `public/` (e.g. `public/kind-kegel/index.html`). Non-ASCII (umlaut) paths break the Pages deploy, so `/aktivitäten/` has no stub
 - `scripts/collect-stats.mjs` runs monthly via GitHub Actions (do not remove)
 - `scripts/optimize-images.mjs` — run manually before committing new images (not in CI)
