@@ -266,11 +266,13 @@ const included = [
     <section id="rechner" class="px-6 py-12 md:py-16">
       <div class="mx-auto max-w-2xl">
         <h2 class="text-center font-serif text-3xl font-bold text-sage-900">
-          Was kostet Ihre Feier?
+          Stellen Sie sich Ihre Feier zusammen
         </h2>
         <p class="mt-3 mb-8 text-center text-sage-600">
-          Stellen Sie sich Ihr Fest zusammen und erhalten Sie sofort einen unverbindlichen
-          Richtwert. Danach melden wir uns mit einem persönlichen Angebot.
+          Unser Konfigurator führt Sie Schritt für Schritt durch alle Möglichkeiten. Bei jeder
+          Auswahl sehen Sie sofort, was sie für Ihre Feier bedeutet und was sie kostet – am Ende
+          steht Ihr unverbindlicher Gesamt-Richtwert. Danach melden wir uns mit einem persönlichen
+          Angebot.
         </p>
         <EventsEventPlanner />
       </div>

@@ -89,6 +89,57 @@ drinkOptions:
       Abgerechnet pro Person und Stunde.
     pricePerPersonPerHour: 9
 
+# Freie Trauung: Zeremonie im Garten mit professionellem Trauredner. Fester Preis
+# inkl. Vermittlung. (Markt 2026: Trauredner ~800–1.500 €.) Platzhalter-Richtwert.
+ceremonyOptions:
+  - id: keine
+    label: Keine Trauung vor Ort
+    description: Sie feiern bei uns, die Trauung findet woanders statt (Standesamt/Kirche).
+    detail: >-
+      Wählen Sie diese Option, wenn Sie standesamtlich oder kirchlich an einem
+      anderen Ort heiraten und bei uns "nur" feiern. Für alle anderen Anlässe
+      (Geburtstag, Jubiläum …) bleibt diese Option einfach ausgewählt.
+    price: 0
+  - id: freie_trauung
+    label: Freie Trauung im Garten
+    description: >-
+      Persönliche, freie Trauzeremonie unter freiem Himmel mit einem professionellen
+      Trauredner – individuell auf Ihre Geschichte abgestimmt.
+    detail: >-
+      Sie heiraten direkt bei uns im Garten: ein erfahrener freier Trauredner
+      gestaltet Ihre Zeremonie ganz persönlich. Wir richten den Traubereich her –
+      so wird Trauung und Feier zu einem stimmungsvollen Tag an einem Ort, ohne
+      Fahrt dazwischen. Enthält Vorgespräch, persönliche Rede und Zeremonie.
+    price: 1190
+
+# Fotograf / Video: keine / Fotoreportage / Foto + Video. Fester Preis inkl.
+# Vermittlung. (Markt 2026: Hochzeitsfotograf ~1.200–2.000 €, Video zusätzlich.)
+photographyOptions:
+  - id: keine
+    label: Kein Fotograf
+    description: Sie bringen Ihren eigenen Fotografen mit oder benötigen keinen.
+    detail: Sie organisieren die Fotos selbst – diese Position bleibt bei 0 €.
+    price: 0
+  - id: fotograf
+    label: Fotograf – Reportage
+    description: >-
+      Professionelle Foto-Reportage Ihres Tages – natürliche Momentaufnahmen und
+      Gruppenbilder, als bearbeitete Bildergalerie zum Download.
+    detail: >-
+      Ein erfahrener Fotograf begleitet Ihre Feier und hält die schönsten Momente
+      fest – vom Empfang bis zum Abend. Sie erhalten die bearbeiteten Bilder digital.
+      Ein Klassiker, den fast alle Hochzeitspaare wählen.
+    price: 1490
+  - id: foto_video
+    label: Foto + Video
+    description: >-
+      Foto-Reportage plus filmischer Zusammenschnitt Ihres Tages als Erinnerungsvideo.
+    detail: >-
+      Zusätzlich zur Fotoreportage entsteht ein professioneller Film Ihres Tages –
+      ein bewegendes Andenken, das Sie immer wieder ansehen können. Ideal für
+      Hochzeiten und große Jubiläen.
+    price: 2290
+
 # Musik: keine / nur Anlage (eigene Playlist) / kompletter DJ. Fester Preis inkl.
 # Organisation, Lieferung/Aufbau und unserer Vermittlungsmarge.
 musicOptions:
@@ -186,6 +237,79 @@ decorationOptions:
       Aufwändige florale Gestaltung mit hochwertigen Arrangements für Tische, Zelt
       und Eingang – das festliche Rundum-Paket.
     pricePerPerson: 20
+
+# Torte & Sweet Table: keine / Hochzeitstorte / Torte + Sweet Table. Pro Person.
+# (Markt 2026: Hochzeitstorte ~4–6 €/Stück, Candy/Sweet Table zusätzlich.)
+cakeOptions:
+  - id: keine
+    label: Keine Torte
+    description: Sie bringen Ihre eigene Torte mit oder verzichten darauf.
+    detail: Kuchen/Torte organisieren Sie selbst – diese Position bleibt bei 0 €.
+    pricePerPerson: 0
+  - id: torte
+    label: Festtorte
+    description: >-
+      Mehrstöckige Festtorte vom Konditor, abgestimmt auf Anlass, Geschmack und
+      Gästezahl – der süße Höhepunkt Ihrer Feier.
+    detail: >-
+      Der klassische Moment: das gemeinsame Anschneiden der Torte. Wir stimmen
+      Größe, Geschmack und Optik mit unserem Konditor auf Ihren Anlass ab.
+      Abgerechnet pro Person, damit die Torte zur Gästezahl passt.
+    pricePerPerson: 7
+  - id: torte_sweet
+    label: Torte + Sweet Table
+    description: >-
+      Festtorte plus liebevoll dekorierter Sweet Table mit Cupcakes, Macarons,
+      Pralinen und mehr zum Naschen über den ganzen Tag.
+    detail: >-
+      Zusätzlich zur Torte eine dekorative Süßigkeiten-Ecke, an der sich Ihre Gäste
+      den ganzen Tag bedienen können – ein beliebter Hingucker, besonders für Kinder.
+    pricePerPerson: 14
+
+# Fotobox: keine / Fotobox mit Requisiten. Fester Preis inkl. Aufbau & Betreuung.
+# (Markt 2026: Fotobox-Miete ~300–500 €.)
+photoboothOptions:
+  - id: keine
+    label: Keine Fotobox
+    description: Ohne Fotobox.
+    detail: Diese Position bleibt bei 0 €.
+    price: 0
+  - id: fotobox
+    label: Fotobox mit Requisiten
+    description: >-
+      Fotobox mit lustigen Requisiten und Sofortausdruck – für viele Lacher und ein
+      Gästebuch voller Erinnerungen.
+    detail: >-
+      Der Unterhaltungs-Hit für Ihre Gäste: Fotos mit Verkleidungen und Sofortdruck,
+      dazu ein Abzug fürs Gästebuch. Wir kümmern uns um Aufbau, Betreuung und Abbau.
+    price: 390
+
+# Styling: keine / Braut-Styling / Braut + Begleitung. Fester Preis, Hair & Make-up.
+# (Markt 2026: Braut-Styling Haare & Make-up ~250–450 €.)
+stylingOptions:
+  - id: keine
+    label: Kein Styling
+    description: Sie organisieren Haare & Make-up selbst.
+    detail: Diese Position bleibt bei 0 €.
+    price: 0
+  - id: braut
+    label: Braut-Styling (Haare & Make-up)
+    description: >-
+      Professionelles Haar- und Make-up-Styling für die Braut (bzw. das Geburtstags-
+      oder Ehrenkind), inkl. Vorprobe.
+    detail: >-
+      Entspannt in den großen Tag starten: Haar- und Make-up-Styling direkt bei uns
+      vor Ort, damit Sie sich um nichts kümmern müssen. Mit vorheriger Typberatung
+      und Probetermin.
+    price: 390
+  - id: braut_partner
+    label: Styling für Braut + Begleitung
+    description: >-
+      Styling für die Braut plus eine weitere Person (Partnerin, Mutter, Trauzeugin).
+    detail: >-
+      Wie das Braut-Styling, zusätzlich für eine zweite Person – ideal, wenn Sie sich
+      gemeinsam vorbereiten möchten.
+    price: 650
 
 # Anlässe (für die Auswahl im Rechner und die Anlass-Kacheln)
 occasions:

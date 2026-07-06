@@ -8,71 +8,367 @@ const { data: config } = await useAsyncData('event-config', () =>
   queryCollection('eventConfig').first(),
 )
 
+// --- Types ----------------------------------------------------------------
+// A single catalogue option. Different groups use different price fields
+// (fixed `price`, `pricePerPerson`, or `pricePerPersonPerHour`); the unit on
+// the group decides which one applies and how it scales.
+interface CatalogOption {
+  id: string
+  label: string
+  description: string
+  detail?: string
+  image?: string
+  imageAlt?: string
+  price?: number
+  pricePerPerson?: number
+  pricePerPersonPerHour?: number
+}
+type Unit = 'flat' | 'person' | 'personHour'
+type SelectKey =
+  | 'cateringId'
+  | 'drinkId'
+  | 'ceremonyId'
+  | 'photographyId'
+  | 'musicId'
+  | 'decorationId'
+  | 'cakeId'
+  | 'photoboothId'
+  | 'stylingId'
+  | 'tableId'
+  | 'chairCoverId'
+  | 'dishwareId'
+  | 'flooringId'
+interface WizardGroup {
+  key: SelectKey
+  unit: Unit
+  legend: string
+  note?: string
+  options: CatalogOption[]
+}
+interface WizardStep {
+  title: string
+  intro?: string
+  image?: string
+  imageAlt?: string
+  groups: WizardGroup[]
+}
+
+// --- Config accessors ------------------------------------------------------
+const opts = (key: keyof NonNullable<typeof config.value>): CatalogOption[] =>
+  (config.value?.[key] as CatalogOption[] | undefined) ?? []
+
 const occasions = computed(() => config.value?.occasions ?? [])
-const cateringTiers = computed(() => config.value?.cateringTiers ?? [])
-const drinkOptions = computed(() => config.value?.drinkOptions ?? [])
-const musicOptions = computed(() => config.value?.musicOptions ?? [])
-const decorationOptions = computed(() => config.value?.decorationOptions ?? [])
-const tableOptions = computed(() => config.value?.tableOptions ?? [])
-const chairCoverOptions = computed(() => config.value?.chairCoverOptions ?? [])
-const dishwareOptions = computed(() => config.value?.dishwareOptions ?? [])
-const flooringOptions = computed(() => config.value?.flooringOptions ?? [])
 const guestRange = computed(() => config.value?.guestRange ?? { min: 10, max: 80, default: 40 })
 const partyDuration = computed(() => config.value?.partyDuration ?? { min: 3, max: 12, default: 6 })
 const basePackage = computed(() => config.value?.basePackage)
 
+// --- Form state ------------------------------------------------------------
 const form = reactive({
   occasionId: '',
   customOccasion: '',
   date: '',
   guests: guestRange.value.default,
   hours: partyDuration.value.default,
-  cateringId: cateringTiers.value[0]?.id ?? '',
+  cateringId: '',
   drinkId: '',
+  ceremonyId: '',
+  photographyId: '',
   musicId: '',
+  decorationId: '',
+  cakeId: '',
+  photoboothId: '',
+  stylingId: '',
   tableId: '',
   chairCoverId: '',
   dishwareId: '',
   flooringId: '',
-  decorationId: '',
   name: '',
   email: '',
   phone: '',
   notes: '',
 })
 
-// Seed defaults once config is available (handles async load on the client)
+// --- The catalogue steps (the "click-by-click" interview) ------------------
+// Each step is one screen with an explanatory intro, a photo, and its option
+// cards. Photos below are PLACEHOLDERS from the existing garden gallery — swap
+// them for real event photography once available (or set `image` per option in
+// content/events/config.yml).
+const optionSteps = computed<WizardStep[]>(() => [
+  {
+    title: 'Catering',
+    image: '/img/picknick/abendschmaus.webp',
+    imageAlt: 'Liebevoll angerichtetes Buffet',
+    intro:
+      'Das Herzstück jeder Feier: Unser Partner-Caterer richtet seine Küche bei uns in der Garage ein und verwöhnt Ihre Gäste. Der Preis gilt pro Person und wächst mit der Gästezahl.',
+    groups: [
+      { key: 'cateringId', unit: 'person', legend: 'Catering', options: opts('cateringTiers') },
+    ],
+  },
+  {
+    title: 'Getränke',
+    image: '/img/picknick/garten-pavillon-sitzecke.webp',
+    imageAlt: 'Gemütliche Sitzecke im Garten',
+    intro:
+      'Die Getränke laufen über uns – wählen Sie zwischen Selbstbedienung und Service am Tisch. Abgerechnet pro Person und Stunde, richtet sich also nach Gästezahl und Dauer Ihrer Feier.',
+    groups: [
+      {
+        key: 'drinkId',
+        unit: 'personHour',
+        legend: 'Getränke',
+        note: 'Der Preis gilt pro Person und Stunde und wird mit Ihrer Feierdauer multipliziert.',
+        options: opts('drinkOptions'),
+      },
+    ],
+  },
+  {
+    title: 'Freie Trauung',
+    image: '/img/garten/garten-sitzbank-apfelbaum-bluete.webp',
+    imageAlt: 'Blühender Apfelbaum mit Sitzbank im Garten',
+    intro:
+      'Möchten Sie direkt bei uns im Garten heiraten? Ein professioneller Trauredner gestaltet Ihre freie Zeremonie – Trauung und Feier an einem Ort, ganz ohne Fahrt dazwischen. Für alle anderen Anlässe lassen Sie diese Auswahl einfach bei „Keine Trauung“.',
+    groups: [
+      {
+        key: 'ceremonyId',
+        unit: 'flat',
+        legend: 'Freie Trauung',
+        options: opts('ceremonyOptions'),
+      },
+    ],
+  },
+  {
+    title: 'Fotograf & Video',
+    image: '/img/garten/garten-eingang-rudbeckia-abend.webp',
+    imageAlt: 'Abendstimmung im Garten',
+    intro:
+      'Damit die schönsten Momente für immer bleiben: Wir vermitteln erfahrene Fotografen und Videografen. Ein fester Preis für Ihren gesamten Tag.',
+    groups: [
+      {
+        key: 'photographyId',
+        unit: 'flat',
+        legend: 'Fotograf & Video',
+        options: opts('photographyOptions'),
+      },
+    ],
+  },
+  {
+    title: 'Musik',
+    image: '/img/garten/garten-laube-herbst.webp',
+    imageAlt: 'Gartenlaube',
+    intro:
+      'Von der eigenen Playlist über die reine Musikanlage bis zum kompletten DJ für die Abendgestaltung. Der Strom kommt direkt aus dem Haus.',
+    groups: [{ key: 'musicId', unit: 'flat', legend: 'Musik', options: opts('musicOptions') }],
+  },
+  {
+    title: 'Dekoration',
+    image: '/img/garten/garten-haengekorb-blumen.webp',
+    imageAlt: 'Blühender Hängekorb im Garten',
+    intro:
+      'Die Tischdekoration gibt Ihrer Feier den festlichen Rahmen – von schlicht bis zur aufwändigen Blumengestaltung. Abgerechnet pro Person, passend zur Anzahl der Tische.',
+    groups: [
+      {
+        key: 'decorationId',
+        unit: 'person',
+        legend: 'Dekoration',
+        options: opts('decorationOptions'),
+      },
+    ],
+  },
+  {
+    title: 'Torte & Sweet Table',
+    image: '/img/picknick/kuchen-streusel.webp',
+    imageAlt: 'Frischer Kuchen',
+    intro:
+      'Der süße Höhepunkt: eine Festtorte vom Konditor, auf Wunsch mit dekorativem Sweet Table zum Naschen. Abgerechnet pro Person.',
+    groups: [
+      {
+        key: 'cakeId',
+        unit: 'person',
+        legend: 'Torte & Sweet Table',
+        options: opts('cakeOptions'),
+      },
+    ],
+  },
+  {
+    title: 'Fotobox',
+    image: '/img/picknick/garten-sitzecke-rosen.webp',
+    imageAlt: 'Sitzecke mit Rosen im Garten',
+    intro:
+      'Der Unterhaltungs-Hit für Ihre Gäste: eine Fotobox mit Requisiten und Sofortdruck – für viele Lacher und ein Gästebuch voller Erinnerungen.',
+    groups: [
+      { key: 'photoboothId', unit: 'flat', legend: 'Fotobox', options: opts('photoboothOptions') },
+    ],
+  },
+  {
+    title: 'Styling',
+    image: '/img/garten/garten-narzissen-weiss.webp',
+    imageAlt: 'Weiße Narzissen im Garten',
+    intro:
+      'Entspannt in den großen Tag starten: professionelles Haar- und Make-up-Styling direkt bei uns vor Ort, mit Typberatung und Probetermin.',
+    groups: [
+      { key: 'stylingId', unit: 'flat', legend: 'Styling', options: opts('stylingOptions') },
+    ],
+  },
+  {
+    title: 'Mobiliar & Ausstattung',
+    image: '/img/garten/garten-sitzecke-apfelbaum.webp',
+    imageAlt: 'Sitzgelegenheit unter dem Apfelbaum',
+    intro:
+      'Vom rustikalen bis zum eleganten Look: Stellen Sie Tische, Stuhlhussen, Geschirr und Bodenbelag zusammen. Die jeweils erste Option ist bereits im Basispreis enthalten – jede Aufwertung wird pro Person berechnet.',
+    groups: [
+      { key: 'tableId', unit: 'person', legend: 'Tische', options: opts('tableOptions') },
+      {
+        key: 'chairCoverId',
+        unit: 'person',
+        legend: 'Stuhlhussen',
+        options: opts('chairCoverOptions'),
+      },
+      {
+        key: 'dishwareId',
+        unit: 'person',
+        legend: 'Geschirr & Gläser',
+        options: opts('dishwareOptions'),
+      },
+      {
+        key: 'flooringId',
+        unit: 'person',
+        legend: 'Bodenbelag / Tanzfläche',
+        options: opts('flooringOptions'),
+      },
+    ],
+  },
+])
+
+// Every group across all steps — used for defaults, totals and the summary.
+const allGroups = computed<WizardGroup[]>(() => optionSteps.value.flatMap((s) => s.groups))
+
+// Seed each selection with its first option once config has loaded. The first
+// option is deliberately the included/"Keine" one for opt-in extras.
 watchEffect(() => {
-  if (!form.cateringId && cateringTiers.value[0]) form.cateringId = cateringTiers.value[0].id
-  if (!form.drinkId) {
-    // default to self-service if present, else the first option
-    const def = drinkOptions.value.find((d) => d.pricePerPersonPerHour > 0) ?? drinkOptions.value[0]
-    if (def) form.drinkId = def.id
+  for (const group of allGroups.value) {
+    if (!form[group.key] && group.options[0]) form[group.key] = group.options[0].id
   }
-  if (!form.musicId && musicOptions.value[0]) form.musicId = musicOptions.value[0].id
-  if (!form.tableId && tableOptions.value[0]) form.tableId = tableOptions.value[0].id
-  if (!form.chairCoverId && chairCoverOptions.value[0])
-    form.chairCoverId = chairCoverOptions.value[0].id
-  if (!form.dishwareId && dishwareOptions.value[0]) form.dishwareId = dishwareOptions.value[0].id
-  if (!form.flooringId && flooringOptions.value[0]) form.flooringId = flooringOptions.value[0].id
-  if (!form.decorationId && decorationOptions.value[0])
-    form.decorationId = decorationOptions.value[0].id
 })
 
-// Furniture & equipment groups — rendered generically (all are per-person radios)
-type FurnitureKey = 'tableId' | 'chairCoverId' | 'dishwareId' | 'flooringId'
-const furnitureGroups = computed<
-  {
-    key: FurnitureKey
-    label: string
-    options: { id: string; label: string; description: string; pricePerPerson: number }[]
-  }[]
->(() => [
-  { key: 'tableId', label: 'Tische', options: tableOptions.value },
-  { key: 'chairCoverId', label: 'Stuhlhussen', options: chairCoverOptions.value },
-  { key: 'dishwareId', label: 'Geschirr & Gläser', options: dishwareOptions.value },
-  { key: 'flooringId', label: 'Bodenbelag / Tanzfläche', options: flooringOptions.value },
-])
+// --- Pricing ---------------------------------------------------------------
+function rawPrice(opt: CatalogOption | undefined, unit: Unit): number {
+  if (!opt) return 0
+  if (unit === 'person') return opt.pricePerPerson ?? 0
+  if (unit === 'personHour') return opt.pricePerPersonPerHour ?? 0
+  return opt.price ?? 0
+}
+function optAmount(opt: CatalogOption | undefined, unit: Unit): number {
+  const p = rawPrice(opt, unit)
+  if (unit === 'person') return p * form.guests
+  if (unit === 'personHour') return p * form.guests * form.hours
+  return p
+}
+function unitPriceLabel(opt: CatalogOption, unit: Unit): string {
+  const p = rawPrice(opt, unit)
+  if (p === 0) return '–'
+  if (unit === 'person') return `${p} € / Person`
+  if (unit === 'personHour') return `${p} € / Pers. · Std.`
+  return `${formatEuro(p)} €`
+}
+function selectedOption(group: WizardGroup): CatalogOption | undefined {
+  return group.options.find((o) => o.id === form[group.key]) ?? group.options[0]
+}
+function formatEuro(value: number): string {
+  return value.toLocaleString('de-DE')
+}
+
+// Base price is banded by guest count (the included tent scales with size).
+const basePrice = computed(() => {
+  const bands = basePackage.value?.guestBands ?? []
+  const band = bands.find((b) => form.guests <= b.maxGuests) ?? bands[bands.length - 1]
+  return band?.price ?? 0
+})
+
+const estimate = computed(
+  () =>
+    basePrice.value +
+    allGroups.value.reduce((sum, g) => sum + optAmount(selectedOption(g), g.unit), 0),
+)
+const perGuest = computed(() => (form.guests > 0 ? Math.round(estimate.value / form.guests) : 0))
+
+// Line items for the summary + the enquiry email.
+interface Line {
+  label: string
+  detail: string
+  amount: number
+}
+const summaryLines = computed<Line[]>(() => {
+  const lines: Line[] = [
+    {
+      label: basePackage.value?.label ?? 'Basispreis',
+      detail: `${basePackage.value?.label ?? 'Basispreis'} · ${form.guests} Gäste`,
+      amount: basePrice.value,
+    },
+  ]
+  for (const group of allGroups.value) {
+    const sel = selectedOption(group)
+    if (!sel) continue
+    const amount = optAmount(sel, group.unit)
+    if (amount <= 0) continue
+    let detail = `${group.legend}: ${sel.label}`
+    if (group.unit === 'person')
+      detail = `${group.legend}: ${sel.label} · ${form.guests} × ${sel.pricePerPerson} €`
+    else if (group.unit === 'personHour')
+      detail = `${group.legend}: ${sel.label} · ${form.guests} × ${sel.pricePerPersonPerHour} € × ${form.hours} h`
+    lines.push({ label: group.legend, detail, amount })
+  }
+  return lines
+})
+
+// --- Occasion helpers ------------------------------------------------------
+const isCustomOccasion = computed(() => form.occasionId === 'andere')
+const occasionLabel = computed(() => {
+  if (isCustomOccasion.value) return form.customOccasion.trim() || 'Eigener Anlass'
+  return occasions.value.find((o) => o.id === form.occasionId)?.label ?? ''
+})
+
+// --- Wizard navigation -----------------------------------------------------
+// Step 0 = intro/questions, 1..N = catalogue steps, N+1 = summary + contact.
+const currentStep = ref(0)
+const totalSteps = computed(() => optionSteps.value.length + 2)
+const isIntro = computed(() => currentStep.value === 0)
+const isSummary = computed(() => currentStep.value === totalSteps.value - 1)
+const activeStep = computed<WizardStep | undefined>(() =>
+  isIntro.value || isSummary.value ? undefined : optionSteps.value[currentStep.value - 1],
+)
+const progressPercent = computed(() =>
+  Math.round((currentStep.value / (totalSteps.value - 1)) * 100),
+)
+const stepTitle = computed(() => {
+  if (isIntro.value) return 'Ihr Anlass & Eckdaten'
+  if (isSummary.value) return 'Zusammenfassung & Anfrage'
+  return activeStep.value?.title ?? ''
+})
+
+const introValid = computed(
+  () =>
+    form.occasionId !== '' &&
+    (!isCustomOccasion.value || form.customOccasion.trim() !== '') &&
+    form.guests >= guestRange.value.min &&
+    form.guests <= guestRange.value.max,
+)
+
+const scrollAnchor = ref<HTMLElement | null>(null)
+function scrollToTop() {
+  if (import.meta.client) scrollAnchor.value?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+function next() {
+  if (isIntro.value && !introValid.value) return
+  if (currentStep.value < totalSteps.value - 1) {
+    currentStep.value++
+    scrollToTop()
+  }
+}
+function prev() {
+  if (currentStep.value > 0) {
+    currentStep.value--
+    scrollToTop()
+  }
+}
 
 const minDate = ref('')
 if (import.meta.client) {
@@ -82,77 +378,14 @@ if (import.meta.client) {
   minDate.value = d.toISOString().slice(0, 10)
 }
 
-const selectedCatering = computed(
-  () => cateringTiers.value.find((c) => c.id === form.cateringId) ?? cateringTiers.value[0],
-)
-const selectedDrink = computed(() => drinkOptions.value.find((d) => d.id === form.drinkId))
-const selectedMusic = computed(() => musicOptions.value.find((m) => m.id === form.musicId))
-const selectedDecoration = computed(() =>
-  decorationOptions.value.find((d) => d.id === form.decorationId),
-)
-
-const isCustomOccasion = computed(() => form.occasionId === 'andere')
-const occasionLabel = computed(() => {
-  if (isCustomOccasion.value) return form.customOccasion.trim() || 'Eigener Anlass'
-  return occasions.value.find((o) => o.id === form.occasionId)?.label ?? ''
-})
-
-// Base price is banded by guest count (the included tent scales with size).
-const basePrice = computed(() => {
-  const bands = basePackage.value?.guestBands ?? []
-  const band = bands.find((b) => form.guests <= b.maxGuests) ?? bands[bands.length - 1]
-  return band?.price ?? 0
-})
-
-function formatEuro(value: number): string {
-  return value.toLocaleString('de-DE')
-}
-
-const cateringTotal = computed(() => (selectedCatering.value?.pricePerPerson ?? 0) * form.guests)
-const drinksTotal = computed(
-  () => (selectedDrink.value?.pricePerPersonPerHour ?? 0) * form.guests * form.hours,
-)
-const musicTotal = computed(() => selectedMusic.value?.price ?? 0)
-const decorationTotal = computed(
-  () => (selectedDecoration.value?.pricePerPerson ?? 0) * form.guests,
-)
-
-const selectedTable = computed(() => tableOptions.value.find((o) => o.id === form.tableId))
-const selectedChairCover = computed(() =>
-  chairCoverOptions.value.find((o) => o.id === form.chairCoverId),
-)
-const selectedDishware = computed(() => dishwareOptions.value.find((o) => o.id === form.dishwareId))
-const selectedFlooring = computed(() => flooringOptions.value.find((o) => o.id === form.flooringId))
-const tableTotal = computed(() => (selectedTable.value?.pricePerPerson ?? 0) * form.guests)
-const chairCoverTotal = computed(
-  () => (selectedChairCover.value?.pricePerPerson ?? 0) * form.guests,
-)
-const dishwareTotal = computed(() => (selectedDishware.value?.pricePerPerson ?? 0) * form.guests)
-const flooringTotal = computed(() => (selectedFlooring.value?.pricePerPerson ?? 0) * form.guests)
-const furnitureTotal = computed(
-  () => tableTotal.value + chairCoverTotal.value + dishwareTotal.value + flooringTotal.value,
-)
-
-const estimate = computed(
-  () =>
-    basePrice.value +
-    cateringTotal.value +
-    drinksTotal.value +
-    musicTotal.value +
-    furnitureTotal.value +
-    decorationTotal.value,
-)
-const perGuest = computed(() => (form.guests > 0 ? Math.round(estimate.value / form.guests) : 0))
-
+// --- Submission ------------------------------------------------------------
 const isSubmitting = ref(false)
 const isSubmitted = ref(false)
 const errorMessage = ref('')
 
 const isFormValid = computed(
   () =>
-    form.occasionId !== '' &&
-    (!isCustomOccasion.value || form.customOccasion.trim() !== '') &&
-    form.guests >= guestRange.value.min &&
+    introValid.value &&
     form.name.trim() !== '' &&
     form.email.trim() !== '' &&
     form.phone.trim() !== '',
@@ -170,28 +403,19 @@ watch(
 )
 
 function buildMessage(): string {
-  return [
+  const lines = [
     `Anlass: ${occasionLabel.value || '–'}`,
     `Wunschtermin: ${form.date || 'noch offen'}`,
     `Gäste: ${form.guests}`,
     `Dauer: ca. ${form.hours} Stunden`,
     '',
-    `${basePackage.value?.label ?? 'Basispreis'} (${form.guests} Gäste): ${formatEuro(basePrice.value)} €`,
-    `Catering: ${selectedCatering.value?.label} – ${form.guests} × ${selectedCatering.value?.pricePerPerson} € = ${formatEuro(cateringTotal.value)} €`,
-    `Getränke: ${selectedDrink.value?.label}${(selectedDrink.value?.pricePerPersonPerHour ?? 0) > 0 ? ` – ${form.guests} × ${selectedDrink.value?.pricePerPersonPerHour} € × ${form.hours} h = ${formatEuro(drinksTotal.value)} €` : ''}`,
-    `Musik: ${selectedMusic.value?.label}${musicTotal.value > 0 ? ` = ${formatEuro(musicTotal.value)} €` : ''}`,
-    `Tische: ${selectedTable.value?.label}${tableTotal.value > 0 ? ` – ${form.guests} × ${selectedTable.value?.pricePerPerson} € = ${formatEuro(tableTotal.value)} €` : ' (im Basispreis)'}`,
-    `Stuhlhussen: ${selectedChairCover.value?.label}${chairCoverTotal.value > 0 ? ` – ${form.guests} × ${selectedChairCover.value?.pricePerPerson} € = ${formatEuro(chairCoverTotal.value)} €` : ''}`,
-    `Geschirr: ${selectedDishware.value?.label}${dishwareTotal.value > 0 ? ` – ${form.guests} × ${selectedDishware.value?.pricePerPerson} € = ${formatEuro(dishwareTotal.value)} €` : ''}`,
-    `Bodenbelag: ${selectedFlooring.value?.label}${flooringTotal.value > 0 ? ` – ${form.guests} × ${selectedFlooring.value?.pricePerPerson} € = ${formatEuro(flooringTotal.value)} €` : ''}`,
-    `Dekoration: ${selectedDecoration.value?.label}${decorationTotal.value > 0 ? ` – ${form.guests} × ${selectedDecoration.value?.pricePerPerson} € = ${formatEuro(decorationTotal.value)} €` : ''}`,
+    ...summaryLines.value.map((l) => `${l.detail} = ${formatEuro(l.amount)} €`),
     '',
     `Geschätzter Gesamtpreis: ca. ${formatEuro(estimate.value)} € (ca. ${formatEuro(perGuest.value)} € / Person)`,
     '',
     `Nachricht: ${form.notes || '–'}`,
   ]
-    .filter(Boolean)
-    .join('\n')
+  return lines.join('\n')
 }
 
 async function handleSubmit() {
@@ -229,10 +453,13 @@ async function handleSubmit() {
     isSubmitting.value = false
   }
 }
+
+const inputClass =
+  'mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none'
 </script>
 
 <template>
-  <div>
+  <div ref="scrollAnchor" class="scroll-mt-28">
     <!-- Success state -->
     <div v-if="isSubmitted" class="rounded-xl bg-sage-50 p-8 text-center">
       <Icon name="ph:check-circle-duotone" class="mx-auto mb-4 size-12 text-sage-600" />
@@ -243,182 +470,145 @@ async function handleSubmit() {
       </p>
     </div>
 
-    <form v-else class="space-y-8" @submit.prevent="handleSubmit">
-      <!-- Immer enthalten -->
-      <div v-if="basePackage" class="rounded-xl border border-sage-200 bg-sage-50/60 p-6">
-        <h3 class="font-serif text-lg font-semibold text-sage-900">{{ basePackage.label }}</h3>
-        <p class="mt-1 text-sm text-sage-600">{{ basePackage.description }}</p>
-        <ul class="mt-4 grid gap-2 sm:grid-cols-2">
-          <li
-            v-for="(item, i) in basePackage.includes"
-            :key="i"
-            class="flex items-start gap-2 text-sm text-sage-700"
-          >
-            <Icon
-              name="ph:check-circle-duotone"
-              class="mt-0.5 size-4 shrink-0 text-waldhonig-500"
-            />
-            {{ item }}
-          </li>
-        </ul>
-      </div>
-
-      <!-- Anlass & Eckdaten -->
-      <fieldset class="space-y-5">
-        <legend class="font-serif text-lg font-semibold text-sage-900">
-          1. Ihr Anlass & Eckdaten
-        </legend>
-
-        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          <div>
-            <label for="ev-occasion" class="block text-sm font-medium text-sage-800">
-              Anlass *
-            </label>
-            <select
-              id="ev-occasion"
-              v-model="form.occasionId"
-              class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
-            >
-              <option value="" disabled>Bitte wählen</option>
-              <option v-for="o in occasions" :key="o.id" :value="o.id">{{ o.label }}</option>
-              <option value="andere">Anderer Anlass …</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="ev-date" class="block text-sm font-medium text-sage-800">
-              Wunschtermin
-            </label>
-            <input
-              id="ev-date"
-              v-model="form.date"
-              type="date"
-              :min="minDate"
-              class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
-            />
-          </div>
-
-          <div>
-            <label for="ev-guests" class="block text-sm font-medium text-sage-800">
-              Gäste * <span class="text-sage-400">({{ guestRange.min }}–{{ guestRange.max }})</span>
-            </label>
-            <input
-              id="ev-guests"
-              v-model.number="form.guests"
-              type="number"
-              :min="guestRange.min"
-              :max="guestRange.max"
-              class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
-            />
-          </div>
-
-          <div>
-            <label for="ev-hours" class="block text-sm font-medium text-sage-800">
-              Dauer (Std.)
-              <span class="text-sage-400">({{ partyDuration.min }}–{{ partyDuration.max }})</span>
-            </label>
-            <input
-              id="ev-hours"
-              v-model.number="form.hours"
-              type="number"
-              :min="partyDuration.min"
-              :max="partyDuration.max"
-              class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
-            />
-          </div>
+    <div v-else class="overflow-hidden rounded-2xl border border-sage-200 bg-white shadow-sm">
+      <!-- Progress header -->
+      <div class="border-b border-sage-100 bg-sage-50/60 px-6 py-4">
+        <div class="flex items-baseline justify-between">
+          <p class="text-xs font-medium tracking-wide text-waldhonig-600 uppercase">
+            Schritt {{ currentStep + 1 }} von {{ totalSteps }}
+          </p>
+          <p class="text-xs text-sage-500">{{ progressPercent }} %</p>
         </div>
-
-        <!-- Eigener Anlass -->
-        <div v-if="isCustomOccasion">
-          <label for="ev-custom-occasion" class="block text-sm font-medium text-sage-800">
-            Welcher Anlass? *
-          </label>
-          <input
-            id="ev-custom-occasion"
-            v-model="form.customOccasion"
-            type="text"
-            placeholder="z. B. Abschlussfeier, Vereinsfest, Renteneintritt …"
-            class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
+        <h3 class="mt-1 font-serif text-lg font-semibold text-sage-900">{{ stepTitle }}</h3>
+        <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-sage-200">
+          <div
+            class="h-full rounded-full bg-waldhonig-500 transition-all duration-300"
+            :style="{ width: `${progressPercent}%` }"
           />
         </div>
-      </fieldset>
+      </div>
 
-      <!-- Catering -->
-      <fieldset class="space-y-3">
-        <legend class="font-serif text-lg font-semibold text-sage-900">2. Catering</legend>
-        <div class="space-y-3">
-          <label
-            v-for="tier in cateringTiers"
-            :key="tier.id"
-            class="flex cursor-pointer items-start gap-3 rounded-lg border p-4 transition-colors hover:bg-sage-50"
-            :class="form.cateringId === tier.id ? 'border-sage-400 bg-sage-50' : 'border-sage-200'"
-          >
-            <input
-              v-model="form.cateringId"
-              type="radio"
-              name="catering"
-              :value="tier.id"
-              class="mt-1 size-4 accent-waldhonig-500"
-            />
-            <span class="flex-1">
-              <span class="flex items-baseline justify-between gap-2">
-                <span class="font-medium text-sage-900">{{ tier.label }}</span>
-                <span class="shrink-0 text-sm font-semibold text-waldhonig-700">
-                  {{ tier.pricePerPerson }} € / Person
-                </span>
-              </span>
-              <span class="mt-1 block text-sm text-sage-600">{{ tier.description }}</span>
-            </span>
-          </label>
+      <div class="p-6 md:p-8">
+        <!-- ============ STEP 0: Intro & Eckdaten ============ -->
+        <div v-if="isIntro" class="space-y-8">
+          <div v-if="basePackage" class="rounded-xl border border-sage-200 bg-sage-50/60 p-6">
+            <h4 class="font-serif text-lg font-semibold text-sage-900">{{ basePackage.label }}</h4>
+            <p class="mt-1 text-sm text-sage-600">{{ basePackage.description }}</p>
+            <ul class="mt-4 grid gap-2 sm:grid-cols-2">
+              <li
+                v-for="(item, i) in basePackage.includes"
+                :key="i"
+                class="flex items-start gap-2 text-sm text-sage-700"
+              >
+                <Icon
+                  name="ph:check-circle-duotone"
+                  class="mt-0.5 size-4 shrink-0 text-waldhonig-500"
+                />
+                {{ item }}
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <p class="text-sage-700">
+              Beantworten Sie zunächst ein paar kurze Fragen. Danach führen wir Sie Schritt für
+              Schritt durch alle Möglichkeiten – Sie sehen bei jeder Auswahl sofort, was sie für
+              Ihre Feier bedeutet und was sie kostet.
+            </p>
+
+            <div class="mt-5 grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="ev-occasion" class="block text-sm font-medium text-sage-800">
+                  Anlass *
+                </label>
+                <select id="ev-occasion" v-model="form.occasionId" :class="inputClass">
+                  <option value="" disabled>Bitte wählen</option>
+                  <option v-for="o in occasions" :key="o.id" :value="o.id">{{ o.label }}</option>
+                  <option value="andere">Anderer Anlass …</option>
+                </select>
+              </div>
+
+              <div v-if="isCustomOccasion">
+                <label for="ev-custom-occasion" class="block text-sm font-medium text-sage-800">
+                  Welcher Anlass? *
+                </label>
+                <input
+                  id="ev-custom-occasion"
+                  v-model="form.customOccasion"
+                  type="text"
+                  placeholder="z. B. Abschlussfeier, Vereinsfest …"
+                  :class="inputClass"
+                />
+              </div>
+
+              <div>
+                <label for="ev-date" class="block text-sm font-medium text-sage-800">
+                  Wunschtermin
+                </label>
+                <input
+                  id="ev-date"
+                  v-model="form.date"
+                  type="date"
+                  :min="minDate"
+                  :class="inputClass"
+                />
+              </div>
+
+              <div>
+                <label for="ev-guests" class="block text-sm font-medium text-sage-800">
+                  Gäste *
+                  <span class="text-sage-400">({{ guestRange.min }}–{{ guestRange.max }})</span>
+                </label>
+                <input
+                  id="ev-guests"
+                  v-model.number="form.guests"
+                  type="number"
+                  :min="guestRange.min"
+                  :max="guestRange.max"
+                  :class="inputClass"
+                />
+              </div>
+
+              <div>
+                <label for="ev-hours" class="block text-sm font-medium text-sage-800">
+                  Dauer (Std.)
+                  <span class="text-sage-400">
+                    ({{ partyDuration.min }}–{{ partyDuration.max }})
+                  </span>
+                </label>
+                <input
+                  id="ev-hours"
+                  v-model.number="form.hours"
+                  type="number"
+                  :min="partyDuration.min"
+                  :max="partyDuration.max"
+                  :class="inputClass"
+                />
+              </div>
+            </div>
+          </div>
         </div>
-      </fieldset>
 
-      <!-- Getränke -->
-      <fieldset class="space-y-3">
-        <legend class="font-serif text-lg font-semibold text-sage-900">3. Getränke</legend>
-        <p class="text-sm text-sage-500">
-          Die Getränkepauschale wird pro Person und Stunde berechnet und richtet sich nach der Dauer
-          Ihrer Feier ({{ form.hours }} Std.).
-        </p>
-        <div class="space-y-3">
-          <label
-            v-for="opt in drinkOptions"
-            :key="opt.id"
-            class="flex cursor-pointer items-start gap-3 rounded-lg border p-4 transition-colors hover:bg-sage-50"
-            :class="form.drinkId === opt.id ? 'border-sage-400 bg-sage-50' : 'border-sage-200'"
-          >
-            <input
-              v-model="form.drinkId"
-              type="radio"
-              name="drinks"
-              :value="opt.id"
-              class="mt-1 size-4 accent-waldhonig-500"
-            />
-            <span class="flex-1">
-              <span class="flex items-baseline justify-between gap-2">
-                <span class="font-medium text-sage-900">{{ opt.label }}</span>
-                <span class="shrink-0 text-sm font-semibold text-waldhonig-700">
-                  {{
-                    opt.pricePerPersonPerHour > 0
-                      ? `${opt.pricePerPersonPerHour} € / Pers. · Std.`
-                      : '–'
-                  }}
-                </span>
-              </span>
-              <span class="mt-1 block text-sm text-sage-600">{{ opt.description }}</span>
-            </span>
-          </label>
-        </div>
-      </fieldset>
+        <!-- ============ STEPS 1..N: Catalogue ============ -->
+        <div v-else-if="activeStep" class="space-y-6">
+          <NuxtImg
+            v-if="activeStep.image"
+            :src="activeStep.image"
+            :alt="activeStep.imageAlt ?? activeStep.title"
+            class="h-48 w-full rounded-xl object-cover md:h-56"
+            width="800"
+            height="450"
+            loading="lazy"
+          />
+          <p v-if="activeStep.intro" class="leading-relaxed text-sage-700">
+            {{ activeStep.intro }}
+          </p>
 
-      <!-- Mobiliar & Ausstattung -->
-      <fieldset class="space-y-6">
-        <legend class="font-serif text-lg font-semibold text-sage-900">
-          4. Mobiliar & Ausstattung
-        </legend>
-        <div v-for="group in furnitureGroups" :key="group.key" class="space-y-3">
-          <p class="text-sm font-medium text-sage-800">{{ group.label }}</p>
-          <div class="space-y-3">
+          <fieldset v-for="group in activeStep.groups" :key="group.key" class="space-y-3">
+            <legend v-if="activeStep.groups.length > 1" class="text-sm font-semibold text-sage-800">
+              {{ group.legend }}
+            </legend>
+            <p v-if="group.note" class="text-sm text-sage-500">{{ group.note }}</p>
             <label
               v-for="opt in group.options"
               :key="opt.id"
@@ -430,220 +620,182 @@ async function handleSubmit() {
                 type="radio"
                 :name="group.key"
                 :value="opt.id"
-                class="mt-1 size-4 accent-waldhonig-500"
+                class="mt-1 size-4 shrink-0 accent-waldhonig-500"
+              />
+              <NuxtImg
+                v-if="opt.image"
+                :src="opt.image"
+                :alt="opt.imageAlt ?? opt.label"
+                class="h-16 w-20 shrink-0 rounded-md object-cover"
+                width="160"
+                height="128"
+                loading="lazy"
               />
               <span class="flex-1">
                 <span class="flex items-baseline justify-between gap-2">
                   <span class="font-medium text-sage-900">{{ opt.label }}</span>
                   <span class="shrink-0 text-sm font-semibold text-waldhonig-700">
-                    {{ opt.pricePerPerson > 0 ? `+${opt.pricePerPerson} € / Person` : 'inklusive' }}
+                    {{ unitPriceLabel(opt, group.unit) }}
                   </span>
                 </span>
                 <span class="mt-1 block text-sm text-sage-600">{{ opt.description }}</span>
+                <span
+                  v-if="opt.detail"
+                  class="mt-2 block border-l-2 border-sage-200 pl-3 text-sm text-sage-500 italic"
+                >
+                  {{ opt.detail }}
+                </span>
               </span>
             </label>
-          </div>
+          </fieldset>
         </div>
-      </fieldset>
 
-      <!-- Musik -->
-      <fieldset class="space-y-3">
-        <legend class="font-serif text-lg font-semibold text-sage-900">5. Musik</legend>
-        <div class="space-y-3">
-          <label
-            v-for="opt in musicOptions"
-            :key="opt.id"
-            class="flex cursor-pointer items-start gap-3 rounded-lg border p-4 transition-colors hover:bg-sage-50"
-            :class="form.musicId === opt.id ? 'border-sage-400 bg-sage-50' : 'border-sage-200'"
-          >
-            <input
-              v-model="form.musicId"
-              type="radio"
-              name="music"
-              :value="opt.id"
-              class="mt-1 size-4 accent-waldhonig-500"
-            />
-            <span class="flex-1">
-              <span class="flex items-baseline justify-between gap-2">
-                <span class="font-medium text-sage-900">{{ opt.label }}</span>
-                <span class="shrink-0 text-sm font-semibold text-waldhonig-700">
-                  {{ opt.price > 0 ? `${formatEuro(opt.price)} €` : '–' }}
-                </span>
+        <!-- ============ STEP N+1: Summary & contact ============ -->
+        <form v-else class="space-y-8" @submit.prevent="handleSubmit">
+          <div class="rounded-xl bg-waldhonig-50 p-6">
+            <div class="flex items-center justify-between">
+              <h4 class="font-serif text-base font-semibold text-sage-900">Ihr Richtwert</h4>
+              <span
+                class="rounded-full bg-waldhonig-100 px-3 py-1 text-xs font-medium text-waldhonig-700"
+              >
+                unverbindlich
               </span>
-              <span class="mt-1 block text-sm text-sage-600">{{ opt.description }}</span>
-            </span>
-          </label>
-        </div>
-      </fieldset>
+            </div>
+            <dl class="mt-4 space-y-2 text-sm">
+              <div
+                v-for="(line, i) in summaryLines"
+                :key="i"
+                class="flex justify-between gap-4"
+                :class="i === 0 ? 'text-sage-800' : 'text-sage-600'"
+              >
+                <dt>{{ line.detail }}</dt>
+                <dd class="shrink-0 font-medium">{{ formatEuro(line.amount) }} €</dd>
+              </div>
+              <div class="flex items-baseline justify-between border-t border-waldhonig-200 pt-3">
+                <dt class="font-semibold text-sage-900">Geschätzter Gesamtpreis</dt>
+                <dd class="text-xl font-bold text-waldhonig-700">
+                  ca. {{ formatEuro(estimate) }} €
+                </dd>
+              </div>
+              <p class="text-right text-xs text-sage-500">
+                ≈ {{ formatEuro(perGuest) }} € pro Person
+              </p>
+            </dl>
+            <p class="mt-4 text-xs leading-relaxed text-sage-500">{{ config?.disclaimer }}</p>
+          </div>
 
-      <!-- Dekoration -->
-      <fieldset class="space-y-3">
-        <legend class="font-serif text-lg font-semibold text-sage-900">6. Dekoration</legend>
-        <div class="space-y-3">
-          <label
-            v-for="opt in decorationOptions"
-            :key="opt.id"
-            class="flex cursor-pointer items-start gap-3 rounded-lg border p-4 transition-colors hover:bg-sage-50"
-            :class="form.decorationId === opt.id ? 'border-sage-400 bg-sage-50' : 'border-sage-200'"
+          <fieldset class="space-y-5">
+            <legend class="font-serif text-lg font-semibold text-sage-900">
+              Ihre Kontaktdaten
+            </legend>
+            <p class="text-sm text-sage-600">
+              Senden Sie uns Ihre Zusammenstellung – wir melden uns innerhalb von 24 Stunden mit
+              einem persönlichen, unverbindlichen Angebot.
+            </p>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="ev-name" class="block text-sm font-medium text-sage-800">Name *</label>
+                <input
+                  id="ev-name"
+                  v-model="form.name"
+                  type="text"
+                  required
+                  autocomplete="name"
+                  :class="inputClass"
+                />
+              </div>
+              <div>
+                <label for="ev-email" class="block text-sm font-medium text-sage-800">
+                  E-Mail *
+                </label>
+                <input
+                  id="ev-email"
+                  v-model="form.email"
+                  type="email"
+                  required
+                  autocomplete="email"
+                  :class="inputClass"
+                />
+              </div>
+            </div>
+            <div>
+              <label for="ev-phone" class="block text-sm font-medium text-sage-800">
+                Telefon *
+              </label>
+              <input
+                id="ev-phone"
+                v-model="form.phone"
+                type="tel"
+                required
+                autocomplete="tel"
+                :class="inputClass"
+              />
+            </div>
+            <div>
+              <label for="ev-notes" class="block text-sm font-medium text-sage-800">
+                Ihre Wünsche <span class="text-sage-400">(optional)</span>
+              </label>
+              <textarea
+                id="ev-notes"
+                v-model="form.notes"
+                rows="4"
+                placeholder="Erzählen Sie uns von Ihrer Feier – Uhrzeit, Stil, besondere Wünsche …"
+                :class="inputClass"
+              />
+            </div>
+          </fieldset>
+
+          <div v-if="errorMessage" role="alert" class="rounded-lg bg-red-50 p-4 text-red-700">
+            {{ errorMessage }}
+          </div>
+
+          <button
+            type="submit"
+            :disabled="isSubmitting"
+            class="w-full rounded-lg bg-waldhonig-500 px-8 py-4 text-lg font-semibold text-white transition-colors hover:bg-waldhonig-600 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            <input
-              v-model="form.decorationId"
-              type="radio"
-              name="decoration"
-              :value="opt.id"
-              class="mt-1 size-4 accent-waldhonig-500"
+            <Icon
+              v-if="isSubmitting"
+              name="ph:spinner"
+              class="mr-2 inline-block size-5 animate-spin"
             />
-            <span class="flex-1">
-              <span class="flex items-baseline justify-between gap-2">
-                <span class="font-medium text-sage-900">{{ opt.label }}</span>
-                <span class="shrink-0 text-sm font-semibold text-waldhonig-700">
-                  {{ opt.pricePerPerson > 0 ? `${opt.pricePerPerson} € / Person` : '–' }}
-                </span>
-              </span>
-              <span class="mt-1 block text-sm text-sage-600">{{ opt.description }}</span>
-            </span>
-          </label>
-        </div>
-      </fieldset>
-
-      <!-- Preis-Richtwert -->
-      <div class="rounded-xl bg-waldhonig-50 p-6">
-        <div class="flex items-center justify-between">
-          <h3 class="font-serif text-base font-semibold text-sage-900">Ihr Richtwert</h3>
-          <span
-            class="rounded-full bg-waldhonig-100 px-3 py-1 text-xs font-medium text-waldhonig-700"
-          >
-            unverbindlich
-          </span>
-        </div>
-        <dl class="mt-4 space-y-2 text-sm">
-          <div class="flex justify-between">
-            <dt class="text-sage-700">Basispreis · {{ form.guests }} Gäste</dt>
-            <dd class="font-medium text-sage-900">{{ formatEuro(basePrice) }} €</dd>
-          </div>
-          <div class="flex justify-between">
-            <dt class="text-sage-700">
-              Catering · {{ form.guests }} × {{ selectedCatering?.pricePerPerson }} €
-            </dt>
-            <dd class="font-medium text-sage-900">{{ formatEuro(cateringTotal) }} €</dd>
-          </div>
-          <div v-if="drinksTotal > 0" class="flex justify-between text-sage-600">
-            <dt>
-              Getränke · {{ form.guests }} × {{ selectedDrink?.pricePerPersonPerHour }} € ×
-              {{ form.hours }} h
-            </dt>
-            <dd>{{ formatEuro(drinksTotal) }} €</dd>
-          </div>
-          <div v-if="musicTotal > 0" class="flex justify-between text-sage-600">
-            <dt>{{ selectedMusic?.label }}</dt>
-            <dd>{{ formatEuro(musicTotal) }} €</dd>
-          </div>
-          <div v-if="tableTotal > 0" class="flex justify-between text-sage-600">
-            <dt>
-              {{ selectedTable?.label }} · {{ form.guests }} × {{ selectedTable?.pricePerPerson }} €
-            </dt>
-            <dd>{{ formatEuro(tableTotal) }} €</dd>
-          </div>
-          <div v-if="chairCoverTotal > 0" class="flex justify-between text-sage-600">
-            <dt>Stuhlhussen · {{ form.guests }} × {{ selectedChairCover?.pricePerPerson }} €</dt>
-            <dd>{{ formatEuro(chairCoverTotal) }} €</dd>
-          </div>
-          <div v-if="dishwareTotal > 0" class="flex justify-between text-sage-600">
-            <dt>
-              {{ selectedDishware?.label }} · {{ form.guests }} ×
-              {{ selectedDishware?.pricePerPerson }} €
-            </dt>
-            <dd>{{ formatEuro(dishwareTotal) }} €</dd>
-          </div>
-          <div v-if="flooringTotal > 0" class="flex justify-between text-sage-600">
-            <dt>
-              {{ selectedFlooring?.label }} · {{ form.guests }} ×
-              {{ selectedFlooring?.pricePerPerson }} €
-            </dt>
-            <dd>{{ formatEuro(flooringTotal) }} €</dd>
-          </div>
-          <div v-if="decorationTotal > 0" class="flex justify-between text-sage-600">
-            <dt>Dekoration · {{ form.guests }} × {{ selectedDecoration?.pricePerPerson }} €</dt>
-            <dd>{{ formatEuro(decorationTotal) }} €</dd>
-          </div>
-          <div class="flex items-baseline justify-between border-t border-waldhonig-200 pt-3">
-            <dt class="font-semibold text-sage-900">Geschätzter Gesamtpreis</dt>
-            <dd class="text-lg font-bold text-waldhonig-700">ca. {{ formatEuro(estimate) }} €</dd>
-          </div>
-          <p class="text-right text-xs text-sage-500">≈ {{ formatEuro(perGuest) }} € pro Person</p>
-        </dl>
-        <p class="mt-4 text-xs leading-relaxed text-sage-500">
-          {{ config?.disclaimer }}
-        </p>
+            {{ isSubmitting ? 'Wird gesendet …' : 'Unverbindliche Anfrage senden' }}
+          </button>
+        </form>
       </div>
 
-      <!-- Kontaktdaten -->
-      <fieldset class="space-y-5">
-        <legend class="font-serif text-lg font-semibold text-sage-900">7. Ihre Kontaktdaten</legend>
-        <div class="grid gap-5 sm:grid-cols-2">
-          <div>
-            <label for="ev-name" class="block text-sm font-medium text-sage-800">Name *</label>
-            <input
-              id="ev-name"
-              v-model="form.name"
-              type="text"
-              required
-              autocomplete="name"
-              class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label for="ev-email" class="block text-sm font-medium text-sage-800">E-Mail *</label>
-            <input
-              id="ev-email"
-              v-model="form.email"
-              type="email"
-              required
-              autocomplete="email"
-              class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
-            />
-          </div>
-        </div>
-        <div>
-          <label for="ev-phone" class="block text-sm font-medium text-sage-800">Telefon *</label>
-          <input
-            id="ev-phone"
-            v-model="form.phone"
-            type="tel"
-            required
-            autocomplete="tel"
-            class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
-          />
-        </div>
-        <div>
-          <label for="ev-notes" class="block text-sm font-medium text-sage-800">
-            Ihre Wünsche <span class="text-sage-400">(optional)</span>
-          </label>
-          <textarea
-            id="ev-notes"
-            v-model="form.notes"
-            rows="4"
-            placeholder="Erzählen Sie uns von Ihrer Feier – Uhrzeit, Stil, besondere Wünsche …"
-            class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
-          />
-        </div>
-      </fieldset>
-
-      <div v-if="errorMessage" role="alert" class="rounded-lg bg-red-50 p-4 text-red-700">
-        {{ errorMessage }}
-      </div>
-
-      <button
-        type="submit"
-        :disabled="isSubmitting"
-        class="w-full rounded-lg bg-waldhonig-500 px-8 py-4 text-lg font-semibold text-white transition-colors hover:bg-waldhonig-600 disabled:cursor-not-allowed disabled:opacity-50"
+      <!-- Sticky running total + navigation -->
+      <div
+        class="sticky bottom-0 z-10 flex items-center justify-between gap-4 border-t border-sage-200 bg-white/95 px-6 py-4 backdrop-blur"
       >
-        <Icon v-if="isSubmitting" name="ph:spinner" class="mr-2 inline-block size-5 animate-spin" />
-        {{ isSubmitting ? 'Wird gesendet …' : 'Unverbindliche Anfrage senden' }}
-      </button>
-      <p class="text-center text-sm text-sage-500">
-        Kostenlos & unverbindlich. Wir melden uns innerhalb von 24 Stunden.
-      </p>
-    </form>
+        <div>
+          <p class="text-xs text-sage-500">
+            {{ isSummary ? 'Gesamtpreis (Richtwert)' : 'Zwischensumme' }}
+          </p>
+          <p class="font-serif text-xl font-bold text-waldhonig-700">
+            ca. {{ formatEuro(estimate) }} €
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button
+            v-if="currentStep > 0"
+            type="button"
+            class="rounded-lg border border-sage-300 px-4 py-2.5 text-sm font-medium text-sage-700 transition-colors hover:bg-sage-50"
+            @click="prev"
+          >
+            Zurück
+          </button>
+          <button
+            v-if="!isSummary"
+            type="button"
+            :disabled="isIntro && !introValid"
+            class="rounded-lg bg-waldhonig-500 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-waldhonig-600 disabled:cursor-not-allowed disabled:opacity-50"
+            @click="next"
+          >
+            Weiter
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>

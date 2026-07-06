@@ -261,11 +261,21 @@ const eventOccasionSchema = z.object({
   icon: z.string(),
 })
 
+// Shared optional fields on every catalogue option: a longer `detail`
+// ("what this means for your event", shown in the wizard step) and an owner-
+// supplied `image` (photos are added later; the wizard renders one if present).
+const eventOptionMediaFields = {
+  detail: z.string().optional(),
+  image: z.string().optional(),
+  imageAlt: z.string().optional(),
+}
+
 const eventCateringTierSchema = z.object({
   id: z.string(),
   label: z.string(),
   description: z.string(),
   pricePerPerson: z.number(),
+  ...eventOptionMediaFields,
 })
 
 // Drinks option (radio incl. "none"): priced per person PER HOUR — total scales
@@ -275,24 +285,28 @@ const eventDrinkOptionSchema = z.object({
   label: z.string(),
   description: z.string(),
   pricePerPersonPerHour: z.number(),
+  ...eventOptionMediaFields,
 })
 
-// Fixed-price option (music: none / sound system only / full DJ)
+// Fixed-price option (radio incl. "none"): used for music, ceremony,
+// photography, photobooth and styling. Total = price (independent of guests).
 const eventFixedOptionSchema = z.object({
   id: z.string(),
   label: z.string(),
   description: z.string(),
   price: z.number(),
+  ...eventOptionMediaFields,
 })
 
-// Generic per-person choice (radio): used for decoration, tables, chair covers,
-// dishware and flooring. The first option is typically the included/basic one
-// (pricePerPerson 0); upgrades cost extra. Total = pricePerPerson × guests.
+// Generic per-person choice (radio): used for decoration, cake, tables, chair
+// covers, dishware and flooring. The first option is typically the included/
+// basic one (pricePerPerson 0); upgrades cost extra. Total = pricePerPerson × guests.
 const eventPerPersonChoiceSchema = z.object({
   id: z.string(),
   label: z.string(),
   description: z.string(),
   pricePerPerson: z.number(),
+  ...eventOptionMediaFields,
 })
 
 // Guest band — pick the first band whose maxGuests covers the selected guest
@@ -326,8 +340,18 @@ const eventConfigSchema = z.object({
   cateringTiers: z.array(eventCateringTierSchema).min(1),
   // Drinks: radio incl. a "Keine" option; priced per person per hour
   drinkOptions: z.array(eventDrinkOptionSchema).min(1),
+  // Freie Trauung (on-site ceremony with a celebrant): radio incl. "Keine"; fixed
+  ceremonyOptions: z.array(eventFixedOptionSchema).min(1),
+  // Photographer / videographer: radio incl. "Keine"; fixed price
+  photographyOptions: z.array(eventFixedOptionSchema).min(1),
   // Music: radio incl. a "Keine" option; fixed price
   musicOptions: z.array(eventFixedOptionSchema).min(1),
+  // Wedding cake / sweet table: radio incl. "Keine"; priced per person
+  cakeOptions: z.array(eventPerPersonChoiceSchema).min(1),
+  // Photobooth (Fotobox): radio incl. "Keine"; fixed price
+  photoboothOptions: z.array(eventFixedOptionSchema).min(1),
+  // Hair & make-up styling: radio incl. "Keine"; fixed price
+  stylingOptions: z.array(eventFixedOptionSchema).min(1),
   // Furniture & equipment — each a per-person radio (first option = included/basic)
   tableOptions: z.array(eventPerPersonChoiceSchema).min(1),
   chairCoverOptions: z.array(eventPerPersonChoiceSchema).min(1),
