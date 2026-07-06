@@ -27,7 +27,10 @@ watch(
         <p class="font-sans text-sm text-sage-700 sm:text-base">
           Wir verwenden Cookies, um Ihnen die bestmögliche Erfahrung zu bieten. Weitere
           Informationen finden Sie in unserer
-          <NuxtLink to="/datenschutz" class="text-waldhonig-600 underline hover:text-waldhonig-700">
+          <NuxtLink
+            to="/datenschutz/"
+            class="text-waldhonig-600 underline hover:text-waldhonig-700"
+          >
             Datenschutzerklärung</NuxtLink
           >.
         </p>

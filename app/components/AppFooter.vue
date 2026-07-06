@@ -7,44 +7,44 @@ const { locale } = useLocale()
 const footerNav = computed(() => {
   if (locale.value === 'en') {
     return [
-      { label: t('footer.nav.roomsPrices', 'en'), to: '/en/rooms' },
-      { label: t('footer.nav.forFamilies', 'en'), to: '/en/families' },
-      { label: t('footer.nav.activities', 'en'), to: '/en/activities' },
-      { label: t('footer.nav.picnic', 'en'), to: '/en/picnic' },
-      { label: t('footer.nav.sustainability', 'en'), to: '/en/sustainability' },
-      { label: t('footer.nav.attractions', 'en'), to: '/en/attractions' },
-      { label: t('footer.nav.contactDirections', 'en'), to: '/en/contact' },
-      { label: t('footer.nav.about', 'en'), to: '/en/about' },
+      { label: t('footer.nav.roomsPrices', 'en'), to: '/en/rooms/' },
+      { label: t('footer.nav.forFamilies', 'en'), to: '/en/families/' },
+      { label: t('footer.nav.activities', 'en'), to: '/en/activities/' },
+      { label: t('footer.nav.picnic', 'en'), to: '/en/picnic/' },
+      { label: t('footer.nav.sustainability', 'en'), to: '/en/sustainability/' },
+      { label: t('footer.nav.attractions', 'en'), to: '/en/attractions/' },
+      { label: t('footer.nav.contactDirections', 'en'), to: '/en/contact/' },
+      { label: t('footer.nav.about', 'en'), to: '/en/about/' },
     ]
   }
   return [
-    { label: t('footer.nav.roomsPrices', 'de'), to: '/zimmer' },
-    { label: t('footer.nav.forFamilies', 'de'), to: '/familie' },
-    { label: t('footer.nav.activities', 'de'), to: '/aktivitaeten' },
-    { label: t('footer.nav.picnic', 'de'), to: '/picknick' },
-    { label: t('footer.nav.sustainability', 'de'), to: '/nachhaltigkeit' },
-    { label: t('footer.nav.attractions', 'de'), to: '/ausflugsziele' },
-    { label: t('footer.nav.contactDirections', 'de'), to: '/kontakt' },
-    { label: t('footer.nav.about', 'de'), to: '/willkommen' },
+    { label: t('footer.nav.roomsPrices', 'de'), to: '/zimmer/' },
+    { label: t('footer.nav.forFamilies', 'de'), to: '/familie/' },
+    { label: t('footer.nav.activities', 'de'), to: '/aktivitaeten/' },
+    { label: t('footer.nav.picnic', 'de'), to: '/picknick/' },
+    { label: t('footer.nav.sustainability', 'de'), to: '/nachhaltigkeit/' },
+    { label: t('footer.nav.attractions', 'de'), to: '/ausflugsziele/' },
+    { label: t('footer.nav.contactDirections', 'de'), to: '/kontakt/' },
+    { label: t('footer.nav.about', 'de'), to: '/willkommen/' },
   ]
 })
 
 const legalNav = computed(() => {
   if (locale.value === 'en') {
     return [
-      { label: t('legal.impressum', 'en'), to: '/en/imprint' },
-      { label: t('legal.datenschutz', 'en'), to: '/en/privacy' },
-      { label: t('legal.agb', 'en'), to: '/en/terms' },
+      { label: t('legal.impressum', 'en'), to: '/en/imprint/' },
+      { label: t('legal.datenschutz', 'en'), to: '/en/privacy/' },
+      { label: t('legal.agb', 'en'), to: '/en/terms/' },
     ]
   }
   return [
-    { label: t('legal.impressum', 'de'), to: '/impressum' },
-    { label: t('legal.datenschutz', 'de'), to: '/datenschutz' },
-    { label: t('legal.agb', 'de'), to: '/agb' },
+    { label: t('legal.impressum', 'de'), to: '/impressum/' },
+    { label: t('legal.datenschutz', 'de'), to: '/datenschutz/' },
+    { label: t('legal.agb', 'de'), to: '/agb/' },
   ]
 })
 
-const roomsLink = computed(() => (locale.value === 'en' ? '/en/rooms' : '/zimmer'))
+const roomsLink = computed(() => (locale.value === 'en' ? '/en/rooms/' : '/zimmer/'))
 
 const { openSettings } = useCookieConsent()
 

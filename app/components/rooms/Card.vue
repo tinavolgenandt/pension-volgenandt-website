@@ -26,8 +26,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 // Locale-aware room detail path
 const roomPath = computed(() => {
-  if (props.locale === 'en') return `/en/rooms/${props.slug}`
-  return `/zimmer/${props.slug}`
+  if (props.locale === 'en') return `/en/rooms/${props.slug}/`
+  return `/zimmer/${props.slug}/`
 })
 
 // Direct booking URL for rooms with Beds24 integration

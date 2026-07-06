@@ -71,6 +71,53 @@ const gardenSpots = computed(() => (spotsData.value?.items ?? []).filter((s) => 
 const { data: basket } = await useAsyncData('picknick-basket', () =>
   queryCollection('picknickBasket').first(),
 )
+
+// Build video source URLs dynamically. A static `src="/video/..."` on <source>
+// gets rewritten by Vite's template asset transform (to a broken `/&/...` path),
+// so we bind :src with the runtime baseURL instead — same pattern as HeroVideo.
+const baseURL = useRuntimeConfig().app.baseURL
+const gardenVideoSources = {
+  webm: `${baseURL}video/picknick-garten-hero.webm`,
+  mp4: `${baseURL}video/picknick-garten-hero.mp4`,
+}
+
+// Force muted autoplay. Two gotchas handled here:
+//  1. Vue does not always reflect the `muted` attribute to the DOM property, so
+//     browsers treat the video as unmuted and block autoplay — we set it in JS.
+//  2. Chrome will not start an off-screen muted video reliably, so we play it
+//     once it scrolls into view via an IntersectionObserver.
+const gardenVideo = ref<HTMLVideoElement | null>(null)
+let gardenObserver: IntersectionObserver | null = null
+
+function playGarden() {
+  const v = gardenVideo.value
+  if (!v) return
+  v.muted = true
+  v.play().catch(() => {
+    /* autoplay may still be blocked (e.g. data saver) — poster stays visible */
+  })
+}
+
+onMounted(() => {
+  nextTick(() => {
+    const v = gardenVideo.value
+    if (!v) return
+    playGarden()
+    if ('IntersectionObserver' in window) {
+      gardenObserver = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) playGarden()
+          }
+        },
+        { threshold: 0.25 },
+      )
+      gardenObserver.observe(v)
+    }
+  })
+})
+
+onBeforeUnmount(() => gardenObserver?.disconnect())
 </script>
 
 <template>
@@ -101,7 +148,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
           to="/picknick/buchen/"
           class="mt-6 inline-block rounded-lg bg-waldhonig-500 px-8 py-3.5 text-base font-semibold text-white transition-colors hover:bg-waldhonig-600"
         >
-          Jetzt buchen
+          Jetzt anfragen
         </NuxtLink>
       </div>
     </section>
@@ -114,8 +161,8 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
         Pension oder irgendwo in der wunderschönen Umgebung.
       </p>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
-        Ab <strong class="text-waldhonig-600">19 € pro Person</strong>. Korbpfand 100 € in bar bei
-        Abholung (bei Rückgabe zurück).
+        Ab <strong class="text-waldhonig-600">19 € pro Person</strong>. Korbpfand 50 € in bar bei
+        Abholung (bei Rückgabe zurück). Für unsere Übernachtungsgäste entfällt das Pfand.
       </p>
     </section>
 
@@ -209,6 +256,41 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
             :image-position="spot.imagePosition"
           />
         </div>
+      </div>
+    </section>
+
+    <!-- Drohnen-Gartenflug — centered mid-width clip: poster paints first, the
+         muted drone clip plays over it; prefers-reduced-motion keeps the still. -->
+    <section class="px-6 py-12 md:py-16">
+      <div
+        class="relative mx-auto aspect-video max-w-4xl overflow-hidden rounded-xl bg-[#2C3E2D] shadow-sm"
+      >
+        <NuxtImg
+          src="/img/picknick/picknick-garten-hero-poster.webp"
+          alt="Blick aus der Luft über den grünen Garten der Pension Volgenandt"
+          class="absolute inset-0 h-full w-full object-cover"
+          width="1280"
+          height="720"
+          loading="lazy"
+        />
+        <ClientOnly>
+          <video
+            ref="gardenVideo"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+            aria-hidden="true"
+            tabindex="-1"
+            class="picknick-garten-video absolute inset-0 h-full w-full object-cover"
+            @loadeddata="playGarden"
+            @canplay="playGarden"
+          >
+            <source :src="gardenVideoSources.webm" type="video/webm" />
+            <source :src="gardenVideoSources.mp4" type="video/mp4" />
+          </video>
+        </ClientOnly>
       </div>
     </section>
 
@@ -318,12 +400,26 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
           to="/picknick/buchen/"
           class="mt-6 inline-block rounded-lg bg-waldhonig-500 px-8 py-4 text-lg font-semibold text-white transition-colors hover:bg-waldhonig-600"
         >
-          Korb anfragen
+          Jetzt anfragen
         </NuxtLink>
         <p class="mt-4 text-sm text-sage-500">
-          Ab 19 € / Person · Korbpfand 100 € bar (bei Rückgabe zurück)
+          Ab 19 € / Person · Korbpfand 50 € bar (bei Rückgabe zurück) · für Übernachtungsgäste
+          entfällt es
         </p>
       </div>
     </section>
   </div>
 </template>
+
+<style scoped>
+/* The drone clip sits over its poster image; reduced-motion users keep the still. */
+.picknick-garten-video {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .picknick-garten-video {
+    display: none;
+  }
+}
+</style>

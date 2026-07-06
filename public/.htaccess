@@ -1,3 +1,8 @@
+# NOTE: This site is hosted on GitHub Pages, which does NOT read .htaccess.
+# These directives only take effect if the site is ever moved to Apache/IONOS.
+# Legacy-URL redirects are therefore implemented as static meta-refresh stubs
+# under public/ (e.g. public/kind-kegel/index.html) so GitHub Pages serves them.
+
 # ─── Cache Control ────────────────────────────────────────────────
 # Hashed Nuxt build assets (immutable — filenames change on rebuild)
 <FilesMatch "^_nuxt/">

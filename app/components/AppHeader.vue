@@ -29,31 +29,34 @@ function toggleMenu() {
 }
 
 function isActive(to: string): boolean {
-  return route.path === to
+  // Compare slash-insensitively: the site uses trailing-slash canonicals, but
+  // route.path can arrive with or without one depending on navigation source.
+  const strip = (p: string) => p.replace(/\/+$/, '') || '/'
+  return strip(route.path) === strip(to)
 }
 
 // Locale-aware nav items
 const navItems = computed(() => {
   if (locale.value === 'en') {
     return [
-      { label: t('nav.rooms', 'en'), to: '/en/rooms' },
-      { label: t('nav.families', 'en'), to: '/en/families' },
-      { label: t('nav.activities', 'en'), to: '/en/activities' },
-      { label: t('nav.news', 'en'), to: '/en/news' },
-      { label: t('nav.picnic', 'en'), to: '/en/picnic' },
-      { label: t('nav.sustainability', 'en'), to: '/en/sustainability' },
-      { label: t('nav.contact', 'en'), to: '/en/contact' },
+      { label: t('nav.rooms', 'en'), to: '/en/rooms/' },
+      { label: t('nav.families', 'en'), to: '/en/families/' },
+      { label: t('nav.activities', 'en'), to: '/en/activities/' },
+      { label: t('nav.news', 'en'), to: '/en/news/' },
+      { label: t('nav.picnic', 'en'), to: '/en/picnic/' },
+      { label: t('nav.sustainability', 'en'), to: '/en/sustainability/' },
+      { label: t('nav.contact', 'en'), to: '/en/contact/' },
     ]
   }
   return [
-    { label: t('nav.rooms', 'de'), to: '/zimmer' },
-    { label: t('nav.families', 'de'), to: '/familie' },
-    { label: t('nav.activities', 'de'), to: '/aktivitaeten' },
-    { label: t('nav.news', 'de'), to: '/aktuelles' },
-    { label: t('nav.picnic', 'de'), to: '/picknick' },
-    { label: t('nav.celebrations', 'de'), to: '/feiern' },
-    { label: t('nav.sustainability', 'de'), to: '/nachhaltigkeit' },
-    { label: t('nav.contact', 'de'), to: '/kontakt' },
+    { label: t('nav.rooms', 'de'), to: '/zimmer/' },
+    { label: t('nav.families', 'de'), to: '/familie/' },
+    { label: t('nav.activities', 'de'), to: '/aktivitaeten/' },
+    { label: t('nav.news', 'de'), to: '/aktuelles/' },
+    { label: t('nav.picnic', 'de'), to: '/picknick/' },
+    { label: t('nav.celebrations', 'de'), to: '/feiern/' },
+    { label: t('nav.sustainability', 'de'), to: '/nachhaltigkeit/' },
+    { label: t('nav.contact', 'de'), to: '/kontakt/' },
   ]
 })
 

@@ -51,7 +51,7 @@ const abendDrinkOptions = [
   { id: 'sekt', label: 'Sekt' },
   { id: 'weiss-wein', label: 'Weißwein' },
   { id: 'rot-wein', label: 'Rotwein' },
-  { id: 'bier', label: 'Bier' },
+  { id: 'bier', label: 'Lokales Pils' },
   { id: 'aperol', label: 'Aperol Spritz' },
   { id: 'sekt-alkoholfrei', label: 'Alkoholfreier Sekt' },
   { id: 'bier-alkoholfrei', label: 'Alkoholfreies Bier' },
@@ -83,8 +83,9 @@ const extrasOptions = [
     unit: 'Person',
     brunchOnly: false,
   },
-  { id: 'croissants', label: 'Croissant', price: 2, unit: 'Stück', brunchOnly: false },
-  { id: 'sekt', label: 'Sekt', price: 3, unit: 'Person', brunchOnly: true },
+  { id: 'croissants', label: 'Croissant', price: 2, unit: 'Stück', brunchOnly: true },
+  { id: 'sekt', label: 'Sekt', price: 3, unit: 'Person', brunchOnly: false },
+  { id: 'wasser', label: 'Flasche Wasser', price: 3, unit: 'Flasche', brunchOnly: false },
   { id: 'decke-extra', label: 'Extra Decke', price: 2, unit: 'Stück', brunchOnly: false },
   {
     id: 'blumenstrauss',
@@ -97,7 +98,14 @@ const extrasOptions = [
 
 const isQuantifiable = (extra: (typeof extrasOptions)[0]) => extra.unit !== ''
 
-const filteredExtras = computed(() => extrasOptions.filter((e) => !e.brunchOnly || isBrunch.value))
+// Sekt and water are rendered with the drinks (Getränke), not in the generic extras grid.
+const DRINK_EXTRA_IDS = ['sekt', 'wasser']
+const filteredExtras = computed(() =>
+  extrasOptions.filter((e) => !DRINK_EXTRA_IDS.includes(e.id) && (!e.brunchOnly || isBrunch.value)),
+)
+const drinkExtras = computed(() =>
+  extrasOptions.filter((e) => DRINK_EXTRA_IDS.includes(e.id) && (!e.brunchOnly || isBrunch.value)),
+)
 
 function extraPriceLabel(extra: (typeof extrasOptions)[0]): string {
   if (extra.price === 0) return 'kostenlos'
@@ -142,6 +150,7 @@ const form = reactive({
   kaffeeType: 'schwarz',
   teeType: 'fruechtetee',
   extras: {} as Record<string, number>,
+  waterType: '' as '' | 'still' | 'sprudel',
   name: '',
   email: '',
   phone: '',
@@ -220,6 +229,7 @@ const isFormValid = computed(
     form.email.trim() !== '' &&
     form.phone.trim() !== '' &&
     totalDrinks.value >= includedDrinks.value &&
+    ((form.extras['wasser'] ?? 0) === 0 || form.waterType !== '') &&
     grandTotal.value > 0,
 )
 
@@ -250,9 +260,14 @@ function buildMessageText(): string {
       ? selectedExtras
           .map((e) => {
             const qty = form.extras[e.id] ?? 1
+            const waterSuffix =
+              e.id === 'wasser' && form.waterType
+                ? ` (${form.waterType === 'sprudel' ? 'mit Kohlensäure' : 'still'})`
+                : ''
+            const label = `${e.label}${waterSuffix}`
             return qty > 1
-              ? `${qty}× ${e.label} (${extraPriceLabel(e)})`
-              : `${e.label} (${extraPriceLabel(e)})`
+              ? `${qty}× ${label} (${extraPriceLabel(e)})`
+              : `${label} (${extraPriceLabel(e)})`
           })
           .join(', ')
       : 'keine'
@@ -303,6 +318,10 @@ function renderPayPalButton() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       createOrder: (_data: any, actions: any) => {
         errorMessage.value = ''
+        if ((form.extras['wasser'] ?? 0) > 0 && form.waterType === '') {
+          errorMessage.value = 'Bitte wählen Sie beim Wasser: still oder mit Kohlensäure.'
+          return Promise.reject(new Error('Water type required'))
+        }
         if (!isFormValid.value) {
           errorMessage.value =
             'Bitte füllen Sie alle Pflichtfelder aus und wählen Sie die Getränke.'
@@ -463,6 +482,13 @@ if (import.meta.client) {
         </div>
       </div>
 
+      <p v-if="isBrunch" class="text-xs text-sage-500">
+        Frische Brötchen sind enthalten – ein Croissant ist optional zubuchbar.
+      </p>
+      <p v-else class="text-xs text-sage-500">
+        Brezeln (2 pro Person) sind im Abendschmaus bereits enthalten.
+      </p>
+
       <p class="text-xs text-sage-500">Max. 4 Personen pro Korb (inkl. Kinder).</p>
       <div class="grid gap-5 sm:grid-cols-2">
         <div>
@@ -519,7 +545,9 @@ if (import.meta.client) {
         Kinder-Korb ({{ KIDS_PRICE.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} € /
         Kind)
       </h3>
-      <p class="mt-1 text-xs text-sage-500">Kindgerechte Portionen für kleine Genießer</p>
+      <p class="mt-1 text-xs text-sage-500">
+        Eigens für unsere kleinen Gäste zusammengestellt – mit kleiner Überraschung
+      </p>
       <ul class="mt-3 space-y-1.5">
         <li
           v-for="(item, i) in kidsKorbInhalt"
@@ -605,6 +633,70 @@ if (import.meta.client) {
                 {{ v.label }}
               </option>
             </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sekt & Wasser, gleich formatiert wie die übrigen Getränke -->
+      <div class="space-y-2">
+        <div
+          v-for="extra in drinkExtras"
+          :key="extra.id"
+          class="rounded-lg border px-4 py-3"
+          :class="
+            (form.extras[extra.id] ?? 0) > 0 ? 'border-sage-400 bg-sage-50' : 'border-sage-200'
+          "
+        >
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-sage-800">{{ extra.label }}</span>
+            <div class="flex items-center gap-2">
+              <button
+                type="button"
+                class="flex size-7 items-center justify-center rounded-full border border-sage-300 text-sage-600 transition-colors hover:bg-sage-100 disabled:opacity-30"
+                :disabled="(form.extras[extra.id] ?? 0) <= 0"
+                @click="form.extras[extra.id] = (form.extras[extra.id] ?? 0) - 1"
+              >
+                −
+              </button>
+              <span class="w-5 text-center text-sm font-semibold text-sage-900">
+                {{ form.extras[extra.id] ?? 0 }}
+              </span>
+              <button
+                type="button"
+                class="flex size-7 items-center justify-center rounded-full border border-sage-300 text-sage-600 transition-colors hover:bg-sage-100"
+                @click="form.extras[extra.id] = (form.extras[extra.id] ?? 0) + 1"
+              >
+                +
+              </button>
+            </div>
+          </div>
+          <!-- Wasser: still oder mit Kohlensäure (Pflicht bei Auswahl) -->
+          <div v-if="extra.id === 'wasser' && (form.extras['wasser'] ?? 0) > 0" class="mt-3">
+            <div class="flex gap-5">
+              <label class="flex cursor-pointer items-center gap-2 text-sm text-sage-700">
+                <input
+                  v-model="form.waterType"
+                  type="radio"
+                  value="still"
+                  name="water-type"
+                  class="size-4 accent-waldhonig-500"
+                />
+                Still
+              </label>
+              <label class="flex cursor-pointer items-center gap-2 text-sm text-sage-700">
+                <input
+                  v-model="form.waterType"
+                  type="radio"
+                  value="sprudel"
+                  name="water-type"
+                  class="size-4 accent-waldhonig-500"
+                />
+                Mit Kohlensäure
+              </label>
+            </div>
+            <p v-if="form.waterType === ''" class="mt-2 text-xs text-red-600">
+              Bitte wählen Sie still oder mit Kohlensäure.
+            </p>
           </div>
         </div>
       </div>
@@ -788,7 +880,8 @@ if (import.meta.client) {
           </dd>
         </div>
         <p class="mt-2 text-xs text-sage-500">
-          Zusätzlich: 100 € Korbpfand in bar bei Abholung (bei Rückgabe zurück).
+          Zusätzlich: 50 € Korbpfand in bar bei Abholung (bei Rückgabe zurück). Für
+          Übernachtungsgäste entfällt das Pfand.
         </p>
       </dl>
     </div>
