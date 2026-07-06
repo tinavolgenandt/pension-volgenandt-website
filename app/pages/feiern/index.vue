@@ -73,7 +73,7 @@ const steps = [
 const included = [
   {
     icon: 'ph:key-duotone',
-    title: 'Das ganze Anwesen für Sie allein',
+    title: 'Das ganze Grundstück für Sie allein',
     text: 'Für Ihr Festwochenende buchen Sie die komplette Pension exklusiv – alle Zimmer und Ferienwohnungen für bis zu 18 Übernachtungsgäste. Keine anderen Gäste – nur Sie, Ihre Familie und Ihre Freunde, ganz unter sich.',
   },
   {
@@ -135,7 +135,7 @@ const included = [
         Ihr Sommerfest im Eichsfeld – ganz ohne Stress
       </h2>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
-        Für Ihr Festwochenende gehört Ihnen das <strong>gesamte Anwesen ganz allein</strong>: Sie
+        Für Ihr Festwochenende gehört Ihnen das <strong>gesamte Grundstück ganz allein</strong>: Sie
         buchen die komplette Pension mit allen Zimmern für das Wochenende, Ihre Gäste übernachten
         direkt vor Ort – und wir organisieren Ihr Fest von A bis Z. Dazu ein
         <strong>Rundum-sorglos-Paket</strong> mit Catering über unseren Partner-Caterer und
@@ -236,10 +236,14 @@ const included = [
         <div
           class="grid gap-8 rounded-2xl bg-sage-50 p-8 sm:grid-cols-[auto_1fr] sm:items-center md:p-10"
         >
-          <div
-            class="mx-auto flex size-28 items-center justify-center rounded-full bg-waldhonig-100 sm:mx-0"
-          >
-            <Icon name="ph:user-circle-duotone" class="size-20 text-waldhonig-500" />
+          <div class="mx-auto size-28 overflow-hidden rounded-full sm:mx-0">
+            <img
+              src="/img/events/eventmanagerin-tina.webp"
+              alt="Tina Volgenandt, Eventmanagerin"
+              class="size-full object-cover"
+              width="112"
+              height="112"
+            />
           </div>
           <div class="text-center sm:text-left">
             <p class="text-sm font-medium tracking-wide text-waldhonig-600 uppercase">
@@ -292,8 +296,8 @@ const included = [
             <Icon name="ph:shield-check-duotone" class="mx-auto size-9 text-waldhonig-500" />
             <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">Völlig privat</h3>
             <p class="mt-2 text-sm text-sage-600">
-              Das ganze Anwesen gehört für das Wochenende nur Ihnen – keine Nachbarn, keine fremden
-              Gäste.
+              Das ganze Grundstück gehört für das Wochenende nur Ihnen – keine Nachbarn, keine
+              fremden Gäste.
             </p>
           </div>
           <div class="rounded-xl bg-white p-6 text-center">
