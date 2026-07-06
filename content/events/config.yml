@@ -4,6 +4,14 @@
 # (Stand 2026). Vor dem Live-Gang müssen die echten Preise (v.a. Caterer,
 # Versicherung) bestätigt werden. Diese Datei lässt sich ohne Code-Änderung
 # anpassen – einfach Werte ändern und neu veröffentlichen.
+#
+# FOTOS (pro Option): Jede greifbare Option hat unten bereits einen `image`-Platz-
+# halter, der auf `/img/events/…webp` zeigt. Die Dateien existieren noch nicht –
+# der Konfigurator blendet ein fehlendes Bild automatisch aus. Sobald ein Foto
+# vorliegt: als WebP unter genau diesem Pfad in `public/img/events/` ablegen
+# (vorher optimieren, siehe CLAUDE.md), fertig – das Bild erscheint dann von
+# selbst. `imageAlt` ist der Alternativtext (Barrierefreiheit/SEO); bei Bedarf
+# anpassen. Pfad ändern ist erlaubt, muss aber auf die abgelegte Datei zeigen.
 
 guestRange:
   min: 10
@@ -55,18 +63,24 @@ basePackage:
 cateringTiers:
   - id: rustikal
     label: Rustikales Buffet
+    image: /img/events/catering-rustikal.webp
+    imageAlt: Rustikales Buffet mit regionalen, saisonalen Gerichten
     description: >-
       Herzhaftes Buffet unseres Partner-Caterers mit regionalen, saisonalen
       Gerichten – unkompliziert und reichhaltig. Ideal für entspannte Familienfeiern.
     pricePerPerson: 45
   - id: klassisch
     label: Klassisches Festbuffet
+    image: /img/events/catering-klassisch.webp
+    imageAlt: Reich gedecktes klassisches Festbuffet
     description: >-
       Vielfältiges Buffet mit warmen und kalten Speisen, Salaten und Dessert –
       der beliebte Klassiker unseres Partner-Caterers für Hochzeiten und große Feste.
     pricePerPerson: 69
   - id: premium
     label: Premium-Menü am Platz
+    image: /img/events/catering-premium.webp
+    imageAlt: Serviertes Premium-Menü am festlich gedeckten Tisch
     description: >-
       Mehrgängiges, serviertes Menü mit Service am Tisch – die festlichste und
       eleganteste Variante unseres Partner-Caterers für besondere Anlässe.
@@ -78,12 +92,16 @@ cateringTiers:
 drinkOptions:
   - id: selbstbedienung
     label: Getränkepauschale – Selbstbedienung
+    image: /img/events/getraenke-selbstbedienung.webp
+    imageAlt: Getränkestation zur Selbstbedienung
     description: >-
       Getränkestation mit Auswahl an Softdrinks, Bier und Wein; Ihre Gäste bedienen
       sich selbst. Abgerechnet pro Person und Stunde.
     pricePerPersonPerHour: 6
   - id: service
     label: Getränkepauschale – mit Service
+    image: /img/events/getraenke-service.webp
+    imageAlt: Getränkeservice am Tisch und an der Bar
     description: >-
       Getränke werden von unserem Personal am Tisch und an der Bar serviert.
       Abgerechnet pro Person und Stunde.
@@ -102,6 +120,8 @@ ceremonyOptions:
     price: 0
   - id: freie_trauung
     label: Freie Trauung im Garten
+    image: /img/events/trauung-freie-trauung.webp
+    imageAlt: Freie Trauzeremonie im Garten
     description: >-
       Persönliche, freie Trauzeremonie unter freiem Himmel mit einem professionellen
       Trauredner – individuell auf Ihre Geschichte abgestimmt.
@@ -122,6 +142,8 @@ photographyOptions:
     price: 0
   - id: fotograf
     label: Fotograf – Reportage
+    image: /img/events/foto-fotograf.webp
+    imageAlt: Hochzeitsfotograf hält einen Moment der Feier fest
     description: >-
       Professionelle Foto-Reportage Ihres Tages – natürliche Momentaufnahmen und
       Gruppenbilder, als bearbeitete Bildergalerie zum Download.
@@ -132,6 +154,8 @@ photographyOptions:
     price: 1490
   - id: foto_video
     label: Foto + Video
+    image: /img/events/foto-video.webp
+    imageAlt: Foto- und Videoteam im Einsatz auf der Feier
     description: >-
       Foto-Reportage plus filmischer Zusammenschnitt Ihres Tages als Erinnerungsvideo.
     detail: >-
@@ -149,12 +173,16 @@ musicOptions:
     price: 0
   - id: anlage
     label: Nur Musikanlage (eigene Playlist)
+    image: /img/events/musik-anlage.webp
+    imageAlt: Professionelle Musikanlage mit Lautsprechern
     description: >-
       Professionelle Musikanlage inkl. Lieferung, Aufbau und Anschluss Ihres eigenen
       Geräts – Sie spielen Ihre eigene Playlist. Strom aus dem Haus.
     price: 290
   - id: dj
     label: DJ komplett
+    image: /img/events/musik-dj.webp
+    imageAlt: DJ sorgt auf der Feier für Stimmung
     description: >-
       Professioneller DJ mit kompletter Anlage für die Abendgestaltung, inkl.
       Organisation und Technik. Strom aus dem Haus.
@@ -166,14 +194,20 @@ musicOptions:
 tableOptions:
   - id: biertisch
     label: Biertischgarnituren (rustikal)
+    image: /img/events/tische-biertisch.webp
+    imageAlt: Rustikale Holz-Biertischgarnituren mit Bänken
     description: Klassische Holz-Biertischgarnituren mit Bänken – im Basispreis enthalten.
     pricePerPerson: 0
   - id: bankett
     label: Eckige Bankett-Tische
+    image: /img/events/tische-bankett.webp
+    imageAlt: Lange eckige Bankett-Tafeln mit Einzelstühlen
     description: Lange Tafeln mit Einzelstühlen – festlich und gesellig.
     pricePerPerson: 5
   - id: rund
     label: Runde Festtische
+    image: /img/events/tische-rund.webp
+    imageAlt: Elegante runde Festtische mit Bestuhlung
     description: Elegante runde Tische für 8–10 Personen – die klassische Hochzeitsbestuhlung.
     pricePerPerson: 6
 
@@ -184,6 +218,8 @@ chairCoverOptions:
     pricePerPerson: 0
   - id: mit
     label: Mit Stuhlhussen
+    image: /img/events/hussen-mit.webp
+    imageAlt: Stühle mit festlichen Stuhlhussen
     description: Festliche Stuhlhussen für einen edlen, einheitlichen Look.
     pricePerPerson: 4
 
@@ -194,6 +230,8 @@ dishwareOptions:
     pricePerPerson: 0
   - id: mietgeschirr
     label: Komplettes Mietgeschirr
+    image: /img/events/geschirr-mietgeschirr.webp
+    imageAlt: Festlich eingedecktes Mietgeschirr mit Gläsern und Besteck
     description: Hochwertiges Mietgeschirr mit Tellern, Gläsern und Besteck inkl. Spülservice.
     pricePerPerson: 8
 
@@ -201,12 +239,16 @@ dishwareOptions:
 flooringOptions:
   - id: tanzflaeche
     label: Holz-Tanzfläche
+    image: /img/events/boden-tanzflaeche.webp
+    imageAlt: Ausgelegte Holz-Tanzfläche im Garten
     description: >-
       Ausgelegte Holz-Tanzfläche – schützt den Rasen im Hauptbereich und schafft
       eine schöne Fläche zum Tanzen.
     pricePerPerson: 5
   - id: komplett
     label: Kompletter Holzboden im Zelt
+    image: /img/events/boden-komplett.webp
+    imageAlt: Durchgehender Holzboden im Festzelt
     description: >-
       Durchgehender Holzboden im gesamten Zelt – maximaler Schutz für Ihren Rasen
       und ein edles Ambiente, auch bei Nässe.
@@ -225,14 +267,20 @@ decorationOptions:
     pricePerPerson: 0
   - id: schlicht
     label: Schlichte Tischdekoration
+    image: /img/events/deko-schlicht.webp
+    imageAlt: Schlichte Tischdekoration mit Blumen und Kerzen
     description: Dezenter Blumenschmuck und Kerzen auf den Tischen – schlicht und stimmungsvoll.
     pricePerPerson: 8
   - id: klassisch
     label: Klassische Festdekoration
+    image: /img/events/deko-klassisch.webp
+    imageAlt: Klassische Festdekoration mit frischen Blumen
     description: Liebevolle Tisch- und Festdekoration mit frischen Blumen, passend zu Ihren Farbwünschen.
     pricePerPerson: 13
   - id: premium
     label: Premium-Blumendekoration
+    image: /img/events/deko-premium.webp
+    imageAlt: Aufwändige florale Premium-Dekoration
     description: >-
       Aufwändige florale Gestaltung mit hochwertigen Arrangements für Tische, Zelt
       und Eingang – das festliche Rundum-Paket.
@@ -248,6 +296,8 @@ cakeOptions:
     pricePerPerson: 0
   - id: torte
     label: Festtorte
+    image: /img/events/torte-festtorte.webp
+    imageAlt: Mehrstöckige Festtorte
     description: >-
       Mehrstöckige Festtorte vom Konditor, abgestimmt auf Anlass, Geschmack und
       Gästezahl – der süße Höhepunkt Ihrer Feier.
@@ -258,6 +308,8 @@ cakeOptions:
     pricePerPerson: 7
   - id: torte_sweet
     label: Torte + Sweet Table
+    image: /img/events/torte-sweet-table.webp
+    imageAlt: Festtorte mit dekoriertem Sweet Table
     description: >-
       Festtorte plus liebevoll dekorierter Sweet Table mit Cupcakes, Macarons,
       Pralinen und mehr zum Naschen über den ganzen Tag.
@@ -276,6 +328,8 @@ photoboothOptions:
     price: 0
   - id: fotobox
     label: Fotobox mit Requisiten
+    image: /img/events/fotobox.webp
+    imageAlt: Fotobox mit lustigen Requisiten
     description: >-
       Fotobox mit lustigen Requisiten und Sofortausdruck – für viele Lacher und ein
       Gästebuch voller Erinnerungen.
@@ -294,6 +348,8 @@ stylingOptions:
     price: 0
   - id: braut
     label: Braut-Styling (Haare & Make-up)
+    image: /img/events/styling-braut.webp
+    imageAlt: Braut beim Haar- und Make-up-Styling
     description: >-
       Professionelles Haar- und Make-up-Styling für die Braut (bzw. das Geburtstags-
       oder Ehrenkind), inkl. Vorprobe.
@@ -304,6 +360,8 @@ stylingOptions:
     price: 390
   - id: braut_partner
     label: Styling für Braut + Begleitung
+    image: /img/events/styling-braut-partner.webp
+    imageAlt: Styling für Braut und eine weitere Person
     description: >-
       Styling für die Braut plus eine weitere Person (Partnerin, Mutter, Trauzeugin).
     detail: >-

@@ -454,6 +454,34 @@ async function handleSubmit() {
   }
 }
 
+// Photo slots are wired into the config, but the real WebP files are dropped in
+// later (see content/events/config.yml). Rather than render an <img> that might
+// 404, we probe each source in the browser and only reveal it once it actually
+// loads — so there is never a broken image, and a slot "lights up" on its own
+// the moment the owner adds the file. Probing is lazy, per step.
+const readyImages = reactive<Record<string, boolean>>({})
+function probeImage(src?: string) {
+  if (!src || readyImages[src] || !import.meta.client) return
+  const img = new Image()
+  img.onload = () => {
+    readyImages[src] = true
+  }
+  img.src = src
+}
+
+// Probe the active step's photos (step hero + each option) when the step opens,
+// so only files that exist are revealed.
+watch(
+  () => currentStep.value,
+  () => {
+    const step = activeStep.value
+    if (!step) return
+    probeImage(step.image)
+    for (const group of step.groups) for (const o of group.options) probeImage(o.image)
+  },
+  { immediate: true },
+)
+
 const inputClass =
   'mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none'
 </script>
@@ -592,7 +620,7 @@ const inputClass =
         <!-- ============ STEPS 1..N: Catalogue ============ -->
         <div v-else-if="activeStep" class="space-y-6">
           <NuxtImg
-            v-if="activeStep.image"
+            v-if="activeStep.image && readyImages[activeStep.image]"
             :src="activeStep.image"
             :alt="activeStep.imageAlt ?? activeStep.title"
             class="h-48 w-full rounded-xl object-cover md:h-56"
@@ -623,7 +651,7 @@ const inputClass =
                 class="mt-1 size-4 shrink-0 accent-waldhonig-500"
               />
               <NuxtImg
-                v-if="opt.image"
+                v-if="opt.image && readyImages[opt.image]"
                 :src="opt.image"
                 :alt="opt.imageAlt ?? opt.label"
                 class="h-16 w-20 shrink-0 rounded-md object-cover"
