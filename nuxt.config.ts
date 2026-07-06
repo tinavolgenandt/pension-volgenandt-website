@@ -64,10 +64,14 @@ export default defineNuxtConfig({
     // Auto-discovers all prerendered routes
   },
 
-  // Robots configuration
-  robots: {
-    groups: [{ userAgent: '*', allow: '/' }],
-  },
+  // Robots configuration. A preview/staging build (PREVIEW=true) disallows the
+  // whole site so a shared test link is never crawled or indexed — nuxt-robots
+  // also injects `<meta name="robots" content="noindex, nofollow">` on every
+  // disallowed route. Production builds (flag unset) stay fully indexable.
+  robots:
+    process.env.PREVIEW === 'true'
+      ? { groups: [{ userAgent: '*', disallow: ['/'] }] }
+      : { groups: [{ userAgent: '*', allow: '/' }] },
 
   // Link checker: warn only during incremental build (pages added across phases)
   linkChecker: {
@@ -154,6 +158,7 @@ export default defineNuxtConfig({
         '/nachhaltigkeit/',
         '/picknick/',
         '/picknick/buchen/',
+        '/feiern/',
         '/aktivitaeten/',
         '/kontakt/',
         // Phase 4 attraction pages
