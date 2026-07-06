@@ -61,7 +61,10 @@ export default defineNuxtConfig({
 
   // Sitemap configuration
   sitemap: {
-    // Auto-discovers all prerendered routes
+    // Auto-discovers all prerendered routes.
+    // /feiern/ is noindex (provisional prices, not yet nav-linked) — exclude it
+    // here too so Search Console never sees "submitted URL marked noindex".
+    exclude: ['/feiern/**'],
   },
 
   // Robots configuration. A preview/staging build (PREVIEW=true) disallows the

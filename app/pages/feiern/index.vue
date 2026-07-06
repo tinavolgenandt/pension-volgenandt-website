@@ -14,6 +14,9 @@ useSeoMeta({
     'Ihr Fest im Grünen im Eichsfeld – Rundum-sorglos mit Catering, Eventplanung und Übernachtung für Ihre Gäste.',
   ogImage: '/img/garten/garten-rasen-baeume-sommer.webp',
   ogType: 'website',
+  // Prices are still provisional (caterer/insurance not yet confirmed) and the
+  // page isn't linked from nav — noindex until it's ready for real customers.
+  robots: 'noindex, nofollow',
 })
 
 useHead({

@@ -54,7 +54,9 @@ const navItems = computed(() => {
     { label: t('nav.activities', 'de'), to: '/aktivitaeten/' },
     { label: t('nav.news', 'de'), to: '/aktuelles/' },
     { label: t('nav.picnic', 'de'), to: '/picknick/' },
-    { label: t('nav.celebrations', 'de'), to: '/feiern/' },
+    // 'Feiern' nav entry intentionally omitted for now: /feiern/ is live but
+    // noindex — prices aren't confirmed with suppliers yet. Re-add once ready
+    // (see .planning/event-garden/06-supplier-plan.md).
     { label: t('nav.sustainability', 'de'), to: '/nachhaltigkeit/' },
     { label: t('nav.contact', 'de'), to: '/kontakt/' },
   ]
