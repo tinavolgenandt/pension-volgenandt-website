@@ -20,24 +20,42 @@ content: >-
   überraschen kreative Spezialitäten wie der Spaghettieisteller.
 
 
+  Auf der Eiskarte lohnt sich ein Blick auf die ausgefalleneren
+  Kreationen: gleich mehrere Spaghetti-Eis-Varianten – klassisch mit
+  Erdbeersoße und weißer Schokolade, als Bananen- oder Schokoversion,
+  oder augenzwinkernd als „Carbonara“ mit Eierlikör und Nüssen –,
+  dazu Tartufo mit Schokosoße und Kaffeelikör, buntes Pizza-Eis oder
+  das Spiegelei-Eis mit Aprikosen. Wer es opulent mag, teilt sich zu
+  zweit die Coppa Mille Fiori.
+
+
   Dazu gibt es Kaffee und Kuchen, Joghurt-Kreationen, Waffeln
   und kleine warme Gerichte. Die Atmosphäre ist gemütlich
   und der Service freundlich –
   kein Wunder, dass das Café bei Google 4,7 von 5 Sternen hat.
 
 
+  Das Café liegt in der Langen Straße 17 in Leinefelde-Worbis.
+  Geöffnet ist montags und freitags von 12 bis 18 Uhr, dienstags
+  bis donnerstags von 9 bis 18 Uhr sowie sonntags von 13 bis 19 Uhr;
+  samstags bleibt es geschlossen.
+
+
   Das San Remo eignet sich perfekt als Zwischenstopp bei einem
   Bummel durch Worbis oder nach einem Besuch im Alternativen
   Bärenpark, der nur wenige Gehminuten entfernt liegt.
 hostTip: >-
-  Probieren Sie unbedingt die hausgemachten Eissorten – jede einzelne
-  wird vor Ort frisch hergestellt. Kombinieren Sie den Besuch mit
-  dem Bärenpark Worbis, der nur wenige Minuten zu Fuß entfernt ist.
+  Probieren Sie das Spaghetti-Eis „Carbonara“ – die humorvolle
+  Variante mit Eierlikör und Nüssen sorgt garantiert für Gesprächsstoff
+  am Familientisch. Kombinieren Sie den Besuch mit dem Bärenpark
+  Worbis, der nur wenige Minuten zu Fuß entfernt ist.
 bestTimeToVisit: 'Frühling bis Herbst, besonders an warmen Tagen'
-website: 'https://www.google.com/maps/search/Eiscafé+San+Remo+Worbis'
+website: 'https://sanremo-worbis.de/'
 additionalWebsites:
   - label: 'Instagram'
     url: 'https://www.instagram.com/eiscafe.san.remo/'
+  - label: 'Google Maps'
+    url: 'https://www.google.com/maps/search/Eiscafé+San+Remo+Worbis'
 coordinates:
   lat: 51.4088
   lng: 10.2128
