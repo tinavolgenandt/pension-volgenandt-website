@@ -26,7 +26,7 @@
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-vue": "^8.6.0",
     "focus-trap": "^8.1.0",
-    "nuxt": "^4.4.4",
+    "nuxt": "4.4.7",
     "playwright": "^1.59.1",
     "vue": "^3.5.33",
     "vue-router": "^4.6.4"
@@ -36,7 +36,7 @@
       "better-sqlite3"
     ],
     "overrides": {
-      "tar": ">=7.5.10",
+      "tar": ">=7.5.16",
       "rollup": ">=4.59.0",
       "serialize-javascript": ">=7.0.5",
       "svgo": ">=4.0.1",
@@ -46,10 +46,19 @@
       "srvx": ">=0.11.13",
       "yaml": ">=2.8.3",
       "node-forge": ">=1.4.0",
-      "h3": ">=1.15.6",
+      "h3": ">=1.15.9",
       "socket.io-parser": ">=4.2.6",
-      "devalue": ">=5.6.4",
-      "unhead": ">=2.1.5"
+      "devalue": ">=5.8.1",
+      "unhead": ">=2.1.13",
+      "@unhead/vue": "^2.1.16",
+      "js-yaml": ">=4.2.0 <5.0.0",
+      "qs": ">=6.15.2",
+      "@tootallnate/once": ">=2.0.1",
+      "ws": ">=8.21.0",
+      "shell-quote": ">=1.8.4",
+      "launch-editor": ">=2.14.1",
+      "esbuild": ">=0.28.1",
+      "@babel/core": ">=7.29.6 <8.0.0"
     }
   },
   "devDependencies": {
@@ -60,7 +69,7 @@
     "@oxc-transform/binding-win32-x64-msvc": "^0.112.0",
     "@tailwindcss/vite": "^4.2.4",
     "googleapis": "^171.4.0",
-    "nodemailer": "^8.0.7",
+    "nodemailer": "^9.0.3",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.7.4",
     "tailwindcss": "^4.2.4",
