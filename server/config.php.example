@@ -38,6 +38,16 @@ define('BEDS24_ROOM_NAMES', [
     656180 => 'Ferienwohnung Schöne Aussicht',
 ]);
 
+// Breakfast tiers: per-person gross price → Speisen (7%) / Getränke (19%) split.
+// Beds24 only ever sends one combined "Frühstück" amount — this is how the
+// invoice reconstructs the legally required MwSt split by price match.
+// (Deliberately a list with an explicit 'price' field, not price-as-array-key —
+// PHP silently truncates float array keys to int.)
+define('BREAKFAST_TIERS', [
+    ['price' => 10.00, 'food' => 7.00,  'drink' => 3.00],  // Frühstück (normal)
+    ['price' => 15.00, 'food' => 10.00, 'drink' => 5.00],  // Frühstück Genießer
+]);
+
 // Bank details (Kreissparkasse Eichsfeld)
 define('BANK_NAME', 'Kreissparkasse Eichsfeld');
 define('BANK_IBAN', 'DE28820570701106230767');

@@ -210,7 +210,7 @@ function parseLineItems(array $booking, array $webhookItems = []): array {
         if ($cleaned !== '') $desc = $cleaned;
 
         if (isBreakfastItem($desc)) {
-            $breakfastItems[] = makeLineItem($desc ?: 'Frühstück', $gross, 19, $qty, $unit);
+            $breakfastItems = array_merge($breakfastItems, splitBreakfastItem($qty, $unit));
         } else {
             $accommodationGross += $gross;
         }
@@ -238,6 +238,34 @@ function isBreakfastItem(string $desc): bool {
     return str_contains($lower, 'frühstück')
         || str_contains($lower, 'breakfast')
         || str_contains($lower, 'fruehstueck');
+}
+
+/**
+ * Split a per-person breakfast charge into the legally required Speisen
+ * (7%) / Getränke (19%) line items. Beds24 only ever sends one combined
+ * "Frühstück" amount, so the split is reconstructed by matching the
+ * per-person price against BREAKFAST_TIERS (server/config.php) — a fixed
+ * absolute Speisen/Getränke split per tier, not a percentage ratio, since
+ * that's how the two breakfast products (normal/Genießer) are actually priced.
+ */
+function splitBreakfastItem(float $qty, float $unitGross): array {
+    $tiers = defined('BREAKFAST_TIERS') ? BREAKFAST_TIERS : [];
+
+    foreach ($tiers as $tier) {
+        if (abs($unitGross - (float)$tier['price']) < 0.05) {
+            return [
+                makeLineItem('Frühstück – Speisen',  $tier['food']  * $qty, 7,  $qty, $tier['food']),
+                makeLineItem('Frühstück – Getränke', $tier['drink'] * $qty, 19, $qty, $tier['drink']),
+            ];
+        }
+    }
+
+    // Unknown price — don't guess a split. One clearly-flagged line so it
+    // can't be silently approved wrong; Simone can fix it in the editable
+    // review form.
+    return [
+        makeLineItem('Frühstück (Preis unbekannt – bitte Aufteilung prüfen!)', $unitGross * $qty, 19, $qty, $unitGross),
+    ];
 }
 
 function makeLineItem(string $desc, float $gross, int $vatRate, float $qty = 1.0, float $unitGross = 0.0): array {
