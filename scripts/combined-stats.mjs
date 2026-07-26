@@ -181,13 +181,23 @@ async function fetchBeds24(token, params) {
 
 // Weekly: bookings CREATED within [rangeStart, rangeEnd], filtered client-side by bookingTime
 async function getNewBookings(token, rangeStart, rangeEnd) {
-  const broadFrom = toIsoDate(addDays(rangeStart, -365))
-  const broadTo = toIsoDate(addDays(rangeEnd, 730))
-  const all = await fetchBeds24(token, {
-    arrivalFrom: broadFrom,
-    arrivalTo: broadTo,
-    departureFrom: broadFrom,
-  })
+  // Broad window: arrivals from 1 year ago to 2 years ahead catches any
+  // booking created this week regardless of when the guest actually
+  // arrives. Fetched one calendar month at a time (see monthChunks) —
+  // a single wide-range query was confirmed to silently return an
+  // incomplete result set from Beds24.
+  const broadFrom = addDays(rangeStart, -365)
+  const broadTo = addDays(rangeEnd, 730)
+  const perMonth = await Promise.all(
+    monthChunks(broadFrom, broadTo).map(({ start, end }) =>
+      fetchBeds24(token, {
+        arrivalFrom: toIsoDate(start),
+        arrivalTo: toIsoDate(end),
+        departureFrom: toIsoDate(start),
+      }).catch(() => []),
+    ),
+  )
+  const all = perMonth.flat()
   const startMs = rangeStart.getTime()
   const endMs = rangeEnd.getTime() + 86400000
 
