@@ -365,6 +365,26 @@ function last12MonthKeys() {
   return keys
 }
 
+// Splits [rangeStart, rangeEnd] into calendar-month chunks, each clamped to
+// the overall range. Wide multi-month Beds24 queries were found to silently
+// return incomplete results, so date-window queries are kept to one
+// calendar month at a time throughout this script.
+function monthChunks(rangeStart, rangeEnd) {
+  const chunks = []
+  let cursor = new Date(rangeStart.getFullYear(), rangeStart.getMonth(), 1)
+  while (cursor <= rangeEnd) {
+    const y = cursor.getFullYear()
+    const m = cursor.getMonth() + 1
+    const daysInMonth = new Date(y, m, 0).getDate()
+    const chunkStart = new Date(Math.max(cursor.getTime(), rangeStart.getTime()))
+    const naturalEnd = new Date(y, m - 1, daysInMonth)
+    const chunkEnd = new Date(Math.min(naturalEnd.getTime(), rangeEnd.getTime()))
+    chunks.push({ start: chunkStart, end: chunkEnd })
+    cursor = new Date(y, m, 1) // first of next month
+  }
+  return chunks
+}
+
 // Revenue development of the last 12 months: monthly totals, per-room totals,
 // and the breakfast share (from Beds24 invoice items, same detection as
 // server/invoice-draft.php's isBreakfastItem()).
@@ -375,87 +395,95 @@ function last12MonthKeys() {
 // This is deliberately the *same* math as MTD so the two don't contradict each
 // other for the current month. This is gross turnover (Bruttoumsatz); no cost
 // data exists anywhere in this system, so it is not a profit/margin figure.
+// IMPORTANT: fetches one calendar month at a time (same narrow
+// arrivalTo/departureFrom shape as collectMTD) rather than one wide
+// 12-month query. A wide query was confirmed live to silently return an
+// incomplete/differently-selected result set from Beds24 — comparing a
+// wide fetch against 12 separate narrow monthly fetches for the same
+// bookings found the wide one missing real, priced bookings (~€1,946
+// undercounted for July alone). The narrow per-month shape matches
+// collectMTD exactly and is verified correct against its own "Umsatz" figure.
 async function collectRevenueHistory(token) {
   const monthKeys = last12MonthKeys()
-  if (!token)
-    return { monthKeys, monthlyRevenue: {}, roomRevenue: {}, totalRevenue: 0, breakfastRevenue: 0 }
-
-  const oldestKey = monthKeys[0]
-  const [oldestYear, oldestMonth] = oldestKey.split('-').map(Number)
-  const historyStart = toIsoDate(new Date(oldestYear, oldestMonth - 1, 1))
-  const historyEnd = toIsoDate(mtdEnd) // yesterday — complete days only, matches MTD's own boundary
-
-  const historyStartMs = new Date(`${historyStart}T00:00:00`).getTime()
-  const historyEndMs = new Date(`${historyEnd}T00:00:00`).getTime() + 86400000 // exclusive
-
-  // Stays overlapping the window (not just arrivals) — same fetch shape as collectMTD.
-  const [active, cancelled] = await Promise.all([
-    fetchBeds24(token, {
-      arrivalTo: historyEnd,
-      departureFrom: historyStart,
-      includeInvoice: 'true',
-    }).catch(() => []),
-    fetchBeds24(token, {
-      arrivalTo: historyEnd,
-      departureFrom: historyStart,
-      includeInvoice: 'true',
-      status: 'cancelled',
-    }).catch(() => []),
-  ])
-  const cancelledIds = new Set((cancelled ?? []).map((b) => b.id))
-
   const monthlyRevenue = Object.fromEntries(monthKeys.map((k) => [k, 0]))
   const roomRevenue = Object.fromEntries(Object.values(ROOM_NAMES).map((n) => [n, 0]))
+  if (!token)
+    return { monthKeys, monthlyRevenue, roomRevenue, totalRevenue: 0, breakfastRevenue: 0 }
+
   let totalRevenue = 0
   let breakfastRevenue = 0
 
-  for (const b of active ?? []) {
-    if (isBlindBooking(b)) continue // blocked nights, not real reservations
+  await Promise.all(
+    monthKeys.map(async (key) => {
+      const [y, m] = key.split('-').map(Number)
+      const daysInMonth = new Date(y, m, 0).getDate()
+      const monthStart = new Date(y, m - 1, 1)
+      const naturalMonthEnd = new Date(y, m - 1, daysInMonth)
+      // Clamp the current (partial) month to yesterday — complete days only.
+      const monthEnd = naturalMonthEnd < mtdEnd ? naturalMonthEnd : mtdEnd
+      if (monthEnd < monthStart) return // future month, nothing to fetch yet
 
-    const isCancelled =
-      cancelledIds.has(b.id) ||
-      (b.cancelTime && b.cancelTime !== 0 && b.cancelTime !== '0') ||
-      (typeof b.status === 'string' && b.status.toLowerCase().includes('cancel'))
-    if (isCancelled) continue
+      const monthStartStr = toIsoDate(monthStart)
+      const monthEndStr = toIsoDate(monthEnd)
+      const rsMs = new Date(`${monthStartStr}T00:00:00`).getTime()
+      const reMs = new Date(`${monthEndStr}T00:00:00`).getTime() + 86400000
 
-    const fullPrice = parseFloat(b.price) || 0
-    if (fullPrice === 0) continue // nothing to distribute (already flagged separately)
+      const [active, cancelled] = await Promise.all([
+        fetchBeds24(token, {
+          arrivalTo: monthEndStr,
+          departureFrom: monthStartStr,
+          includeInvoice: 'true',
+        }).catch(() => []),
+        fetchBeds24(token, {
+          arrivalTo: monthEndStr,
+          departureFrom: monthStartStr,
+          includeInvoice: 'true',
+          status: 'cancelled',
+        }).catch(() => []),
+      ])
+      const cancelledIds = new Set((cancelled ?? []).map((b) => b.id))
 
-    const arrival = new Date(b.arrival)
-    const departure = new Date(b.departure)
-    const totalNights = Math.max(1, Math.round((departure - arrival) / 86400000))
-    const perNight = fullPrice / totalNights
-    const roomName = ROOM_NAMES[String(b.roomId)] || 'Unbekannt'
+      for (const b of active ?? []) {
+        if (isBlindBooking(b)) continue // blocked nights, not real reservations
 
-    // Walk each night of the stay, crediting it to whichever calendar month
-    // it falls in, clamped to the 12-month reporting window.
-    let bookingRevenueInWindow = 0
-    for (let i = 0; i < totalNights; i++) {
-      const night = addDays(arrival, i)
-      const nightMs = night.getTime()
-      if (nightMs < historyStartMs || nightMs >= historyEndMs) continue
-      const monthKey = `${night.getFullYear()}-${String(night.getMonth() + 1).padStart(2, '0')}`
-      if (!(monthKey in monthlyRevenue)) continue
-      monthlyRevenue[monthKey] += perNight
-      bookingRevenueInWindow += perNight
-    }
-    if (bookingRevenueInWindow === 0) continue
+        const isCancelled =
+          cancelledIds.has(b.id) ||
+          (b.cancelTime && b.cancelTime !== 0 && b.cancelTime !== '0') ||
+          (typeof b.status === 'string' && b.status.toLowerCase().includes('cancel'))
+        if (isCancelled) continue
 
-    totalRevenue += bookingRevenueInWindow
-    roomRevenue[roomName] = (roomRevenue[roomName] || 0) + bookingRevenueInWindow
+        const fullPrice = parseFloat(b.price) || 0
+        if (fullPrice === 0) continue // nothing to distribute (already flagged separately)
 
-    // Breakfast items aren't per-night, so prorate them by the same
-    // in-window fraction of the stay as the room revenue above.
-    const windowFraction = bookingRevenueInWindow / fullPrice
-    const invoiceItems = b.invoice?.items ?? b.invoiceItems ?? []
-    for (const item of invoiceItems) {
-      const desc = item.description ?? item.desc ?? ''
-      if (!isBreakfastItem(desc)) continue
-      const unit = parseFloat(item.amount ?? item.unitPrice ?? 0) || 0
-      const qty = parseFloat(item.qty ?? item.quantity ?? 1) || 1
-      breakfastRevenue += unit * qty * windowFraction
-    }
-  }
+        const arrival = new Date(b.arrival).getTime()
+        const departure = new Date(b.departure).getTime()
+        const totalNights = Math.max(1, Math.round((departure - arrival) / 86400000))
+        const clampedStart = Math.max(arrival, rsMs)
+        const clampedEnd = Math.min(departure, reMs)
+        const nightsInRange = Math.max(0, Math.round((clampedEnd - clampedStart) / 86400000))
+        if (nightsInRange === 0) continue
+
+        const revenueInMonth = (nightsInRange / totalNights) * fullPrice
+        monthlyRevenue[key] += revenueInMonth
+        totalRevenue += revenueInMonth
+
+        const roomName = ROOM_NAMES[String(b.roomId)] || 'Unbekannt'
+        roomRevenue[roomName] = (roomRevenue[roomName] || 0) + revenueInMonth
+
+        // Breakfast items aren't per-night, so prorate them by the same
+        // in-month fraction of the stay as the room revenue above.
+        const monthFraction = revenueInMonth / fullPrice
+        const invoiceItems = b.invoice?.items ?? b.invoiceItems ?? []
+        for (const item of invoiceItems) {
+          const desc = item.description ?? item.desc ?? ''
+          if (!isBreakfastItem(desc)) continue
+          const unit = parseFloat(item.amount ?? item.unitPrice ?? 0) || 0
+          const qty = parseFloat(item.qty ?? item.quantity ?? 1) || 1
+          breakfastRevenue += unit * qty * monthFraction
+        }
+      }
+    }),
+  )
 
   return { monthKeys, monthlyRevenue, roomRevenue, totalRevenue, breakfastRevenue }
 }
@@ -469,26 +497,33 @@ async function collectZeroPriceBookings(token) {
 
   const monthKeys = last12MonthKeys()
   const [oldestYear, oldestMonth] = monthKeys[0].split('-').map(Number)
-  const rangeFrom = toIsoDate(new Date(oldestYear, oldestMonth - 1, 1))
-  const rangeTo = toIsoDate(addDays(today, 180))
+  const rangeFrom = new Date(oldestYear, oldestMonth - 1, 1)
+  const rangeTo = addDays(today, 180)
 
-  const all = await fetchBeds24(token, {
-    arrivalFrom: rangeFrom,
-    arrivalTo: rangeTo,
-    departureFrom: rangeFrom,
-  }).catch(() => [])
+  const perMonth = await Promise.all(
+    monthChunks(rangeFrom, rangeTo).map(async ({ start, end }) => {
+      const startStr = toIsoDate(start)
+      const endStr = toIsoDate(end)
+      const all = await fetchBeds24(token, {
+        arrivalFrom: startStr,
+        arrivalTo: endStr,
+        departureFrom: startStr,
+      }).catch(() => [])
 
-  const zeroPriced = all.filter((b) => {
-    if (isBlindBooking(b)) return false // blocked nights correctly have no price — not a follow-up item
-    const isCancelled =
-      (b.cancelTime && b.cancelTime !== 0 && b.cancelTime !== '0') ||
-      (typeof b.status === 'string' && b.status.toLowerCase().includes('cancel'))
-    if (isCancelled) return false
-    const price = parseFloat(b.price)
-    return isNaN(price) || price === 0
-  })
+      return all.filter((b) => {
+        if (isBlindBooking(b)) return false // blocked nights correctly have no price — not a follow-up item
+        const isCancelled =
+          (b.cancelTime && b.cancelTime !== 0 && b.cancelTime !== '0') ||
+          (typeof b.status === 'string' && b.status.toLowerCase().includes('cancel'))
+        if (isCancelled) return false
+        const price = parseFloat(b.price)
+        return isNaN(price) || price === 0
+      })
+    }),
+  )
 
-  return zeroPriced
+  return perMonth
+    .flat()
     .map((b) => ({
       id: b.id,
       arrival: b.arrival?.slice(0, 10) ?? '?',
