@@ -120,7 +120,7 @@ function autoSendPaidBookingDraft(array $draft, string $draftPath): array {
     }
     file_put_contents($sentDir . '/' . $draft['token'] . '.pdf', $pdfBytes);
 
-    $emailSent               = sendInvoiceToGuest($draft, $pdfBytes);
+    $emailSent               = sendInvoiceToGuest($draft, $pdfBytes, true);
     $draft['guestEmailSent'] = $emailSent;
 
     file_put_contents($draftPath, json_encode($draft, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
