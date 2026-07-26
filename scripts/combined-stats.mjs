@@ -83,8 +83,18 @@ const prevMtdEnd = new Date(mtdYear - 1, mtdMonth - 1, mtdEnd.getDate())
 
 const MONTH_NAMES_DE = [
   '',
-  'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
-  'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember',
+  'Januar',
+  'Februar',
+  'März',
+  'April',
+  'Mai',
+  'Juni',
+  'Juli',
+  'August',
+  'September',
+  'Oktober',
+  'November',
+  'Dezember',
 ]
 
 const monthLabel = `${MONTH_NAMES_DE[mtdMonth]} ${mtdYear}`
@@ -130,27 +140,64 @@ function mapChannel(src) {
   return 'Direkt'
 }
 
+// Same detection Beds24 invoice items use for the "Frühstück" line item (see server/invoice-draft.php)
+function isBreakfastItem(desc) {
+  const lower = (desc || '').toLowerCase()
+  return lower.includes('frühstück') || lower.includes('fruehstueck') || lower.includes('breakfast')
+}
+
+// "Blind bookings" — Beds24's own mechanism for manually blocking nights
+// (maintenance, owner use, etc.). status:"black" is Beds24's field for this;
+// confirmed via a live API sample (31/48 zero-price bookings had this status).
+// These aren't real guest bookings: no price is expected, and they must not
+// count toward occupancy, revenue, or the zero-price follow-up list.
+function isBlindBooking(b) {
+  return typeof b.status === 'string' && b.status.toLowerCase() === 'black'
+}
+
+// Paginates through Beds24's nextPageToken — without this, wide date windows
+// (e.g. the 12-month revenue history) silently truncate to a single page.
 async function fetchBeds24(token, params) {
-  const qs = new URLSearchParams({
-    propertyId: BEDS24_PROPERTY_ID,
-    includeInvoice: 'false',
-    ...params,
-  })
-  const res = await fetch(`https://api.beds24.com/v2/bookings?${qs}`, { headers: { token } })
-  const body = await res.json()
-  const arr = Array.isArray(body) ? body : body.data
-  return Array.isArray(arr) ? arr : []
+  const results = []
+  let pageToken = null
+
+  do {
+    const qs = new URLSearchParams({
+      propertyId: BEDS24_PROPERTY_ID,
+      includeInvoice: 'false',
+      ...params,
+    })
+    if (pageToken) qs.set('pageToken', pageToken)
+
+    const res = await fetch(`https://api.beds24.com/v2/bookings?${qs}`, { headers: { token } })
+    const body = await res.json()
+    const arr = Array.isArray(body) ? body : body.data
+    if (Array.isArray(arr)) results.push(...arr)
+    pageToken = body.nextPageToken ?? null
+  } while (pageToken)
+
+  return results
 }
 
 // Weekly: bookings CREATED within [rangeStart, rangeEnd], filtered client-side by bookingTime
 async function getNewBookings(token, rangeStart, rangeEnd) {
-  const broadFrom = toIsoDate(addDays(rangeStart, -365))
-  const broadTo = toIsoDate(addDays(rangeEnd, 730))
-  const all = await fetchBeds24(token, {
-    arrivalFrom: broadFrom,
-    arrivalTo: broadTo,
-    departureFrom: broadFrom,
-  })
+  // Broad window: arrivals from 1 year ago to 2 years ahead catches any
+  // booking created this week regardless of when the guest actually
+  // arrives. Fetched one calendar month at a time (see monthChunks) —
+  // a single wide-range query was confirmed to silently return an
+  // incomplete result set from Beds24.
+  const broadFrom = addDays(rangeStart, -365)
+  const broadTo = addDays(rangeEnd, 730)
+  const perMonth = await Promise.all(
+    monthChunks(broadFrom, broadTo).map(({ start, end }) =>
+      fetchBeds24(token, {
+        arrivalFrom: toIsoDate(start),
+        arrivalTo: toIsoDate(end),
+        departureFrom: toIsoDate(start),
+      }).catch(() => []),
+    ),
+  )
+  const all = perMonth.flat()
   const startMs = rangeStart.getTime()
   const endMs = rangeEnd.getTime() + 86400000
 
@@ -166,7 +213,7 @@ async function getNewBookings(token, rangeStart, rangeEnd) {
     const isCancelled =
       (b.cancelTime && b.cancelTime !== 0 && b.cancelTime !== '0') ||
       (typeof b.status === 'string' && b.status.toLowerCase().includes('cancel'))
-    if (isCancelled) continue
+    if (isCancelled || isBlindBooking(b)) continue
     confirmed++
     const ch = mapChannel(b.apiSource)
     byChannel[ch] = (byChannel[ch] || 0) + 1
@@ -192,7 +239,7 @@ async function getArrivals(token, rangeStart, rangeEnd) {
     const isCancelled =
       (b.cancelTime && b.cancelTime !== 0 && b.cancelTime !== '0') ||
       (typeof b.status === 'string' && b.status.toLowerCase().includes('cancel'))
-    return !isCancelled
+    return !isCancelled && !isBlindBooking(b)
   }).length
 }
 
@@ -210,6 +257,11 @@ function aggregateBookings(bookings, rangeStart, rangeEnd) {
   const byChannel = { Direkt: 0, 'Booking.com': 0, Website: 0, Airbnb: 0 }
 
   for (const b of bookings) {
+    // Blind bookings (status:"black") are manually blocked nights, not real
+    // reservations — exclude entirely so they don't inflate occupancy/nights
+    // or show up as cancellations/zero-price bookings.
+    if (isBlindBooking(b)) continue
+
     totalBookings++
     const isCancelled =
       b._forceCancelled ||
@@ -231,7 +283,9 @@ function aggregateBookings(bookings, rangeStart, rangeEnd) {
     const fullPrice = parseFloat(b.price) || 0
     if (fullPrice === 0) {
       zeroPriceBookings++
-      console.warn(`Booking with €0 price: ID=${b.id}, arrival=${b.arrival}, room=${ROOM_NAMES[String(b.roomId)] || b.roomId}`)
+      console.warn(
+        `Booking with €0 price: ID=${b.id}, arrival=${b.arrival}, room=${ROOM_NAMES[String(b.roomId)] || b.roomId}`,
+      )
     }
     totalRevenue += (nightsInRange / totalNights) * fullPrice
 
@@ -296,7 +350,9 @@ async function collectOutlook(token) {
       const days = new Date(y, m, 0).getDate()
       const from = `${y}-${String(m).padStart(2, '0')}-01`
       const to = `${y}-${String(m).padStart(2, '0')}-${String(days).padStart(2, '0')}`
-      const bookings = await fetchBeds24(token, { arrivalTo: to, departureFrom: from }).catch(() => [])
+      const bookings = await fetchBeds24(token, { arrivalTo: to, departureFrom: from }).catch(
+        () => [],
+      )
       const agg = aggregateBookings(bookings, from, to)
       return {
         monthLabel: `${MONTH_NAMES_DE[m]} ${y}`,
@@ -306,6 +362,186 @@ async function collectOutlook(token) {
       }
     }),
   )
+}
+
+// Last 12 calendar months, oldest → newest, including the current (partial) month.
+// e.g. run in July 2026 → ['2025-08', ..., '2026-07']
+function last12MonthKeys() {
+  const keys = []
+  for (let i = 11; i >= 0; i--) {
+    const d = new Date(mtdYear, mtdMonth - 1 - i, 1)
+    keys.push(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`)
+  }
+  return keys
+}
+
+// Splits [rangeStart, rangeEnd] into calendar-month chunks, each clamped to
+// the overall range. Wide multi-month Beds24 queries were found to silently
+// return incomplete results, so date-window queries are kept to one
+// calendar month at a time throughout this script.
+function monthChunks(rangeStart, rangeEnd) {
+  const chunks = []
+  let cursor = new Date(rangeStart.getFullYear(), rangeStart.getMonth(), 1)
+  while (cursor <= rangeEnd) {
+    const y = cursor.getFullYear()
+    const m = cursor.getMonth() + 1
+    const daysInMonth = new Date(y, m, 0).getDate()
+    const chunkStart = new Date(Math.max(cursor.getTime(), rangeStart.getTime()))
+    const naturalEnd = new Date(y, m - 1, daysInMonth)
+    const chunkEnd = new Date(Math.min(naturalEnd.getTime(), rangeEnd.getTime()))
+    chunks.push({ start: chunkStart, end: chunkEnd })
+    cursor = new Date(y, m, 1) // first of next month
+  }
+  return chunks
+}
+
+// Revenue development of the last 12 months: monthly totals, per-room totals,
+// and the breakfast share (from Beds24 invoice items, same detection as
+// server/invoice-draft.php's isBreakfastItem()).
+// Umsatz per month for the last 12 months, using the same nights-prorated,
+// stay-overlap method as the "Umsatz" figure in the MTD section (aggregateBookings)
+// — a booking's price is spread across the nights it actually covers, and only
+// the nights that fall within each calendar month/the reporting window count.
+// This is deliberately the *same* math as MTD so the two don't contradict each
+// other for the current month. This is gross turnover (Bruttoumsatz); no cost
+// data exists anywhere in this system, so it is not a profit/margin figure.
+// IMPORTANT: fetches one calendar month at a time (same narrow
+// arrivalTo/departureFrom shape as collectMTD) rather than one wide
+// 12-month query. A wide query was confirmed live to silently return an
+// incomplete/differently-selected result set from Beds24 — comparing a
+// wide fetch against 12 separate narrow monthly fetches for the same
+// bookings found the wide one missing real, priced bookings (~€1,946
+// undercounted for July alone). The narrow per-month shape matches
+// collectMTD exactly and is verified correct against its own "Umsatz" figure.
+async function collectRevenueHistory(token) {
+  const monthKeys = last12MonthKeys()
+  const monthlyRevenue = Object.fromEntries(monthKeys.map((k) => [k, 0]))
+  const roomRevenue = Object.fromEntries(Object.values(ROOM_NAMES).map((n) => [n, 0]))
+  if (!token)
+    return { monthKeys, monthlyRevenue, roomRevenue, totalRevenue: 0, breakfastRevenue: 0 }
+
+  let totalRevenue = 0
+  let breakfastRevenue = 0
+
+  await Promise.all(
+    monthKeys.map(async (key) => {
+      const [y, m] = key.split('-').map(Number)
+      const daysInMonth = new Date(y, m, 0).getDate()
+      const monthStart = new Date(y, m - 1, 1)
+      const naturalMonthEnd = new Date(y, m - 1, daysInMonth)
+      // Clamp the current (partial) month to yesterday — complete days only.
+      const monthEnd = naturalMonthEnd < mtdEnd ? naturalMonthEnd : mtdEnd
+      if (monthEnd < monthStart) return // future month, nothing to fetch yet
+
+      const monthStartStr = toIsoDate(monthStart)
+      const monthEndStr = toIsoDate(monthEnd)
+      const rsMs = new Date(`${monthStartStr}T00:00:00`).getTime()
+      const reMs = new Date(`${monthEndStr}T00:00:00`).getTime() + 86400000
+
+      const [active, cancelled] = await Promise.all([
+        fetchBeds24(token, {
+          arrivalTo: monthEndStr,
+          departureFrom: monthStartStr,
+          includeInvoice: 'true',
+        }).catch(() => []),
+        fetchBeds24(token, {
+          arrivalTo: monthEndStr,
+          departureFrom: monthStartStr,
+          includeInvoice: 'true',
+          status: 'cancelled',
+        }).catch(() => []),
+      ])
+      const cancelledIds = new Set((cancelled ?? []).map((b) => b.id))
+
+      for (const b of active ?? []) {
+        if (isBlindBooking(b)) continue // blocked nights, not real reservations
+
+        const isCancelled =
+          cancelledIds.has(b.id) ||
+          (b.cancelTime && b.cancelTime !== 0 && b.cancelTime !== '0') ||
+          (typeof b.status === 'string' && b.status.toLowerCase().includes('cancel'))
+        if (isCancelled) continue
+
+        const fullPrice = parseFloat(b.price) || 0
+        if (fullPrice === 0) continue // nothing to distribute (already flagged separately)
+
+        const arrival = new Date(b.arrival).getTime()
+        const departure = new Date(b.departure).getTime()
+        const totalNights = Math.max(1, Math.round((departure - arrival) / 86400000))
+        const clampedStart = Math.max(arrival, rsMs)
+        const clampedEnd = Math.min(departure, reMs)
+        const nightsInRange = Math.max(0, Math.round((clampedEnd - clampedStart) / 86400000))
+        if (nightsInRange === 0) continue
+
+        const revenueInMonth = (nightsInRange / totalNights) * fullPrice
+        monthlyRevenue[key] += revenueInMonth
+        totalRevenue += revenueInMonth
+
+        const roomName = ROOM_NAMES[String(b.roomId)] || 'Unbekannt'
+        roomRevenue[roomName] = (roomRevenue[roomName] || 0) + revenueInMonth
+
+        // Breakfast items aren't per-night, so prorate them by the same
+        // in-month fraction of the stay as the room revenue above.
+        const monthFraction = revenueInMonth / fullPrice
+        const invoiceItems = b.invoice?.items ?? b.invoiceItems ?? []
+        for (const item of invoiceItems) {
+          const desc = item.description ?? item.desc ?? ''
+          if (!isBreakfastItem(desc)) continue
+          const unit = parseFloat(item.amount ?? item.unitPrice ?? 0) || 0
+          const qty = parseFloat(item.qty ?? item.quantity ?? 1) || 1
+          breakfastRevenue += unit * qty * monthFraction
+        }
+      }
+    }),
+  )
+
+  return { monthKeys, monthlyRevenue, roomRevenue, totalRevenue, breakfastRevenue }
+}
+
+// Confirmed reservations without a price (price = 0 or missing) — for manual
+// follow-up in Beds24. Scans the same 12-month lookback plus the next 180
+// days of upcoming arrivals, so both stale past bookings and new/unpriced
+// upcoming ones surface.
+async function collectZeroPriceBookings(token) {
+  if (!token) return []
+
+  const monthKeys = last12MonthKeys()
+  const [oldestYear, oldestMonth] = monthKeys[0].split('-').map(Number)
+  const rangeFrom = new Date(oldestYear, oldestMonth - 1, 1)
+  const rangeTo = addDays(today, 180)
+
+  const perMonth = await Promise.all(
+    monthChunks(rangeFrom, rangeTo).map(async ({ start, end }) => {
+      const startStr = toIsoDate(start)
+      const endStr = toIsoDate(end)
+      const all = await fetchBeds24(token, {
+        arrivalFrom: startStr,
+        arrivalTo: endStr,
+        departureFrom: startStr,
+      }).catch(() => [])
+
+      return all.filter((b) => {
+        if (isBlindBooking(b)) return false // blocked nights correctly have no price — not a follow-up item
+        const isCancelled =
+          (b.cancelTime && b.cancelTime !== 0 && b.cancelTime !== '0') ||
+          (typeof b.status === 'string' && b.status.toLowerCase().includes('cancel'))
+        if (isCancelled) return false
+        const price = parseFloat(b.price)
+        return isNaN(price) || price === 0
+      })
+    }),
+  )
+
+  return perMonth
+    .flat()
+    .map((b) => ({
+      id: b.id,
+      arrival: b.arrival?.slice(0, 10) ?? '?',
+      departure: b.departure?.slice(0, 10) ?? '?',
+      roomName: ROOM_NAMES[String(b.roomId)] || `Zimmer ${b.roomId}`,
+      guestName: [b.firstName, b.lastName].filter(Boolean).join(' ').trim() || 'Unbekannt',
+    }))
+    .sort((a, b) => a.arrival.localeCompare(b.arrival))
 }
 
 // ---------------------------------------------------------------------------
@@ -335,7 +571,16 @@ async function getGA4Data() {
       .runReport({ property: `properties/${GA4_PROPERTY_ID}`, requestBody })
       .catch(() => ({ data: { rows: [] } }))
 
-  const [weekThisRes, weekPrevRes, mtdRes, mtdPrevRes, picknickRes, picknickPrevRes, qrThisRes, qrPrevRes] = await Promise.all([
+  const [
+    weekThisRes,
+    weekPrevRes,
+    mtdRes,
+    mtdPrevRes,
+    picknickRes,
+    picknickPrevRes,
+    qrThisRes,
+    qrPrevRes,
+  ] = await Promise.all([
     // Weekly sessions (this week)
     run({
       dateRanges: [{ startDate: toIsoDate(weekStart), endDate: toIsoDate(weekEnd) }],
@@ -473,14 +718,128 @@ async function getGA4Data() {
 // ---------------------------------------------------------------------------
 // Email HTML
 // ---------------------------------------------------------------------------
-function buildEmail({ bookings, nextArrivals, mtd, prevMtd, outlook, ga4 }) {
-  const fmtEur = (n) =>
-    new Intl.NumberFormat('de-DE', {
-      style: 'currency',
-      currency: 'EUR',
-      maximumFractionDigits: 0,
-    }).format(n)
+const fmtEur = (n) =>
+  new Intl.NumberFormat('de-DE', {
+    style: 'currency',
+    currency: 'EUR',
+    maximumFractionDigits: 0,
+  }).format(n)
 
+const MONTH_ABBR_DE = MONTH_NAMES_DE.map((m) => m.slice(0, 3))
+
+// Inline HTML/CSS horizontal bar chart — no external chart service, no JS,
+// renders reliably in email clients (Gmail, Outlook, Apple Mail, ...).
+function buildRevenueHistorySection(revHistory) {
+  const { monthKeys, monthlyRevenue, roomRevenue, totalRevenue, breakfastRevenue } = revHistory
+  if (totalRevenue <= 0) return ''
+
+  const maxMonthly = Math.max(...monthKeys.map((k) => monthlyRevenue[k] ?? 0), 1)
+
+  const chartRows = monthKeys
+    .map((k) => {
+      const [y, m] = k.split('-').map(Number)
+      const label = `${MONTH_ABBR_DE[m]} ${String(y).slice(2)}`
+      const value = monthlyRevenue[k] ?? 0
+      const widthPct = Math.max(2, Math.round((value / maxMonthly) * 100))
+      return `
+        <tr>
+          <td style="padding:3px 8px 3px 0;font-size:11px;color:#666;white-space:nowrap;width:46px;">${label}</td>
+          <td style="padding:3px 0;">
+            <div style="background:#e5e0d5;border-radius:3px;">
+              <div style="background:#3d5a3e;border-radius:3px;width:${widthPct}%;height:14px;"></div>
+            </div>
+          </td>
+          <td style="padding:3px 0 3px 8px;font-size:11px;color:#2d3b28;font-weight:600;text-align:right;white-space:nowrap;width:64px;">${fmtEur(value)}</td>
+        </tr>`
+    })
+    .join('')
+
+  const roomRows = Object.entries(roomRevenue)
+    .sort((a, b) => b[1] - a[1])
+    .map(
+      ([room, revenue]) => `
+      <tr>
+        <td style="padding:4px 0;color:#4a4a4a;font-size:13px;">${room}</td>
+        <td style="padding:4px 0;text-align:right;font-weight:600;color:#2d3b28;font-size:13px;">${fmtEur(revenue)}</td>
+      </tr>`,
+    )
+    .join('')
+
+  const breakfastPct = totalRevenue > 0 ? ((breakfastRevenue / totalRevenue) * 100).toFixed(1) : '0'
+
+  return `
+    <tr><td style="padding:0 24px 4px;">
+      <h2 style="font-size:15px;color:#2d3b28;border-bottom:2px solid #c9a84c;padding-bottom:5px;margin:0 0 12px;">Umsatzentwicklung (letzte 12 Monate)</h2>
+      <p style="margin:0 0 10px;font-size:11px;color:#999;font-style:italic;">Bruttoumsatz ohne Abzug von Kosten — keine Gewinnkennzahl.</p>
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:14px;">${chartRows}</table>
+      <table width="100%" cellpadding="0" cellspacing="0">
+        <tr><td colspan="2" style="padding-bottom:4px;font-weight:600;color:#3d5a3e;font-size:12px;">Nach Zimmer:</td></tr>
+        ${roomRows}
+        <tr><td colspan="2" style="padding-top:6px;border-top:1px solid #f0ede6;"></td></tr>
+        <tr>
+          <td style="padding:5px 0;font-weight:700;color:#2d3b28;font-size:13px;">Gesamt</td>
+          <td style="padding:5px 0;text-align:right;font-weight:700;color:#2d3b28;font-size:13px;">${fmtEur(totalRevenue)}</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 0 0;color:#888;font-size:12px;">davon Frühstück</td>
+          <td style="padding:8px 0 0;text-align:right;color:#888;font-size:12px;">${fmtEur(breakfastRevenue)} (${breakfastPct}%)</td>
+        </tr>
+      </table>
+    </td></tr>`
+}
+
+// Confirmed reservations without a price — flagged for manual follow-up in Beds24.
+function buildZeroPriceSection(zeroPriceBookings) {
+  if (!zeroPriceBookings || zeroPriceBookings.length === 0) return ''
+
+  const MAX_ROWS = 15
+  const shown = zeroPriceBookings.slice(0, MAX_ROWS)
+  const overflow = zeroPriceBookings.length - shown.length
+
+  const rows = shown
+    .map(
+      (b) => `
+      <tr>
+        <td style="padding:4px 6px;font-size:12px;color:#4a4a4a;">${b.id}</td>
+        <td style="padding:4px 6px;font-size:12px;color:#4a4a4a;">${b.arrival} – ${b.departure}</td>
+        <td style="padding:4px 6px;font-size:12px;color:#4a4a4a;">${b.roomName}</td>
+        <td style="padding:4px 6px;font-size:12px;color:#4a4a4a;">${b.guestName}</td>
+      </tr>`,
+    )
+    .join('')
+
+  const overflowRow =
+    overflow > 0
+      ? `<tr><td colspan="4" style="padding:4px 6px;font-size:11px;color:#888;font-style:italic;">+ ${overflow} weitere — vollständige Liste in Beds24</td></tr>`
+      : ''
+
+  return `
+    <tr><td style="padding:0 24px 4px;">
+      <h2 style="font-size:15px;color:#2d3b28;border-bottom:2px solid #c9a84c;padding-bottom:5px;margin:0 0 12px;">&#x26A0;&#xFE0F; Reservierungen ohne Preisangabe</h2>
+      <p style="margin:0 0 8px;font-size:12px;color:#888;">Zur Nachverfolgung — bitte Preis in Beds24 prüfen und nachtragen.</p>
+      <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+        <tr style="background:#f8f7f4;">
+          <th style="padding:5px 6px;text-align:left;font-size:11px;color:#888;font-weight:600;">ID</th>
+          <th style="padding:5px 6px;text-align:left;font-size:11px;color:#888;font-weight:600;">Zeitraum</th>
+          <th style="padding:5px 6px;text-align:left;font-size:11px;color:#888;font-weight:600;">Zimmer</th>
+          <th style="padding:5px 6px;text-align:left;font-size:11px;color:#888;font-weight:600;">Gast</th>
+        </tr>
+        ${rows}
+        ${overflowRow}
+      </table>
+    </td></tr>`
+}
+
+function buildEmail({
+  bookings,
+  nextArrivals,
+  mtd,
+  prevMtd,
+  outlook,
+  ga4,
+  revHistory,
+  zeroPriceBookings,
+}) {
   const trendBadge = (curr, prev) => {
     if (!prev || prev === 0 || curr == null) return ''
     const pct = ((curr - prev) / prev) * 100
@@ -721,6 +1080,14 @@ function buildEmail({ bookings, nextArrivals, mtd, prevMtd, outlook, ga4 }) {
 
   ${outlookHtml}
 
+  <tr><td style="height:8px;"></td></tr>
+
+  ${buildRevenueHistorySection(revHistory)}
+
+  <tr><td style="height:8px;"></td></tr>
+
+  ${buildZeroPriceSection(zeroPriceBookings)}
+
   <!-- Footer -->
   <tr><td style="padding:16px 28px;text-align:center;border-top:1px solid #f0ede6;">
     <p style="margin:0;font-size:11px;color:#bbb;">
@@ -751,44 +1118,61 @@ async function main() {
   const prevMtdStartStr = toIsoDate(prevMtdStart)
   const prevMtdEndStr = toIsoDate(prevMtdEnd)
 
-  const [bookings, nextArrivals, mtd, prevMtd, outlook, ga4] = await Promise.all([
-    token
-      ? getNewBookings(token, weekStart, weekEnd).catch((e) => {
-          console.error('Beds24 new bookings error:', e.message)
-          return { confirmed: 0, revenue: 0, byChannel: {} }
-        })
-      : Promise.resolve({ confirmed: 0, revenue: 0, byChannel: {} }),
+  const [bookings, nextArrivals, mtd, prevMtd, outlook, ga4, revHistory, zeroPriceBookings] =
+    await Promise.all([
+      token
+        ? getNewBookings(token, weekStart, weekEnd).catch((e) => {
+            console.error('Beds24 new bookings error:', e.message)
+            return { confirmed: 0, revenue: 0, byChannel: {} }
+          })
+        : Promise.resolve({ confirmed: 0, revenue: 0, byChannel: {} }),
 
-    token
-      ? getArrivals(token, nextWeekStart, nextWeekEnd).catch((e) => {
-          console.error('Beds24 arrivals error:', e.message)
-          return 0
-        })
-      : Promise.resolve(0),
+      token
+        ? getArrivals(token, nextWeekStart, nextWeekEnd).catch((e) => {
+            console.error('Beds24 arrivals error:', e.message)
+            return 0
+          })
+        : Promise.resolve(0),
 
-    token
-      ? collectMTD(token, mtdStartStr, mtdEndStr).catch((e) => {
-          console.error('Beds24 MTD error:', e.message)
-          return null
-        })
-      : Promise.resolve(null),
+      token
+        ? collectMTD(token, mtdStartStr, mtdEndStr).catch((e) => {
+            console.error('Beds24 MTD error:', e.message)
+            return null
+          })
+        : Promise.resolve(null),
 
-    token
-      ? collectMTD(token, prevMtdStartStr, prevMtdEndStr).catch(() => null)
-      : Promise.resolve(null),
+      token
+        ? collectMTD(token, prevMtdStartStr, prevMtdEndStr).catch(() => null)
+        : Promise.resolve(null),
 
-    token
-      ? collectOutlook(token).catch((e) => {
-          console.error('Beds24 outlook error:', e.message)
-          return []
-        })
-      : Promise.resolve([]),
+      token
+        ? collectOutlook(token).catch((e) => {
+            console.error('Beds24 outlook error:', e.message)
+            return []
+          })
+        : Promise.resolve([]),
 
-    getGA4Data().catch((e) => {
-      console.error('GA4 error:', e.message)
-      return null
-    }),
-  ])
+      getGA4Data().catch((e) => {
+        console.error('GA4 error:', e.message)
+        return null
+      }),
+
+      collectRevenueHistory(token).catch((e) => {
+        console.error('Beds24 revenue history error:', e.message)
+        return {
+          monthKeys: last12MonthKeys(),
+          monthlyRevenue: {},
+          roomRevenue: {},
+          totalRevenue: 0,
+          breakfastRevenue: 0,
+        }
+      }),
+
+      collectZeroPriceBookings(token).catch((e) => {
+        console.error('Beds24 zero-price bookings error:', e.message)
+        return []
+      }),
+    ])
 
   console.log(
     `Week: ${bookings.confirmed} new bookings (€${bookings.revenue.toFixed(0)}), ${nextArrivals} arrivals next week`,
@@ -808,6 +1192,12 @@ async function main() {
       `GA4: week=${ga4.sessionsThis} sessions (prev=${ga4.sessionsPrev}), MTD=${ga4.mtdSessions} sessions`,
     )
   }
+  console.log(
+    `Revenue history: €${revHistory.totalRevenue.toFixed(0)} total, €${revHistory.breakfastRevenue.toFixed(0)} breakfast`,
+  )
+  if (zeroPriceBookings.length > 0) {
+    console.log(`Zero-price reservations flagged for follow-up: ${zeroPriceBookings.length}`)
+  }
 
   // MTD can be null if Beds24 is unavailable — build email with what we have,
   // but guard against a null mtd crashing buildEmail
@@ -824,7 +1214,16 @@ async function main() {
     topRoom: '–',
   }
 
-  const html = buildEmail({ bookings, nextArrivals, mtd: safeMtd, prevMtd, outlook, ga4 })
+  const html = buildEmail({
+    bookings,
+    nextArrivals,
+    mtd: safeMtd,
+    prevMtd,
+    outlook,
+    ga4,
+    revHistory,
+    zeroPriceBookings,
+  })
 
   if (!SMTP_USER || !SMTP_PASS) {
     console.warn('SMTP credentials not set, skipping email send')
