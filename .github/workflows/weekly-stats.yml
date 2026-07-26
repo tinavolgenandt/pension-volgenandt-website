@@ -30,15 +30,24 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-      - name: Collect and send combined statistics
-        run: node scripts/combined-stats.mjs
+      # TEMPORARY — diagnostic only, remove this step before merging.
+      - name: DEBUG - inspect blind booking fields
+        run: node scripts/_debug-blind-bookings.mjs
         env:
           BEDS24_REFRESH_TOKEN: ${{ secrets.BEDS24_REFRESH_TOKEN }}
           BEDS24_PROPERTY_ID: '261258'
-          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
-          GOOGLE_SERVICE_ACCOUNT_KEY: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
-          SMTP_HOST: 'smtp.ionos.de'
-          SMTP_PORT: '587'
-          SMTP_USER: ${{ secrets.SMTP_USER }}
-          SMTP_PASS: ${{ secrets.SMTP_PASS }}
-          REPORT_RECIPIENTS: 'kontakt@pension-volgenandt.de,tina.volgenandt@googlemail.com'
+
+      # TEMPORARY — disabled while iterating on the diagnostic above, so this
+      # dispatch doesn't spam kontakt@ with another email each debug run.
+      # - name: Collect and send combined statistics
+      #   run: node scripts/combined-stats.mjs
+      #   env:
+      #     BEDS24_REFRESH_TOKEN: ${{ secrets.BEDS24_REFRESH_TOKEN }}
+      #     BEDS24_PROPERTY_ID: '261258'
+      #     GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
+      #     GOOGLE_SERVICE_ACCOUNT_KEY: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+      #     SMTP_HOST: 'smtp.ionos.de'
+      #     SMTP_PORT: '587'
+      #     SMTP_USER: ${{ secrets.SMTP_USER }}
+      #     SMTP_PASS: ${{ secrets.SMTP_PASS }}
+      #     REPORT_RECIPIENTS: 'kontakt@pension-volgenandt.de,tina.volgenandt@googlemail.com'
