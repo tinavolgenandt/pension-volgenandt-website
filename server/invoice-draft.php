@@ -58,11 +58,6 @@ function generateInvoiceDraftIfNeeded(int $bookingId, array $webhookItems = []):
         return ['ok' => true, 'skipped' => true, 'reason' => 'status_not_applicable'];
     }
 
-    if ($balance <= 0.01) {
-        draftLog($bookingId, 'skip', "balance={$balance} too low");
-        return ['ok' => true, 'skipped' => true, 'reason' => 'no_balance'];
-    }
-
     $draft = buildInvoiceDraft($booking, $webhookItems);
     $token = $draft['token'];
 
@@ -76,6 +71,23 @@ function generateInvoiceDraftIfNeeded(int $bookingId, array $webhookItems = []):
     }
 
     markBookingProcessed($bookingId, $token);
+
+    // Booking already fully paid at webhook time — nothing left for Simone to
+    // check, so send the Buchungsbestätigung (+ paid invoice) straight to the
+    // guest instead of waiting on manual approval.
+    if ($balance <= 0.01) {
+        $sendResult = autoSendPaidBookingDraft($draft, $path);
+        draftLog($bookingId, 'auto_sent', "token={$token} scenario={$draft['scenario']} emailSent=" . ($sendResult['emailSent'] ? '1' : '0'));
+
+        return [
+            'ok'       => true,
+            'skipped'  => false,
+            'token'    => $token,
+            'scenario' => $draft['scenario'],
+            'autoSent' => true,
+        ];
+    }
+
     draftLog($bookingId, 'created', "token={$token} scenario={$draft['scenario']} balance={$balance}");
 
     // Notify Simone so she can review and approve
@@ -84,6 +96,38 @@ function generateInvoiceDraftIfNeeded(int $bookingId, array $webhookItems = []):
     draftLog($bookingId, 'notify', "simone_email=" . ($notified ? 'sent' : 'failed'));
 
     return ['ok' => true, 'skipped' => false, 'token' => $token, 'scenario' => $draft['scenario']];
+}
+
+/**
+ * Auto-approve and send a draft for a booking that was already fully paid
+ * when the webhook arrived. Skips the Simone review step entirely; she gets
+ * an FYI email afterwards instead of an approval request.
+ */
+function autoSendPaidBookingDraft(array $draft, string $draftPath): array {
+    require_once __DIR__ . '/invoice-pdf.php';
+    require_once __DIR__ . '/invoice-mailer.php';
+
+    $draft['invoiceDate'] = date('Y-m-d');
+    $draft['approvedAt']  = date('c');
+    $draft['status']      = 'approved';
+    $draft['note']        = 'Automatisch versendet – Buchung war bei Eingang bereits vollständig bezahlt.';
+
+    $pdfBytes = generateInvoicePdf($draft);
+
+    $sentDir = __DIR__ . '/invoices/sent';
+    if (!is_dir($sentDir)) {
+        mkdir($sentDir, 0750, true);
+    }
+    file_put_contents($sentDir . '/' . $draft['token'] . '.pdf', $pdfBytes);
+
+    $emailSent               = sendInvoiceToGuest($draft, $pdfBytes);
+    $draft['guestEmailSent'] = $emailSent;
+
+    file_put_contents($draftPath, json_encode($draft, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+
+    notifySimoneAutoSent($draft, $emailSent);
+
+    return ['emailSent' => $emailSent];
 }
 
 // ---------------------------------------------------------------------------
