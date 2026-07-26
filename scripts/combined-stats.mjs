@@ -146,6 +146,15 @@ function isBreakfastItem(desc) {
   return lower.includes('frühstück') || lower.includes('fruehstueck') || lower.includes('breakfast')
 }
 
+// "Blind bookings" — Beds24's own mechanism for manually blocking nights
+// (maintenance, owner use, etc.). status:"black" is Beds24's field for this;
+// confirmed via a live API sample (31/48 zero-price bookings had this status).
+// These aren't real guest bookings: no price is expected, and they must not
+// count toward occupancy, revenue, or the zero-price follow-up list.
+function isBlindBooking(b) {
+  return typeof b.status === 'string' && b.status.toLowerCase() === 'black'
+}
+
 async function fetchBeds24(token, params) {
   const qs = new URLSearchParams({
     propertyId: BEDS24_PROPERTY_ID,
@@ -182,7 +191,7 @@ async function getNewBookings(token, rangeStart, rangeEnd) {
     const isCancelled =
       (b.cancelTime && b.cancelTime !== 0 && b.cancelTime !== '0') ||
       (typeof b.status === 'string' && b.status.toLowerCase().includes('cancel'))
-    if (isCancelled) continue
+    if (isCancelled || isBlindBooking(b)) continue
     confirmed++
     const ch = mapChannel(b.apiSource)
     byChannel[ch] = (byChannel[ch] || 0) + 1
@@ -208,7 +217,7 @@ async function getArrivals(token, rangeStart, rangeEnd) {
     const isCancelled =
       (b.cancelTime && b.cancelTime !== 0 && b.cancelTime !== '0') ||
       (typeof b.status === 'string' && b.status.toLowerCase().includes('cancel'))
-    return !isCancelled
+    return !isCancelled && !isBlindBooking(b)
   }).length
 }
 
@@ -226,6 +235,11 @@ function aggregateBookings(bookings, rangeStart, rangeEnd) {
   const byChannel = { Direkt: 0, 'Booking.com': 0, Website: 0, Airbnb: 0 }
 
   for (const b of bookings) {
+    // Blind bookings (status:"black") are manually blocked nights, not real
+    // reservations — exclude entirely so they don't inflate occupancy/nights
+    // or show up as cancellations/zero-price bookings.
+    if (isBlindBooking(b)) continue
+
     totalBookings++
     const isCancelled =
       b._forceCancelled ||
@@ -342,6 +356,13 @@ function last12MonthKeys() {
 // Revenue development of the last 12 months: monthly totals, per-room totals,
 // and the breakfast share (from Beds24 invoice items, same detection as
 // server/invoice-draft.php's isBreakfastItem()).
+// Umsatz per month for the last 12 months, using the same nights-prorated,
+// stay-overlap method as the "Umsatz" figure in the MTD section (aggregateBookings)
+// — a booking's price is spread across the nights it actually covers, and only
+// the nights that fall within each calendar month/the reporting window count.
+// This is deliberately the *same* math as MTD so the two don't contradict each
+// other for the current month. This is gross turnover (Bruttoumsatz); no cost
+// data exists anywhere in this system, so it is not a profit/margin figure.
 async function collectRevenueHistory(token) {
   const monthKeys = last12MonthKeys()
   if (!token)
@@ -350,17 +371,19 @@ async function collectRevenueHistory(token) {
   const oldestKey = monthKeys[0]
   const [oldestYear, oldestMonth] = oldestKey.split('-').map(Number)
   const historyStart = toIsoDate(new Date(oldestYear, oldestMonth - 1, 1))
-  const historyEnd = toIsoDate(today)
+  const historyEnd = toIsoDate(mtdEnd) // yesterday — complete days only, matches MTD's own boundary
 
+  const historyStartMs = new Date(`${historyStart}T00:00:00`).getTime()
+  const historyEndMs = new Date(`${historyEnd}T00:00:00`).getTime() + 86400000 // exclusive
+
+  // Stays overlapping the window (not just arrivals) — same fetch shape as collectMTD.
   const [active, cancelled] = await Promise.all([
     fetchBeds24(token, {
-      arrivalFrom: historyStart,
       arrivalTo: historyEnd,
       departureFrom: historyStart,
       includeInvoice: 'true',
     }).catch(() => []),
     fetchBeds24(token, {
-      arrivalFrom: historyStart,
       arrivalTo: historyEnd,
       departureFrom: historyStart,
       includeInvoice: 'true',
@@ -375,30 +398,50 @@ async function collectRevenueHistory(token) {
   let breakfastRevenue = 0
 
   for (const b of active ?? []) {
+    if (isBlindBooking(b)) continue // blocked nights, not real reservations
+
     const isCancelled =
       cancelledIds.has(b.id) ||
       (b.cancelTime && b.cancelTime !== 0 && b.cancelTime !== '0') ||
       (typeof b.status === 'string' && b.status.toLowerCase().includes('cancel'))
     if (isCancelled) continue
 
+    const fullPrice = parseFloat(b.price) || 0
+    if (fullPrice === 0) continue // nothing to distribute (already flagged separately)
+
     const arrival = new Date(b.arrival)
-    const monthKey = `${arrival.getFullYear()}-${String(arrival.getMonth() + 1).padStart(2, '0')}`
-    if (!(monthKey in monthlyRevenue)) continue // outside the 12-month window
-
-    const price = parseFloat(b.price) || 0
-    monthlyRevenue[monthKey] += price
-    totalRevenue += price
-
+    const departure = new Date(b.departure)
+    const totalNights = Math.max(1, Math.round((departure - arrival) / 86400000))
+    const perNight = fullPrice / totalNights
     const roomName = ROOM_NAMES[String(b.roomId)] || 'Unbekannt'
-    roomRevenue[roomName] = (roomRevenue[roomName] || 0) + price
 
+    // Walk each night of the stay, crediting it to whichever calendar month
+    // it falls in, clamped to the 12-month reporting window.
+    let bookingRevenueInWindow = 0
+    for (let i = 0; i < totalNights; i++) {
+      const night = addDays(arrival, i)
+      const nightMs = night.getTime()
+      if (nightMs < historyStartMs || nightMs >= historyEndMs) continue
+      const monthKey = `${night.getFullYear()}-${String(night.getMonth() + 1).padStart(2, '0')}`
+      if (!(monthKey in monthlyRevenue)) continue
+      monthlyRevenue[monthKey] += perNight
+      bookingRevenueInWindow += perNight
+    }
+    if (bookingRevenueInWindow === 0) continue
+
+    totalRevenue += bookingRevenueInWindow
+    roomRevenue[roomName] = (roomRevenue[roomName] || 0) + bookingRevenueInWindow
+
+    // Breakfast items aren't per-night, so prorate them by the same
+    // in-window fraction of the stay as the room revenue above.
+    const windowFraction = bookingRevenueInWindow / fullPrice
     const invoiceItems = b.invoice?.items ?? b.invoiceItems ?? []
     for (const item of invoiceItems) {
       const desc = item.description ?? item.desc ?? ''
       if (!isBreakfastItem(desc)) continue
       const unit = parseFloat(item.amount ?? item.unitPrice ?? 0) || 0
       const qty = parseFloat(item.qty ?? item.quantity ?? 1) || 1
-      breakfastRevenue += unit * qty
+      breakfastRevenue += unit * qty * windowFraction
     }
   }
 
@@ -424,6 +467,7 @@ async function collectZeroPriceBookings(token) {
   }).catch(() => [])
 
   const zeroPriced = all.filter((b) => {
+    if (isBlindBooking(b)) return false // blocked nights correctly have no price — not a follow-up item
     const isCancelled =
       (b.cancelTime && b.cancelTime !== 0 && b.cancelTime !== '0') ||
       (typeof b.status === 'string' && b.status.toLowerCase().includes('cancel'))
@@ -668,7 +712,8 @@ function buildRevenueHistorySection(revHistory) {
 
   return `
     <tr><td style="padding:0 24px 4px;">
-      <h2 style="font-size:15px;color:#2d3b28;border-bottom:2px solid #c9a84c;padding-bottom:5px;margin:0 0 12px;">Erlösentwicklung (letzte 12 Monate)</h2>
+      <h2 style="font-size:15px;color:#2d3b28;border-bottom:2px solid #c9a84c;padding-bottom:5px;margin:0 0 12px;">Umsatzentwicklung (letzte 12 Monate)</h2>
+      <p style="margin:0 0 10px;font-size:11px;color:#999;font-style:italic;">Bruttoumsatz ohne Abzug von Kosten — keine Gewinnkennzahl.</p>
       <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:14px;">${chartRows}</table>
       <table width="100%" cellpadding="0" cellspacing="0">
         <tr><td colspan="2" style="padding-bottom:4px;font-weight:600;color:#3d5a3e;font-size:12px;">Nach Zimmer:</td></tr>
