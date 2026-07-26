@@ -155,16 +155,28 @@ function isBlindBooking(b) {
   return typeof b.status === 'string' && b.status.toLowerCase() === 'black'
 }
 
+// Paginates through Beds24's nextPageToken — without this, wide date windows
+// (e.g. the 12-month revenue history) silently truncate to a single page.
 async function fetchBeds24(token, params) {
-  const qs = new URLSearchParams({
-    propertyId: BEDS24_PROPERTY_ID,
-    includeInvoice: 'false',
-    ...params,
-  })
-  const res = await fetch(`https://api.beds24.com/v2/bookings?${qs}`, { headers: { token } })
-  const body = await res.json()
-  const arr = Array.isArray(body) ? body : body.data
-  return Array.isArray(arr) ? arr : []
+  const results = []
+  let pageToken = null
+
+  do {
+    const qs = new URLSearchParams({
+      propertyId: BEDS24_PROPERTY_ID,
+      includeInvoice: 'false',
+      ...params,
+    })
+    if (pageToken) qs.set('pageToken', pageToken)
+
+    const res = await fetch(`https://api.beds24.com/v2/bookings?${qs}`, { headers: { token } })
+    const body = await res.json()
+    const arr = Array.isArray(body) ? body : body.data
+    if (Array.isArray(arr)) results.push(...arr)
+    pageToken = body.nextPageToken ?? null
+  } while (pageToken)
+
+  return results
 }
 
 // Weekly: bookings CREATED within [rangeStart, rangeEnd], filtered client-side by bookingTime
