@@ -5,7 +5,6 @@
  * Public API:
  *   sendMail(string $to, string $toName, string $subject, string $html, string $text, array $attachments): bool
  *   notifySimone(array $draft): bool           — sends review-link email to ADMIN_EMAIL
- *   notifySimoneAutoSent(array $draft, bool $emailSent): bool — FYI for auto-sent (fully paid) bookings
  *   sendInvoiceToGuest(array $draft, string $pdfBytes): bool
  */
 
@@ -22,7 +21,8 @@ function sendMail(
     string $html,
     string $text = '',
     array  $attachments = [],
-    array  $cc = []
+    array  $cc = [],
+    array  $bcc = []
 ): bool {
     $autoload = __DIR__ . '/vendor/autoload.php';
     if (!file_exists($autoload)) {
@@ -46,6 +46,9 @@ function sendMail(
         $mail->addAddress($to, $toName);
         foreach ($cc as $ccAddr) {
             $mail->addCC($ccAddr);
+        }
+        foreach ($bcc as $bccAddr) {
+            $mail->addBCC($bccAddr);
         }
         $mail->Subject = $subject;
         $mail->isHTML(true);
@@ -74,24 +77,32 @@ function sendMail(
 // ---------------------------------------------------------------------------
 
 function notifySimone(array $draft): bool {
-    $guest   = $draft['guest'];
-    $stay    = $draft['stay'];
-    $totals  = $draft['totals'];
-    $token   = $draft['token'];
-    $invNum  = $draft['invoiceNumber'] ?? '';
-    $total   = number_format((float)($totals['total'] ?? 0), 2, ',', '.');
-    $link    = INVOICE_BASE_URL . '/invoice-review.php?token=' . urlencode($token);
+    $guest     = $draft['guest'];
+    $stay      = $draft['stay'];
+    $totals    = $draft['totals'];
+    $token     = $draft['token'];
+    $prePaid   = !empty($draft['prePaid']);
+    $suggested = peekNextInvoiceNumber();
+    $total     = number_format((float)($totals['total'] ?? 0), 2, ',', '.');
+    $link      = INVOICE_BASE_URL . '/invoice-review.php?token=' . urlencode($token);
 
     $checkIn  = $stay['checkIn']  ? date('d.m.Y', strtotime($stay['checkIn']))  : '–';
     $checkOut = $stay['checkOut'] ? date('d.m.Y', strtotime($stay['checkOut'])) : '–';
 
-    $subject = 'Neue Rechnung prüfen: ' . ($guest['name'] ?? '') . ' – ' . $total . ' €';
+    $subject = ($prePaid ? 'Bereits bezahlt – Rechnungsnummer prüfen: ' : 'Neue Rechnung prüfen: ')
+        . ($guest['name'] ?? '') . ' – ' . $total . ' €';
+
+    $heading = $prePaid ? 'Bereits bezahlt – bitte nur kurz prüfen' : 'Neuer Rechnungsentwurf';
+    $intro   = $prePaid
+        ? '<p style="margin:0 0 16px;line-height:1.6;">Diese Buchung wurde bereits vollständig bezahlt. Bitte kurz die Rechnungsnummer prüfen und freigeben — der Haken &bdquo;Bereits bezahlt&ldquo; ist schon gesetzt.</p>'
+        : '';
 
     $html = '
 <div style="font-family:Arial,sans-serif;font-size:14px;color:#333;max-width:540px;">
-  <h2 style="color:#3d5a3e;margin:0 0 16px;">Neuer Rechnungsentwurf</h2>
+  <h2 style="color:#3d5a3e;margin:0 0 16px;">' . $heading . '</h2>
+  ' . $intro . '
   <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
-    <tr><td style="padding:6px 10px;color:#666;width:130px;">Rechnungs-Nr.</td><td style="padding:6px 10px;"><strong>' . htmlspecialchars($invNum) . '</strong></td></tr>
+    <tr><td style="padding:6px 10px;color:#666;width:170px;">Voraussichtl. Rechnungs-Nr.</td><td style="padding:6px 10px;"><strong>' . htmlspecialchars($suggested) . '</strong></td></tr>
     <tr style="background:#f9f9f9;"><td style="padding:6px 10px;color:#666;">Gast</td><td style="padding:6px 10px;">' . htmlspecialchars($guest['name'] ?? '') . '</td></tr>
     <tr><td style="padding:6px 10px;color:#666;">Zimmer</td><td style="padding:6px 10px;">' . htmlspecialchars($stay['roomName'] ?? '') . '</td></tr>
     <tr style="background:#f9f9f9;"><td style="padding:6px 10px;color:#666;">Zeitraum</td><td style="padding:6px 10px;">' . $checkIn . ' – ' . $checkOut . ' (' . (int)($stay['nights'] ?? 0) . ' Nächte)</td></tr>
@@ -101,44 +112,6 @@ function notifySimone(array $draft): bool {
   <p style="margin-top:20px;font-size:12px;color:#aaa;">
     Oder Link kopieren:<br>' . htmlspecialchars($link) . '
   </p>
-</div>';
-
-    return sendMail(ADMIN_EMAIL, 'Simone Volgenandt', $subject, $html);
-}
-
-// ---------------------------------------------------------------------------
-// FYI notice: booking was already paid in full, confirmation auto-sent
-// ---------------------------------------------------------------------------
-
-function notifySimoneAutoSent(array $draft, bool $emailSent): bool {
-    $guest   = $draft['guest'];
-    $stay    = $draft['stay'];
-    $totals  = $draft['totals'];
-    $token   = $draft['token'];
-    $invNum  = $draft['invoiceNumber'] ?? '';
-    $total   = number_format((float)($totals['total'] ?? 0), 2, ',', '.');
-    $link    = INVOICE_BASE_URL . '/invoice-review.php?token=' . urlencode($token);
-
-    $checkIn  = $stay['checkIn']  ? date('d.m.Y', strtotime($stay['checkIn']))  : '–';
-    $checkOut = $stay['checkOut'] ? date('d.m.Y', strtotime($stay['checkOut'])) : '–';
-
-    $subject = 'Buchungsbestätigung automatisch versendet: ' . ($guest['name'] ?? '') . ' – ' . $total . ' €';
-    $statusLine = $emailSent
-        ? 'Die Buchungsbestätigung wurde bereits automatisch an den Gast gesendet.'
-        : 'Achtung: Der Gast hat keine E-Mail-Adresse hinterlegt — die Bestätigung konnte nicht gesendet werden.';
-
-    $html = '
-<div style="font-family:Arial,sans-serif;font-size:14px;color:#333;max-width:540px;">
-  <h2 style="color:#3d5a3e;margin:0 0 8px;">Buchung bereits vollständig bezahlt</h2>
-  <p style="margin:0 0 16px;line-height:1.6;">' . htmlspecialchars($statusLine) . ' Keine Aktion erforderlich — nur zur Info.</p>
-  <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
-    <tr><td style="padding:6px 10px;color:#666;width:130px;">Rechnungs-Nr.</td><td style="padding:6px 10px;"><strong>' . htmlspecialchars($invNum) . '</strong></td></tr>
-    <tr style="background:#f9f9f9;"><td style="padding:6px 10px;color:#666;">Gast</td><td style="padding:6px 10px;">' . htmlspecialchars($guest['name'] ?? '') . '</td></tr>
-    <tr><td style="padding:6px 10px;color:#666;">Zimmer</td><td style="padding:6px 10px;">' . htmlspecialchars($stay['roomName'] ?? '') . '</td></tr>
-    <tr style="background:#f9f9f9;"><td style="padding:6px 10px;color:#666;">Zeitraum</td><td style="padding:6px 10px;">' . $checkIn . ' – ' . $checkOut . ' (' . (int)($stay['nights'] ?? 0) . ' Nächte)</td></tr>
-    <tr><td style="padding:6px 10px;color:#666;">Betrag (bezahlt)</td><td style="padding:6px 10px;"><strong>' . $total . ' €</strong></td></tr>
-  </table>
-  <a href="' . htmlspecialchars($link) . '" style="display:inline-block;background:#3d5a3e;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px;">Rechnung ansehen →</a>
 </div>';
 
     return sendMail(ADMIN_EMAIL, 'Simone Volgenandt', $subject, $html);
@@ -290,7 +263,12 @@ function sendInvoiceToGuest(array $draft, string $pdfBytes, bool $isPaid = false
 </div>';
     }
 
+    $bcc = [ADMIN_EMAIL];
+    if (defined('STEUERBUERO_EMAIL') && STEUERBUERO_EMAIL !== '') {
+        $bcc[] = STEUERBUERO_EMAIL;
+    }
+
     return sendMail($email, $name, $subject, $html, '', [
         ['data' => $pdfBytes, 'filename' => 'Rechnung-' . $invNum . '.pdf', 'mime' => 'application/pdf'],
-    ], [ADMIN_EMAIL]);
+    ], [], $bcc);
 }

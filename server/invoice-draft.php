@@ -59,6 +59,7 @@ function generateInvoiceDraftIfNeeded(int $bookingId, array $webhookItems = []):
     }
 
     $draft = buildInvoiceDraft($booking, $webhookItems);
+    $draft['prePaid'] = $balance <= 0.01;
     $token = $draft['token'];
 
     if (!is_dir(INV_DRAFTS_DIR)) {
@@ -72,62 +73,17 @@ function generateInvoiceDraftIfNeeded(int $bookingId, array $webhookItems = []):
 
     markBookingProcessed($bookingId, $token);
 
-    // Booking already fully paid at webhook time — nothing left for Simone to
-    // check, so send the Buchungsbestätigung (+ paid invoice) straight to the
-    // guest instead of waiting on manual approval.
-    if ($balance <= 0.01) {
-        $sendResult = autoSendPaidBookingDraft($draft, $path);
-        draftLog($bookingId, 'auto_sent', "token={$token} scenario={$draft['scenario']} emailSent=" . ($sendResult['emailSent'] ? '1' : '0'));
+    draftLog($bookingId, 'created', "token={$token} scenario={$draft['scenario']} balance={$balance} prePaid=" . ($draft['prePaid'] ? '1' : '0'));
 
-        return [
-            'ok'       => true,
-            'skipped'  => false,
-            'token'    => $token,
-            'scenario' => $draft['scenario'],
-            'autoSent' => true,
-        ];
-    }
-
-    draftLog($bookingId, 'created', "token={$token} scenario={$draft['scenario']} balance={$balance}");
-
-    // Notify Simone so she can review and approve
+    // Notify Simone so she can review and approve — always, even when the
+    // booking is already fully paid at webhook time. A wrong Rechnungsnummer
+    // is exactly the kind of mistake a payment-only check would miss, so
+    // nothing ever reaches a guest without her clicking Genehmigen.
     require_once __DIR__ . '/invoice-mailer.php';
     $notified = notifySimone($draft);
     draftLog($bookingId, 'notify', "simone_email=" . ($notified ? 'sent' : 'failed'));
 
     return ['ok' => true, 'skipped' => false, 'token' => $token, 'scenario' => $draft['scenario']];
-}
-
-/**
- * Auto-approve and send a draft for a booking that was already fully paid
- * when the webhook arrived. Skips the Simone review step entirely; she gets
- * an FYI email afterwards instead of an approval request.
- */
-function autoSendPaidBookingDraft(array $draft, string $draftPath): array {
-    require_once __DIR__ . '/invoice-pdf.php';
-    require_once __DIR__ . '/invoice-mailer.php';
-
-    $draft['invoiceDate'] = date('Y-m-d');
-    $draft['approvedAt']  = date('c');
-    $draft['status']      = 'approved';
-    $draft['note']        = 'Automatisch versendet – Buchung war bei Eingang bereits vollständig bezahlt.';
-
-    $pdfBytes = generateInvoicePdf($draft);
-
-    $sentDir = __DIR__ . '/invoices/sent';
-    if (!is_dir($sentDir)) {
-        mkdir($sentDir, 0750, true);
-    }
-    file_put_contents($sentDir . '/' . $draft['token'] . '.pdf', $pdfBytes);
-
-    $emailSent               = sendInvoiceToGuest($draft, $pdfBytes, true);
-    $draft['guestEmailSent'] = $emailSent;
-
-    file_put_contents($draftPath, json_encode($draft, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-
-    notifySimoneAutoSent($draft, $emailSent);
-
-    return ['emailSent' => $emailSent];
 }
 
 // ---------------------------------------------------------------------------
@@ -136,7 +92,6 @@ function autoSendPaidBookingDraft(array $draft, string $draftPath): array {
 
 function buildInvoiceDraft(array $booking, array $webhookItems = []): array {
     $token    = makeUuid();
-    $invNum   = nextInvoiceNumber();
     $scenario = detectScenario($booking);
     $guest    = parseGuest($booking);
     $stay     = parseStay($booking);
@@ -149,7 +104,9 @@ function buildInvoiceDraft(array $booking, array $webhookItems = []): array {
         'status'        => 'pending',
         'scenario'      => $scenario,
         'bookingId'     => (int)($booking['id'] ?? 0),
-        'invoiceNumber' => $invNum,
+        // Assigned only when Simone approves (see tryAssignInvoiceNumber) —
+        // never at draft creation, so a rejected draft never burns a number.
+        'invoiceNumber' => null,
         'invoiceDate'   => null,
         'guest'         => $guest,
         'stay'          => $stay,
@@ -226,9 +183,15 @@ function parseLineItems(array $booking, array $webhookItems = []): array {
     $invoiceItems = $booking['invoice']['items'] ?? $booking['invoiceItems'] ?? $webhookItems;
     $basePrice    = (float)($booking['price'] ?? $booking['totalPrice'] ?? 0);
 
+    // Always name the specific room on the accommodation line — a booking never
+    // covers more than one room, but guests/companies often book several rooms
+    // together, and each room gets its own invoice. Without the room name those
+    // invoices are indistinguishable ("Übernachtung" on all of them).
+    $roomLabel = 'Übernachtung – ' . resolveRoomName($booking);
+
     // No itemized invoice — fall back to room price only
     if (empty($invoiceItems)) {
-        return $basePrice > 0 ? [makeLineItem('Übernachtung', $basePrice, 7)] : [];
+        return $basePrice > 0 ? [makeLineItem($roomLabel, $basePrice, 7)] : [];
     }
 
     $accommodationGross = 0.0;
@@ -256,9 +219,9 @@ function parseLineItems(array $booking, array $webhookItems = []): array {
     $items = [];
 
     if ($accommodationGross > 0.01) {
-        $items[] = makeLineItem('Übernachtung', $accommodationGross, 7);
+        $items[] = makeLineItem($roomLabel, $accommodationGross, 7);
     } elseif (empty($breakfastItems) && $basePrice > 0) {
-        $items[] = makeLineItem('Übernachtung', $basePrice, 7);
+        $items[] = makeLineItem($roomLabel, $basePrice, 7);
     }
 
     return array_merge($items, $breakfastItems);
@@ -326,36 +289,104 @@ function extractBalance(array $booking): float {
 }
 
 // ---------------------------------------------------------------------------
-// Invoice number (atomic file-lock increment)
+// Invoice number — assigned at approval time, not draft creation, so a
+// rejected/discarded draft never burns a number and numbers stay in the
+// order invoices are actually issued.
 // ---------------------------------------------------------------------------
 
-function nextInvoiceNumber(): string {
-    $file = INV_COUNTER_FILE;
-    $lock = $file . '.lock';
+/**
+ * Read-only look at what the next invoice number would currently be. Used
+ * to prefill the editable Rechnungsnummer field on the review page — this is
+ * only a suggestion, nothing is reserved until tryAssignInvoiceNumber().
+ */
+function peekNextInvoiceNumber(): string {
+    $data  = json_decode(@file_get_contents(INV_COUNTER_FILE) ?: '{}', true) ?? [];
+    $year  = (int)($data['year'] ?? date('Y'));
+    $count = (int)($data['counter'] ?? 0);
 
-    for ($attempt = 0; $attempt < 10; $attempt++) {
-        $fp = @fopen($lock, 'x');
-        if ($fp !== false) { fclose($fp); break; }
-        usleep(100_000);
+    if ($year !== (int)date('Y')) {
+        $count = 0;
+    }
+
+    return sprintf('%d-%03d', (int)date('Y'), $count + 1);
+}
+
+/**
+ * Does any other draft already carry this invoice number?
+ */
+function isInvoiceNumberUsed(string $num, string $excludeToken): bool {
+    foreach (glob(INV_DRAFTS_DIR . '/*.json') ?: [] as $file) {
+        if (basename($file, '.json') === $excludeToken) continue;
+        $data = json_decode(@file_get_contents($file) ?: '', true);
+        if (($data['invoiceNumber'] ?? null) === $num) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Atomically validate, reserve, and persist a specific invoice number onto
+ * a draft. The whole check-and-write happens while holding the counter
+ * lock, so two concurrent approvals can never end up with the same number.
+ * Returns false (draft left untouched) if the number is malformed or
+ * already used by another draft — callers must not proceed on false.
+ */
+function tryAssignInvoiceNumber(array &$draft, string $requestedNumber, string $draftPath): bool {
+    if (!preg_match('/^(\d{4})-(\d{3,})$/', $requestedNumber, $m)) {
+        return false;
+    }
+    $year  = (int)$m[1];
+    $count = (int)$m[2];
+
+    $lock = INV_COUNTER_FILE . '.lock';
+    if (!acquireCounterLock($lock)) {
+        throw new \RuntimeException('Could not acquire invoice-counter lock');
     }
 
     try {
-        $data  = json_decode(@file_get_contents($file) ?: '{}', true) ?? [];
-        $year  = (int)($data['year']    ?? date('Y'));
-        $count = (int)($data['counter'] ?? 0);
-
-        if ($year !== (int)date('Y')) {
-            $year  = (int)date('Y');
-            $count = 0;
+        if (isInvoiceNumberUsed($requestedNumber, $draft['token'])) {
+            return false;
         }
 
-        $count++;
-        file_put_contents($file, json_encode(['year' => $year, 'counter' => $count], JSON_PRETTY_PRINT));
+        $data         = json_decode(@file_get_contents(INV_COUNTER_FILE) ?: '{}', true) ?? [];
+        $currentYear  = (int)($data['year']    ?? $year);
+        $currentCount = (int)($data['counter'] ?? 0);
 
-        return sprintf('%d-%03d', $year, $count);
+        if ($currentYear !== $year || $count > $currentCount) {
+            file_put_contents(INV_COUNTER_FILE, json_encode(['year' => $year, 'counter' => $count], JSON_PRETTY_PRINT));
+        }
+
+        $draft['invoiceNumber'] = $requestedNumber;
+        file_put_contents($draftPath, json_encode($draft, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+
+        return true;
     } finally {
         @unlink($lock);
     }
+}
+
+/**
+ * Acquire the invoice-counter lock, recovering from a stale lock file left
+ * behind by a crashed request (anything older than 10s is treated as
+ * orphaned). Returns false if the lock could not be acquired — callers must
+ * treat that as a hard failure and never proceed without it, since that is
+ * exactly how two invoices could end up with the same number.
+ */
+function acquireCounterLock(string $lock): bool {
+    if (file_exists($lock) && (time() - (int)@filemtime($lock)) > 10) {
+        @unlink($lock);
+    }
+
+    for ($attempt = 0; $attempt < 20; $attempt++) {
+        $fp = @fopen($lock, 'x');
+        if ($fp !== false) {
+            fclose($fp);
+            return true;
+        }
+        usleep(100_000);
+    }
+    return false;
 }
 
 // ---------------------------------------------------------------------------

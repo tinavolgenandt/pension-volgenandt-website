@@ -22,6 +22,9 @@ define('INVOICE_WEBHOOK_SECRET', 'CHANGE_ME');
 define('ADMIN_EMAIL',    'kontakt@pension-volgenandt.de');
 define('MAIL_FROM_NAME', 'Simone & Ralf Volgenandt');
 
+// Steuerbüro — receives a BCC copy of every invoice PDF sent to a guest
+define('STEUERBUERO_EMAIL', 'CHANGE_ME');
+
 // Base URL of the server-side API (no trailing slash)
 define('INVOICE_BASE_URL', 'https://api.pension-volgenandt.de');
 
