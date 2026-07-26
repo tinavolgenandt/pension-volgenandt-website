@@ -62,9 +62,17 @@ class Beds24Api {
         $bookings = $response['data']['data'] ?? [];
 
         // Filter: only confirmed/new with outstanding balance
+        // Beds24 v2 /bookings never populates invoice.balance or balance for
+        // this account — fall back to price minus deposit (amount paid).
         return array_values(array_filter($bookings, function (array $b): bool {
-            $status  = strtolower((string)($b['status'] ?? ''));
-            $balance = (float)($b['invoice']['balance'] ?? $b['balance'] ?? $b['price'] ?? 0);
+            $status = strtolower((string)($b['status'] ?? ''));
+            if (isset($b['invoice']['balance'])) {
+                $balance = (float)$b['invoice']['balance'];
+            } elseif (isset($b['balance'])) {
+                $balance = (float)$b['balance'];
+            } else {
+                $balance = (float)($b['price'] ?? 0) - (float)($b['deposit'] ?? 0);
+            }
             return in_array($status, ['confirmed', 'new'], true) && $balance > 0.01;
         }));
     }

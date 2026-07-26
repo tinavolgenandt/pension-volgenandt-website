@@ -312,8 +312,17 @@ function calcTotals(array $items): array {
 }
 
 function extractBalance(array $booking): float {
-    // Beds24 v2: balance is in invoice.balance; fall back to top-level price
-    return (float)($booking['invoice']['balance'] ?? $booking['balance'] ?? $booking['price'] ?? 0);
+    // Beds24 v2 /bookings never populates invoice.balance or balance for this
+    // account — only price (total) and deposit (paid to date) are reliable.
+    if (isset($booking['invoice']['balance'])) {
+        return (float)$booking['invoice']['balance'];
+    }
+    if (isset($booking['balance'])) {
+        return (float)$booking['balance'];
+    }
+    $price   = (float)($booking['price']   ?? 0);
+    $deposit = (float)($booking['deposit'] ?? 0);
+    return round($price - $deposit, 2);
 }
 
 // ---------------------------------------------------------------------------
