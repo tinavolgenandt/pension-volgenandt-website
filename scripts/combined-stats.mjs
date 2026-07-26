@@ -164,7 +164,7 @@ async function fetchBeds24(token, params) {
   do {
     const qs = new URLSearchParams({
       propertyId: BEDS24_PROPERTY_ID,
-      includeInvoice: 'false',
+      includeInvoiceItems: 'false',
       ...params,
     })
     if (pageToken) qs.set('pageToken', pageToken)
@@ -252,15 +252,26 @@ function aggregateBookings(bookings, rangeStart, rangeEnd) {
   let cancellations = 0
   let totalRevenue = 0
   let totalNightsInRange = 0
+  let blockedNightsInRange = 0
   let zeroPriceBookings = 0
   const byRoom = {}
   const byChannel = { Direkt: 0, 'Booking.com': 0, Website: 0, Airbnb: 0 }
 
   for (const b of bookings) {
-    // Blind bookings (status:"black") are manually blocked nights, not real
-    // reservations — exclude entirely so they don't inflate occupancy/nights
-    // or show up as cancellations/zero-price bookings.
-    if (isBlindBooking(b)) continue
+    // Blind bookings (status:"black") are manually blocked nights (vacation,
+    // maintenance, ...), not real reservations — exclude them from
+    // bookings/nights/revenue entirely. But also track how many nights they
+    // block so occupancy is measured against actually-available capacity:
+    // otherwise a room blocked for a week would drag occupancy below 100%
+    // even though every bookable night that week is full.
+    if (isBlindBooking(b)) {
+      const arrival = new Date(b.arrival).getTime()
+      const departure = new Date(b.departure).getTime()
+      const clampedStart = Math.max(arrival, rsMs)
+      const clampedEnd = Math.min(departure, reMs)
+      blockedNightsInRange += Math.max(0, Math.round((clampedEnd - clampedStart) / 86400000))
+      continue
+    }
 
     totalBookings++
     const isCancelled =
@@ -299,9 +310,11 @@ function aggregateBookings(bookings, rangeStart, rangeEnd) {
 
   const confirmed = totalBookings - cancellations
   const daysInRange = Math.round((reMs - rsMs) / 86400000)
-  const totalAvailable = TOTAL_UNITS * daysInRange
+  // Nights blocked by blind bookings aren't real availability — exclude them
+  // from the denominator so occupancy reflects only bookable nights.
+  const totalAvailable = Math.max(0, TOTAL_UNITS * daysInRange - blockedNightsInRange)
   const occupancyRate =
-    totalAvailable > 0 ? ((totalNightsInRange / totalAvailable) * 100).toFixed(1) : '0'
+    totalAvailable > 0 ? Math.min(100, (totalNightsInRange / totalAvailable) * 100).toFixed(1) : '0'
   const avgStay = confirmed > 0 ? (totalNightsInRange / confirmed).toFixed(1) : '0'
   const cancellationRate =
     totalBookings > 0 ? ((cancellations / totalBookings) * 100).toFixed(1) : '0'
@@ -442,12 +455,12 @@ async function collectRevenueHistory(token) {
         fetchBeds24(token, {
           arrivalTo: monthEndStr,
           departureFrom: monthStartStr,
-          includeInvoice: 'true',
+          includeInvoiceItems: 'true',
         }).catch(() => []),
         fetchBeds24(token, {
           arrivalTo: monthEndStr,
           departureFrom: monthStartStr,
-          includeInvoice: 'true',
+          includeInvoiceItems: 'true',
           status: 'cancelled',
         }).catch(() => []),
       ])
