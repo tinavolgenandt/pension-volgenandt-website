@@ -195,6 +195,7 @@ function parseLineItems(array $booking, array $webhookItems = []): array {
     }
 
     $accommodationGross = 0.0;
+    $accommodationCount = 0;
     $breakfastItems     = [];
 
     foreach ($invoiceItems as $raw) {
@@ -213,13 +214,23 @@ function parseLineItems(array $booking, array $webhookItems = []): array {
             $breakfastItems = array_merge($breakfastItems, splitBreakfastItem($qty, $unit));
         } else {
             $accommodationGross += $gross;
+            $accommodationCount++;
         }
     }
 
     $items = [];
 
     if ($accommodationGross > 0.01) {
-        $items[] = makeLineItem($roomLabel, $accommodationGross, 7);
+        // Always one line, always room-named — but if Beds24 sent more than
+        // one accommodation-type charge (e.g. a misconfigured Auto Action
+        // duplicating the native rate line), don't silently trust the summed
+        // total: flag it visibly so Simone checks Beds24 before approving,
+        // same "don't guess, make it visible" pattern as the unknown-
+        // breakfast-price case below.
+        $label = $accommodationCount > 1
+            ? $roomLabel . " ({$accommodationCount} Posten summiert – bitte Betrag in Beds24 prüfen!)"
+            : $roomLabel;
+        $items[] = makeLineItem($label, $accommodationGross, 7);
     } elseif (empty($breakfastItems) && $basePrice > 0) {
         $items[] = makeLineItem($roomLabel, $basePrice, 7);
     }
