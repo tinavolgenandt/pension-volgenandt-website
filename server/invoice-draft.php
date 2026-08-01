@@ -49,6 +49,18 @@ function generateInvoiceDraftIfNeeded(int $bookingId, array $webhookItems = []):
         return ['ok' => false, 'error' => 'Booking not found in Beds24'];
     }
 
+    // Booking.com is the merchant of record for these guests — the pension
+    // never charges them directly, so a German Rechnung showing the gross
+    // (pre-commission) amount would be wrong. `channel` is Beds24's stable
+    // machine code ('booking'); `apiSource` ("Booking.com") is checked too
+    // in case a future webhook payload ever lacks `channel`.
+    $channel   = strtolower((string)($booking['channel']   ?? ''));
+    $apiSource = strtolower((string)($booking['apiSource'] ?? ''));
+    if ($channel === 'booking' || str_contains($apiSource, 'booking.com')) {
+        draftLog($bookingId, 'skip', "booking_com_ota channel={$channel} apiSource={$apiSource}");
+        return ['ok' => true, 'skipped' => true, 'reason' => 'booking_com_ota'];
+    }
+
     // Beds24 v2 returns status as a string ('confirmed', 'new', 'request', etc.)
     $status  = strtolower((string)($booking['status'] ?? ''));
     $balance = extractBalance($booking);

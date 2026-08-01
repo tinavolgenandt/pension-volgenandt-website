@@ -222,7 +222,10 @@ async function getNewBookings(token, rangeStart, rangeEnd) {
       zeroPriceCount++
       console.warn(`New booking with €0 price: ID=${b.id}, arrival=${b.arrival}, room=${b.roomId}`)
     }
-    revenue += price
+    // Net of channel commission (e.g. Booking.com) — price is the gross rate
+    // the guest paid, commission is what the channel keeps before paying out.
+    const commission = parseFloat(b.commission) || 0
+    revenue += price - commission
   }
 
   return { confirmed, revenue, zeroPriceCount, byChannel }
@@ -298,7 +301,9 @@ function aggregateBookings(bookings, rangeStart, rangeEnd) {
         `Booking with €0 price: ID=${b.id}, arrival=${b.arrival}, room=${ROOM_NAMES[String(b.roomId)] || b.roomId}`,
       )
     }
-    totalRevenue += (nightsInRange / totalNights) * fullPrice
+    // Net of channel commission (e.g. Booking.com) — see getNewBookings() above.
+    const netPrice = fullPrice - (parseFloat(b.commission) || 0)
+    totalRevenue += (nightsInRange / totalNights) * netPrice
 
     const roomName = ROOM_NAMES[String(b.roomId)] || 'Unbekannt'
     byRoom[roomName] = (byRoom[roomName] || 0) + 1
@@ -416,8 +421,9 @@ function monthChunks(rangeStart, rangeEnd) {
 // — a booking's price is spread across the nights it actually covers, and only
 // the nights that fall within each calendar month/the reporting window count.
 // This is deliberately the *same* math as MTD so the two don't contradict each
-// other for the current month. This is gross turnover (Bruttoumsatz); no cost
-// data exists anywhere in this system, so it is not a profit/margin figure.
+// other for the current month. Net of channel commission (e.g. Booking.com) —
+// still not a full profit/margin figure since no other cost data (cleaning,
+// utilities, ...) exists anywhere in this system.
 // IMPORTANT: fetches one calendar month at a time (same narrow
 // arrivalTo/departureFrom shape as collectMTD) rather than one wide
 // 12-month query. A wide query was confirmed live to silently return an
@@ -477,6 +483,8 @@ async function collectRevenueHistory(token) {
 
         const fullPrice = parseFloat(b.price) || 0
         if (fullPrice === 0) continue // nothing to distribute (already flagged separately)
+        // Net of channel commission (e.g. Booking.com) — see getNewBookings() above.
+        const netPrice = fullPrice - (parseFloat(b.commission) || 0)
 
         const arrival = new Date(b.arrival).getTime()
         const departure = new Date(b.departure).getTime()
@@ -486,7 +494,11 @@ async function collectRevenueHistory(token) {
         const nightsInRange = Math.max(0, Math.round((clampedEnd - clampedStart) / 86400000))
         if (nightsInRange === 0) continue
 
-        const revenueInMonth = (nightsInRange / totalNights) * fullPrice
+        // In-month fraction of the stay — computed from nights, not from the
+        // (now commission-adjusted) revenue, so it stays a pure proration
+        // ratio independent of price.
+        const monthFraction = nightsInRange / totalNights
+        const revenueInMonth = monthFraction * netPrice
         monthlyRevenue[key] += revenueInMonth
         totalRevenue += revenueInMonth
 
@@ -495,7 +507,6 @@ async function collectRevenueHistory(token) {
 
         // Breakfast items aren't per-night, so prorate them by the same
         // in-month fraction of the stay as the room revenue above.
-        const monthFraction = revenueInMonth / fullPrice
         const invoiceItems = b.invoice?.items ?? b.invoiceItems ?? []
         for (const item of invoiceItems) {
           const desc = item.description ?? item.desc ?? ''
@@ -783,7 +794,7 @@ function buildRevenueHistorySection(revHistory) {
   return `
     <tr><td style="padding:0 24px 4px;">
       <h2 style="font-size:15px;color:#2d3b28;border-bottom:2px solid #c9a84c;padding-bottom:5px;margin:0 0 12px;">Umsatzentwicklung (letzte 12 Monate)</h2>
-      <p style="margin:0 0 10px;font-size:11px;color:#999;font-style:italic;">Bruttoumsatz ohne Abzug von Kosten — keine Gewinnkennzahl.</p>
+      <p style="margin:0 0 10px;font-size:11px;color:#999;font-style:italic;">Netto nach Buchungsportal-Provision (z.&nbsp;B. Booking.com), aber ohne weitere Kosten — keine Gewinnkennzahl.</p>
       <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:14px;">${chartRows}</table>
       <table width="100%" cellpadding="0" cellspacing="0">
         <tr><td colspan="2" style="padding-bottom:4px;font-weight:600;color:#3d5a3e;font-size:12px;">Nach Zimmer:</td></tr>
