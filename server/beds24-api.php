@@ -30,8 +30,8 @@ class Beds24Api {
         if (!$this->accessToken && !$this->authenticate()) return null;
 
         $response = $this->request('GET', '/bookings', null, [], [
-            'id'             => $bookingId,
-            'includeInvoice' => 'true',
+            'id'                  => $bookingId,
+            'includeInvoiceItems' => 'true',
         ]);
 
         if (!$response['ok']) return null;
@@ -50,10 +50,10 @@ class Beds24Api {
         if (!$this->accessToken && !$this->authenticate()) return [];
 
         $response = $this->request('GET', '/bookings', null, [], [
-            'propertyId'     => $this->propertyId,
-            'arrivalFrom'    => $from,
-            'arrivalTo'      => $to,
-            'includeInvoice' => 'true',
+            'propertyId'          => $this->propertyId,
+            'arrivalFrom'         => $from,
+            'arrivalTo'           => $to,
+            'includeInvoiceItems' => 'true',
         ]);
 
         if (!$response['ok']) return [];

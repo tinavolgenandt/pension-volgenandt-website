@@ -9,10 +9,9 @@
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/beds24-api.php';
 
-define('INV_DRAFTS_DIR',     __DIR__ . '/invoices/drafts');
-define('INV_LOGS_DIR',       __DIR__ . '/invoices/logs');
-define('INV_COUNTER_FILE',   __DIR__ . '/data/invoice-counter.json');
-define('INV_PROCESSED_FILE', __DIR__ . '/data/processed-bookings.json');
+define('INV_DRAFTS_DIR',   __DIR__ . '/invoices/drafts');
+define('INV_LOGS_DIR',     __DIR__ . '/invoices/logs');
+define('INV_COUNTER_FILE', __DIR__ . '/data/invoice-counter.json');
 
 // Issuer data — required on every invoice by German law
 define('INV_ISSUER_NAME',   'Zimmervermietung Ralf Volgenandt');
@@ -37,10 +36,6 @@ function generateInvoiceDraftIfNeeded(int $bookingId, array $webhookItems = []):
         return ['ok' => false, 'error' => 'Invalid booking ID'];
     }
 
-    if (isBookingProcessed($bookingId)) {
-        return ['ok' => true, 'skipped' => true, 'reason' => 'already_processed'];
-    }
-
     $api     = new Beds24Api();
     $booking = $api->getBooking($bookingId);
 
@@ -62,15 +57,56 @@ function generateInvoiceDraftIfNeeded(int $bookingId, array $webhookItems = []):
     }
 
     // Beds24 v2 returns status as a string ('confirmed', 'new', 'request', etc.)
-    $status  = strtolower((string)($booking['status'] ?? ''));
-    $balance = extractBalance($booking);
-
+    $status = strtolower((string)($booking['status'] ?? ''));
     if (!in_array($status, ['confirmed', 'new'], true)) {
         draftLog($bookingId, 'skip', "status={$status} not invoice-worthy");
         return ['ok' => true, 'skipped' => true, 'reason' => 'status_not_applicable'];
     }
 
-    $draft = buildInvoiceDraft($booking, $webhookItems);
+    $items    = parseLineItems($booking, $webhookItems);
+    $existing = findDraftsForBooking($bookingId);
+    $pending  = array_values(array_filter($existing, fn(array $d) => ($d['status'] ?? '') === 'pending'));
+    $approved = array_values(array_filter($existing, fn(array $d) => ($d['status'] ?? '') === 'approved'));
+
+    // A draft is already awaiting Simone's review — don't spawn a second one
+    // just because Beds24 re-fired the webhook. Refresh it in place if the
+    // numbers actually moved (e.g. she corrected something in Beds24 before
+    // getting to the review), otherwise there's nothing to do.
+    if (!empty($pending)) {
+        return refreshPendingDraft($pending[0], $booking, $items);
+    }
+
+    // Already invoiced and approved at least once — only a genuinely new
+    // charge (extras added on-site after the stay was already settled)
+    // justifies a follow-up Nachtragsrechnung. Diff against everything
+    // already invoiced so the follow-up contains just the delta, not the
+    // whole stay again.
+    if (!empty($approved)) {
+        $newItems = diffLineItems($items, $approved);
+        if (empty($newItems)) {
+            draftLog($bookingId, 'skip', 'no_new_charges_since_approval');
+            return ['ok' => true, 'skipped' => true, 'reason' => 'no_new_charges'];
+        }
+        $relatesTo = array_values(array_filter(array_map(fn(array $d) => $d['invoiceNumber'] ?? null, $approved)));
+        $note = 'Nachtragsrechnung für zusätzliche Positionen'
+            . (!empty($relatesTo) ? ' zu Rechnung ' . implode(', ', $relatesTo) : '') . '.';
+        return persistNewDraft($booking, $newItems, 'C', ['relatesTo' => $relatesTo, 'note' => $note]);
+    }
+
+    // No prior drafts at all (first time, or every previous draft was
+    // rejected) — start fresh with the full stay.
+    return persistNewDraft($booking, $items, detectScenario($booking));
+}
+
+/**
+ * Build, save, and notify for a brand-new draft (full stay, or the delta-only
+ * Nachtrag for extras added after a prior approval).
+ */
+function persistNewDraft(array $booking, array $items, string $scenario, array $extra = []): array {
+    $bookingId = (int)($booking['id'] ?? 0);
+    $balance   = extractBalance($booking);
+
+    $draft = buildInvoiceDraft($booking, $items, $scenario, $extra);
     $draft['prePaid'] = $balance <= 0.01;
     $token = $draft['token'];
 
@@ -83,9 +119,7 @@ function generateInvoiceDraftIfNeeded(int $bookingId, array $webhookItems = []):
         return ['ok' => false, 'error' => 'Failed to save draft JSON'];
     }
 
-    markBookingProcessed($bookingId, $token);
-
-    draftLog($bookingId, 'created', "token={$token} scenario={$draft['scenario']} balance={$balance} prePaid=" . ($draft['prePaid'] ? '1' : '0'));
+    draftLog($bookingId, 'created', "token={$token} scenario={$scenario} balance={$balance} prePaid=" . ($draft['prePaid'] ? '1' : '0'));
 
     // Notify Simone so she can review and approve — always, even when the
     // booking is already fully paid at webhook time. A wrong Rechnungsnummer
@@ -95,20 +129,51 @@ function generateInvoiceDraftIfNeeded(int $bookingId, array $webhookItems = []):
     $notified = notifySimone($draft);
     draftLog($bookingId, 'notify', "simone_email=" . ($notified ? 'sent' : 'failed'));
 
-    return ['ok' => true, 'skipped' => false, 'token' => $token, 'scenario' => $draft['scenario']];
+    return ['ok' => true, 'skipped' => false, 'token' => $token, 'scenario' => $scenario];
+}
+
+/**
+ * A draft is still sitting in Simone's inbox, unreviewed — update it in place
+ * instead of creating a second one. No-op (and no re-notify) if nothing about
+ * the charges actually changed, since Beds24 can re-fire the same webhook
+ * event more than once.
+ */
+function refreshPendingDraft(array $draft, array $booking, array $items): array {
+    $bookingId = (int)($draft['bookingId'] ?? $booking['id'] ?? 0);
+    $token     = $draft['token'] ?? '';
+
+    if (itemSetsEqual($items, $draft['lineItems'] ?? [])) {
+        draftLog($bookingId, 'skip', "pending_draft_unchanged token={$token}");
+        return ['ok' => true, 'skipped' => true, 'reason' => 'pending_draft_unchanged'];
+    }
+
+    $balance = extractBalance($booking);
+    $draft['guest']     = parseGuest($booking);
+    $draft['stay']      = parseStay($booking);
+    $draft['lineItems'] = $items;
+    $draft['totals']    = calcTotals($items);
+    $draft['prePaid']   = $balance <= 0.01;
+
+    $path = INV_DRAFTS_DIR . '/' . $token . '.json';
+    file_put_contents($path, json_encode($draft, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+    draftLog($bookingId, 'updated', "pending_draft_refreshed token={$token} balance={$balance}");
+
+    require_once __DIR__ . '/invoice-mailer.php';
+    $notified = notifySimone($draft, true);
+    draftLog($bookingId, 'notify', "simone_email_refresh=" . ($notified ? 'sent' : 'failed'));
+
+    return ['ok' => true, 'skipped' => false, 'token' => $token, 'scenario' => $draft['scenario'] ?? 'B', 'refreshed' => true];
 }
 
 // ---------------------------------------------------------------------------
 // Draft builder
 // ---------------------------------------------------------------------------
 
-function buildInvoiceDraft(array $booking, array $webhookItems = []): array {
-    $token    = makeUuid();
-    $scenario = detectScenario($booking);
-    $guest    = parseGuest($booking);
-    $stay     = parseStay($booking);
-    $items    = parseLineItems($booking, $webhookItems);
-    $totals   = calcTotals($items);
+function buildInvoiceDraft(array $booking, array $items, string $scenario, array $extra = []): array {
+    $token  = makeUuid();
+    $guest  = parseGuest($booking);
+    $stay   = parseStay($booking);
+    $totals = calcTotals($items);
 
     return [
         'token'         => $token,
@@ -120,6 +185,9 @@ function buildInvoiceDraft(array $booking, array $webhookItems = []): array {
         // never at draft creation, so a rejected draft never burns a number.
         'invoiceNumber' => null,
         'invoiceDate'   => null,
+        // Invoice number(s) this draft supplements — set only for scenario
+        // 'C' (Nachtragsrechnung for extras added after a prior approval).
+        'relatesTo'     => $extra['relatesTo'] ?? [],
         'guest'         => $guest,
         'stay'          => $stay,
         'issuer'        => [
@@ -134,7 +202,7 @@ function buildInvoiceDraft(array $booking, array $webhookItems = []): array {
         'lineItems'     => $items,
         'totals'        => $totals,
         'paymentNote'   => 'Zahlbar innerhalb von 7 Tagen nach Rechnungsstellung.',
-        'note'          => '',
+        'note'          => $extra['note'] ?? '',
         'approvedAt'    => null,
     ];
 }
@@ -209,6 +277,7 @@ function parseLineItems(array $booking, array $webhookItems = []): array {
     $accommodationGross = 0.0;
     $accommodationCount = 0;
     $breakfastItems     = [];
+    $extraItems         = [];
 
     foreach ($invoiceItems as $raw) {
         $desc  = trim($raw['description'] ?? $raw['desc'] ?? '');
@@ -224,9 +293,16 @@ function parseLineItems(array $booking, array $webhookItems = []): array {
 
         if (isBreakfastItem($desc)) {
             $breakfastItems = array_merge($breakfastItems, splitBreakfastItem($qty, $unit));
-        } else {
+        } elseif (isAccommodationItem($desc)) {
             $accommodationGross += $gross;
             $accommodationCount++;
+        } else {
+            // A genuinely separate service (Minibar, verlängerter Check-out,
+            // Parkplatz, ...) added in Beds24 — its own line, not swallowed
+            // into the accommodation total. Also what lets a later
+            // Nachtragsrechnung (extras added on-site after checkout) isolate
+            // exactly this charge instead of re-billing the whole stay.
+            $extraItems[] = makeLineItem($desc, $gross, 19, $qty, $unit);
         }
     }
 
@@ -243,11 +319,28 @@ function parseLineItems(array $booking, array $webhookItems = []): array {
             ? $roomLabel . " ({$accommodationCount} Posten summiert – bitte Betrag in Beds24 prüfen!)"
             : $roomLabel;
         $items[] = makeLineItem($label, $accommodationGross, 7);
-    } elseif (empty($breakfastItems) && $basePrice > 0) {
+    } elseif (empty($breakfastItems) && empty($extraItems) && $basePrice > 0) {
         $items[] = makeLineItem($roomLabel, $basePrice, 7);
     }
 
-    return array_merge($items, $breakfastItems);
+    return array_merge($items, $breakfastItems, $extraItems);
+}
+
+/**
+ * True for items that represent the room rate itself — Beds24's native rate
+ * line has no description, and the one known misconfiguration that ever
+ * duplicated it (see [[beds24-auto-preis-duplicate-accommodation]]) labeled
+ * its extra line "Übernachtung". Everything else (Minibar, Parkplatz, ...) is
+ * a genuinely separate service and must not be summed into the room total.
+ */
+function isAccommodationItem(string $desc): bool {
+    if ($desc === '') return true;
+    $lower = mb_strtolower($desc);
+    return str_contains($lower, 'übernachtung')
+        || str_contains($lower, 'ubernachtung')
+        || str_contains($lower, 'unterkunft')
+        || str_contains($lower, 'overnight')
+        || str_contains($lower, 'accommodation');
 }
 
 function resolveRoomName(array $b): string {
@@ -441,22 +534,63 @@ function acquireCounterLock(string $lock): bool {
 }
 
 // ---------------------------------------------------------------------------
-// Processed-bookings index (idempotency)
+// Draft lookup and diffing — the drafts directory is the single source of
+// truth for "what has already been invoiced for this booking", replacing the
+// old one-shot processed-bookings flag that could never produce a second
+// draft (see [[automated-invoicing-project-status]] TODO).
 // ---------------------------------------------------------------------------
 
-function isBookingProcessed(int $id): bool {
-    return isset(loadProcessed()[(string)$id]);
+/**
+ * All drafts (any status) for a booking, oldest first.
+ */
+function findDraftsForBooking(int $bookingId): array {
+    $drafts = [];
+    foreach (glob(INV_DRAFTS_DIR . '/*.json') ?: [] as $file) {
+        $data = json_decode(@file_get_contents($file) ?: '', true);
+        if (is_array($data) && (int)($data['bookingId'] ?? 0) === $bookingId) {
+            $drafts[] = $data;
+        }
+    }
+    usort($drafts, fn(array $a, array $b) => strcmp($a['createdAt'] ?? '', $b['createdAt'] ?? ''));
+    return $drafts;
 }
 
-function markBookingProcessed(int $id, string $token): void {
-    $data          = loadProcessed();
-    $data[(string)$id] = ['token' => $token, 'at' => date('c')];
-    file_put_contents(INV_PROCESSED_FILE, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+function lineItemKey(array $item): string {
+    return ($item['description'] ?? '') . '|'
+        . number_format((float)($item['grossAmount'] ?? 0), 2, '.', '') . '|'
+        . (int)($item['vatRate'] ?? 0);
 }
 
-function loadProcessed(): array {
-    if (!file_exists(INV_PROCESSED_FILE)) return [];
-    return json_decode(@file_get_contents(INV_PROCESSED_FILE) ?: '{}', true) ?? [];
+/**
+ * Multiset diff: items in $currentItems with no matching (description,
+ * grossAmount, vatRate) counterpart across all $priorDrafts' lineItems.
+ * Beds24 invoice items only ever get appended to, never rewritten in place,
+ * so this reliably isolates genuinely new charges (e.g. extras added
+ * on-site) from the stay's original items.
+ */
+function diffLineItems(array $currentItems, array $priorDrafts): array {
+    $priorCounts = [];
+    foreach ($priorDrafts as $draft) {
+        foreach (($draft['lineItems'] ?? []) as $item) {
+            $key = lineItemKey($item);
+            $priorCounts[$key] = ($priorCounts[$key] ?? 0) + 1;
+        }
+    }
+
+    $newItems = [];
+    foreach ($currentItems as $item) {
+        $key = lineItemKey($item);
+        if (($priorCounts[$key] ?? 0) > 0) {
+            $priorCounts[$key]--;
+            continue;
+        }
+        $newItems[] = $item;
+    }
+    return $newItems;
+}
+
+function itemSetsEqual(array $a, array $b): bool {
+    return count($a) === count($b) && empty(diffLineItems($a, [['lineItems' => $b]]));
 }
 
 // ---------------------------------------------------------------------------

@@ -4,7 +4,7 @@
  *
  * Public API:
  *   sendMail(string $to, string $toName, string $subject, string $html, string $text, array $attachments): bool
- *   notifySimone(array $draft): bool           — sends review-link email to ADMIN_EMAIL
+ *   notifySimone(array $draft, bool $isRefresh = false): bool — sends review-link email to ADMIN_EMAIL
  *   sendInvoiceToGuest(array $draft, string $pdfBytes): bool
  */
 
@@ -76,12 +76,13 @@ function sendMail(
 // Notify Simone that a new draft is ready to review
 // ---------------------------------------------------------------------------
 
-function notifySimone(array $draft): bool {
+function notifySimone(array $draft, bool $isRefresh = false): bool {
     $guest     = $draft['guest'];
     $stay      = $draft['stay'];
     $totals    = $draft['totals'];
     $token     = $draft['token'];
     $prePaid   = !empty($draft['prePaid']);
+    $isNachtrag = ($draft['scenario'] ?? '') === 'C';
     $suggested = peekNextInvoiceNumber();
     $total     = number_format((float)($totals['total'] ?? 0), 2, ',', '.');
     $link      = INVOICE_BASE_URL . '/invoice-review.php?token=' . urlencode($token);
@@ -89,13 +90,25 @@ function notifySimone(array $draft): bool {
     $checkIn  = $stay['checkIn']  ? date('d.m.Y', strtotime($stay['checkIn']))  : '–';
     $checkOut = $stay['checkOut'] ? date('d.m.Y', strtotime($stay['checkOut'])) : '–';
 
-    $subject = ($prePaid ? 'Bereits bezahlt – Rechnungsnummer prüfen: ' : 'Neue Rechnung prüfen: ')
-        . ($guest['name'] ?? '') . ' – ' . $total . ' €';
-
-    $heading = $prePaid ? 'Bereits bezahlt – bitte nur kurz prüfen' : 'Neuer Rechnungsentwurf';
-    $intro   = $prePaid
-        ? '<p style="margin:0 0 16px;line-height:1.6;">Diese Buchung wurde bereits vollständig bezahlt. Bitte kurz die Rechnungsnummer prüfen und freigeben — der Haken &bdquo;Bereits bezahlt&ldquo; ist schon gesetzt.</p>'
-        : '';
+    if ($isNachtrag) {
+        $subject = 'Zusatzrechnung prüfen (Extras): ' . ($guest['name'] ?? '') . ' – ' . $total . ' €';
+        $heading = 'Neue Zusatzrechnung für Extras';
+        $relatesTo = $draft['relatesTo'] ?? [];
+        $intro = '<p style="margin:0 0 16px;line-height:1.6;">Für diese Buchung wurden nach der letzten Rechnung'
+            . (!empty($relatesTo) ? ' (' . htmlspecialchars(implode(', ', $relatesTo)) . ')' : '')
+            . ' zusätzliche Positionen in Beds24 erfasst. Diese Zusatzrechnung enthält nur die neuen Posten.</p>';
+    } elseif ($isRefresh) {
+        $subject = 'Rechnungsentwurf aktualisiert: ' . ($guest['name'] ?? '') . ' – ' . $total . ' €';
+        $heading = 'Rechnungsentwurf aktualisiert';
+        $intro   = '<p style="margin:0 0 16px;line-height:1.6;">Die Zahlen in Beds24 haben sich geändert, seit dieser Entwurf erstellt wurde — bitte noch einmal kurz prüfen, bevor freigegeben wird.</p>';
+    } else {
+        $subject = ($prePaid ? 'Bereits bezahlt – Rechnungsnummer prüfen: ' : 'Neue Rechnung prüfen: ')
+            . ($guest['name'] ?? '') . ' – ' . $total . ' €';
+        $heading = $prePaid ? 'Bereits bezahlt – bitte nur kurz prüfen' : 'Neuer Rechnungsentwurf';
+        $intro   = $prePaid
+            ? '<p style="margin:0 0 16px;line-height:1.6;">Diese Buchung wurde bereits vollständig bezahlt. Bitte kurz die Rechnungsnummer prüfen und freigeben — der Haken &bdquo;Bereits bezahlt&ldquo; ist schon gesetzt.</p>'
+            : '';
+    }
 
     $html = '
 <div style="font-family:Arial,sans-serif;font-size:14px;color:#333;max-width:540px;">
@@ -229,6 +242,26 @@ function sendInvoiceToGuest(array $draft, string $pdfBytes, bool $isPaid = false
   </p>
 
   ' . $signOff . '
+</div>';
+    } elseif ($scenario === 'C') {
+        $relatesTo = $draft['relatesTo'] ?? [];
+        $relatesToText = !empty($relatesTo)
+            ? ' Sie ergänzt Ihre bereits erhaltene Rechnung Nr. ' . $esc(implode(', ', $relatesTo)) . '.'
+            : '';
+        $subject = 'Ihre Rechnung für zusätzliche Leistungen – Pension Volgenandt';
+        $html = '
+<div style="font-family:Arial,sans-serif;font-size:14px;color:#333;max-width:560px;">
+  <p style="margin:0 0 12px;">Sehr geehrte/r ' . $guestName . ',</p>
+  <p style="line-height:1.7;margin:0 0 20px;">
+    anbei erhalten Sie Ihre Rechnung Nr. <strong>' . $esc($invNum) . '</strong> für zusätzliche Leistungen
+    während Ihres Aufenthalts vom ' . $checkIn . ' bis ' . $checkOut . '.' . $relatesToText . '
+  </p>
+  <table style="width:100%;border-collapse:collapse;margin:0 0 20px;background:#f9f7f3;border-radius:6px;">
+    <tr><td style="padding:10px 14px;color:#666;width:38%;">Zimmer</td><td style="padding:10px 14px;">' . $roomName . '</td></tr>
+    <tr style="border-top:1px solid #ede9e1;background:#f0f7ee;"><td style="padding:10px 14px;color:#666;">Gesamtbetrag</td><td style="padding:10px 14px;font-weight:700;color:#3d5a3e;">' . $total . '</td></tr>
+  </table>
+  ' . ($isPaid ? '' : '<p style="line-height:1.7;margin:0 0 12px;">Bitte begleichen Sie den Betrag innerhalb von <strong>7 Tagen</strong>:</p>') . '
+  ' . $paidNote . $bankHtml . $ppBtn . $cancelNote . $signOff . '
 </div>';
     } else {
         $subject = 'Ihre aktualisierte Rechnung – Pension Volgenandt';

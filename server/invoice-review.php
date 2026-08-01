@@ -227,6 +227,9 @@ label { display: block; font-weight: 600; margin-bottom: 6px; }
     </p>
 
     <table class="info">
+      <?php if (($draft['scenario'] ?? '') === 'C'): ?>
+      <tr><td>Art</td><td><span style="color:#e67e22;font-weight:600;">Zusatzrechnung (Extras)</span><?php if (!empty($draft['relatesTo'])): ?> — ergänzt Rechnung <?= htmlspecialchars(implode(', ', $draft['relatesTo'])) ?><?php endif; ?></td></tr>
+      <?php endif; ?>
       <tr><td>Gast</td><td><strong><?= htmlspecialchars($guest['name'] ?? '–') ?></strong></td></tr>
       <tr><td>E-Mail Gast</td><td><?= htmlspecialchars($guest['email'] ?? '–') ?></td></tr>
       <tr><td>Zimmer</td><td><?= htmlspecialchars($stay['roomName'] ?? '–') ?></td></tr>
