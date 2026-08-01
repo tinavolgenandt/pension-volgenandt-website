@@ -138,11 +138,8 @@ function sendInvoiceToGuest(array $draft, string $pdfBytes, bool $isPaid = false
     $checkIn   = ($stay['checkIn']  ?? '') ? date('d.m.Y', strtotime($stay['checkIn']))  : '–';
     $checkOut  = ($stay['checkOut'] ?? '') ? date('d.m.Y', strtotime($stay['checkOut'])) : '–';
     $nights    = (int)($stay['nights']   ?? 0);
-    $adults    = (int)($stay['adults']   ?? 1);
-    $children  = (int)($stay['children'] ?? 0);
     $roomName  = $esc($stay['roomName'] ?? 'Zimmer');
     $total     = number_format((float)($totals['total'] ?? 0), 2, ',', '.') . '&nbsp;&euro;';
-    $personStr = $adults . ' Erwachsene' . ($children > 0 ? ', ' . $children . ' Kinder' : '');
 
     // Payment section: either "please pay" (bank/PayPal/cancellation warning)
     // or, for bookings already paid in full via PayPal, a receipt confirmation.
@@ -192,15 +189,19 @@ function sendInvoiceToGuest(array $draft, string $pdfBytes, bool $isPaid = false
 </p>';
 
     if ($scenario === 'A') {
-        $subject = 'Buchungsbestätigung – Pension Volgenandt';
+        // Beds24's own instant "Buchungsbestätigung" already confirmed the stay
+        // details (and, for online-paid bookings, already noted the payment) —
+        // this email's only job is to deliver the reviewed, compliant invoice
+        // that follows once Simone has checked it. Don't restate the booking
+        // confirmation, just introduce the attached Rechnung.
+        $subject = 'Ihre Rechnung zu Ihrer Buchung – Pension Volgenandt';
         $html = '
 <div style="font-family:Arial,sans-serif;font-size:14px;color:#333;max-width:560px;">
-  <h2 style="color:#3d5a3e;margin:0 0 4px;font-size:20px;">Buchungsbestätigung</h2>
-  <p style="margin:0 0 20px;font-size:12px;color:#999;">Buchungsdatum: ' . date('d.m.Y') . '</p>
-
   <p style="margin:0 0 12px;">Sehr geehrte/r ' . $guestName . ',</p>
   <p style="line-height:1.7;margin:0 0 20px;">
-    wir freuen uns, Ihre Buchung bestätigen zu können, und heißen Sie herzlich willkommen in unserem Haus.
+    vielen Dank für Ihre Buchung — Ihre Buchungsbestätigung haben Sie bereits separat erhalten.
+    Anbei erhalten Sie nun Ihre Rechnung Nr. <strong>' . $esc($invNum) . '</strong> für Ihren Aufenthalt
+    vom ' . $checkIn . ' bis ' . $checkOut . '.
   </p>
 
   <table style="width:100%;border-collapse:collapse;margin:0 0 20px;background:#f9f7f3;border-radius:6px;">
@@ -209,32 +210,16 @@ function sendInvoiceToGuest(array $draft, string $pdfBytes, bool $isPaid = false
       <td style="padding:10px 14px;font-weight:700;">' . $roomName . '</td>
     </tr>
     <tr style="border-top:1px solid #ede9e1;">
-      <td style="padding:10px 14px;color:#666;">Anreise</td>
-      <td style="padding:10px 14px;">' . $checkIn . ' ab 14:00 Uhr</td>
+      <td style="padding:10px 14px;color:#666;">Zeitraum</td>
+      <td style="padding:10px 14px;">' . $checkIn . ' – ' . $checkOut . ' (' . $nights . ' Nächte)</td>
     </tr>
-    <tr style="border-top:1px solid #ede9e1;">
-      <td style="padding:10px 14px;color:#666;">Abreise</td>
-      <td style="padding:10px 14px;">' . $checkOut . ' bis 11:00 Uhr</td>
-    </tr>
-    <tr style="border-top:1px solid #ede9e1;">
-      <td style="padding:10px 14px;color:#666;">Personen</td>
-      <td style="padding:10px 14px;">' . $personStr . '</td>
-    </tr>
-    <tr style="border-top:1px solid #ede9e1;">
-      <td style="padding:10px 14px;color:#666;">Nächte</td>
-      <td style="padding:10px 14px;">' . $nights . '</td>
-    </tr>
-    <tr style="border-top:1px solid #ede9e1;">
+    <tr style="border-top:1px solid #ede9e1;background:#f0f7ee;">
       <td style="padding:10px 14px;color:#666;">Gesamtbetrag</td>
-      <td style="padding:10px 14px;font-weight:700;">' . $total . '</td>
+      <td style="padding:10px 14px;font-weight:700;color:#3d5a3e;">' . $total . '</td>
     </tr>
   </table>
 
-  <p style="line-height:1.7;margin:0 0 12px;">
-    Im Anhang finden Sie Ihre Rechnung Nr. <strong>' . $esc($invNum) . '</strong>.' . ($isPaid ? '' : '
-    Bitte begleichen Sie den Betrag innerhalb von <strong>7 Tagen</strong>:') . '
-  </p>
-
+  ' . ($isPaid ? '' : '<p style="line-height:1.7;margin:0 0 12px;">Bitte begleichen Sie den Betrag innerhalb von <strong>7 Tagen</strong>:</p>') . '
   ' . $paidNote . $bankHtml . $ppBtn . $cancelNote . '
 
   <p style="font-size:13px;color:#555;margin:0 0 20px;line-height:1.7;">
