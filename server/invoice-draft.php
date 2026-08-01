@@ -49,6 +49,18 @@ function generateInvoiceDraftIfNeeded(int $bookingId, array $webhookItems = []):
         return ['ok' => false, 'error' => 'Booking not found in Beds24'];
     }
 
+    // Booking.com is the merchant of record for these guests — the pension
+    // never charges them directly, so a German Rechnung showing the gross
+    // (pre-commission) amount would be wrong. `channel` is Beds24's stable
+    // machine code ('booking'); `apiSource` ("Booking.com") is checked too
+    // in case a future webhook payload ever lacks `channel`.
+    $channel   = strtolower((string)($booking['channel']   ?? ''));
+    $apiSource = strtolower((string)($booking['apiSource'] ?? ''));
+    if ($channel === 'booking' || str_contains($apiSource, 'booking.com')) {
+        draftLog($bookingId, 'skip', "booking_com_ota channel={$channel} apiSource={$apiSource}");
+        return ['ok' => true, 'skipped' => true, 'reason' => 'booking_com_ota'];
+    }
+
     // Beds24 v2 returns status as a string ('confirmed', 'new', 'request', etc.)
     $status  = strtolower((string)($booking['status'] ?? ''));
     $balance = extractBalance($booking);
@@ -195,6 +207,7 @@ function parseLineItems(array $booking, array $webhookItems = []): array {
     }
 
     $accommodationGross = 0.0;
+    $accommodationCount = 0;
     $breakfastItems     = [];
 
     foreach ($invoiceItems as $raw) {
@@ -213,13 +226,23 @@ function parseLineItems(array $booking, array $webhookItems = []): array {
             $breakfastItems = array_merge($breakfastItems, splitBreakfastItem($qty, $unit));
         } else {
             $accommodationGross += $gross;
+            $accommodationCount++;
         }
     }
 
     $items = [];
 
     if ($accommodationGross > 0.01) {
-        $items[] = makeLineItem($roomLabel, $accommodationGross, 7);
+        // Always one line, always room-named — but if Beds24 sent more than
+        // one accommodation-type charge (e.g. a misconfigured Auto Action
+        // duplicating the native rate line), don't silently trust the summed
+        // total: flag it visibly so Simone checks Beds24 before approving,
+        // same "don't guess, make it visible" pattern as the unknown-
+        // breakfast-price case below.
+        $label = $accommodationCount > 1
+            ? $roomLabel . " ({$accommodationCount} Posten summiert – bitte Betrag in Beds24 prüfen!)"
+            : $roomLabel;
+        $items[] = makeLineItem($label, $accommodationGross, 7);
     } elseif (empty($breakfastItems) && $basePrice > 0) {
         $items[] = makeLineItem($roomLabel, $basePrice, 7);
     }
