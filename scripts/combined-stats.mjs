@@ -155,6 +155,23 @@ function isBlindBooking(b) {
   return typeof b.status === 'string' && b.status.toLowerCase() === 'black'
 }
 
+// Beds24's booking-level `price` field is separate from the Kosten/invoice
+// line items — editing the line items (which is what Simone actually does
+// when "adding the price") does NOT update `price` unless someone also
+// clicks "Preis und ausstehende Zahlung neu berechnen". That leaves `price`
+// at 0 even though the booking is fully and correctly priced. Fall back to
+// summing the charge line items whenever `price` itself is 0, so revenue and
+// the zero-price follow-up list reflect what's actually in the booking.
+// Requires the fetch to have used includeInvoiceItems=true.
+function effectivePrice(b) {
+  const price = parseFloat(b.price) || 0
+  if (price > 0) return price
+  const items = b.invoice?.items ?? b.invoiceItems ?? []
+  return items
+    .filter((i) => i.type === 'charge')
+    .reduce((sum, i) => sum + (parseFloat(i.lineTotal) || 0), 0)
+}
+
 // Paginates through Beds24's nextPageToken — without this, wide date windows
 // (e.g. the 12-month revenue history) silently truncate to a single page.
 async function fetchBeds24(token, params) {
@@ -194,6 +211,7 @@ async function getNewBookings(token, rangeStart, rangeEnd) {
         arrivalFrom: toIsoDate(start),
         arrivalTo: toIsoDate(end),
         departureFrom: toIsoDate(start),
+        includeInvoiceItems: 'true',
       }).catch(() => []),
     ),
   )
@@ -217,7 +235,7 @@ async function getNewBookings(token, rangeStart, rangeEnd) {
     confirmed++
     const ch = mapChannel(b.apiSource)
     byChannel[ch] = (byChannel[ch] || 0) + 1
-    const price = parseFloat(b.price) || 0
+    const price = effectivePrice(b)
     if (price === 0) {
       zeroPriceCount++
       console.warn(`New booking with €0 price: ID=${b.id}, arrival=${b.arrival}, room=${b.roomId}`)
@@ -294,7 +312,7 @@ function aggregateBookings(bookings, rangeStart, rangeEnd) {
     const nightsInRange = Math.max(0, Math.round((clampedEnd - clampedStart) / 86400000))
     totalNightsInRange += nightsInRange
 
-    const fullPrice = parseFloat(b.price) || 0
+    const fullPrice = effectivePrice(b)
     if (fullPrice === 0) {
       zeroPriceBookings++
       console.warn(
@@ -343,11 +361,16 @@ function aggregateBookings(bookings, rangeStart, rangeEnd) {
 // Month-to-date: fetches stays overlapping [startDate, endDate] (ISO strings)
 async function collectMTD(token, startDate, endDate) {
   const [active, cancelled] = await Promise.all([
-    fetchBeds24(token, { arrivalTo: endDate, departureFrom: startDate }).catch(() => []),
+    fetchBeds24(token, {
+      arrivalTo: endDate,
+      departureFrom: startDate,
+      includeInvoiceItems: 'true',
+    }).catch(() => []),
     fetchBeds24(token, {
       arrivalTo: endDate,
       departureFrom: startDate,
       status: 'cancelled',
+      includeInvoiceItems: 'true',
     }).catch(() => []),
   ])
   const all = [
@@ -481,7 +504,7 @@ async function collectRevenueHistory(token) {
           (typeof b.status === 'string' && b.status.toLowerCase().includes('cancel'))
         if (isCancelled) continue
 
-        const fullPrice = parseFloat(b.price) || 0
+        const fullPrice = effectivePrice(b)
         if (fullPrice === 0) continue // nothing to distribute (already flagged separately)
         // Net of channel commission (e.g. Booking.com) — see getNewBookings() above.
         const netPrice = fullPrice - (parseFloat(b.commission) || 0)
@@ -522,10 +545,13 @@ async function collectRevenueHistory(token) {
   return { monthKeys, monthlyRevenue, roomRevenue, totalRevenue, breakfastRevenue }
 }
 
-// Confirmed reservations without a price (price = 0 or missing) — for manual
-// follow-up in Beds24. Scans the same 12-month lookback plus the next 180
-// days of upcoming arrivals, so both stale past bookings and new/unpriced
-// upcoming ones surface.
+// Confirmed reservations without a price — for manual follow-up in Beds24.
+// "Without a price" means effectivePrice() is 0: neither the booking's own
+// price field nor its Kosten line items add up to anything, so this only
+// flags bookings that genuinely still need attention (see effectivePrice()).
+// Scans the same 12-month lookback plus the next 180 days of upcoming
+// arrivals, so both stale past bookings and new/unpriced upcoming ones
+// surface.
 async function collectZeroPriceBookings(token) {
   if (!token) return []
 
@@ -542,6 +568,7 @@ async function collectZeroPriceBookings(token) {
         arrivalFrom: startStr,
         arrivalTo: endStr,
         departureFrom: startStr,
+        includeInvoiceItems: 'true',
       }).catch(() => [])
 
       return all.filter((b) => {
@@ -550,8 +577,7 @@ async function collectZeroPriceBookings(token) {
           (b.cancelTime && b.cancelTime !== 0 && b.cancelTime !== '0') ||
           (typeof b.status === 'string' && b.status.toLowerCase().includes('cancel'))
         if (isCancelled) return false
-        const price = parseFloat(b.price)
-        return isNaN(price) || price === 0
+        return effectivePrice(b) === 0
       })
     }),
   )
