@@ -14,15 +14,14 @@
 
 session_start();
 
-define('ADMIN_PW', 'Mutz2912!!(');
-
+require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/smtp.php';
 
 // ---------------------------------------------------------------------------
 // Auth
 // ---------------------------------------------------------------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['pw'])) {
-    if (hash_equals(ADMIN_PW, $_POST['pw'])) {
+    if (hash_equals(STORNO_ADMIN_PW, $_POST['pw'])) {
         $_SESSION['storno_admin'] = true;
     } else {
         $loginError = true;
