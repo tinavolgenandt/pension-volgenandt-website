@@ -13,6 +13,7 @@
  */
 
 require_once __DIR__ . '/smtp.php'; // also loads config.php
+require_once __DIR__ . '/vouchers.php';
 
 // ---------------------------------------------------------------------------
 // Config (credentials come from config.php via smtp.php)
@@ -58,6 +59,8 @@ $phone         = trim($input['phone'] ?? '');
 $message       = trim($input['message'] ?? '');
 $subject       = trim($input['_subject'] ?? '');
 $bookingDate   = trim($input['bookingDate'] ?? '');
+$bookingTime   = trim($input['bookingTime'] ?? '');
+$voucherCode   = trim($input['voucherCode'] ?? '');
 $gotcha        = trim($input['_gotcha'] ?? '');
 
 if ($gotcha !== '') {
@@ -153,20 +156,40 @@ if (!is_dir($bookingsDir)) {
     mkdir($bookingsDir, 0750, true);
 }
 
-$token   = bin2hex(random_bytes(16));
+$token = bin2hex(random_bytes(16));
+
+// ---------------------------------------------------------------------------
+// Redeem voucher (if provided) — payment is already captured at this point,
+// so a stale/invalid code does NOT block the booking; it's flagged for the
+// admin to check manually instead.
+// ---------------------------------------------------------------------------
+$voucherApplied = false;
+$voucherIssue   = '';
+if ($voucherCode !== '') {
+    $redeemResult = redeemVoucher($voucherCode, $email, $token);
+    $voucherApplied = $redeemResult['valid'];
+    if (!$voucherApplied) {
+        $voucherIssue = $redeemResult['reason'];
+    }
+}
+
 $booking = [
-    'token'         => $token,
-    'createdAt'     => date('c'),
-    'status'        => 'pending',
-    'name'          => $name,
-    'email'         => $email,
-    'phone'         => $phone,
-    'message'       => $message,
-    'subject'       => $subject,
-    'bookingDate'   => $bookingDate,
-    'amount'        => $paidAmount,
-    'transactionId' => $transactionId,
-    'paypalOrderId' => $paypalOrderId,
+    'token'           => $token,
+    'createdAt'       => date('c'),
+    'status'          => 'pending',
+    'name'            => $name,
+    'email'           => $email,
+    'phone'           => $phone,
+    'message'         => $message,
+    'subject'         => $subject,
+    'bookingDate'     => $bookingDate,
+    'bookingTime'     => $bookingTime,
+    'amount'          => $paidAmount,
+    'transactionId'   => $transactionId,
+    'paypalOrderId'   => $paypalOrderId,
+    'voucherCode'     => $voucherCode !== '' ? $voucherCode : null,
+    'voucherApplied'  => $voucherCode !== '' ? $voucherApplied : null,
+    'voucherIssue'    => $voucherIssue !== '' ? $voucherIssue : null,
 ];
 file_put_contents("$bookingsDir/$token.json", json_encode($booking, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 
@@ -264,6 +287,20 @@ sendSmtp(
 $acceptUrl  = $confirmBase . '?token=' . urlencode($token) . '&action=accept';
 $declineUrl = $confirmBase . '?token=' . urlencode($token) . '&action=decline';
 
+$voucherWarningHtml = '';
+if ($voucherCode !== '' && !$voucherApplied) {
+    $voucherWarningHtml = '
+  <tr><td style="padding:0 32px 20px;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background:#fdecea;border-radius:6px;">
+      <tr><td style="padding:14px 16px;font-size:13px;line-height:1.6;color:#c0392b;">
+        &#9888;&#65039; <strong>Gutschein-Code &bdquo;' . htmlspecialchars($voucherCode, ENT_QUOTES, 'UTF-8') . '&ldquo; konnte nicht best&auml;tigt werden:</strong><br>
+        ' . htmlspecialchars($voucherIssue, ENT_QUOTES, 'UTF-8') . '<br>
+        Bitte bezahlten Betrag vor Best&auml;tigung manuell pr&uuml;fen.
+      </td></tr>
+    </table>
+  </td></tr>';
+}
+
 $adminHtml = '<!DOCTYPE html>
 <html lang="de"><head><meta charset="UTF-8"></head>
 <body style="margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#333;background:#f7f5f0;">
@@ -301,7 +338,7 @@ $adminHtml = '<!DOCTYPE html>
     <h2 style="margin:0 0 12px;font-size:16px;color:#3d5a3e;border-bottom:2px solid #e8e4dc;padding-bottom:8px;">Buchungsdetails</h2>
     <div style="font-size:14px;line-height:1.8;margin:0 0 28px;color:#444;background:#f7f5f0;padding:16px;border-radius:6px;">' . $messageHtml . '</div>
   </td></tr>
-
+' . $voucherWarningHtml . '
   <!-- Accept / Decline buttons -->
   <tr><td style="padding:0 32px 32px;">
     <table width="100%" cellpadding="0" cellspacing="0">

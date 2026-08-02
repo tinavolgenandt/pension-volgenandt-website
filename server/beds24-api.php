@@ -78,6 +78,49 @@ class Beds24Api {
     }
 
     /**
+     * Best-effort check whether a guest email has an overlapping accommodation
+     * booking around a given date (used to skip the picnic follow-up email
+     * for guests who are also staying with us). Matches only by email — a
+     * guest using a different email for their picnic order than for their
+     * room booking will not be detected.
+     */
+    public function hasAccommodationOverlap(string $email, string $date): bool {
+        if (!$this->accessToken && !$this->authenticate()) return false;
+        $email = strtolower(trim($email));
+        if ($email === '') return false;
+
+        $from = date('Y-m-d', strtotime($date . ' -7 days'));
+        $to   = date('Y-m-d', strtotime($date . ' +1 day'));
+
+        $response = $this->request('GET', '/bookings', null, [], [
+            'propertyId'  => $this->propertyId,
+            'arrivalFrom' => $from,
+            'arrivalTo'   => $to,
+        ]);
+
+        if (!$response['ok']) return false;
+
+        $bookings = $response['data']['data'] ?? [];
+        foreach ($bookings as $b) {
+            $status = strtolower((string)($b['status'] ?? ''));
+            if (!in_array($status, ['confirmed', 'new'], true)) continue;
+
+            $guestEmail = strtolower(trim((string)($b['email'] ?? $b['guestEmail'] ?? '')));
+            if ($guestEmail !== $email) continue;
+
+            $arrival   = (string)($b['arrival']   ?? $b['checkIn']  ?? $b['arrivalDate']   ?? '');
+            $departure = (string)($b['departure'] ?? $b['checkOut'] ?? $b['departureDate'] ?? '');
+            if ($arrival === '' || $departure === '') continue;
+
+            if ($arrival <= $to && $departure >= $date) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Low-level HTTP request helper.
      */
     private function request(string $method, string $path, ?string $body, array $extraHeaders = [], array $queryParams = []): array {

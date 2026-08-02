@@ -18,6 +18,19 @@ define('BEDS24_PROPERTY_ID', '261258');
 // Invoice webhook — shared secret sent by Beds24 in X-Invoice-Secret header
 define('INVOICE_WEBHOOK_SECRET', 'CHANGE_ME');
 
+// Picnic follow-up trigger — shared secret sent by GitHub Actions in X-Followup-Secret header
+define('PICKNICK_FOLLOWUP_SECRET', 'CHANGE_ME');
+
+// Picnic/accommodation "thank you" voucher — ONE shared codeword for every
+// guest (not per-guest random). Redeemed automatically for picnic bookings
+// via vouchers.php (one redemption per email). For room bookings, this same
+// codeword must ALSO be configured manually in Beds24 under
+// Settings -> Booking Engine -> Voucher Codes (list it as a one-time phrase
+// as many times as you want available slots, e.g. 50x, and top up the list
+// when it runs low — Beds24 has no API for this, it's dashboard-only).
+define('PICKNICK_VOUCHER_CODE', 'CHANGE_ME');
+define('PICKNICK_VOUCHER_DISCOUNT_PERCENT', 5);
+
 // Admin email — receives draft-review notifications
 define('ADMIN_EMAIL',    'kontakt@pension-volgenandt.de');
 define('MAIL_FROM_NAME', 'Simone & Ralf Volgenandt');
