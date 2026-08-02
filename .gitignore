@@ -41,6 +41,9 @@ server/invoices/logs/
 server/data/invoice-counter.json
 server/data/processed-bookings.json
 server/data/customers.json
+server/bookings/
+server/vouchers.json
+server/blocked-dates.json
 
 # Beds24 sync scripts & screenshots
 sync_*.mjs

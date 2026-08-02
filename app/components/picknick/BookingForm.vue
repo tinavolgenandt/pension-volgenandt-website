@@ -194,6 +194,47 @@ const extraDrinkCount = computed(() => Math.max(0, totalDrinks.value - includedD
 const isSubmitting = ref(false)
 const errorMessage = ref('')
 
+// Voucher code
+const voucherCode = ref('')
+const voucherStatus = ref<'idle' | 'checking' | 'valid' | 'invalid'>('idle')
+const voucherDiscountPercent = ref(0)
+const voucherMessage = ref('')
+
+async function applyVoucher() {
+  if (voucherCode.value.trim() === '' || form.email.trim() === '') return
+  voucherStatus.value = 'checking'
+  voucherMessage.value = ''
+  try {
+    const response = await fetch('https://api.pension-volgenandt.de/voucher-validate.php', {
+      method: 'POST',
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: voucherCode.value.trim(), email: form.email }),
+    })
+    const result = await response.json()
+    if (result.valid) {
+      voucherStatus.value = 'valid'
+      voucherDiscountPercent.value = result.discountPercent
+      voucherMessage.value = `${result.discountPercent} % Rabatt wird abgezogen.`
+    } else {
+      voucherStatus.value = 'invalid'
+      voucherDiscountPercent.value = 0
+      voucherMessage.value = result.reason || 'Dieser Gutschein-Code ist ungültig.'
+    }
+  } catch {
+    voucherStatus.value = 'invalid'
+    voucherDiscountPercent.value = 0
+    voucherMessage.value = 'Gutschein konnte nicht geprüft werden. Bitte versuchen Sie es erneut.'
+  }
+}
+
+watch([() => voucherCode.value, () => form.email], () => {
+  if (voucherStatus.value !== 'idle') {
+    voucherStatus.value = 'idle'
+    voucherDiscountPercent.value = 0
+    voucherMessage.value = ''
+  }
+})
+
 const selectedPackage = computed(
   () => packages.value.find((p) => p.id === form.packageId) ?? packages.value[0],
 )
@@ -218,7 +259,13 @@ const selectedExtrasWithCost = computed(() =>
     }),
 )
 const extrasTotal = computed(() => selectedExtrasWithCost.value.reduce((sum, e) => sum + e.cost, 0))
-const grandTotal = computed(() => baseTotal.value + extrasTotal.value)
+const subtotal = computed(() => baseTotal.value + extrasTotal.value)
+const discountAmount = computed(() =>
+  voucherStatus.value === 'valid'
+    ? Math.round(subtotal.value * (voucherDiscountPercent.value / 100) * 100) / 100
+    : 0,
+)
+const grandTotal = computed(() => subtotal.value - discountAmount.value)
 
 const isFormValid = computed(
   () =>
@@ -291,6 +338,9 @@ function buildMessageText(): string {
       : null,
     hafermilchExtra.value > 0 ? `Hafermilch-Aufpreis: +${hafermilchExtra.value} €` : null,
     extrasTotal.value > 0 ? `Extras: ${extrasTotal.value} €` : null,
+    voucherStatus.value === 'valid'
+      ? `Gutschein ${voucherCode.value.trim()}: -${discountAmount.value.toLocaleString('de-DE', { minimumFractionDigits: 2 })} € (${voucherDiscountPercent.value} %)`
+      : null,
     `Gesamt: ${grandTotal.value.toLocaleString('de-DE', { minimumFractionDigits: 2 })} €`,
     '',
     `Name: ${form.name}`,
@@ -356,11 +406,13 @@ function renderPayPalButton() {
               paypalOrderId: data.orderID,
               amount: grandTotal.value,
               bookingDate: form.date,
+              bookingTime: form.time,
               name: form.name,
               email: form.email,
               phone: form.phone,
               message: buildMessageText(),
               _subject: buildSubject(),
+              voucherCode: voucherStatus.value === 'valid' ? voucherCode.value.trim() : '',
             }),
           })
 
@@ -828,6 +880,35 @@ if (import.meta.client) {
       </div>
     </fieldset>
 
+    <!-- Gutschein-Code -->
+    <fieldset class="space-y-2">
+      <legend class="font-serif text-lg font-semibold text-sage-900">
+        Gutschein-Code <span class="text-sm font-normal text-sage-500">(optional)</span>
+      </legend>
+      <div class="flex gap-2">
+        <input
+          v-model="voucherCode"
+          type="text"
+          name="voucher-code"
+          placeholder="z. B. DANKE-A1B2C3D4"
+          class="w-full rounded-lg border border-sage-300 px-4 py-3 uppercase focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
+        />
+        <button
+          type="button"
+          class="shrink-0 rounded-lg border border-sage-400 px-4 py-3 text-sm font-medium text-sage-700 transition-colors hover:bg-sage-100 disabled:opacity-40"
+          :disabled="
+            voucherCode.trim() === '' || form.email.trim() === '' || voucherStatus === 'checking'
+          "
+          @click="applyVoucher"
+        >
+          {{ voucherStatus === 'checking' ? 'Prüfe…' : 'Einlösen' }}
+        </button>
+      </div>
+      <p v-if="voucherMessage" class="text-xs" :class="voucherStatus === 'valid' ? 'text-sage-600' : 'text-red-600'">
+        {{ voucherMessage }}
+      </p>
+    </fieldset>
+
     <!-- Preisübersicht -->
     <div class="rounded-lg bg-waldhonig-50 p-5">
       <h3 class="font-serif text-base font-semibold text-sage-900">Preisübersicht</h3>
@@ -872,6 +953,10 @@ if (import.meta.client) {
         >
           <dt>{{ extra.qty > 1 ? `${extra.qty}× ` : '' }}{{ extra.label }}</dt>
           <dd>+ {{ extra.cost.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €</dd>
+        </div>
+        <div v-if="voucherStatus === 'valid'" class="flex justify-between text-sage-600">
+          <dt>Gutschein ({{ voucherDiscountPercent }} %)</dt>
+          <dd>- {{ discountAmount.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €</dd>
         </div>
         <div class="flex justify-between border-t border-waldhonig-200 pt-2">
           <dt class="font-semibold text-sage-900">Zu zahlen</dt>

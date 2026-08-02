@@ -1,0 +1,17 @@
+name: Picknick Follow-up
+
+on:
+  schedule:
+    # Every 30 minutes — keeps the "5 hours after pickup" promise accurate
+    # to within half an hour without needing cron access on the IONOS host.
+    - cron: '*/30 * * * *'
+  workflow_dispatch: {}
+
+jobs:
+  followup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger picnic follow-up check
+        run: |
+          curl -fsS -X POST https://api.pension-volgenandt.de/picknick-followup.php \
+            -H "X-Followup-Secret: ${{ secrets.PICKNICK_FOLLOWUP_SECRET }}"
