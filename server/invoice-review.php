@@ -83,11 +83,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $status === 'pending') {
                 $draft['totals']    = calcTotals($editedItems);
             }
 
-            $draft['paymentNote'] = trim($_POST['payment_note'] ?? '') ?: ($draft['paymentNote'] ?? '');
-            $draft['note']        = $note;
+            $isFirmenrechnung = ($_POST['is_firmenrechnung'] ?? '') === '1';
+            $draft['isFirmenrechnung'] = $isFirmenrechnung;
+            $draft['companyName']      = trim($_POST['company_name']      ?? '');
+            $draft['bookingReference'] = trim($_POST['booking_reference'] ?? '');
+            $draft['ohneFruehstueck']  = $isFirmenrechnung && ($_POST['ohne_fruehstueck'] ?? '') === '1';
+
             $draft['invoiceDate'] = date('Y-m-d');
             $draft['approvedAt']  = date('c');
             $draft['status']      = 'approved';
+
+            // Firmenrechnung: 3 Werktage statt der üblichen 7 Tage (Simones
+            // Regel, 2026-08-03) — always computed from the actual due date
+            // rather than trusting free text, so it can't drift out of sync
+            // with the "Wichtiger Hinweis" storno wording below.
+            if ($isFirmenrechnung) {
+                $due = computeDueDate(new \DateTime($draft['invoiceDate']), 3);
+                $draft['paymentNote'] = 'Zahlbar bis zum ' . $due->format('d.m.Y') . '.';
+            } else {
+                $draft['paymentNote'] = trim($_POST['payment_note'] ?? '') ?: ($draft['paymentNote'] ?? '');
+            }
+            $draft['note']        = $note;
 
             $isPaid = ($_POST['already_paid'] ?? '') === '1';
             $draft['manuallyMarkedPaid'] = $isPaid;
@@ -230,8 +246,17 @@ label { display: block; font-weight: 600; margin-bottom: 6px; }
       <?php if (($draft['scenario'] ?? '') === 'C'): ?>
       <tr><td>Art</td><td><span style="color:#e67e22;font-weight:600;">Zusatzrechnung (Extras)</span><?php if (!empty($draft['relatesTo'])): ?> — ergänzt Rechnung <?= htmlspecialchars(implode(', ', $draft['relatesTo'])) ?><?php endif; ?></td></tr>
       <?php endif; ?>
+      <?php if (!empty($draft['groupBookingIds'])): ?>
+      <tr><td>Gruppenbuchung</td><td><span style="color:#3d5a3e;font-weight:600;"><?= count($draft['groupBookingIds']) ?> Zimmer</span> — Buchungen #<?= htmlspecialchars(implode(', #', $draft['groupBookingIds'])) ?></td></tr>
+      <?php endif; ?>
       <tr><td>Gast</td><td><strong><?= htmlspecialchars($guest['name'] ?? '–') ?></strong></td></tr>
       <tr><td>E-Mail Gast</td><td><?= htmlspecialchars($guest['email'] ?? '–') ?></td></tr>
+      <?php if (!empty($draft['isFirmenrechnung'])): ?>
+      <tr><td>Firma</td><td><strong><?= htmlspecialchars($draft['companyName'] ?? '–') ?></strong></td></tr>
+      <?php if (!empty($draft['bookingReference'])): ?>
+      <tr><td>Buchungsnummer</td><td><?= htmlspecialchars($draft['bookingReference']) ?></td></tr>
+      <?php endif; ?>
+      <?php endif; ?>
       <tr><td>Zimmer</td><td><?= htmlspecialchars($stay['roomName'] ?? '–') ?></td></tr>
       <tr><td>Zeitraum</td><td><?= $checkIn ?> – <?= $checkOut ?> &nbsp;(<?= (int)($stay['nights'] ?? 0) ?> Nächte, <?= (int)($stay['adults'] ?? 0) ?> Erw.)</td></tr>
       <tr><td>Gesamtbetrag</td><td><strong><?= $total ?> €</strong></td></tr>
@@ -262,6 +287,23 @@ label { display: block; font-weight: 600; margin-bottom: 6px; }
         <div><label for="guest_address">Straße</label><input type="text" id="guest_address" name="guest_address" value="<?= htmlspecialchars($guest['address'] ?? '') ?>"></div>
         <div><label for="guest_zip">PLZ</label><input type="text" id="guest_zip" name="guest_zip" value="<?= htmlspecialchars($guest['zip'] ?? '') ?>"></div>
         <div><label for="guest_city">Ort</label><input type="text" id="guest_city" name="guest_city" value="<?= htmlspecialchars($guest['city'] ?? '') ?>"></div>
+      </div>
+
+      <label class="checkbox-row">
+        <input type="checkbox" id="is_firmenrechnung" name="is_firmenrechnung" value="1"
+               <?= !empty($draft['isFirmenrechnung']) ? 'checked' : '' ?>
+               onchange="document.getElementById('firmen-fields').style.display = this.checked ? 'block' : 'none';">
+        Firmenrechnung (z.&nbsp;B. Fero Fensterbau, Barczewski) — 3 Werktage Zahlungsziel statt 7 Tage
+      </label>
+      <div id="firmen-fields" style="display:<?= !empty($draft['isFirmenrechnung']) ? 'block' : 'none' ?>;margin-bottom:16px;">
+        <div class="field-row">
+          <div><label for="company_name">Firma</label><input type="text" id="company_name" name="company_name" value="<?= htmlspecialchars($draft['companyName'] ?? '') ?>"></div>
+          <div><label for="booking_reference">Buchungsnummer <span style="font-weight:400;color:#999;">(optional)</span></label><input type="text" id="booking_reference" name="booking_reference" value="<?= htmlspecialchars($draft['bookingReference'] ?? '') ?>"></div>
+        </div>
+        <label class="checkbox-row">
+          <input type="checkbox" name="ohne_fruehstueck" value="1" <?= !empty($draft['ohneFruehstueck']) ? 'checked' : '' ?>>
+          Preis ohne Frühstück — erscheint als Hinweis auf der Rechnung
+        </label>
       </div>
 
       <h2 class="section-title">Positionen</h2>
@@ -295,7 +337,7 @@ label { display: block; font-weight: 600; margin-bottom: 6px; }
         </table>
       </div>
 
-      <label for="payment_note">Zahlungshinweis</label>
+      <label for="payment_note">Zahlungshinweis <span style="font-weight:400;color:#999;">(wird bei Firmenrechnung automatisch auf 3 Werktage berechnet)</span></label>
       <input type="text" id="payment_note" name="payment_note" value="<?= htmlspecialchars($draft['paymentNote'] ?? '') ?>">
 
       <label for="note">Hinweis / Notiz <span style="font-weight:400;color:#999;">(optional — erscheint auf der Rechnung)</span></label>

@@ -92,6 +92,16 @@ function buildInvoiceHtml(array $draft): string {
     $addrStreet  = h(trim($guest['address'] ?? ''));
     $addrZipCity = h(trim(($guest['zip'] ?? '') . ' ' . ($guest['city'] ?? '')));
 
+    $isFirmenrechnung = !empty($draft['isFirmenrechnung']);
+    $companyLine = '';
+    if ($isFirmenrechnung && !empty($draft['companyName'])) {
+        $companyLine = h($draft['companyName']) . '<br>';
+    }
+    $bookingRefLine = '';
+    if ($isFirmenrechnung && !empty($draft['bookingReference'])) {
+        $bookingRefLine = '<p style="margin:8px 0 0;font-size:11px;color:#666;">Buchungsnummer: ' . h($draft['bookingReference']) . '</p>';
+    }
+
     $checkIn  = formatDate($stay['checkIn']  ?? '');
     $checkOut = formatDate($stay['checkOut'] ?? '');
     $nights   = (int)($stay['nights']   ?? 0);
@@ -174,6 +184,24 @@ function buildInvoiceHtml(array $draft): string {
             . '</div>';
     }
 
+    $ohneFruehstueckBlock = '';
+    if (!empty($draft['ohneFruehstueck'])) {
+        $ohneFruehstueckBlock = '<div style="margin-top:16px;padding:10px 14px;background:#fef9ee;border-radius:4px;font-size:12px;">'
+            . '<strong>Hinweis:</strong> Der ausgewiesene Preis versteht sich ohne Frühstück.'
+            . '</div>';
+    }
+
+    // The generic "storniert nach X Tagen" warning assumes the standard
+    // 7-Tage guest term. Firmenrechnungen already state an exact due date in
+    // paymentNote (see computeDueDate() in invoice-draft.php) — showing both
+    // would be redundant and could disagree if the due date ever needs a
+    // manual override, so it's skipped for Firmenrechnungen.
+    $stornoWarning = $isFirmenrechnung ? '' : '
+    <div style="margin-bottom:12px;padding:10px 14px;background:#fff3cd;border-left:3px solid #e6a817;border-radius:4px;font-size:11px;line-height:1.5;color:#333;">
+      <strong>Wichtiger Hinweis:</strong> Sollte die Zahlung nicht innerhalb von 7 Tagen eingehen,
+      behalten wir uns vor, die Buchung automatisch zu stornieren.
+    </div>';
+
     return '<!DOCTYPE html>
 <html lang="de">
 <head><meta charset="UTF-8"><title>Rechnung ' . $invNum . '</title></head>
@@ -187,10 +215,12 @@ function buildInvoiceHtml(array $draft): string {
       <td style="vertical-align:top;width:50%;">
         <p style="margin:0 0 4px;font-size:10px;color:#999;text-transform:uppercase;letter-spacing:0.5px;">Rechnungsempfänger</p>
         <p style="margin:0;font-size:13px;line-height:1.7;">
+          ' . $companyLine . '
           <strong>' . $guestName . '</strong><br>
           ' . ($addrStreet ? $addrStreet . '<br>' : '') . '
           ' . ($addrZipCity ?: '<span style="color:#aaa;">(Adresse nicht angegeben)</span>') . '
         </p>
+        ' . $bookingRefLine . '
       </td>
       <td style="vertical-align:top;text-align:right;">
         <p style="margin:0 0 4px;font-size:10px;color:#999;text-transform:uppercase;letter-spacing:0.5px;">Leistungszeitraum</p>
@@ -234,10 +264,7 @@ function buildInvoiceHtml(array $draft): string {
   <!-- Payment info -->
   <div style="margin-top:28px;padding:14px 0;font-size:12px;line-height:1.8;">
     <p style="margin:0 0 8px;font-size:13px;"><strong>Zahlungsbedingungen:</strong> ' . h($draft['paymentNote'] ?? '') . '</p>
-    <div style="margin-bottom:12px;padding:10px 14px;background:#fff3cd;border-left:3px solid #e6a817;border-radius:4px;font-size:11px;line-height:1.5;color:#333;">
-      <strong>Wichtiger Hinweis:</strong> Sollte die Zahlung nicht innerhalb von 7 Tagen eingehen,
-      behalten wir uns vor, die Buchung automatisch zu stornieren.
-    </div>
+    ' . $stornoWarning . '
     <table width="100%" style="border-collapse:collapse;">
       <tr>
         <td style="vertical-align:top;padding-right:16px;">
@@ -255,6 +282,7 @@ function buildInvoiceHtml(array $draft): string {
     ' . $paypalBlock . '
   </div>
 
+  ' . $ohneFruehstueckBlock . '
   ' . $noteBlock . '
 
   <!-- Page footer -->

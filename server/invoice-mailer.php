@@ -146,6 +146,8 @@ function sendInvoiceToGuest(array $draft, string $pdfBytes, bool $isPaid = false
     $name  = $guest['name']  ?? '';
     if (!$email) return false;
 
+    $isFirmenrechnung = !empty($draft['isFirmenrechnung']);
+
     $esc       = fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
     $guestName = $esc($name);
     $checkIn   = ($stay['checkIn']  ?? '') ? date('d.m.Y', strtotime($stay['checkIn']))  : '–';
@@ -187,7 +189,11 @@ function sendInvoiceToGuest(array $draft, string $pdfBytes, bool $isPaid = false
 </p>';
         }
 
-        $cancelNote = '
+        // Skipped for Firmenrechnungen: paymentNote already states the exact
+        // due date (see computeDueDate() in invoice-draft.php) — a generic
+        // "innerhalb von 7 Tagen" line would be redundant and, if the actual
+        // term is 3 Werktage, simply wrong.
+        $cancelNote = $isFirmenrechnung ? '' : '
 <p style="background:#fff3cd;border-left:4px solid #e6a817;padding:10px 14px;border-radius:4px;font-size:13px;line-height:1.6;margin:0 0 20px;">
   <strong>Wichtiger Hinweis:</strong> Sollte die Zahlung nicht innerhalb von 7 Tagen eingehen,
   behalten wir uns vor, die Buchung automatisch zu stornieren.
@@ -232,7 +238,9 @@ function sendInvoiceToGuest(array $draft, string $pdfBytes, bool $isPaid = false
     </tr>
   </table>
 
-  ' . ($isPaid ? '' : '<p style="line-height:1.7;margin:0 0 12px;">Bitte begleichen Sie den Betrag innerhalb von <strong>7 Tagen</strong>:</p>') . '
+  ' . ($isPaid ? '' : ($isFirmenrechnung
+        ? '<p style="line-height:1.7;margin:0 0 12px;">Der Rechnungsbetrag ist ' . lcfirst($esc($draft['paymentNote'] ?? '')) . '</p>'
+        : '<p style="line-height:1.7;margin:0 0 12px;">Bitte begleichen Sie den Betrag innerhalb von <strong>7 Tagen</strong>:</p>')) . '
   ' . $paidNote . $bankHtml . $ppBtn . $cancelNote . '
 
   <p style="font-size:13px;color:#555;margin:0 0 20px;line-height:1.7;">
@@ -260,7 +268,9 @@ function sendInvoiceToGuest(array $draft, string $pdfBytes, bool $isPaid = false
     <tr><td style="padding:10px 14px;color:#666;width:38%;">Zimmer</td><td style="padding:10px 14px;">' . $roomName . '</td></tr>
     <tr style="border-top:1px solid #ede9e1;background:#f0f7ee;"><td style="padding:10px 14px;color:#666;">Gesamtbetrag</td><td style="padding:10px 14px;font-weight:700;color:#3d5a3e;">' . $total . '</td></tr>
   </table>
-  ' . ($isPaid ? '' : '<p style="line-height:1.7;margin:0 0 12px;">Bitte begleichen Sie den Betrag innerhalb von <strong>7 Tagen</strong>:</p>') . '
+  ' . ($isPaid ? '' : ($isFirmenrechnung
+        ? '<p style="line-height:1.7;margin:0 0 12px;">Der Rechnungsbetrag ist ' . lcfirst($esc($draft['paymentNote'] ?? '')) . '</p>'
+        : '<p style="line-height:1.7;margin:0 0 12px;">Bitte begleichen Sie den Betrag innerhalb von <strong>7 Tagen</strong>:</p>')) . '
   ' . $paidNote . $bankHtml . $ppBtn . $cancelNote . $signOff . '
 </div>';
     } else {
@@ -276,7 +286,9 @@ function sendInvoiceToGuest(array $draft, string $pdfBytes, bool $isPaid = false
     <tr style="border-top:1px solid #ede9e1;"><td style="padding:10px 14px;color:#666;">Zeitraum</td><td style="padding:10px 14px;">' . $checkIn . ' – ' . $checkOut . '</td></tr>
     <tr style="border-top:1px solid #ede9e1;background:#f0f7ee;"><td style="padding:10px 14px;color:#666;">Gesamtbetrag</td><td style="padding:10px 14px;font-weight:700;color:#3d5a3e;">' . $total . '</td></tr>
   </table>
-  ' . ($isPaid ? '' : '<p style="line-height:1.7;margin:0 0 12px;">Bitte begleichen Sie den Betrag innerhalb von <strong>7 Tagen</strong>:</p>') . '
+  ' . ($isPaid ? '' : ($isFirmenrechnung
+        ? '<p style="line-height:1.7;margin:0 0 12px;">Der Rechnungsbetrag ist ' . lcfirst($esc($draft['paymentNote'] ?? '')) . '</p>'
+        : '<p style="line-height:1.7;margin:0 0 12px;">Bitte begleichen Sie den Betrag innerhalb von <strong>7 Tagen</strong>:</p>')) . '
   ' . $paidNote . $bankHtml . $ppBtn . $cancelNote . $signOff . '
 </div>';
     }
