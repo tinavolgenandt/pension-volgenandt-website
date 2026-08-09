@@ -18,8 +18,8 @@ description: >-
   zur Verfügung. Lassen Sie sich vom Duft der Rosen in
   den Schlaf wiegen. Unsere voll ausgestattete
   Gemeinschaftsküche und die Terrasse dürfen gerne
-  genutzt werden – wir bitten um Rücksichtnahme auf
-  andere Gäste.
+  genutzt werden. Wir bitten dabei um Rücksichtnahme
+  auf andere Gäste.
 
 beds24PropertyId: 261258
 beds24RoomId: 549252
@@ -77,7 +77,7 @@ extras:
     price: 10
     unit: 'pro Person / Nacht'
   - name: 'Picknick-Korb'
-    description: 'Regional & hausgemacht, mit Geschirr und Decke. Im Garten der Pension entspannen, auf einen Ausflug mitnehmen oder einen Lieblingsplatz in der Eichsfelder Natur suchen – wir packen alles ein. Ausflugstipps gibt es auf unserer Website.'
+    description: 'Regional & hausgemacht, mit Geschirr und Decke. Im Garten der Pension entspannen, auf einen Ausflug mitnehmen oder einen Lieblingsplatz in der Eichsfelder Natur suchen. Wir packen alles ein. Ausflugstipps gibt es auf unserer Website.'
     price: 19
     pricePrefix: 'ab '
     unit: 'pro Person'

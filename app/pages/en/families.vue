@@ -79,7 +79,7 @@ const familyFeatures = [
     <!-- 1. Thin photo banner -->
     <SharedPageBanner
       image="/img/garten/einfahrt-sommer.webp"
-      image-alt="Pension Volgenandt – entrance with garden view in summer"
+      image-alt="Entrance of Pension Volgenandt with a garden view in summer"
       title="For Families"
       subtitle="Where Little Ones Are the Stars"
     />
@@ -118,7 +118,7 @@ const familyFeatures = [
         />
         <div>
           <h2 class="font-serif text-2xl font-bold text-sage-900">
-            Our Garden – A Paradise for Children
+            Our Garden: Plenty of Space to Play
           </h2>
           <p class="mt-4 leading-relaxed text-sage-800">
             On our large green area, your children can play to their hearts' content and discover
@@ -127,7 +127,7 @@ const familyFeatures = [
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
             Bobby cars and tricycles are ready to go, and in the evening we watch the fireflies in
-            the garden together. For us, a family holiday is more than just a room – it is the
+            the garden together. For us, a family holiday is more than just a room: it is the
             little moments that count.
           </p>
         </div>
@@ -148,7 +148,7 @@ const familyFeatures = [
               greenery.
             </p>
             <p class="mt-4 leading-relaxed text-sage-800">
-              A barbecue set with utensils and pans can be booked as an extra – just bring your own
+              A barbecue set with utensils and pans can be booked as an extra, just bring your own
               charcoal.
             </p>
           </div>
@@ -183,7 +183,7 @@ const familyFeatures = [
             desired.
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
-            At breakfast, we are happy to cater to the little ones' wishes – just let us know.
+            At breakfast, we are happy to cater to the little ones' wishes, just let us know.
           </p>
         </div>
       </div>
@@ -199,7 +199,7 @@ const familyFeatures = [
           <li class="flex items-start gap-3">
             <Icon name="ph:check-circle-duotone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
             <span class="leading-relaxed text-sage-800">
-              We provide cots and high chairs free of charge in every room – simply let us know when
+              We provide cots and high chairs free of charge in every room, simply let us know when
               booking.
             </span>
           </li>
@@ -212,13 +212,13 @@ const familyFeatures = [
           <li class="flex items-start gap-3">
             <Icon name="ph:check-circle-duotone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
             <span class="leading-relaxed text-sage-800">
-              The Bear Park Worbis is only 6 km away – a wonderful experience for the whole family.
+              The Bear Park Worbis is only 6 km away: a wonderful experience for the whole family.
             </span>
           </li>
           <li class="flex items-start gap-3">
             <Icon name="ph:check-circle-duotone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
             <span class="leading-relaxed text-sage-800">
-              Hiking trails and cycling routes nearby – easily accessible by car or rental bike,
+              Hiking trails and cycling routes nearby, easily accessible by car or rental bike,
               also suitable for little legs.
             </span>
           </li>

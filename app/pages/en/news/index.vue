@@ -33,7 +33,7 @@ const { data: articles } = await useAsyncData('en-news', () =>
   <div>
     <SharedPageBanner
       image="/img/garten/einfahrt-sommer.webp"
-      image-alt="Pension Volgenandt – entrance with garden view in summer"
+      image-alt="Entrance of Pension Volgenandt with a garden view in summer"
       title="News"
       subtitle="Updates from the Region"
     />

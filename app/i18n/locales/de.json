@@ -53,7 +53,7 @@
   },
   "rooms": {
     "title": "Unsere Zimmer",
-    "subtitle": "Ob gemütliche Ferienwohnung für die ganze Familie oder komfortables Doppelzimmer für Paare – bei uns finden Sie den passenden Rückzugsort für Ihren Aufenthalt im Eichsfeld.",
+    "subtitle": "Wir haben gemütliche Ferienwohnungen für Familien und komfortable Doppelzimmer für Paare. Bei uns finden Sie den passenden Rückzugsort für Ihren Aufenthalt im Eichsfeld.",
     "chooseRoom": "Wählen Sie ein Zimmer, um Verfügbarkeit und Buchungsmöglichkeiten zu sehen."
   },
   "price": {
@@ -76,14 +76,14 @@
     "heading": "Kontakt & Anfahrt",
     "subtitle": "Wir freuen uns auf Sie",
     "talkToUs": "Sprechen Sie uns an",
-    "talkToUsText": "Ob Sie eine Frage haben, ein Zimmer buchen möchten oder einfach mehr über unsere Pension erfahren wollen – wir sind gerne für Sie da.",
+    "talkToUsText": "Egal ob Sie eine Frage haben, ein Zimmer buchen möchten oder mehr über unsere Pension erfahren wollen: Wir sind gerne für Sie da.",
     "mobile": "Mobil",
     "whatsapp": "WhatsApp",
     "landline": "Festnetz",
     "email": "E-Mail",
     "address": "Adresse",
     "sendMessage": "Nachricht senden",
-    "sendMessageText": "Schreiben Sie uns – wir antworten in der Regel innerhalb von 24 Stunden."
+    "sendMessageText": "Schreiben Sie uns, wir antworten in der Regel innerhalb von 24 Stunden."
   },
   "form": {
     "name": "Name",
@@ -101,7 +101,7 @@
     "byCar": "Mit dem Auto (A38)",
     "byCarText": "Von der A38 nehmen Sie die Ausfahrt Leinefelde und folgen der Beschilderung Richtung Breitenbach. Nach etwa 10 Minuten Fahrt erreichen Sie unsere Pension an der Otto-Reutter-Straße 28. Kostenlose Parkplätze stehen direkt vor dem Haus bereit.",
     "byTrain": "Mit der Bahn",
-    "byTrainText": "Vom Bahnhof Leinefelde sind es 4 km bis zu unserer Pension. Gerne holen wir Sie nach Absprache vom Bahnhof ab – rufen Sie uns einfach vorher an.",
+    "byTrainText": "Vom Bahnhof Leinefelde sind es 4 km bis zu unserer Pension. Gerne holen wir Sie nach Absprache vom Bahnhof ab. Rufen Sie uns dafür einfach vorher an.",
     "gps": "Koordinaten für das Navi",
     "openMaps": "In Google Maps öffnen"
   },
@@ -144,13 +144,13 @@
     "heroButton": "Zimmer entdecken",
     "welcomeHeading": "Willkommen in Breitenbach",
     "welcomeText": "",
-    "welcomeTitle": "Willkommen bei uns",
-    "welcomeParagraph1": "Wir sind Simone & Ralf Volgenandt und freuen uns, Sie in unserem Zuhause im Eichsfeld willkommen zu heißen. Unsere Pension liegt etwa einen Kilometer außerhalb von Breitenbach, eingebettet in die sanfte Hügellandschaft Thüringens – ein Ort, an dem die Zeit ein wenig langsamer vergeht.",
+    "welcomeTitle": "Unser Zuhause im Eichsfeld",
+    "welcomeParagraph1": "Wir sind Simone & Ralf Volgenandt und freuen uns, Sie in unserem Zuhause im Eichsfeld willkommen zu heißen. Unsere Pension liegt etwa einen Kilometer außerhalb von Breitenbach, eingebettet in die sanfte Hügellandschaft Thüringens, wo die Zeit ein wenig langsamer vergeht.",
     "welcomeParagraph2": "Ob Sie die Burgen und Wanderwege der Region erkunden, den nahen Bärenpark besuchen oder einfach die Stille genießen möchten: Bei uns finden Sie den Ausgangspunkt für erholsame Tage. Unsere Ferienwohnungen und Zimmer bieten Ihnen Platz, Komfort und einen Blick ins Grüne.",
-    "welcomeParagraph3": "Wir bewirtschaften unser Haus mit Sorgfalt und Liebe zur Natur – mit Solarenergie vom eigenen Dach, einer biologischen Kläranlage und einem Garten, der zum Verweilen einlädt.",
-    "welcomeImageAlt": "Simone und Ralf Volgenandt – Ihre Gastgeber in Breitenbach",
+    "welcomeParagraph3": "Wir bewirtschaften unser Haus mit Sorgfalt und Liebe zur Natur: mit Solarenergie vom eigenen Dach, einer biologischen Kläranlage und einem Garten, der zum Verweilen einlädt.",
+    "welcomeImageAlt": "Simone und Ralf Volgenandt, Ihre Gastgeber in Breitenbach",
     "gardenHeading": "Garten & Umgebung",
-    "gardenSubtitle": "Vier Jahreszeiten – ein Ort der Ruhe",
+    "gardenSubtitle": "Zu jeder Jahreszeit ein Ort der Ruhe",
     "ourRooms": "Unsere Zimmer",
     "testimonialsHeading": "Was unsere Gäste sagen",
     "googleReview": "Google Bewertung",
@@ -159,7 +159,7 @@
     "ariaPrevQuote": "Vorheriges Zitat",
     "ariaNextQuote": "Nächstes Zitat",
     "ariaQuoteOf": "Zitat {current} von {total}",
-    "experienceHeading": "Erleben Sie das Eichsfeld",
+    "experienceHeading": "Das Eichsfeld entdecken",
     "exploreAttractions": "Alle Ausflugsziele entdecken",
     "sustainabilityHeading": "Natürlich nachhaltig",
     "sustainabilityText": "Nachhaltigkeit ist bei uns kein Trend, sondern gelebter Alltag. Unser Zuhause im Eichsfeld pflegen wir mit derselben Sorgfalt wie Ihren Aufenthalt.",
@@ -185,7 +185,7 @@
     "gardenPhoto9": "Winterlandschaft im Eichsfeld mit verschneiten Feldern und Sonnenschein"
   },
   "hosts": {
-    "caption": "Simone & Ralf Volgenandt – wir freuen uns auf Sie",
+    "caption": "Simone & Ralf Volgenandt, wir freuen uns auf Sie",
     "buildingCaption": "So empfängt Sie unsere Pension"
   },
   "softCta": {
@@ -217,14 +217,14 @@
       "region": "Region",
       "pension": "Pension"
     },
-    "eventQuestion": "Haben Sie Fragen zu dieser Veranstaltung? Wir beraten Sie gerne.",
+    "articleQuestion": "Haben Sie Fragen dazu? Wir beraten Sie gerne.",
     "stayWithUs": "Übernachten Sie bei uns im Eichsfeld"
   },
   "activities": {
     "title": "Aktivitäten",
     "subtitle": "Entdecken Sie das Eichsfeld",
     "intro1": "Das Eichsfeld ist ein Paradies für alle, die gerne draußen unterwegs sind. In der Umgebung unserer Pension finden Sie zahlreiche Wander- und Radwege, die durch eine der schönsten Landschaften Thüringens führen.",
-    "intro2": "Ob sportlich oder gemütlich, allein oder mit der Familie – wir beraten Sie gerne zu den besten Routen und Ausflugszielen in unserer Nähe.",
+    "intro2": "Ob sportlich oder gemütlich, allein oder mit der Familie: Wir beraten Sie gerne zu den besten Routen und Ausflugszielen in unserer Nähe.",
     "popularAttractions": "Beliebte Ausflugsziele",
     "sportingActivities": "Sportliche Aktivitäten",
     "planActive": "Planen Sie Ihren aktiven Urlaub im Eichsfeld",
@@ -234,10 +234,10 @@
     },
     "cycling": {
       "title": "Radfahren",
-      "description": "Ob gemütliche Radtour entlang der Leine oder sportliche Route durch die Hügel – hier ist für jeden etwas dabei."
+      "description": "Ob gemütliche Radtour entlang der Leine oder sportliche Route durch die Hügel: Hier ist für jeden etwas dabei."
     },
-    "picnicHeading": "Picknick-Korb – Der Ausflug mit Genuss",
-    "picnicText": "Nehmen Sie unseren hausgemachten Picknick-Korb auf Ihre Tour mit – ob zur Burg Hanstein, an den Seeburger See oder einfach in den Garten. Regional, saisonal, mit echtem Geschirr. Ab 19 € pro Person.",
+    "picnicHeading": "Unser Picknick-Korb für unterwegs",
+    "picnicText": "Nehmen Sie unseren hausgemachten Picknick-Korb auf Ihre Tour mit, ob zur Burg Hanstein, an den Seeburger See oder einfach in den Garten. Regional, saisonal, mit echtem Geschirr. Ab 19 € pro Person.",
     "picnicLink": "Picknick-Korb entdecken"
   },
   "attractions": {
@@ -248,7 +248,7 @@
     "recommendations": "Unsere Empfehlungen",
     "activitiesHeading": "Aktivitäten",
     "returnToRooms": "Nach einem erlebnisreichen Tag zurück in gemütliche Zimmer",
-    "hikingDesc": "Wanderwege in der Umgebung – von gemütlich bis anspruchsvoll.",
+    "hikingDesc": "Wanderwege in der Umgebung, von gemütlich bis anspruchsvoll.",
     "cyclingDesc": "Der Leine-Radweg führt direkt an Breitenbach vorbei."
   },
   "activity": {
@@ -314,8 +314,8 @@
     "bookNow": "Jetzt Zimmer sichern",
     "moreInfo": "Mehr erfahren",
     "countdownLabel": "Tage noch",
-    "teaserTitle": "Landesgartenschau 2026 – direkt vor unserer Tür",
-    "teaserText": "Vom 23. April bis 11. Oktober verwandelt sich Leinefelde-Worbis in einen blühenden Veranstaltungsort – nur 5 Autominuten von unserer Pension. Über 300.000 Besucher werden erwartet. Sichern Sie sich rechtzeitig Ihr Zimmer."
+    "teaserTitle": "Landesgartenschau 2026 direkt vor unserer Tür",
+    "teaserText": "Vom 23. April bis 11. Oktober verwandelt sich Leinefelde-Worbis in einen blühenden Veranstaltungsort, nur 5 Autominuten von unserer Pension. Über 300.000 Besucher werden erwartet. Sichern Sie sich rechtzeitig Ihr Zimmer."
   },
   "ferienwohnungen": {
     "title": "Ferienwohnungen im Eichsfeld",
@@ -331,7 +331,7 @@
   "monteurzimmer": {
     "title": "Monteurzimmer in Leinefelde-Worbis",
     "subtitle": "Günstig, komfortabel & verkehrsgünstig gelegen",
-    "intro": "Sie arbeiten in Leinefelde-Worbis oder im Eichsfeld? Unsere Pension bietet komfortable Zimmer für Monteure, Handwerker und Geschäftsreisende – mit kostenlosem WLAN, Parkplatz und Küchenzugang.",
+    "intro": "Sie arbeiten in Leinefelde-Worbis oder im Eichsfeld? Unsere Pension bietet komfortable Zimmer für Monteure, Handwerker und Geschäftsreisende, inklusive kostenlosem WLAN, Parkplatz und Küchenzugang.",
     "highlights": "Ihre Vorteile",
     "wifi": "Kostenloses WLAN",
     "parking": "Kostenloser Parkplatz",
@@ -339,6 +339,8 @@
     "location": "Nahe A38 & Leinefelde",
     "quiet": "Ruhige Lage im Grünen",
     "weekly": "Attraktive Wochenpreise auf Anfrage",
+    "forWorkersTitle": "Für längere Einsätze",
+    "forWorkersText": "Als familiengeführte Pension sind wir auf längere Aufenthalte eingestellt, wie sie bei Bauprojekten oder Montageeinsätzen im Eichsfeld üblich sind. Auf Wunsch stellen wir die Rechnung direkt auf Ihre Firmenadresse aus. Bei Fragen zu Ihrem Aufenthalt erreichen Sie uns direkt und unkompliziert, telefonisch oder per E-Mail.",
     "bookNow": "Zimmer anfragen"
   }
 }

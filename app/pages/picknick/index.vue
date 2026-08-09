@@ -9,9 +9,9 @@ useSeoMeta({
   title: 'Picknick-Korb ab 19 € | Pension Volgenandt Eichsfeld',
   ogTitle: 'Picknick-Korb | Pension Volgenandt',
   description:
-    'Hausgemacht, regional, mit Herz gepackt. Buchen Sie Ihren Picknick-Korb für den Garten oder die Umgebung – ab 19 € pro Person.',
+    'Hausgemacht, regional, mit Herz gepackt. Buchen Sie Ihren Picknick-Korb für den Garten oder die Umgebung, ab 19 € pro Person.',
   ogDescription:
-    'Hausgemacht, regional, mit Herz gepackt. Buchen Sie Ihren Picknick-Korb für den Garten oder die Umgebung – ab 19 € pro Person.',
+    'Hausgemacht, regional, mit Herz gepackt. Buchen Sie Ihren Picknick-Korb für den Garten oder die Umgebung, ab 19 € pro Person.',
   ogImage: '/img/picknick/header-picknick.webp',
   ogType: 'website',
 })
@@ -157,7 +157,7 @@ onBeforeUnmount(() => gardenObserver?.disconnect())
     <section class="mx-auto max-w-3xl px-6 py-12 text-center md:py-16">
       <p class="text-lg leading-relaxed text-sage-800">
         Wir packen für Sie einen Picknickkorb mit hausgemachten Produkten, echter Picknickdecke,
-        Geschirr und Besteck. Sie suchen sich Ihren Lieblingsplatz aus – im Garten direkt an der
+        Geschirr und Besteck. Sie suchen sich Ihren Lieblingsplatz aus: im Garten direkt an der
         Pension oder irgendwo in der wunderschönen Umgebung.
       </p>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
@@ -201,7 +201,7 @@ onBeforeUnmount(() => gardenObserver?.disconnect())
             >
             <h3 class="mt-4 font-serif text-lg font-semibold text-sage-900">Paket wählen</h3>
             <p class="mt-2 text-sm leading-relaxed text-sage-600">
-              Brunch oder Sonnenuntergang – suchen Sie sich Ihr Wunschangebot aus.
+              Brunch oder Sonnenuntergang: suchen Sie sich Ihr Wunschangebot aus.
             </p>
           </li>
           <li class="flex flex-col items-center text-center">
@@ -231,7 +231,7 @@ onBeforeUnmount(() => gardenObserver?.disconnect())
             >
             <h3 class="mt-4 font-serif text-lg font-semibold text-sage-900">Abholen & genießen</h3>
             <p class="mt-2 text-sm leading-relaxed text-sage-600">
-              Korb an der Pension abholen, Lieblingsplatz aussuchen – und den Moment genießen.
+              Korb an der Pension abholen, Lieblingsplatz aussuchen und den Moment genießen.
             </p>
           </li>
         </ol>
@@ -242,7 +242,7 @@ onBeforeUnmount(() => gardenObserver?.disconnect())
     <section class="px-6 py-12 md:py-16">
       <div class="mx-auto max-w-6xl">
         <h2 class="mb-2 font-serif text-2xl font-semibold text-sage-900">Ihre Plätze im Garten</h2>
-        <p class="mb-8 text-sage-600">Direkt an der Pension – kein Auto nötig.</p>
+        <p class="mb-8 text-sage-600">Direkt an der Pension, kein Auto nötig.</p>
         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           <PicknickSpotCard
             v-for="spot in gardenSpots"
@@ -310,7 +310,7 @@ onBeforeUnmount(() => gardenObserver?.disconnect())
     <section class="px-6 py-10 md:py-12">
       <div class="mx-auto max-w-3xl rounded-xl bg-sage-50 px-8 py-8 text-center">
         <p class="text-sage-700">
-          Den Korb einfach mitnehmen – ob zur Burg Hanstein, an den Seeburger See oder auf eine
+          Den Korb einfach mitnehmen, ob zur Burg Hanstein, an den Seeburger See oder auf eine
           Wanderung im Eichsfeld. Schöne Ausflugsziele gibt es hier in der Umgebung genug.
         </p>
         <NuxtLink
@@ -326,7 +326,7 @@ onBeforeUnmount(() => gardenObserver?.disconnect())
     <section class="mx-auto max-w-5xl px-6 py-12 md:py-16">
       <h2 class="mb-2 font-serif text-2xl font-semibold text-sage-900">Was ist immer dabei?</h2>
       <p class="mb-8 text-sage-600">
-        Jeder Korb ist vollständig ausgestattet – echtes Geschirr, keine Einwegprodukte.
+        Jeder Korb ist vollständig ausgestattet: echtes Geschirr, keine Einwegprodukte.
       </p>
       <PicknickBasketContents v-if="basket" :always="basket.always" :extras="basket.extras" />
     </section>
@@ -394,7 +394,7 @@ onBeforeUnmount(() => gardenObserver?.disconnect())
       <div class="mx-auto max-w-2xl text-center">
         <h2 class="font-serif text-2xl font-semibold text-sage-900">Lust auf ein Picknick?</h2>
         <p class="mt-3 text-sage-700">
-          Jetzt Ihren Wunschtermin anfragen – wir melden uns innerhalb von 24 Stunden.
+          Jetzt Ihren Wunschtermin anfragen, wir melden uns innerhalb von 24 Stunden.
         </p>
         <NuxtLink
           to="/picknick/buchen/"

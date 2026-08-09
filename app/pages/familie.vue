@@ -76,7 +76,7 @@ const familyFeatures = [
     <!-- 1. Thin photo banner -->
     <SharedPageBanner
       image="/img/garten/einfahrt-sommer.webp"
-      image-alt="Pension Volgenandt – Einfahrt mit Gartenblick im Sommer"
+      image-alt="Einfahrt der Pension Volgenandt mit Gartenblick im Sommer"
       title="Für Familien"
       subtitle="Bei uns sind die Kleinen die Größten"
     />
@@ -115,7 +115,7 @@ const familyFeatures = [
         />
         <div>
           <h2 class="font-serif text-2xl font-bold text-sage-900">
-            Unser Garten – ein Paradies für Kinder
+            Unser Garten: viel Platz zum Toben für Kinder
           </h2>
           <p class="mt-4 leading-relaxed text-sage-800">
             Auf unserer großen Grünfläche können Ihre Kinder nach Herzenslust spielen und die Natur
@@ -124,7 +124,7 @@ const familyFeatures = [
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
             Bobbycars und Dreirad stehen bereit, und am Abend beobachten wir gemeinsam die
-            Glühwürmchen im Garten. Für uns ist Familienurlaub mehr als nur ein Zimmer – es sind die
+            Glühwürmchen im Garten. Für uns ist Familienurlaub mehr als nur ein Zimmer: Es sind die
             kleinen Momente, die zählen.
           </p>
         </div>
@@ -145,7 +145,7 @@ const familyFeatures = [
               genießen.
             </p>
             <p class="mt-4 leading-relaxed text-sage-800">
-              Ein Grill-Set mit Besteck und Pfannen können Sie bei uns dazubuchen – Grillkohle
+              Ein Grill-Set mit Besteck und Pfannen können Sie bei uns dazubuchen, Grillkohle
               bringen Sie einfach selbst mit.
             </p>
           </div>
@@ -180,7 +180,7 @@ const familyFeatures = [
             lässt keine Wünsche offen.
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
-            Beim Frühstück gehen wir gerne auf die Wünsche der Kleinen ein – sprechen Sie uns
+            Beim Frühstück gehen wir gerne auf die Wünsche der Kleinen ein, sprechen Sie uns
             einfach an.
           </p>
         </div>
@@ -197,7 +197,7 @@ const familyFeatures = [
           <li class="flex items-start gap-3">
             <Icon name="ph:check-circle-duotone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
             <span class="leading-relaxed text-sage-800">
-              Kinderbetten und Hochstühle stellen wir kostenlos in jedem Zimmer bereit – einfach bei
+              Kinderbetten und Hochstühle stellen wir kostenlos in jedem Zimmer bereit, einfach bei
               der Buchung angeben.
             </span>
           </li>
@@ -210,14 +210,14 @@ const familyFeatures = [
           <li class="flex items-start gap-3">
             <Icon name="ph:check-circle-duotone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
             <span class="leading-relaxed text-sage-800">
-              Der Bärenpark Worbis ist nur 6 km entfernt – ein tolles Erlebnis für die ganze
+              Der Bärenpark Worbis ist nur 6 km entfernt: ein tolles Erlebnis für die ganze
               Familie.
             </span>
           </li>
           <li class="flex items-start gap-3">
             <Icon name="ph:check-circle-duotone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
             <span class="leading-relaxed text-sage-800">
-              Wanderwege und Radtouren in der Umgebung – per Auto oder Leihrad gut erreichbar, auch
+              Wanderwege und Radtouren in der Umgebung, per Auto oder Leihrad gut erreichbar, auch
               für kleine Beine geeignet.
             </span>
           </li>

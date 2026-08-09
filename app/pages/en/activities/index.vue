@@ -60,7 +60,7 @@ const activityCards = [
   {
     title: 'Cycling',
     description:
-      'Whether a leisurely cycle along the Leine or a sporty route through the hills \u2013 there is something for everyone.',
+      'Whether a leisurely cycle along the Leine or a sporty route through the hills, there is something for everyone.',
     icon: 'ph:bicycle-duotone',
     to: '/en/activities/cycling/',
   },
@@ -72,7 +72,7 @@ const activityCards = [
     <!-- 1. Thin photo banner -->
     <SharedPageBanner
       image="/img/garten/einfahrt-sommer.webp"
-      image-alt="Pension Volgenandt – entrance with garden view in summer"
+      image-alt="Entrance of Pension Volgenandt with a garden view in summer"
       title="Activities"
       subtitle="Explore the Eichsfeld"
     />
@@ -80,12 +80,12 @@ const activityCards = [
     <!-- 2. Personal intro -->
     <section class="mx-auto max-w-3xl px-6 py-12 md:py-16">
       <p class="text-lg leading-relaxed text-sage-800">
-        The Eichsfeld is a paradise for anyone who loves the outdoors. In the area around our
+        The Eichsfeld is ideal for anyone who loves the outdoors. In the area around our
         guesthouse you will find numerous hiking and cycling trails that lead through one of the
         most beautiful landscapes in Thuringia.
       </p>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
-        Whether sporty or leisurely, alone or with the family &ndash; we are happy to advise you on
+        Whether sporty or leisurely, alone or with the family, we are happy to advise you on
         the best routes and attractions nearby.
       </p>
     </section>
@@ -193,10 +193,10 @@ const activityCards = [
           </div>
           <div>
             <h2 class="font-serif text-2xl font-semibold text-sage-900">
-              Picnic Basket – Your Outing with a Twist
+              Picnic Basket: Your Outing with a Twist
             </h2>
             <p class="mt-3 leading-relaxed text-sage-700">
-              Take our homemade picnic basket along on your trip – to Burg Hanstein, Seeburger See,
+              Take our homemade picnic basket along on your trip, to Burg Hanstein, Seeburger See,
               or simply into the garden. Local, seasonal, with real crockery. From €19 per person.
             </p>
             <NuxtLink

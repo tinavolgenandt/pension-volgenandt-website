@@ -17,8 +17,8 @@ description: >-
   Trotz seiner kompakten Größe bietet das Zimmer alles,
   was Sie für einen angenehmen Aufenthalt brauchen.
   Unsere voll ausgestattete Gemeinschaftsküche und die
-  Terrasse dürfen gerne genutzt werden – wir bitten um
-  Rücksichtnahme auf andere Gäste.
+  Terrasse dürfen gerne genutzt werden. Wir bitten
+  dabei um Rücksichtnahme auf andere Gäste.
 
 weekendOnly: true
 
@@ -71,7 +71,7 @@ extras:
     price: 15
     unit: 'pro Person / Nacht'
   - name: 'Picknick-Korb'
-    description: 'Regional & hausgemacht, mit Geschirr und Decke. Im Garten der Pension entspannen, auf einen Ausflug mitnehmen oder einen Lieblingsplatz in der Eichsfelder Natur suchen – wir packen alles ein. Ausflugstipps gibt es auf unserer Website.'
+    description: 'Regional & hausgemacht, mit Geschirr und Decke. Im Garten der Pension entspannen, auf einen Ausflug mitnehmen oder einen Lieblingsplatz in der Eichsfelder Natur suchen. Wir packen alles ein. Ausflugstipps gibt es auf unserer Website.'
     price: 19
     pricePrefix: 'ab '
     unit: 'pro Person'

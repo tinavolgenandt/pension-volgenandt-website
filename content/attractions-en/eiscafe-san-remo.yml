@@ -1,9 +1,9 @@
 name: 'Eiscafe San Remo'
 slug: eiscafe-san-remo
-seoTitle: 'Eiscafe San Remo Worbis – Homemade Ice Cream | Eichsfeld'
-seoDescription: 'Eiscafe San Remo in Worbis offers homemade ice cream, coffee and cake – just 9 km from our guesthouse in the Eichsfeld.'
+seoTitle: 'Eiscafe San Remo Worbis: Homemade Ice Cream | Eichsfeld'
+seoDescription: 'Eiscafe San Remo in Worbis offers homemade ice cream, coffee and cake, just 9 km from our guesthouse in the Eichsfeld.'
 heroImage: /img/attractions/eiscafe-san-remo-eisteller.webp
-heroImageAlt: 'Ice cream platter at Eiscafe San Remo – scoops, fruit, cream and wafer rolls'
+heroImageAlt: 'Ice cream platter at Eiscafe San Remo with scoops, fruit, cream and wafer rolls'
 distanceKm: 9
 drivingMinutes: 11
 category: kultur
@@ -11,39 +11,47 @@ shortDescription: 'Homemade ice cream, coffee and cake in the heart of Worbis'
 intro: >-
   Eiscafe San Remo in the centre of Worbis is known for its
   homemade ice cream flavours. The Grohmann family makes all
-  the ice cream varieties on site – a treat for young and old,
+  the ice cream varieties on site, a treat for young and old,
   especially after visiting the nearby bear park.
 content: >-
   Located in the shopping arcade on Lange Strasse, Eiscafe San Remo
   offers a wide selection of homemade ice cream in cones or cups.
-  Alongside the classic flavours, creative specialities like the
-  spaghetti ice cream platter are sure to surprise.
+  The Grohmann family makes all the flavours themselves, and the
+  owner learned the craft of ice cream making in Italy. Alongside
+  the classic flavours, creative specialities like the spaghetti ice
+  cream platter are sure to surprise.
 
 
-  The menu also has some more playful creations worth a look: several
-  spaghetti ice cream variations – the classic with strawberry sauce
-  and white chocolate, a banana or chocolate version, or a tongue-in-
-  cheek "Carbonara" style with eggnog and nuts – plus Tartufo with
-  chocolate sauce and coffee liqueur, colourful pizza ice cream, or
-  the fried-egg-look "Spiegelei" ice cream with apricots. For sharing,
-  there's the generously sized Coppa Mille Fiori for two.
+  The menu also has some more playful creations worth a look:
+  several spaghetti ice cream variations, the classic with
+  strawberry sauce and white chocolate, a banana or chocolate
+  version, or a tongue-in-cheek "Carbonara" style with eggnog and
+  nuts, plus Tartufo with chocolate sauce and coffee liqueur,
+  colourful pizza ice cream, or the fried-egg-look "Spiegelei" ice
+  cream with apricots. For sharing, there is the generously sized
+  Coppa Mille Fiori for two.
 
 
-  There is also coffee and cake, yoghurt creations, waffles and
-  light hot dishes. The atmosphere is cosy and the service friendly
-  – no wonder the cafe has a 4.7 out of 5 star rating on Google.
+  We have been visiting San Remo ourselves for a long time, since
+  our children were toddlers, and we still stop by regularly today.
+  Our favourite is the blueberry cup, made with fresh blueberries
+  and plenty of cream. In summer, we also regularly bring our own
+  berries from the guesthouse garden, which are then turned into ice
+  cream there.
+
+
+  There is also coffee and cake, yoghurt creations and waffles. The
+  atmosphere is cosy and the service friendly.
 
 
   The cafe is located at Lange Strasse 17 in Leinefelde-Worbis.
-  Opening hours are Monday and Friday 12pm-6pm, Tuesday to Thursday
-  9am-6pm, and Sunday 1pm-7pm; closed on Saturdays.
 
 
   San Remo is the perfect stop during a stroll through Worbis or
   after a visit to the Alternative Bear Park, which is just a short
   walk away.
 hostTip: >-
-  Try the "Carbonara" spaghetti ice cream – the playful version with
+  Try the "Carbonara" spaghetti ice cream. The playful version with
   eggnog and nuts is guaranteed to spark conversation at the family
   table. Combine your visit with the Bear Park Worbis, just a few
   minutes' walk away.
@@ -52,7 +60,7 @@ website: 'https://sanremo-worbis.de/'
 additionalWebsites:
   - label: 'Instagram'
     url: 'https://www.instagram.com/eiscafe.san.remo/'
-  - label: 'Google Maps'
+  - label: 'Google Reviews'
     url: 'https://www.google.com/maps/search/Eiscafé+San+Remo+Worbis'
 coordinates:
   lat: 51.4088

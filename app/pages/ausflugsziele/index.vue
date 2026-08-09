@@ -62,7 +62,7 @@ const activityCards = computed(() => [
     <!-- Banner -->
     <SharedPageBanner
       image="/img/garten/einfahrt-sommer.webp"
-      image-alt="Pension Volgenandt – Einfahrt mit Gartenblick im Sommer"
+      image-alt="Einfahrt der Pension Volgenandt mit Gartenblick im Sommer"
       :title="t('attractions.title', locale)"
       :subtitle="t('attractions.subtitle', locale)"
     />
@@ -107,15 +107,15 @@ const activityCards = computed(() => [
           </div>
           <div>
             <h2 class="font-serif text-2xl font-semibold text-sage-900">
-              Picknick-Korb – Ausflug mit Genuss
+              Picknick-Korb: Ausflug mit Genuss
             </h2>
             <p class="mt-3 leading-relaxed text-sage-700">
-              Nehmen Sie unseren hausgemachten Picknick-Korb auf Ihren Ausflug mit – zur Burg
+              Nehmen Sie unseren hausgemachten Picknick-Korb auf Ihren Ausflug mit, zur Burg
               Hanstein, an den Seeburger See oder einfach in unseren Garten. Regional, saisonal, mit
               echtem Geschirr. Ab 19 € pro Person.
             </p>
             <p class="mt-2 text-sm text-sage-500">
-              Auch für Tagesgäste buchbar – kein Zimmer nötig.
+              Auch für Tagesgäste buchbar, kein Zimmer nötig.
             </p>
             <NuxtLink
               to="/picknick/"

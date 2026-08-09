@@ -73,7 +73,7 @@ useJsonLd(
     <!-- 1. Thin photo banner -->
     <SharedPageBanner
       image="/img/garten/einfahrt-sommer.webp"
-      image-alt="Pension Volgenandt – Einfahrt mit Gartenblick im Sommer"
+      image-alt="Einfahrt der Pension Volgenandt mit Gartenblick im Sommer"
       :title="t('contact.heading', locale)"
       :subtitle="t('contact.subtitle', locale)"
     />
@@ -182,7 +182,7 @@ useJsonLd(
         <figure>
           <NuxtImg
             src="/img/content/gastgeber-portrait.webp"
-            alt="Simone und Ralf Volgenandt – Ihre Gastgeber in Breitenbach"
+            alt="Simone und Ralf Volgenandt, Ihre Gastgeber in Breitenbach"
             class="aspect-[4/3] w-full rounded-lg object-cover"
             loading="lazy"
             sizes="100vw sm:50vw"
@@ -194,7 +194,7 @@ useJsonLd(
         <figure>
           <NuxtImg
             src="/img/homepage/gebaeude-innenhof.webp"
-            alt="Pension Volgenandt – Gebäude und Innenhof"
+            alt="Gebäude und Innenhof der Pension Volgenandt"
             class="aspect-[4/3] w-full rounded-lg object-cover"
             loading="lazy"
             sizes="100vw sm:50vw"

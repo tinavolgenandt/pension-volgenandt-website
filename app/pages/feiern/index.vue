@@ -9,9 +9,9 @@ useSeoMeta({
   title: 'Feiern im Garten | Hochzeit & Feste im Eichsfeld – Pension Volgenandt',
   ogTitle: 'Feiern im Garten | Pension Volgenandt',
   description:
-    'Hochzeit, Jugendweihe, Kommunion oder runder Geburtstag: Feiern Sie im Garten der Pension Volgenandt im Eichsfeld – Rundum-sorglos-Paket mit Catering, Eventplanung und Übernachtung. Jetzt Preis berechnen.',
+    'Hochzeit, Jugendweihe, Kommunion oder runder Geburtstag: Feiern Sie im Garten der Pension Volgenandt im Eichsfeld. Rundum-sorglos-Paket mit Catering, Eventplanung und Übernachtung. Jetzt Preis berechnen.',
   ogDescription:
-    'Ihr Fest im Grünen im Eichsfeld – Rundum-sorglos mit Catering, Eventplanung und Übernachtung für Ihre Gäste.',
+    'Ihr Fest im Grünen im Eichsfeld: Rundum-sorglos mit Catering, Eventplanung und Übernachtung für Ihre Gäste.',
   ogImage: '/img/garten/garten-rasen-baeume-sommer.webp',
   ogType: 'website',
   // Prices are still provisional (caterer/insurance not yet confirmed) and the
@@ -39,7 +39,7 @@ useJsonLd(
     url: 'https://www.pension-volgenandt.de/feiern/',
     image: ['https://www.pension-volgenandt.de/img/garten/garten-rasen-baeume-sommer.webp'],
     description:
-      'Full-Service-Eventlocation im Garten der Pension Volgenandt im Eichsfeld für Hochzeiten, Jugendweihe, Konfirmation, Kommunion, Taufe, runde Geburtstage und Jubiläen – inklusive Catering, Eventplanung und Übernachtungsmöglichkeit.',
+      'Full-Service-Eventlocation im Garten der Pension Volgenandt im Eichsfeld für Hochzeiten, Jugendweihe, Konfirmation, Kommunion, Taufe, runde Geburtstage und Jubiläen, inklusive Catering, Eventplanung und Übernachtungsmöglichkeit.',
     areaServed: {
       '@type': 'Place',
       name: 'Eichsfeld, Thüringen',
@@ -54,7 +54,7 @@ useJsonLd(
 const steps = [
   {
     title: 'Anfrage',
-    text: 'Senden Sie uns über den Rechner unverbindlich Ihre Eckdaten – Anlass, Termin und Gästezahl.',
+    text: 'Senden Sie uns über den Rechner unverbindlich Ihre Eckdaten: Anlass, Termin und Gästezahl.',
   },
   {
     title: 'Beratung',
@@ -66,7 +66,7 @@ const steps = [
   },
   {
     title: 'Feiern',
-    text: 'Genießen Sie Ihren Tag im Grünen – wir koordinieren vor Ort, Ihre Gäste übernachten bei uns.',
+    text: 'Verbringen Sie Ihren Tag im Grünen: Wir koordinieren vor Ort, Ihre Gäste übernachten bei uns.',
   },
 ]
 
@@ -74,22 +74,22 @@ const included = [
   {
     icon: 'ph:key-duotone',
     title: 'Das ganze Grundstück für Sie allein',
-    text: 'Für Ihr Festwochenende buchen Sie die komplette Pension exklusiv – alle Zimmer und Ferienwohnungen für bis zu 18 Übernachtungsgäste. Keine anderen Gäste – nur Sie, Ihre Familie und Ihre Freunde, ganz unter sich.',
+    text: 'Für Ihr Festwochenende buchen Sie die komplette Pension exklusiv: alle Zimmer und Ferienwohnungen für bis zu 18 Übernachtungsgäste. Keine anderen Gäste, nur Sie, Ihre Familie und Ihre Freunde, ganz unter sich.',
   },
   {
     icon: 'ph:tree-duotone',
     title: 'Unser Garten als festliche Kulisse',
-    text: 'Ein gepflegter, ruhiger Garten im Eichsfeld – intim, idyllisch und mitten im Grünen. Hier feiern Sie stimmungsvoll und ungestört, auf Wunsch mit Festzelt.',
+    text: 'Ein gepflegter, ruhiger Garten im Eichsfeld, intim und mitten im Grünen. Hier feiern Sie stimmungsvoll und ungestört, auf Wunsch mit Festzelt.',
   },
   {
     icon: 'ph:fork-knife-duotone',
     title: 'Catering vom Partner-Caterer',
-    text: 'Vom rustikalen Buffet bis zum servierten Menü – regional und auf Ihren Anlass abgestimmt, geliefert von unserem erfahrenen Partner-Caterer.',
+    text: 'Vom rustikalen Buffet bis zum servierten Menü: regional und auf Ihren Anlass abgestimmt, geliefert von unserem erfahrenen Partner-Caterer.',
   },
   {
     icon: 'ph:calendar-check-duotone',
     title: 'Eventplanung aus einer Hand',
-    text: 'Wir planen, organisieren und koordinieren im Vorfeld – damit Sie sich an Ihrem Tag ganz auf Ihre Gäste konzentrieren können.',
+    text: 'Wir planen, organisieren und koordinieren im Vorfeld, damit Sie sich an Ihrem Tag ganz auf Ihre Gäste konzentrieren können.',
   },
 ]
 </script>
@@ -118,7 +118,7 @@ const included = [
           Feiern Sie Ihr Fest in unserem Garten
         </h1>
         <p class="mt-3 max-w-2xl text-lg text-white/90 md:text-xl">
-          Hochzeit, Jugendweihe, Kommunion oder runder Geburtstag – rundum sorglos im Grünen.
+          Hochzeit, Jugendweihe, Kommunion oder runder Geburtstag: rundum sorglos im Grünen.
         </p>
         <a
           href="#rechner"
@@ -132,17 +132,17 @@ const included = [
     <!-- 2. Intro -->
     <section class="mx-auto max-w-3xl px-6 py-12 text-center md:py-16">
       <h2 class="font-serif text-2xl font-semibold text-sage-900 md:text-3xl">
-        Ihr Sommerfest im Eichsfeld – ganz ohne Stress
+        Ihr Sommerfest im Eichsfeld, ganz ohne Stress
       </h2>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
         Für Ihr Festwochenende gehört Ihnen das <strong>gesamte Grundstück ganz allein</strong>: Sie
         buchen die komplette Pension mit allen Zimmern für das Wochenende, Ihre Gäste übernachten
-        direkt vor Ort – und wir organisieren Ihr Fest von A bis Z. Dazu ein
+        direkt vor Ort, und wir organisieren Ihr Fest von A bis Z. Dazu ein
         <strong>Rundum-sorglos-Paket</strong> mit Catering über unseren Partner-Caterer und
         persönlicher Eventplanung.
       </p>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
-        Keine Nachbarn, keine Sperrstunde, kein Stress – Sie feiern, wir kümmern uns um den Rest.
+        Keine Nachbarn, keine Sperrstunde, kein Stress: Sie feiern, wir kümmern uns um den Rest.
       </p>
     </section>
 
@@ -153,7 +153,7 @@ const included = [
           Für jeden besonderen Anlass
         </h2>
         <p class="mb-10 text-center text-sage-600">
-          Ob feierlich oder ausgelassen – wir gestalten Ihren Tag.
+          Ob feierlich oder ausgelassen: wir gestalten Ihren Tag.
         </p>
         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           <div
@@ -178,7 +178,7 @@ const included = [
           Unser Komplettpaket
         </h2>
         <p class="mb-10 text-center text-sage-600">
-          Alles aus einer Hand – damit Sie entspannt feiern können.
+          Alles aus einer Hand, damit Sie entspannt feiern können.
         </p>
         <div class="grid gap-6 sm:grid-cols-2">
           <div
@@ -252,7 +252,7 @@ const included = [
             <h2 class="mt-1 font-serif text-2xl font-semibold text-sage-900">Tina Volgenandt</h2>
             <p class="mt-3 leading-relaxed text-sage-700">
               Ihre Feier ist bei mir in erfahrenen Händen: Als Eventmanagerin plane, organisiere und
-              koordiniere ich Ihr Fest persönlich – von der ersten Idee bis zum letzten Detail am
+              koordiniere ich Ihr Fest persönlich, von der ersten Idee bis zum letzten Detail am
               Veranstaltungstag. So können Sie sich ganz auf Ihre Gäste und Ihren Tag konzentrieren.
             </p>
             <a
@@ -277,7 +277,7 @@ const included = [
         </h2>
         <p class="mt-3 mb-8 text-center text-sage-600">
           Unser Konfigurator führt Sie Schritt für Schritt durch alle Möglichkeiten. Bei jeder
-          Auswahl sehen Sie sofort, was sie für Ihre Feier bedeutet und was sie kostet – am Ende
+          Auswahl sehen Sie sofort, was sie für Ihre Feier bedeutet und was sie kostet. Am Ende
           steht Ihr unverbindlicher Gesamt-Richtwert. Danach melden wir uns mit einem persönlichen
           Angebot.
         </p>
@@ -296,7 +296,7 @@ const included = [
             <Icon name="ph:shield-check-duotone" class="mx-auto size-9 text-waldhonig-500" />
             <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">Völlig privat</h3>
             <p class="mt-2 text-sm text-sage-600">
-              Das ganze Grundstück gehört für das Wochenende nur Ihnen – keine Nachbarn, keine
+              Das ganze Grundstück gehört für das Wochenende nur Ihnen: keine Nachbarn, keine
               fremden Gäste.
             </p>
           </div>
@@ -320,7 +320,7 @@ const included = [
             <Icon name="ph:users-three-duotone" class="mx-auto size-9 text-waldhonig-500" />
             <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">10 bis 80 Gäste</h3>
             <p class="mt-2 text-sm text-sage-600">
-              Von der kleinen Familienfeier bis zum großen Fest – in der Saison von Mai bis
+              Von der kleinen Familienfeier bis zum großen Fest, in der Saison von Mai bis
               September.
             </p>
           </div>
@@ -338,7 +338,7 @@ const included = [
       <div class="mx-auto max-w-2xl text-center">
         <h2 class="font-serif text-2xl font-semibold text-sage-900">Lieber persönlich sprechen?</h2>
         <p class="mt-3 text-sage-700">
-          Vereinbaren Sie einen Gesprächstermin – geben Sie einfach Ihren Wunschtermin an, und wir
+          Vereinbaren Sie einen Gesprächstermin: Geben Sie einfach Ihren Wunschtermin an, und wir
           melden uns bei Ihnen.
         </p>
         <div class="mt-8">

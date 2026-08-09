@@ -9,9 +9,9 @@ useSeoMeta({
   title: 'Monteurzimmer Leinefelde | Pension Volgenandt Eichsfeld',
   ogTitle: 'Monteurzimmer Leinefelde | Pension Volgenandt Eichsfeld',
   description:
-    'Günstige Monteurzimmer in Leinefelde-Worbis. WLAN, Parkplatz, Küchenzugang – ideal für Handwerker & Firmen. Ab 50 €/Nacht.',
+    'Günstige Monteurzimmer in Leinefelde-Worbis mit WLAN, Parkplatz und Küchenzugang. Ideal für Handwerker & Firmen, ab 50 €/Nacht.',
   ogDescription:
-    'Günstige Monteurzimmer in Leinefelde-Worbis. WLAN, Parkplatz, Küchenzugang – ideal für Handwerker & Firmen. Ab 50 €/Nacht.',
+    'Günstige Monteurzimmer in Leinefelde-Worbis mit WLAN, Parkplatz und Küchenzugang. Ideal für Handwerker & Firmen, ab 50 €/Nacht.',
   ogImage: `${siteUrl}/img/hero/hero-poster.webp`,
   ogType: 'website',
 })

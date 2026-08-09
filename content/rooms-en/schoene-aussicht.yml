@@ -7,7 +7,7 @@ category: 'Ferienwohnung'
 shortDescription: >-
   Spacious holiday apartment with stunning views across
   the Eichsfeld. Two bedrooms with en-suite bathrooms,
-  large living area with kitchen – ideal for up to
+  large living area with kitchen, ideal for up to
   6 guests.
 description: >-
   The holiday apartment Schöne Aussicht impresses with
@@ -88,7 +88,7 @@ extras:
     price: 10
     unit: 'per person / night'
   - name: 'Picnic basket'
-    description: 'Regional & homemade, with crockery and blanket. Relax in the pension garden, take it on a day trip, or discover your own favourite spot in the Eichsfeld countryside – we pack everything for you. Find inspiration on our trips & activities page.'
+    description: 'Regional & homemade, with crockery and blanket. Relax in the pension garden, take it on a day trip, or discover your own favourite spot in the Eichsfeld countryside. We pack everything for you. Find inspiration on our trips & activities page.'
     price: 19
     pricePrefix: 'from '
     unit: 'per person'

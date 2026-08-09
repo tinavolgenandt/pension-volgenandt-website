@@ -9,9 +9,9 @@ useSeoMeta({
   title: 'Nachhaltigkeit',
   ogTitle: 'Nachhaltigkeit | Pension Volgenandt',
   description:
-    'Solarenergie, eigener Brunnen, Blühwiese und Gemüsegarten – nachhaltig urlauben in der Pension Volgenandt im Eichsfeld.',
+    'Solarenergie, eigener Brunnen, Blühwiese und Gemüsegarten: nachhaltig urlauben in der Pension Volgenandt im Eichsfeld.',
   ogDescription:
-    'Solarenergie, eigener Brunnen, Blühwiese und Gemüsegarten – nachhaltig urlauben in der Pension Volgenandt im Eichsfeld.',
+    'Solarenergie, eigener Brunnen, Blühwiese und Gemüsegarten: nachhaltig urlauben in der Pension Volgenandt im Eichsfeld.',
   ogImage: '/img/content/garten-sonnenhut-blumen.webp',
   ogType: 'website',
 })
@@ -93,7 +93,7 @@ const sustainabilityFeatures = [
     <!-- 1. Thin photo banner -->
     <SharedPageBanner
       image="/img/garten/einfahrt-sommer.webp"
-      image-alt="Pension Volgenandt – Einfahrt mit Gartenblick im Sommer"
+      image-alt="Einfahrt der Pension Volgenandt mit Gartenblick im Sommer"
       title="Nachhaltigkeit"
       subtitle="Verantwortung für Natur und Umgebung"
     />
@@ -131,12 +131,12 @@ const sustainabilityFeatures = [
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
             Auch beim Warmwasser setzen wir auf effiziente Technik und achten darauf, Ressourcen
-            sparsam einzusetzen – ohne dass unsere Gäste auf Komfort verzichten müssen.
+            sparsam einzusetzen, ohne dass unsere Gäste auf Komfort verzichten müssen.
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
             Für Wärme und Heizung nutzen wir eine moderne Holzpelletsanlage. Pellets aus regionalen
-            Holzresten verbrennen besonders sauber und gelten als klimaneutral – das freigesetzte
-            CO₂ wurde zuvor beim Baumwachstum gebunden.
+            Holzresten verbrennen besonders sauber und gelten als klimaneutral, da das freigesetzte
+            CO₂ zuvor beim Baumwachstum gebunden wurde.
           </p>
         </div>
         <NuxtImg
@@ -155,18 +155,18 @@ const sustainabilityFeatures = [
         <div class="grid items-center gap-8 md:grid-cols-2">
           <NuxtImg
             src="/img/content/nachhaltigkeit-brunnen-quelle.webp"
-            alt="Wasser sprudelt aus einem Naturstein – eigener Brunnen der Pension Volgenandt"
+            alt="Wasser sprudelt aus einem Naturstein am eigenen Brunnen der Pension Volgenandt"
             class="rounded-lg"
             loading="lazy"
             sizes="100vw md:50vw"
           />
           <div>
             <h2 class="font-serif text-2xl font-bold text-sage-900">
-              Eigenes Wasser – vom Brunnen bis zur Kläranlage
+              Eigenes Wasser: vom Brunnen bis zur Kläranlage
             </h2>
             <p class="mt-4 leading-relaxed text-sage-800">
               Unser Trinkwasser kommt aus einem eigenen Brunnen auf dem Gelände. Eine UV-Anlage
-              bereitet das Wasser auf – zuverlässig und ganz ohne chemische Zusätze. So genießen
+              bereitet das Wasser auf, zuverlässig und ganz ohne chemische Zusätze. So genießen
               unsere Gäste frisches, sauberes Wasser direkt aus der Natur.
             </p>
             <p class="mt-4 leading-relaxed text-sage-800">
@@ -194,11 +194,11 @@ const sustainabilityFeatures = [
               class="text-waldhonig-600 underline hover:text-waldhonig-700"
               >ImmerBunt</a
             >
-            angelegt – Deutschlands erster Blühwiesen-Agentur. Die Wiese bietet Bienen,
+            angelegt, Deutschlands erster Blühwiesen-Agentur. Die Wiese bietet Bienen,
             Schmetterlingen und anderen Insekten reichlich Nahrung.
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
-            In der Totholzecke finden Käfer, Wildbienen und Igel Unterschlupf – ein bewusst
+            In der Totholzecke finden Käfer, Wildbienen und Igel Unterschlupf: ein bewusst
             belassenes Stück wilde Natur. Zusammen mit einheimischen Wildblumen und alten Obstarten
             entsteht ein vielfältiger Lebensraum direkt vor unserer Haustür.
           </p>
@@ -237,7 +237,7 @@ const sustainabilityFeatures = [
             <h2 class="font-serif text-2xl font-bold text-sage-900">Vom Garten auf den Tisch</h2>
             <p class="mt-4 leading-relaxed text-sage-800">
               In unserem Garten wachsen verschiedene Obstarten, Beeren und Gemüse. Wir ernten alles
-              selbst und verarbeiten vieles davon – ob als hausgemachte Marmelade, frische Kräuter
+              selbst und verarbeiten vieles davon, ob als hausgemachte Marmelade, frische Kräuter
               oder saisonales Obst zum Frühstück.
             </p>
             <p class="mt-4 leading-relaxed text-sage-800">

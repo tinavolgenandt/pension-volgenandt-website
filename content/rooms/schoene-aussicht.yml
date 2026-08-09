@@ -7,7 +7,7 @@ category: 'Ferienwohnung'
 shortDescription: >-
   Großzügige Ferienwohnung mit schönem Ausblick über das
   Eichsfeld. Zwei Schlafzimmer mit eigenem Bad, großer
-  Wohnbereich mit Küche – ideal für bis zu 6 Gäste.
+  Wohnbereich mit Küche, ideal für bis zu 6 Gäste.
 description: >-
   Die Ferienwohnung Schöne Aussicht überzeugt mit ihrem
   weiten Blick über die Hügellandschaft des Eichsfelds.
@@ -87,7 +87,7 @@ extras:
     price: 10
     unit: 'pro Person / Nacht'
   - name: 'Picknick-Korb'
-    description: 'Regional & hausgemacht, mit Geschirr und Decke. Im Garten der Pension entspannen, auf einen Ausflug mitnehmen oder einen Lieblingsplatz in der Eichsfelder Natur suchen – wir packen alles ein. Ausflugstipps gibt es auf unserer Website.'
+    description: 'Regional & hausgemacht, mit Geschirr und Decke. Im Garten der Pension entspannen, auf einen Ausflug mitnehmen oder einen Lieblingsplatz in der Eichsfelder Natur suchen. Wir packen alles ein. Ausflugstipps gibt es auf unserer Website.'
     price: 19
     pricePrefix: 'ab '
     unit: 'pro Person'

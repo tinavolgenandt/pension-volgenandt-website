@@ -16,7 +16,7 @@ description: >-
   Despite its compact size, the room offers everything
   you need for a pleasant stay. Our fully equipped
   shared kitchen and the terrace are available for all
-  guests – we kindly ask for consideration of others.
+  guests. We kindly ask for consideration of others.
 
 weekendOnly: true
 
@@ -68,7 +68,7 @@ extras:
     price: 15
     unit: 'per person / night'
   - name: 'Picnic basket'
-    description: 'Regional & homemade, with crockery and blanket. Relax in the pension garden, take it on a day trip, or discover your own favourite spot in the Eichsfeld countryside – we pack everything for you. Find inspiration on our trips & activities page.'
+    description: 'Regional & homemade, with crockery and blanket. Relax in the pension garden, take it on a day trip, or discover your own favourite spot in the Eichsfeld countryside. We pack everything for you. Find inspiration on our trips & activities page.'
     price: 19
     pricePrefix: 'from '
     unit: 'per person'

@@ -1,7 +1,7 @@
 name: 'Alternative Bear Park Worbis'
 slug: baerenpark-worbis
 seoTitle: 'Bear Park Worbis | Guesthouse near Bear Park'
-seoDescription: 'Visit the Alternative Bear Park Worbis – just 6 km from our guesthouse. Tips and accommodation in the Eichsfeld region.'
+seoDescription: 'Visit the Alternative Bear Park Worbis, just 6 km from our guesthouse. Tips and accommodation in the Eichsfeld region.'
 heroImage: /img/attractions/baerenpark-worbis.webp
 heroImageAlt: 'Brown bear in the naturalistic enclosure of the Alternative Bear Park Worbis'
 distanceKm: 6
@@ -31,11 +31,10 @@ content: >-
 
   The bear park is actively committed to animal welfare and raises
   awareness about the issues of private wild animal keeping. A visit
-  is not only a wonderful experience but also supports an important
-  cause.
+  is a wonderful experience, and it supports an important cause too.
 hostTip: >-
   Come early in the morning when the bears are most active. The
-  trail takes about 1-2 hours. Bring sturdy footwear – the path
+  trail takes about 1-2 hours. Bring sturdy footwear. The path
   leads through hilly woodland.
 bestTimeToVisit: 'Spring to autumn'
 website: 'https://www.baer.de'
@@ -46,7 +45,7 @@ gallery:
   - src: /img/attractions/baerenpark-baer-baumstamm.webp
     alt: 'Brown bear relaxing on a tree trunk in the naturalistic enclosure'
   - src: /img/attractions/baerenpark-baer-nahaufnahme.webp
-    alt: 'Brown bear – expressive close-up of the head'
+    alt: "Close-up of a brown bear's head"
   - src: /img/attractions/baerenpark-baer-wald-fruehling.webp
     alt: 'Brown bear roaming its spacious woodland enclosure in spring'
   - src: /img/attractions/baerenpark-baer-wald.webp
