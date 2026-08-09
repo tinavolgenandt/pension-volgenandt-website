@@ -17,7 +17,7 @@ description: >-
   taking in the view of the courtyard. Wi-Fi and TV
   provide evening entertainment. The fully equipped
   shared kitchen and the terrace are available for all
-  guests – we kindly ask for consideration of others.
+  guests. We kindly ask for consideration of others.
 
 beds24PropertyId: 261258
 beds24RoomId: 548066
@@ -77,12 +77,12 @@ extras:
     price: 15
     unit: 'per person / night'
   - name: 'Picnic basket'
-    description: 'Regional & homemade, with crockery and blanket. Relax in the pension garden, take it on a day trip, or discover your own favourite spot in the Eichsfeld countryside – we pack everything for you. Find inspiration on our trips & activities page.'
+    description: 'Regional & homemade, with crockery and blanket. Relax in the pension garden, take it on a day trip, or discover your own favourite spot in the Eichsfeld countryside. We pack everything for you. Find inspiration on our trips & activities page.'
     price: 19
     pricePrefix: 'from '
     unit: 'per person'
   - name: 'Dog'
-    description: 'Your four-legged friend is welcome – our large garden offers plenty of space to run and explore.'
+    description: 'Your four-legged friend is welcome. Our large garden offers plenty of space to run and explore.'
     price: 5
     unit: 'per night'
   - name: 'BBQ set'

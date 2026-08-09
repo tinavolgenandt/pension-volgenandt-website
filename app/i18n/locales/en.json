@@ -53,7 +53,7 @@
   },
   "rooms": {
     "title": "Our Rooms",
-    "subtitle": "Whether a cosy holiday apartment for the whole family or a comfortable double room for couples – you will find the perfect retreat for your stay in the Eichsfeld.",
+    "subtitle": "We offer cosy holiday apartments for families and comfortable double rooms for couples, so you will find the perfect retreat for your stay in the Eichsfeld.",
     "chooseRoom": "Select a room to see availability and booking options."
   },
   "price": {
@@ -76,14 +76,14 @@
     "heading": "Contact & Directions",
     "subtitle": "We look forward to hearing from you",
     "talkToUs": "Get in touch",
-    "talkToUsText": "Whether you have a question, would like to book a room, or simply want to learn more about our guesthouse – we are happy to help.",
+    "talkToUsText": "Whether you have a question, would like to book a room, or simply want to learn more about our guesthouse, we are happy to help.",
     "mobile": "Mobile",
     "whatsapp": "WhatsApp",
     "landline": "Landline",
     "email": "Email",
     "address": "Address",
     "sendMessage": "Send a message",
-    "sendMessageText": "Write to us – we usually reply within 24 hours."
+    "sendMessageText": "Write to us and we usually reply within 24 hours."
   },
   "form": {
     "name": "Name",
@@ -101,7 +101,7 @@
     "byCar": "By car (A38)",
     "byCarText": "From the A38 motorway, take the Leinefelde exit and follow signs towards Breitenbach. After about 10 minutes you will reach our guesthouse at Otto-Reutter-Straße 28. Free parking is available right in front of the building.",
     "byTrain": "By train",
-    "byTrainText": "Leinefelde station is 4 km from our guesthouse. We are happy to pick you up by arrangement – just give us a call beforehand.",
+    "byTrainText": "Leinefelde station is 4 km from our guesthouse. We are happy to pick you up by arrangement. Just give us a call beforehand.",
     "gps": "GPS coordinates",
     "openMaps": "Open in Google Maps"
   },
@@ -143,14 +143,14 @@
     "description": "Family-run guesthouse in Breitenbach, Eichsfeld. Holiday apartments and rooms with views of the countryside.",
     "heroButton": "Discover rooms",
     "welcomeHeading": "Welcome to Breitenbach",
-    "welcomeText": "Our family-run guesthouse in the heart of the Eichsfeld region offers the perfect base for a relaxing getaway. Surrounded by rolling hills, castles, and nature, you can unwind in our comfortable rooms and apartments – each with its own character and views of the countryside.",
-    "welcomeTitle": "Welcome to Our Home",
-    "welcomeParagraph1": "We are Simone & Ralf Volgenandt and we are delighted to welcome you to our home in the Eichsfeld region. Our guesthouse is located about one kilometre outside Breitenbach, nestled in the gentle hills of Thuringia – a place where time passes a little more slowly.",
+    "welcomeText": "Our family-run guesthouse sits in the heart of the Eichsfeld region, surrounded by rolling hills, castles, and nature. Our rooms and apartments are comfortable, each with its own character, and look out over the countryside.",
+    "welcomeTitle": "Our Home in the Eichsfeld",
+    "welcomeParagraph1": "We are Simone & Ralf Volgenandt and we are delighted to welcome you to our home in the Eichsfeld region. Our guesthouse is located about one kilometre outside Breitenbach, nestled in the gentle hills of Thuringia, where time passes a little more slowly.",
     "welcomeParagraph2": "Whether you want to explore the castles and hiking trails of the region, visit the nearby bear park, or simply enjoy the peace and quiet: our guesthouse is the perfect starting point for relaxing days. Our holiday apartments and rooms offer space, comfort, and views of the countryside.",
-    "welcomeParagraph3": "We run our home with care and a love for nature – with solar energy from our own roof, a biological sewage treatment plant, and a garden that invites you to linger.",
-    "welcomeImageAlt": "Simone and Ralf Volgenandt – your hosts in Breitenbach",
+    "welcomeParagraph3": "We run our home with care and a love for nature: with solar energy from our own roof, a biological sewage treatment plant, and a garden that invites you to linger.",
+    "welcomeImageAlt": "Simone and Ralf Volgenandt, your hosts in Breitenbach",
     "gardenHeading": "Garden & Surroundings",
-    "gardenSubtitle": "Four Seasons – A Place of Tranquility",
+    "gardenSubtitle": "A Place of Tranquility All Year Round",
     "ourRooms": "Our Rooms",
     "testimonialsHeading": "What Our Guests Say",
     "googleReview": "Google Review",
@@ -159,10 +159,10 @@
     "ariaPrevQuote": "Previous quote",
     "ariaNextQuote": "Next quote",
     "ariaQuoteOf": "Quote {current} of {total}",
-    "experienceHeading": "Experience the Eichsfeld",
+    "experienceHeading": "Discover the Eichsfeld",
     "exploreAttractions": "Explore all attractions",
     "sustainabilityHeading": "Naturally Sustainable",
-    "sustainabilityText": "Sustainability is not a trend for us – it is part of our everyday life. We care for our home in the Eichsfeld with the same attention we give to your stay.",
+    "sustainabilityText": "Sustainability is not a trend for us. It is part of our everyday life. We care for our home in the Eichsfeld with the same attention we give to your stay.",
     "sustainabilityFeature1Title": "Solar Energy",
     "sustainabilityFeature1Desc": "Our own power from the roof",
     "sustainabilityFeature2Title": "Bio Sewage Plant",
@@ -185,7 +185,7 @@
     "gardenPhoto9": "Winter landscape in the Eichsfeld with snow-covered fields and sunshine"
   },
   "hosts": {
-    "caption": "Simone & Ralf Volgenandt – we look forward to welcoming you",
+    "caption": "Simone & Ralf Volgenandt, we look forward to welcoming you",
     "buildingCaption": "This is how our guesthouse welcomes you"
   },
   "softCta": {
@@ -217,14 +217,14 @@
       "region": "Region",
       "pension": "Guesthouse"
     },
-    "eventQuestion": "Have questions about this event? We're happy to help.",
+    "articleQuestion": "Have questions about this? We're happy to help.",
     "stayWithUs": "Stay with us in the Eichsfeld"
   },
   "activities": {
     "title": "Activities",
     "subtitle": "Explore the Eichsfeld",
     "intro1": "The Eichsfeld is a paradise for anyone who loves the outdoors. In the surroundings of our guesthouse you will find numerous hiking and cycling trails leading through one of the most beautiful landscapes in Thuringia.",
-    "intro2": "Whether sporty or leisurely, alone or with the family – we are happy to advise you on the best routes and attractions nearby.",
+    "intro2": "Whether sporty or leisurely, alone or with the family: We are happy to advise you on the best routes and attractions nearby.",
     "popularAttractions": "Popular Attractions",
     "sportingActivities": "Sporting Activities",
     "planActive": "Plan your active holiday in the Eichsfeld",
@@ -234,10 +234,10 @@
     },
     "cycling": {
       "title": "Cycling",
-      "description": "Whether a leisurely ride along the Leine or a sporty route through the hills – there is something for everyone."
+      "description": "Whether a leisurely ride along the Leine or a sporty route through the hills: There is something for everyone."
     },
-    "picnicHeading": "Picnic Basket – Your Outing with a Twist",
-    "picnicText": "Take our homemade picnic basket along on your trip – to Burg Hanstein, Seeburger See, or simply the garden. Local, seasonal, with real crockery. From €19 per person.",
+    "picnicHeading": "Our Picnic Basket to Go",
+    "picnicText": "Take our homemade picnic basket along on your trip, to Burg Hanstein, Seeburger See, or simply the garden. Local, seasonal, with real crockery. From €19 per person.",
     "picnicLink": "Discover Picnic Basket"
   },
   "attractions": {
@@ -248,7 +248,7 @@
     "recommendations": "Our Recommendations",
     "activitiesHeading": "Activities",
     "returnToRooms": "Return to cosy rooms after an eventful day",
-    "hikingDesc": "Hiking trails nearby – from leisurely to challenging.",
+    "hikingDesc": "Hiking trails nearby, from leisurely to challenging.",
     "cyclingDesc": "The Leine Cycle Path passes right by Breitenbach."
   },
   "activity": {
@@ -314,8 +314,8 @@
     "bookNow": "Book a room now",
     "moreInfo": "Learn more",
     "countdownLabel": "days to go",
-    "teaserTitle": "State Garden Show 2026 – right on our doorstep",
-    "teaserText": "From April 23 to October 11, Leinefelde-Worbis transforms into a blooming event venue – just 5 minutes by car from our guesthouse. Over 300,000 visitors expected. Book your room in time."
+    "teaserTitle": "State Garden Show 2026 right on our doorstep",
+    "teaserText": "From April 23 to October 11, Leinefelde-Worbis transforms into a blooming event venue, just 5 minutes by car from our guesthouse. Over 300,000 visitors expected. Book your room in time."
   },
   "ferienwohnungen": {
     "title": "Holiday Apartments in the Eichsfeld",
@@ -331,7 +331,7 @@
   "monteurzimmer": {
     "title": "Worker Accommodation in Leinefelde-Worbis",
     "subtitle": "Affordable, comfortable & conveniently located",
-    "intro": "Working in Leinefelde-Worbis or the Eichsfeld region? Our guesthouse offers comfortable rooms for tradespeople, craftsmen, and business travellers – with free WiFi, parking, and kitchen access.",
+    "intro": "Working in Leinefelde-Worbis or the Eichsfeld region? Our guesthouse offers comfortable rooms for tradespeople, craftsmen, and business travellers, including free WiFi, parking, and kitchen access.",
     "highlights": "Your benefits",
     "wifi": "Free WiFi",
     "parking": "Free parking",
@@ -339,6 +339,8 @@
     "location": "Near A38 & Leinefelde",
     "quiet": "Quiet location in nature",
     "weekly": "Attractive weekly rates on request",
+    "forWorkersTitle": "For longer assignments",
+    "forWorkersText": "As a family-run guesthouse, we are set up for longer stays, as they are common with construction projects or installation work in the Eichsfeld. On request, we invoice directly to your company address. If you have questions about your stay, you can reach us directly by phone or email.",
     "bookNow": "Enquire about rooms"
   }
 }

@@ -72,7 +72,7 @@ const { locale } = useLocale()
     <!-- Hero photo banner -->
     <SharedPageBanner
       image="/img/content/gastgeber-portrait.webp"
-      image-alt="Simone und Ralf Volgenandt – Ihre Gastgeber in Breitenbach"
+      image-alt="Simone und Ralf Volgenandt, Ihre Gastgeber in Breitenbach"
       title="Über uns"
       subtitle="Herzlich willkommen in unserem Zuhause"
     />
@@ -100,7 +100,7 @@ const { locale } = useLocale()
             <Icon name="ph:sun-duotone" class="mx-auto size-10 text-waldhonig-500" />
             <h3 class="mt-4 font-serif text-lg font-semibold text-sage-900">Nachhaltigkeit</h3>
             <p class="mt-2 text-sm leading-relaxed text-sage-600">
-              Solarenergie vom eigenen Dach, biologische Kläranlage und ein naturnaher Garten –
+              Solarenergie vom eigenen Dach, biologische Kläranlage und ein naturnaher Garten:
               Umweltbewusstsein ist Teil unseres Alltags.
             </p>
           </div>
@@ -131,7 +131,7 @@ const { locale } = useLocale()
       <div class="mx-auto grid max-w-5xl gap-8 md:grid-cols-2 md:items-center">
         <NuxtImg
           src="/img/homepage/gebaeude-innenhof.webp"
-          alt="Pension Volgenandt – Gebäude und Innenhof in Breitenbach"
+          alt="Gebäude und Innenhof der Pension Volgenandt in Breitenbach"
           class="w-full rounded-lg object-cover shadow-sm"
           loading="lazy"
           sizes="100vw md:50vw"

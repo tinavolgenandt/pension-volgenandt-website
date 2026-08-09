@@ -35,7 +35,7 @@ const { data: attractions } = await useAsyncData('en-attractions', () =>
 const activityCards = [
   {
     title: 'Hiking',
-    description: 'Hiking trails in the area \u2013 from leisurely to challenging.',
+    description: 'Hiking trails in the area, from leisurely to challenging.',
     icon: 'ph:mountains-duotone',
     to: '/en/activities/hiking/',
   },
@@ -53,7 +53,7 @@ const activityCards = [
     <!-- Banner -->
     <SharedPageBanner
       image="/img/garten/einfahrt-sommer.webp"
-      image-alt="Pension Volgenandt – entrance with garden view in summer"
+      image-alt="Entrance of Pension Volgenandt with a garden view in summer"
       title="Attractions"
       subtitle="Explore the Eichsfeld"
     />

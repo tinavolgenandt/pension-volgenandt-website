@@ -6,7 +6,7 @@ type: ferienwohnung
 category: 'Ferienwohnung'
 shortDescription: >-
   Cosy holiday apartment with garden views. Own kitchen,
-  terrace and an additional sofa bed – ideal for
+  terrace and an additional sofa bed, ideal for
   2 guests or small families.
 description: >-
   The holiday apartment Emil's Kuhwiese offers
@@ -77,12 +77,12 @@ extras:
     price: 10
     unit: 'per person / night'
   - name: 'Picnic basket'
-    description: 'Regional & homemade, with crockery and blanket. Relax in the pension garden, take it on a day trip, or discover your own favourite spot in the Eichsfeld countryside – we pack everything for you. Find inspiration on our trips & activities page.'
+    description: 'Regional & homemade, with crockery and blanket. Relax in the pension garden, take it on a day trip, or discover your own favourite spot in the Eichsfeld countryside. We pack everything for you. Find inspiration on our trips & activities page.'
     price: 19
     pricePrefix: 'from '
     unit: 'per person'
   - name: 'Dog'
-    description: 'Your four-legged friend is welcome – our large garden offers plenty of space to run and explore.'
+    description: 'Your four-legged friend is welcome. Our large garden offers plenty of space to run and explore.'
     price: 5
     unit: 'per night'
   - name: 'BBQ set'

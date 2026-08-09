@@ -21,9 +21,9 @@ useSeoMeta({
   title: 'Picnic Basket – Gourmet Breakfast to Go',
   ogTitle: 'Picnic Basket | Pension Volgenandt',
   description:
-    'Homemade, regional, packed with love. Book your picnic basket for the garden or the surrounding area – from 19 EUR per person.',
+    'Homemade, regional, packed with love. Book your picnic basket for the garden or the surrounding area, from 19 EUR per person.',
   ogDescription:
-    'Homemade, regional, packed with love. Book your picnic basket for the garden or the surrounding area – from 19 EUR per person.',
+    'Homemade, regional, packed with love. Book your picnic basket for the garden or the surrounding area, from 19 EUR per person.',
   ogImage: '/img/picknick/header-picknick.webp',
   ogType: 'website',
 })
@@ -109,7 +109,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
     <section class="mx-auto max-w-3xl px-6 py-12 text-center md:py-16">
       <p class="text-lg leading-relaxed text-sage-800">
         We pack a hand-filled wicker basket for you with homemade products, a real picnic blanket,
-        dishes and cutlery. You choose your favourite spot – in the garden right at the guesthouse
+        dishes and cutlery. You choose your favourite spot: in the garden right at the guesthouse
         or somewhere in the beautiful surrounding countryside.
       </p>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
@@ -153,7 +153,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
             >
             <h3 class="mt-4 font-serif text-lg font-semibold text-sage-900">Choose a package</h3>
             <p class="mt-2 text-sm leading-relaxed text-sage-600">
-              Brunch, coffee & cake, or sunset – pick the option that suits you best.
+              Brunch, coffee & cake, or sunset: pick the option that suits you best.
             </p>
           </li>
           <li class="flex flex-col items-center text-center">
@@ -183,7 +183,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
             >
             <h3 class="mt-4 font-serif text-lg font-semibold text-sage-900">Pick up & enjoy</h3>
             <p class="mt-2 text-sm leading-relaxed text-sage-600">
-              Collect the basket at the guesthouse, find your favourite spot – and enjoy the moment.
+              Collect the basket at the guesthouse, find your favourite spot and enjoy the moment.
             </p>
           </li>
         </ol>
@@ -196,7 +196,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
         <h2 class="mb-2 font-serif text-2xl font-semibold text-sage-900">
           Your spots in the garden
         </h2>
-        <p class="mb-8 text-sage-600">Right at the guesthouse – no car needed.</p>
+        <p class="mb-8 text-sage-600">Right at the guesthouse, no car needed.</p>
         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           <PicknickSpotCard
             v-for="spot in gardenSpots"
@@ -229,7 +229,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
     <section class="px-6 py-10 md:py-12">
       <div class="mx-auto max-w-3xl rounded-xl bg-sage-50 px-8 py-8 text-center">
         <p class="text-sage-700">
-          Simply take the basket with you – whether to Burg Hanstein, to Lake Seeburger See or on a
+          Simply take the basket with you, whether to Burg Hanstein, to Lake Seeburger See or on a
           hike through the Eichsfeld region. There are plenty of beautiful destinations in the area.
         </p>
         <NuxtLink
@@ -245,7 +245,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
     <section class="mx-auto max-w-5xl px-6 py-12 md:py-16">
       <h2 class="mb-2 font-serif text-2xl font-semibold text-sage-900">What is always included?</h2>
       <p class="mb-8 text-sage-600">
-        Every basket is fully equipped – real dishes, no disposables.
+        Every basket is fully equipped: real dishes, no disposables.
       </p>
       <PicknickBasketContents v-if="basket" :always="basket.always" :extras="basket.extras" />
     </section>
@@ -313,7 +313,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
       <div class="mx-auto max-w-2xl text-center">
         <h2 class="font-serif text-2xl font-semibold text-sage-900">Fancy a picnic?</h2>
         <p class="mt-3 text-sage-700">
-          Request your preferred date now – we will get back to you within 24 hours.
+          Request your preferred date now, we will get back to you within 24 hours.
         </p>
         <NuxtLink
           to="/en/picnic/book/"

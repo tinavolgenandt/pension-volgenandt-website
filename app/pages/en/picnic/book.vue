@@ -18,7 +18,7 @@ useHead({
 useSeoMeta({
   title: 'Request a Picnic Basket – Pension Volgenandt',
   description:
-    'Request your picnic basket now: choose your date, package and number of guests – we will get back to you within 24 hours.',
+    'Request your picnic basket now: choose your date, package and number of guests. We will get back to you within 24 hours.',
 })
 </script>
 

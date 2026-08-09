@@ -75,7 +75,7 @@ function attractionLink(slug: string) {
     <!-- 1. Thin photo banner -->
     <SharedPageBanner
       image="/img/garten/einfahrt-sommer.webp"
-      image-alt="Pension Volgenandt – Einfahrt mit Gartenblick im Sommer"
+      image-alt="Einfahrt der Pension Volgenandt mit Gartenblick im Sommer"
       :title="t('activities.title', locale)"
       :subtitle="t('activities.subtitle', locale)"
     />

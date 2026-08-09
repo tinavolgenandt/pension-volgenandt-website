@@ -11,9 +11,9 @@ useSeoMeta({
   title: 'Sustainability',
   ogTitle: 'Sustainability | Pension Volgenandt',
   description:
-    'Solar energy, own well, wildflower meadow and vegetable garden – a sustainable holiday at Pension Volgenandt in the Eichsfeld.',
+    'Solar energy, own well, wildflower meadow and vegetable garden: a sustainable holiday at Pension Volgenandt in the Eichsfeld.',
   ogDescription:
-    'Solar energy, own well, wildflower meadow and vegetable garden – a sustainable holiday at Pension Volgenandt in the Eichsfeld.',
+    'Solar energy, own well, wildflower meadow and vegetable garden: a sustainable holiday at Pension Volgenandt in the Eichsfeld.',
   ogImage: '/img/content/garten-sonnenhut-blumen.webp',
   ogType: 'website',
 })
@@ -96,7 +96,7 @@ const sustainabilityFeatures = [
     <!-- 1. Thin photo banner -->
     <SharedPageBanner
       image="/img/garten/einfahrt-sommer.webp"
-      image-alt="Pension Volgenandt – entrance with garden view in summer"
+      image-alt="Entrance of Pension Volgenandt with a garden view in summer"
       title="Sustainability"
       subtitle="Responsibility for Nature and Environment"
     />
@@ -104,7 +104,7 @@ const sustainabilityFeatures = [
     <!-- 2. Personal intro -->
     <section class="mx-auto max-w-3xl px-6 py-12 md:py-16">
       <p class="text-lg leading-relaxed text-sage-800">
-        Sustainability is not a trend for us – it is a matter of course. We live in the heart of
+        Sustainability is not a trend for us. It is a matter of course. We live in the heart of
         nature and want it to stay that way. That is why our sustainability rests on four pillars:
         our own energy generation, an independent water supply, active protection of biodiversity
         and a closed loop from the garden to the breakfast table.
@@ -133,12 +133,12 @@ const sustainabilityFeatures = [
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
             We also rely on efficient technology for hot water and take care to use resources
-            sparingly – without our guests having to compromise on comfort.
+            sparingly, without our guests having to compromise on comfort.
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
             For warmth and heating, we use a modern wood pellet system. Pellets made from regional
-            wood residues burn particularly cleanly and are considered climate-neutral – the CO₂
-            released was previously absorbed during tree growth.
+            wood residues burn particularly cleanly and are considered climate-neutral, since the
+            CO₂ released was previously absorbed during tree growth.
           </p>
         </div>
         <NuxtImg
@@ -157,18 +157,18 @@ const sustainabilityFeatures = [
         <div class="grid items-center gap-8 md:grid-cols-2">
           <NuxtImg
             src="/img/content/nachhaltigkeit-brunnen-quelle.webp"
-            alt="Water flowing from natural stone – the guesthouse's own well"
+            alt="Water flowing from natural stone at the guesthouse's own well"
             class="rounded-lg"
             loading="lazy"
             sizes="100vw md:50vw"
           />
           <div>
             <h2 class="font-serif text-2xl font-bold text-sage-900">
-              Our Own Water – From Well to Treatment Plant
+              Our Own Water: From Well to Treatment Plant
             </h2>
             <p class="mt-4 leading-relaxed text-sage-800">
               Our drinking water comes from our own well on the premises. A UV system treats the
-              water – reliably and entirely without chemical additives. This way, our guests enjoy
+              water reliably and entirely without chemical additives. This way, our guests enjoy
               fresh, clean water straight from nature.
             </p>
             <p class="mt-4 leading-relaxed text-sage-800">
@@ -195,11 +195,11 @@ const sustainabilityFeatures = [
               class="text-waldhonig-600 underline hover:text-waldhonig-700"
               >ImmerBunt</a
             >
-            – Germany's first wildflower meadow agency. The meadow provides bees, butterflies and
+            , Germany's first wildflower meadow agency. The meadow provides bees, butterflies and
             other insects with plenty of food.
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
-            In the deadwood corner, beetles, wild bees and hedgehogs find shelter – a deliberately
+            In the deadwood corner, beetles, wild bees and hedgehogs find shelter, a deliberately
             preserved piece of wild nature. Together with native wildflowers and heritage fruit
             varieties, a diverse habitat is created right on our doorstep.
           </p>
@@ -238,7 +238,7 @@ const sustainabilityFeatures = [
             <h2 class="font-serif text-2xl font-bold text-sage-900">From Garden to Table</h2>
             <p class="mt-4 leading-relaxed text-sage-800">
               Various fruit, berries and vegetables grow in our garden. We harvest everything
-              ourselves and process much of it – whether as homemade jam, fresh herbs or seasonal
+              ourselves and process much of it, whether as homemade jam, fresh herbs or seasonal
               fruit for breakfast.
             </p>
             <p class="mt-4 leading-relaxed text-sage-800">

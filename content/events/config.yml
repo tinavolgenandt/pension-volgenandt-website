@@ -48,9 +48,9 @@ basePackage:
       price: 4490
   includes:
     - >-
-      Exklusive Buchung der gesamten Pension fürs Wochenende – alle 6 Zimmer &
+      Exklusive Buchung der gesamten Pension fürs Wochenende: alle 6 Zimmer &
       Ferienwohnungen für bis zu 18 Übernachtungsgäste
-    - Persönliche Eventplanung, Organisation und Koordination – wir sind für Sie da
+    - 'Persönliche Eventplanung, Organisation und Koordination: Wir sind für Sie da'
     - Festzelt mit schließbaren Seitenwänden und Beleuchtung (Ihr Schlechtwetter-Plan), passend zur Gästezahl
     - Bestuhlung für alle Gäste
     - Professionelle Endreinigung nach der Feier
@@ -67,22 +67,22 @@ cateringTiers:
     imageAlt: Rustikales Buffet mit regionalen, saisonalen Gerichten
     description: >-
       Herzhaftes Buffet unseres Partner-Caterers mit regionalen, saisonalen
-      Gerichten – unkompliziert und reichhaltig. Ideal für entspannte Familienfeiern.
+      Gerichten, unkompliziert und reichhaltig. Ideal für entspannte Familienfeiern.
     pricePerPerson: 45
   - id: klassisch
     label: Klassisches Festbuffet
     image: /img/events/catering-klassisch.webp
     imageAlt: Reich gedecktes klassisches Festbuffet
     description: >-
-      Vielfältiges Buffet mit warmen und kalten Speisen, Salaten und Dessert –
-      der beliebte Klassiker unseres Partner-Caterers für Hochzeiten und große Feste.
+      Vielfältiges Buffet mit warmen und kalten Speisen, Salaten und Dessert.
+      Der beliebte Klassiker unseres Partner-Caterers für Hochzeiten und große Feste.
     pricePerPerson: 69
   - id: premium
     label: Premium-Menü am Platz
     image: /img/events/catering-premium.webp
     imageAlt: Serviertes Premium-Menü am festlich gedeckten Tisch
     description: >-
-      Mehrgängiges, serviertes Menü mit Service am Tisch – die festlichste und
+      Mehrgängiges, serviertes Menü mit Service am Tisch: die festlichste und
       eleganteste Variante unseres Partner-Caterers für besondere Anlässe.
     pricePerPerson: 105
 
@@ -124,11 +124,11 @@ ceremonyOptions:
     imageAlt: Freie Trauzeremonie im Garten
     description: >-
       Persönliche, freie Trauzeremonie unter freiem Himmel mit einem professionellen
-      Trauredner – individuell auf Ihre Geschichte abgestimmt.
+      Trauredner, individuell auf Ihre Geschichte abgestimmt.
     detail: >-
       Sie heiraten direkt bei uns im Garten: ein erfahrener freier Trauredner
-      gestaltet Ihre Zeremonie ganz persönlich. Wir richten den Traubereich her –
-      so wird Trauung und Feier zu einem stimmungsvollen Tag an einem Ort, ohne
+      gestaltet Ihre Zeremonie ganz persönlich. Wir richten den Traubereich her,
+      sodass Trauung und Feier zu einem stimmungsvollen Tag an einem Ort werden, ohne
       Fahrt dazwischen. Enthält Vorgespräch, persönliche Rede und Zeremonie.
     price: 1190
 
@@ -138,18 +138,18 @@ photographyOptions:
   - id: keine
     label: Kein Fotograf
     description: Sie bringen Ihren eigenen Fotografen mit oder benötigen keinen.
-    detail: Sie organisieren die Fotos selbst – diese Position bleibt bei 0 €.
+    detail: Sie organisieren die Fotos selbst. Diese Position bleibt bei 0 €.
     price: 0
   - id: fotograf
     label: Fotograf – Reportage
     image: /img/events/foto-fotograf.webp
     imageAlt: Hochzeitsfotograf hält einen Moment der Feier fest
     description: >-
-      Professionelle Foto-Reportage Ihres Tages – natürliche Momentaufnahmen und
+      Professionelle Foto-Reportage Ihres Tages: natürliche Momentaufnahmen und
       Gruppenbilder, als bearbeitete Bildergalerie zum Download.
     detail: >-
       Ein erfahrener Fotograf begleitet Ihre Feier und hält die schönsten Momente
-      fest – vom Empfang bis zum Abend. Sie erhalten die bearbeiteten Bilder digital.
+      fest, vom Empfang bis zum Abend. Sie erhalten die bearbeiteten Bilder digital.
       Ein Klassiker, den fast alle Hochzeitspaare wählen.
     price: 1490
   - id: foto_video
@@ -159,7 +159,7 @@ photographyOptions:
     description: >-
       Foto-Reportage plus filmischer Zusammenschnitt Ihres Tages als Erinnerungsvideo.
     detail: >-
-      Zusätzlich zur Fotoreportage entsteht ein professioneller Film Ihres Tages –
+      Zusätzlich zur Fotoreportage entsteht ein professioneller Film Ihres Tages:
       ein bewegendes Andenken, das Sie immer wieder ansehen können. Ideal für
       Hochzeiten und große Jubiläen.
     price: 2290
@@ -177,7 +177,7 @@ musicOptions:
     imageAlt: Professionelle Musikanlage mit Lautsprechern
     description: >-
       Professionelle Musikanlage inkl. Lieferung, Aufbau und Anschluss Ihres eigenen
-      Geräts – Sie spielen Ihre eigene Playlist. Strom aus dem Haus.
+      Geräts. Sie spielen Ihre eigene Playlist. Strom aus dem Haus.
     price: 290
   - id: dj
     label: DJ komplett
@@ -196,19 +196,19 @@ tableOptions:
     label: Biertischgarnituren (rustikal)
     image: /img/events/tische-biertisch.webp
     imageAlt: Rustikale Holz-Biertischgarnituren mit Bänken
-    description: Klassische Holz-Biertischgarnituren mit Bänken – im Basispreis enthalten.
+    description: Klassische Holz-Biertischgarnituren mit Bänken, im Basispreis enthalten.
     pricePerPerson: 0
   - id: bankett
     label: Eckige Bankett-Tische
     image: /img/events/tische-bankett.webp
     imageAlt: Lange eckige Bankett-Tafeln mit Einzelstühlen
-    description: Lange Tafeln mit Einzelstühlen – festlich und gesellig.
+    description: 'Lange Tafeln mit Einzelstühlen: festlich und gesellig.'
     pricePerPerson: 5
   - id: rund
     label: Runde Festtische
     image: /img/events/tische-rund.webp
     imageAlt: Elegante runde Festtische mit Bestuhlung
-    description: Elegante runde Tische für 8–10 Personen – die klassische Hochzeitsbestuhlung.
+    description: Elegante runde Tische für 8–10 Personen, die klassische Hochzeitsbestuhlung.
     pricePerPerson: 6
 
 chairCoverOptions:
@@ -226,7 +226,7 @@ chairCoverOptions:
 dishwareOptions:
   - id: caterer
     label: Geschirr über den Caterer
-    description: Teller, Gläser und Besteck stellt unser Partner-Caterer – im Catering enthalten.
+    description: Teller, Gläser und Besteck stellt unser Partner-Caterer, im Catering enthalten.
     pricePerPerson: 0
   - id: mietgeschirr
     label: Komplettes Mietgeschirr
@@ -242,7 +242,7 @@ flooringOptions:
     image: /img/events/boden-tanzflaeche.webp
     imageAlt: Ausgelegte Holz-Tanzfläche im Garten
     description: >-
-      Ausgelegte Holz-Tanzfläche – schützt den Rasen im Hauptbereich und schafft
+      Ausgelegte Holz-Tanzfläche: schützt den Rasen im Hauptbereich und schafft
       eine schöne Fläche zum Tanzen.
     pricePerPerson: 5
   - id: komplett
@@ -250,7 +250,7 @@ flooringOptions:
     image: /img/events/boden-komplett.webp
     imageAlt: Durchgehender Holzboden im Festzelt
     description: >-
-      Durchgehender Holzboden im gesamten Zelt – maximaler Schutz für Ihren Rasen
+      Durchgehender Holzboden im gesamten Zelt: maximaler Schutz für Ihren Rasen
       und ein edles Ambiente, auch bei Nässe.
     pricePerPerson: 12
   - id: keiner
@@ -269,7 +269,7 @@ decorationOptions:
     label: Schlichte Tischdekoration
     image: /img/events/deko-schlicht.webp
     imageAlt: Schlichte Tischdekoration mit Blumen und Kerzen
-    description: Dezenter Blumenschmuck und Kerzen auf den Tischen – schlicht und stimmungsvoll.
+    description: Dezenter Blumenschmuck und Kerzen auf den Tischen, schlicht und stimmungsvoll.
     pricePerPerson: 8
   - id: klassisch
     label: Klassische Festdekoration
@@ -283,7 +283,7 @@ decorationOptions:
     imageAlt: Aufwändige florale Premium-Dekoration
     description: >-
       Aufwändige florale Gestaltung mit hochwertigen Arrangements für Tische, Zelt
-      und Eingang – das festliche Rundum-Paket.
+      und Eingang: das festliche Rundum-Paket.
     pricePerPerson: 20
 
 # Torte & Sweet Table: keine / Hochzeitstorte / Torte + Sweet Table. Pro Person.
@@ -292,7 +292,7 @@ cakeOptions:
   - id: keine
     label: Keine Torte
     description: Sie bringen Ihre eigene Torte mit oder verzichten darauf.
-    detail: Kuchen/Torte organisieren Sie selbst – diese Position bleibt bei 0 €.
+    detail: Kuchen/Torte organisieren Sie selbst. Diese Position bleibt bei 0 €.
     pricePerPerson: 0
   - id: torte
     label: Festtorte
@@ -300,7 +300,7 @@ cakeOptions:
     imageAlt: Mehrstöckige Festtorte
     description: >-
       Mehrstöckige Festtorte vom Konditor, abgestimmt auf Anlass, Geschmack und
-      Gästezahl – der süße Höhepunkt Ihrer Feier.
+      Gästezahl: der süße Höhepunkt Ihrer Feier.
     detail: >-
       Der klassische Moment: das gemeinsame Anschneiden der Torte. Wir stimmen
       Größe, Geschmack und Optik mit unserem Konditor auf Ihren Anlass ab.
@@ -315,7 +315,7 @@ cakeOptions:
       Pralinen und mehr zum Naschen über den ganzen Tag.
     detail: >-
       Zusätzlich zur Torte eine dekorative Süßigkeiten-Ecke, an der sich Ihre Gäste
-      den ganzen Tag bedienen können – ein beliebter Hingucker, besonders für Kinder.
+      den ganzen Tag bedienen können, ein beliebter Hingucker, besonders für Kinder.
     pricePerPerson: 14
 
 # Fotobox: keine / Fotobox mit Requisiten. Fester Preis inkl. Aufbau & Betreuung.
@@ -331,7 +331,7 @@ photoboothOptions:
     image: /img/events/fotobox.webp
     imageAlt: Fotobox mit lustigen Requisiten
     description: >-
-      Fotobox mit lustigen Requisiten und Sofortausdruck – für viele Lacher und ein
+      Fotobox mit lustigen Requisiten und Sofortausdruck, für viele Lacher und ein
       Gästebuch voller Erinnerungen.
     detail: >-
       Der Unterhaltungs-Hit für Ihre Gäste: Fotos mit Verkleidungen und Sofortdruck,
@@ -365,7 +365,7 @@ stylingOptions:
     description: >-
       Styling für die Braut plus eine weitere Person (Partnerin, Mutter, Trauzeugin).
     detail: >-
-      Wie das Braut-Styling, zusätzlich für eine zweite Person – ideal, wenn Sie sich
+      Wie das Braut-Styling, zusätzlich für eine zweite Person: ideal, wenn Sie sich
       gemeinsam vorbereiten möchten.
     price: 650
 
@@ -373,7 +373,7 @@ stylingOptions:
 occasions:
   - id: hochzeit
     label: Hochzeit
-    description: Heiraten im Grünen – intim, persönlich und unvergesslich.
+    description: Heiraten im Grünen, intim und persönlich.
     icon: ph:heart-duotone
   - id: jugendweihe
     label: Jugendweihe / Konfirmation
@@ -393,7 +393,7 @@ occasions:
     icon: ph:confetti-duotone
   - id: firmenfeier
     label: Firmenfeier
-    description: Sommerfest, Teamevent oder Firmenjubiläum im Grünen – fernab vom Büroalltag.
+    description: Sommerfest, Teamevent oder Firmenjubiläum im Grünen, fernab vom Büroalltag.
     icon: ph:briefcase-duotone
 
 disclaimer: >-

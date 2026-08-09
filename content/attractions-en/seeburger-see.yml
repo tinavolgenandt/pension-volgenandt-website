@@ -1,13 +1,13 @@
 name: 'Lake Seeburger See'
 slug: seeburger-see
-seoTitle: 'Seeburger See – the Eye of the Eichsfeld | Guesthouse in the Eichsfeld'
-seoDescription: 'Seeburger See – the Eye of the Eichsfeld – is just 25 km from our guesthouse. Swimming, boating and nature experiences.'
+seoTitle: 'Seeburger See, the Eye of the Eichsfeld | Guesthouse in the Eichsfeld'
+seoDescription: 'Seeburger See, known as the Eye of the Eichsfeld, is just 25 km from our guesthouse. Swimming, boating and nature experiences.'
 heroImage: /img/attractions/seeburger-see-seerosen.webp
-heroImageAlt: 'Seeburger See – water lilies on the still lake under summer clouds'
+heroImageAlt: 'Seeburger See, water lilies on the still lake under summer clouds'
 distanceKm: 25
 drivingMinutes: 30
 category: natur
-shortDescription: '"The Eye of the Eichsfeld" – swimming, boating and nature'
+shortDescription: '"The Eye of the Eichsfeld": swimming, boating and nature'
 intro: >-
   Seeburger See is affectionately known as "the Eye of the Eichsfeld".
   At around 88 hectares it is the largest natural lake in southern
@@ -32,8 +32,8 @@ content: >-
   course.
 hostTip: >-
   On a warm summer day it is ideal for swimming. Take a pedal boat
-  and explore the lake from the water – especially beautiful in the
-  evening sun.
+  and explore the lake from the water. It is especially beautiful
+  in the evening sun.
 bestTimeToVisit: 'May to September for swimming, spring and autumn for birdwatching'
 website: 'https://www.google.com/maps/search/Seeburger+See'
 coordinates:

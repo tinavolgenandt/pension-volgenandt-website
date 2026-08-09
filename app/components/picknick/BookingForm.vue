@@ -535,7 +535,7 @@ if (import.meta.client) {
       </div>
 
       <p v-if="isBrunch" class="text-xs text-sage-500">
-        Frische Brötchen sind enthalten – ein Croissant ist optional zubuchbar.
+        Frische Brötchen sind enthalten. Ein Croissant ist optional zubuchbar.
       </p>
       <p v-else class="text-xs text-sage-500">
         Brezeln (2 pro Person) sind im Abendschmaus bereits enthalten.
@@ -598,7 +598,7 @@ if (import.meta.client) {
         Kind)
       </h3>
       <p class="mt-1 text-xs text-sage-500">
-        Eigens für unsere kleinen Gäste zusammengestellt – mit kleiner Überraschung
+        Eigens für unsere kleinen Gäste zusammengestellt, inklusive kleiner Überraschung
       </p>
       <ul class="mt-3 space-y-1.5">
         <li

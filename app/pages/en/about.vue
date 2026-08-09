@@ -67,7 +67,7 @@ useJsonLd(
     <!-- Hero photo banner -->
     <SharedPageBanner
       image="/img/content/gastgeber-portrait.webp"
-      image-alt="Simone and Ralf Volgenandt – your hosts in Breitenbach"
+      image-alt="Simone and Ralf Volgenandt, your hosts in Breitenbach"
       title="About Us"
       subtitle="Welcome to our home in the Eichsfeld"
     />
@@ -96,14 +96,14 @@ useJsonLd(
             <h3 class="mt-4 font-serif text-lg font-semibold text-sage-900">Sustainability</h3>
             <p class="mt-2 text-sm leading-relaxed text-sage-600">
               Solar panels on our own roof, a biological wastewater system and a nature-friendly
-              garden – environmental awareness is part of our everyday life.
+              garden: environmental awareness is part of our everyday life.
             </p>
           </div>
           <div class="text-center">
             <Icon name="ph:house-line-duotone" class="mx-auto size-10 text-waldhonig-500" />
             <h3 class="mt-4 font-serif text-lg font-semibold text-sage-900">Home atmosphere</h3>
             <p class="mt-2 text-sm leading-relaxed text-sage-600">
-              No hotel formality – just a genuine home feeling. We are here for you and look forward
+              No hotel formality, just a genuine home feeling. We are here for you and look forward
               to personal encounters with our guests.
             </p>
           </div>
@@ -124,7 +124,7 @@ useJsonLd(
       <div class="mx-auto grid max-w-5xl gap-8 md:grid-cols-2 md:items-center">
         <NuxtImg
           src="/img/homepage/gebaeude-innenhof.webp"
-          alt="Pension Volgenandt – building and courtyard in Breitenbach"
+          alt="Building and courtyard of Pension Volgenandt in Breitenbach"
           class="w-full rounded-lg object-cover shadow-sm"
           loading="lazy"
           sizes="100vw md:50vw"
@@ -134,8 +134,8 @@ useJsonLd(
             Our guesthouse in Breitenbach
           </h2>
           <p class="leading-relaxed">
-            Our guesthouse is quietly situated on the edge of Breitenbach, nestled in the green
-            hills of the Eichsfeld. Seven rooms and holiday apartments accommodate couples, families
+            Our guesthouse sits quietly on the edge of Breitenbach, in the green hills of the
+            Eichsfeld. Seven rooms and holiday apartments accommodate couples, families
             and also business travellers.
           </p>
           <p class="leading-relaxed">

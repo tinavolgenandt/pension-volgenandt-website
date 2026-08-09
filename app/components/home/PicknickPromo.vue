@@ -99,7 +99,7 @@ function dismiss() {
           </div>
 
           <p class="mt-3 text-sm leading-relaxed text-sage-600">
-            Im Garten der Pension entspannen oder auf einen Ausflug ins Eichsfeld mitnehmen – wir
+            Im Garten der Pension entspannen oder auf einen Ausflug ins Eichsfeld mitnehmen: Wir
             packen alles ein. Ausflugstipps gibt es auf unserer Website.
           </p>
 
@@ -113,7 +113,7 @@ function dismiss() {
               class="shrink-0 text-waldhonig-500"
               aria-hidden="true"
             />
-            <span>Auch ohne Zimmerbuchung – <strong>Tagesgäste herzlich willkommen.</strong></span>
+            <span>Auch ohne Zimmerbuchung sind <strong>Tagesgäste herzlich willkommen.</strong></span>
           </div>
 
           <NuxtLink

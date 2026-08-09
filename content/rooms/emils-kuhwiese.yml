@@ -7,7 +7,7 @@ category: 'Ferienwohnung'
 shortDescription: >-
   Gemütliche Ferienwohnung mit Blick in den Garten.
   Eigene Küche, Terrasse und ein zusätzliches
-  Schlafsofa – ideal für 2 Personen oder kleine Familien.
+  Schlafsofa, ideal für 2 Personen oder kleine Familien.
 description: >-
   Die Ferienwohnung Emil's Kuhwiese bietet Ihnen
   alles, was Sie für einen entspannten Aufenthalt brauchen.
@@ -77,12 +77,12 @@ extras:
     price: 10
     unit: 'pro Person / Nacht'
   - name: 'Picknick-Korb'
-    description: 'Regional & hausgemacht, mit Geschirr und Decke. Im Garten der Pension entspannen, auf einen Ausflug mitnehmen oder einen Lieblingsplatz in der Eichsfelder Natur suchen – wir packen alles ein. Ausflugstipps gibt es auf unserer Website.'
+    description: 'Regional & hausgemacht, mit Geschirr und Decke. Im Garten der Pension entspannen, auf einen Ausflug mitnehmen oder einen Lieblingsplatz in der Eichsfelder Natur suchen. Wir packen alles ein. Ausflugstipps gibt es auf unserer Website.'
     price: 19
     pricePrefix: 'ab '
     unit: 'pro Person'
   - name: 'Hund'
-    description: 'Ihr Vierbeiner ist bei uns herzlich willkommen – unser großer Garten bietet viel Platz zum Toben und Schnüffeln.'
+    description: 'Ihr Vierbeiner ist bei uns herzlich willkommen. Unser großer Garten bietet viel Platz zum Toben und Schnüffeln.'
     price: 5
     unit: 'pro Nacht'
   - name: 'Grill-Set'

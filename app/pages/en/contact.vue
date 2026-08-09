@@ -53,7 +53,7 @@ const appConfig = useAppConfig()
     <!-- 1. Thin photo banner -->
     <SharedPageBanner
       image="/img/garten/einfahrt-sommer.webp"
-      image-alt="Pension Volgenandt – Entrance with garden view in summer"
+      image-alt="Entrance of Pension Volgenandt with a garden view in summer"
       :title="t('contact.heading', 'en')"
       :subtitle="t('contact.subtitle', 'en')"
     />
@@ -162,7 +162,7 @@ const appConfig = useAppConfig()
         <figure>
           <NuxtImg
             src="/img/content/gastgeber-portrait.webp"
-            alt="Simone and Ralf Volgenandt – Your hosts in Breitenbach"
+            alt="Simone and Ralf Volgenandt, your hosts in Breitenbach"
             class="aspect-[4/3] w-full rounded-lg object-cover"
             loading="lazy"
             sizes="100vw sm:50vw"
@@ -174,7 +174,7 @@ const appConfig = useAppConfig()
         <figure>
           <NuxtImg
             src="/img/homepage/gebaeude-innenhof.webp"
-            alt="Pension Volgenandt – Building and courtyard"
+            alt="Building and courtyard of Pension Volgenandt"
             class="aspect-[4/3] w-full rounded-lg object-cover"
             loading="lazy"
             sizes="100vw sm:50vw"

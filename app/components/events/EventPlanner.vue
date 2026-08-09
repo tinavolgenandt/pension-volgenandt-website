@@ -109,7 +109,7 @@ const optionSteps = computed<WizardStep[]>(() => [
     image: '/img/picknick/garten-pavillon-sitzecke.webp',
     imageAlt: 'Gemütliche Sitzecke im Garten',
     intro:
-      'Die Getränke laufen über uns – wählen Sie zwischen Selbstbedienung und Service am Tisch. Abgerechnet pro Person und Stunde, richtet sich also nach Gästezahl und Dauer Ihrer Feier.',
+      'Die Getränke laufen über uns: Wählen Sie zwischen Selbstbedienung und Service am Tisch. Abgerechnet pro Person und Stunde, richtet sich also nach Gästezahl und Dauer Ihrer Feier.',
     groups: [
       {
         key: 'drinkId',
@@ -125,7 +125,7 @@ const optionSteps = computed<WizardStep[]>(() => [
     image: '/img/garten/garten-sitzbank-apfelbaum-bluete.webp',
     imageAlt: 'Blühender Apfelbaum mit Sitzbank im Garten',
     intro:
-      'Möchten Sie direkt bei uns im Garten heiraten? Ein professioneller Trauredner gestaltet Ihre freie Zeremonie – Trauung und Feier an einem Ort, ganz ohne Fahrt dazwischen. Für alle anderen Anlässe lassen Sie diese Auswahl einfach bei „Keine Trauung“.',
+      'Möchten Sie direkt bei uns im Garten heiraten? Ein professioneller Trauredner gestaltet Ihre freie Zeremonie: Trauung und Feier finden an einem Ort statt, ganz ohne Fahrt dazwischen. Für alle anderen Anlässe lassen Sie diese Auswahl einfach bei „Keine Trauung“.',
     groups: [
       {
         key: 'ceremonyId',
@@ -193,7 +193,7 @@ const optionSteps = computed<WizardStep[]>(() => [
     image: '/img/picknick/garten-sitzecke-rosen.webp',
     imageAlt: 'Sitzecke mit Rosen im Garten',
     intro:
-      'Der Unterhaltungs-Hit für Ihre Gäste: eine Fotobox mit Requisiten und Sofortdruck – für viele Lacher und ein Gästebuch voller Erinnerungen.',
+      'Der Unterhaltungs-Hit für Ihre Gäste: eine Fotobox mit Requisiten und Sofortdruck, für viele Lacher und ein Gästebuch voller Erinnerungen.',
     groups: [
       { key: 'photoboothId', unit: 'flat', legend: 'Fotobox', options: opts('photoboothOptions') },
     ],
@@ -213,7 +213,7 @@ const optionSteps = computed<WizardStep[]>(() => [
     image: '/img/garten/garten-sitzecke-apfelbaum.webp',
     imageAlt: 'Sitzgelegenheit unter dem Apfelbaum',
     intro:
-      'Vom rustikalen bis zum eleganten Look: Stellen Sie Tische, Stuhlhussen, Geschirr und Bodenbelag zusammen. Die jeweils erste Option ist bereits im Basispreis enthalten – jede Aufwertung wird pro Person berechnet.',
+      'Vom rustikalen bis zum eleganten Look: Stellen Sie Tische, Stuhlhussen, Geschirr und Bodenbelag zusammen. Die jeweils erste Option ist bereits im Basispreis enthalten. Jede Aufwertung wird pro Person berechnet.',
     groups: [
       { key: 'tableId', unit: 'person', legend: 'Tische', options: opts('tableOptions') },
       {
@@ -540,7 +540,7 @@ const inputClass =
           <div>
             <p class="text-sage-700">
               Beantworten Sie zunächst ein paar kurze Fragen. Danach führen wir Sie Schritt für
-              Schritt durch alle Möglichkeiten – Sie sehen bei jeder Auswahl sofort, was sie für
+              Schritt durch alle Möglichkeiten. Bei jeder Auswahl sehen Sie sofort, was sie für
               Ihre Feier bedeutet und was sie kostet.
             </p>
 
@@ -717,7 +717,7 @@ const inputClass =
               Ihre Kontaktdaten
             </legend>
             <p class="text-sm text-sage-600">
-              Senden Sie uns Ihre Zusammenstellung – wir melden uns innerhalb von 24 Stunden mit
+              Senden Sie uns Ihre Zusammenstellung. Wir melden uns innerhalb von 24 Stunden mit
               einem persönlichen, unverbindlichen Angebot.
             </p>
             <div class="grid gap-5 sm:grid-cols-2">
