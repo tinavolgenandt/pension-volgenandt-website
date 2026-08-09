@@ -24,6 +24,10 @@ pnpm dev          # http://localhost:3000
 pnpm generate     # static build → .output/public/
 ```
 
+## Backend (server/)
+
+PHP scripts on IONOS handle bookings, invoicing, and transactional email (`server/smtp.php` + `sendSmtp()`). **Every email sent to a guest or other external person must BCC `kontakt@pension-volgenandt.de`** (pass it as the `$bcc` argument to `sendSmtp()`) so the family inbox keeps a record of guest-facing correspondence.
+
 ## License
 
 All rights reserved. This is a private project for Pension Volgenandt.
