@@ -263,7 +263,8 @@ if ($loggedIn && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send']))
         'Simone & Ralf Volgenandt',
         $smtpUser,
         '',
-        true
+        true,
+        ADMIN_EMAIL
     );
 
     if ($result['ok']) {
