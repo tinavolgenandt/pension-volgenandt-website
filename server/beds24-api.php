@@ -42,6 +42,27 @@ class Beds24Api {
     }
 
     /**
+     * Fetch every booking sharing a group — the master booking itself plus all
+     * its room bookings. Beds24 v2's `masterId` query param is special: passing
+     * a booking's own ID (whether it's the master or a standalone booking with
+     * no group at all) returns that booking plus any children whose `masterId`
+     * points to it. A standalone booking returns just itself (count 1).
+     * Confirmed 2026-08-03 against a real 5-room group booking (#82870776).
+     */
+    public function getBookingsByMasterId(int $masterId): array {
+        if (!$this->accessToken && !$this->authenticate()) return [];
+
+        $response = $this->request('GET', '/bookings', null, [], [
+            'masterId'            => $masterId,
+            'includeInvoiceItems' => 'true',
+        ]);
+
+        if (!$response['ok']) return [];
+
+        return $response['data']['data'] ?? [];
+    }
+
+    /**
      * Fetch all confirmed/new bookings with an unpaid balance for a date window.
      * Used as a backup poll to catch any webhooks we may have missed.
      * Returns array of bookings or empty array.

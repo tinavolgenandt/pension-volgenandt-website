@@ -278,7 +278,7 @@ sendSmtp(
     'Ihre Picknick-Anfrage bei Pension Volgenandt',
     $guestReceiptHtml,
     'Simone & Ralf Volgenandt', $adminEmail,
-    '', true
+    '', true, $adminEmail
 );
 
 // ---------------------------------------------------------------------------

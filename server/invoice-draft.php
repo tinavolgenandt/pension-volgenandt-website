@@ -44,27 +44,74 @@ function generateInvoiceDraftIfNeeded(int $bookingId, array $webhookItems = []):
         return ['ok' => false, 'error' => 'Booking not found in Beds24'];
     }
 
+    // Gruppenbuchung (e.g. a family/company booking several rooms together):
+    // Beds24 links sibling room bookings via `masterId`. Querying `masterId`
+    // with a booking's own ID returns that booking plus every sibling whose
+    // `masterId` points to it — a standalone booking (no group) just comes
+    // back alone. Confirmed 2026-08-03 against a real 5-room group booking.
+    // The master's own ID is used as the drafts-lookup key for the whole
+    // group (`bookingId` on the draft), so the existing pending/approved/
+    // Nachtrag diff logic below works unchanged — it only ever cared about
+    // "what's already invoiced under this key", never about single-booking
+    // semantics specifically.
+    $groupMasterId = (int)($booking['masterId'] ?? $booking['id']);
+    $groupBookings = $api->getBookingsByMasterId($groupMasterId);
+    if (empty($groupBookings)) {
+        $groupBookings = [$booking]; // defensive fallback if the group fetch fails
+    }
+    $isGroup = count($groupBookings) > 1;
+
+    $masterBooking = $booking;
+    foreach ($groupBookings as $b) {
+        if ((int)($b['id'] ?? 0) === $groupMasterId) { $masterBooking = $b; break; }
+    }
+
     // Booking.com is the merchant of record for these guests — the pension
     // never charges them directly, so a German Rechnung showing the gross
     // (pre-commission) amount would be wrong. `channel` is Beds24's stable
     // machine code ('booking'); `apiSource` ("Booking.com") is checked too
-    // in case a future webhook payload ever lacks `channel`.
-    $channel   = strtolower((string)($booking['channel']   ?? ''));
-    $apiSource = strtolower((string)($booking['apiSource'] ?? ''));
+    // in case a future webhook payload ever lacks `channel`. Checked on the
+    // master — group bookings are created together and not expected to mix
+    // channels.
+    $channel   = strtolower((string)($masterBooking['channel']   ?? ''));
+    $apiSource = strtolower((string)($masterBooking['apiSource'] ?? ''));
     if ($channel === 'booking' || str_contains($apiSource, 'booking.com')) {
-        draftLog($bookingId, 'skip', "booking_com_ota channel={$channel} apiSource={$apiSource}");
+        draftLog($groupMasterId, 'skip', "booking_com_ota channel={$channel} apiSource={$apiSource}");
         return ['ok' => true, 'skipped' => true, 'reason' => 'booking_com_ota'];
     }
 
     // Beds24 v2 returns status as a string ('confirmed', 'new', 'request', etc.)
-    $status = strtolower((string)($booking['status'] ?? ''));
+    $status = strtolower((string)($masterBooking['status'] ?? ''));
     if (!in_array($status, ['confirmed', 'new'], true)) {
-        draftLog($bookingId, 'skip', "status={$status} not invoice-worthy");
+        draftLog($groupMasterId, 'skip', "status={$status} not invoice-worthy");
         return ['ok' => true, 'skipped' => true, 'reason' => 'status_not_applicable'];
     }
 
-    $items    = parseLineItems($booking, $webhookItems);
-    $existing = findDraftsForBooking($bookingId);
+    $repBooking = $isGroup ? buildGroupRepresentativeBooking($groupBookings, $groupMasterId) : $booking;
+
+    $items = [];
+    foreach ($groupBookings as $b) {
+        $memberWebhookItems = ((int)($b['id'] ?? 0) === $bookingId) ? $webhookItems : [];
+        $items = array_merge($items, parseLineItems($b, $memberWebhookItems));
+    }
+
+    // Firmenrechnung auto-detection: Fero Fensterbau/Barczewski were set up
+    // 2026-08-03 as dedicated Beds24 Offerten (see FIRMENRECHNUNG_OFFERS in
+    // config.php), so a booking made with one of those rates carries a
+    // matching `offerId` — no manual checkbox needed. Checked across every
+    // group member (not just the master) in case a future company books
+    // more than one room.
+    $companyName = null;
+    foreach ($groupBookings as $b) {
+        $offerId = (int)($b['offerId'] ?? 0);
+        $offers  = defined('FIRMENRECHNUNG_OFFERS') ? FIRMENRECHNUNG_OFFERS : [];
+        if (isset($offers[$offerId])) { $companyName = $offers[$offerId]; break; }
+    }
+    $firmenExtra = $companyName !== null
+        ? ['isFirmenrechnung' => true, 'companyName' => $companyName, 'ohneFruehstueck' => true]
+        : [];
+
+    $existing = findDraftsForBooking($groupMasterId);
     $pending  = array_values(array_filter($existing, fn(array $d) => ($d['status'] ?? '') === 'pending'));
     $approved = array_values(array_filter($existing, fn(array $d) => ($d['status'] ?? '') === 'approved'));
 
@@ -73,7 +120,8 @@ function generateInvoiceDraftIfNeeded(int $bookingId, array $webhookItems = []):
     // numbers actually moved (e.g. she corrected something in Beds24 before
     // getting to the review), otherwise there's nothing to do.
     if (!empty($pending)) {
-        return refreshPendingDraft($pending[0], $booking, $items);
+        $groupBookingIds = $isGroup ? array_map(fn(array $b) => (int)($b['id'] ?? 0), $groupBookings) : [];
+        return refreshPendingDraft($pending[0], $repBooking, $items, $groupBookingIds, $firmenExtra);
     }
 
     // Already invoiced and approved at least once — only a genuinely new
@@ -84,18 +132,77 @@ function generateInvoiceDraftIfNeeded(int $bookingId, array $webhookItems = []):
     if (!empty($approved)) {
         $newItems = diffLineItems($items, $approved);
         if (empty($newItems)) {
-            draftLog($bookingId, 'skip', 'no_new_charges_since_approval');
+            draftLog($groupMasterId, 'skip', 'no_new_charges_since_approval');
             return ['ok' => true, 'skipped' => true, 'reason' => 'no_new_charges'];
         }
         $relatesTo = array_values(array_filter(array_map(fn(array $d) => $d['invoiceNumber'] ?? null, $approved)));
         $note = 'Nachtragsrechnung für zusätzliche Positionen'
             . (!empty($relatesTo) ? ' zu Rechnung ' . implode(', ', $relatesTo) : '') . '.';
-        return persistNewDraft($booking, $newItems, 'C', ['relatesTo' => $relatesTo, 'note' => $note]);
+        return persistNewDraft($repBooking, $newItems, 'C', array_merge([
+            'relatesTo'       => $relatesTo,
+            'note'            => $note,
+            'groupBookingIds' => $isGroup ? array_map(fn(array $b) => (int)($b['id'] ?? 0), $groupBookings) : [],
+        ], $firmenExtra));
     }
 
     // No prior drafts at all (first time, or every previous draft was
     // rejected) — start fresh with the full stay.
-    return persistNewDraft($booking, $items, detectScenario($booking));
+    return persistNewDraft($repBooking, $items, detectScenario($masterBooking), array_merge([
+        'groupBookingIds' => $isGroup ? array_map(fn(array $b) => (int)($b['id'] ?? 0), $groupBookings) : [],
+    ], $firmenExtra));
+}
+
+/**
+ * Merge a Gruppenbuchung's sibling room bookings into one synthetic
+ * "booking" that parseGuest()/parseStay()/buildInvoiceDraft() can consume
+ * unchanged — one combined Rechnung instead of one per room. Guest fields
+ * prefer the master's value, falling back to the first sibling that has it
+ * (the master doesn't always carry the fullest contact details, e.g. a
+ * sibling's mobile number where the master's is blank — confirmed against a
+ * real group booking 2026-08-03). Room name becomes the joined list of every
+ * distinct room in the group. `balance` is pre-summed across all members so
+ * `extractBalance()` (which checks `balance` before falling back to
+ * price−deposit) picks it up without needing its own group-aware branch.
+ */
+function buildGroupRepresentativeBooking(array $groupBookings, int $groupMasterId): array {
+    $master = $groupBookings[0];
+    foreach ($groupBookings as $b) {
+        if ((int)($b['id'] ?? 0) === $groupMasterId) { $master = $b; break; }
+    }
+
+    $merged = $master;
+    $guestFields = ['firstName', 'first_name', 'lastName', 'last_name', 'email', 'guestEmail',
+        'phone', 'mobile', 'address', 'street', 'zip', 'postcode', 'city', 'country'];
+    foreach ($guestFields as $field) {
+        if (!empty($merged[$field])) continue;
+        foreach ($groupBookings as $b) {
+            if (!empty($b[$field])) { $merged[$field] = $b[$field]; break; }
+        }
+    }
+
+    $roomNames = [];
+    foreach ($groupBookings as $b) {
+        $name = resolveRoomName($b);
+        if (!in_array($name, $roomNames, true)) $roomNames[] = $name;
+    }
+    // resolveRoomName() looks up BEDS24_ROOM_NAMES[roomId] before falling
+    // back to the roomName string below — clearing roomId here is required,
+    // otherwise parseStay() would silently show only the master's single
+    // room instead of the joined list of every room in the group.
+    $merged['roomName'] = implode(', ', $roomNames);
+    $merged['roomId']   = null;
+    $merged['id']       = $groupMasterId;
+    $merged['balance']  = extractGroupBalance($groupBookings);
+
+    return $merged;
+}
+
+function extractGroupBalance(array $groupBookings): float {
+    $total = 0.0;
+    foreach ($groupBookings as $b) {
+        $total += extractBalance($b);
+    }
+    return round($total, 2);
 }
 
 /**
@@ -138,11 +245,21 @@ function persistNewDraft(array $booking, array $items, string $scenario, array $
  * the charges actually changed, since Beds24 can re-fire the same webhook
  * event more than once.
  */
-function refreshPendingDraft(array $draft, array $booking, array $items): array {
+function refreshPendingDraft(array $draft, array $booking, array $items, array $groupBookingIds = [], array $firmenExtra = []): array {
     $bookingId = (int)($draft['bookingId'] ?? $booking['id'] ?? 0);
     $token     = $draft['token'] ?? '';
 
+    // Metadata that doesn't need a re-notify (group membership, Firmenrechnung
+    // auto-detection) is applied even when the line items themselves are
+    // unchanged — e.g. Simone selects the Fero Fensterbau rate for a booking
+    // that already has a pending draft without changing anything else about
+    // the charges. Persisted silently either way.
+    if (!empty($groupBookingIds)) $draft['groupBookingIds'] = $groupBookingIds;
+    foreach ($firmenExtra as $key => $value) $draft[$key] = $value;
+
     if (itemSetsEqual($items, $draft['lineItems'] ?? [])) {
+        $path = INV_DRAFTS_DIR . '/' . $token . '.json';
+        file_put_contents($path, json_encode($draft, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
         draftLog($bookingId, 'skip', "pending_draft_unchanged token={$token}");
         return ['ok' => true, 'skipped' => true, 'reason' => 'pending_draft_unchanged'];
     }
@@ -188,6 +305,10 @@ function buildInvoiceDraft(array $booking, array $items, string $scenario, array
         // Invoice number(s) this draft supplements — set only for scenario
         // 'C' (Nachtragsrechnung for extras added after a prior approval).
         'relatesTo'     => $extra['relatesTo'] ?? [],
+        // Beds24 booking IDs of every room in this Gruppenbuchung (empty for
+        // a standalone booking) — 'bookingId' above is the group's masterId,
+        // used as the drafts-lookup key for the whole group.
+        'groupBookingIds' => $extra['groupBookingIds'] ?? [],
         'guest'         => $guest,
         'stay'          => $stay,
         'issuer'        => [
@@ -204,6 +325,17 @@ function buildInvoiceDraft(array $booking, array $items, string $scenario, array
         'paymentNote'   => 'Zahlbar innerhalb von 7 Tagen nach Rechnungsstellung.',
         'note'          => $extra['note'] ?? '',
         'approvedAt'    => null,
+        // Firmenrechnung (e.g. Fero Fensterbau, Barczewski) — auto-detected
+        // from the booking's `offerId` (see FIRMENRECHNUNG_OFFERS in
+        // config.php) when the booking used one of their dedicated Beds24
+        // rates; still editable/overridable by Simone on the review page
+        // (e.g. a company booking made without selecting the rate by
+        // mistake, or vice versa). Drives the shorter payment term
+        // (3 Werktage, see computeDueDate()) and the "ohne Frühstück" note.
+        'isFirmenrechnung'  => $extra['isFirmenrechnung'] ?? false,
+        'companyName'       => $extra['companyName'] ?? '',
+        'bookingReference'  => $extra['bookingReference'] ?? '',
+        'ohneFruehstueck'   => $extra['ohneFruehstueck'] ?? false,
     ];
 }
 
@@ -280,6 +412,17 @@ function parseLineItems(array $booking, array $webhookItems = []): array {
     $extraItems         = [];
 
     foreach ($invoiceItems as $raw) {
+        // Beds24 v2 invoice items carry a `type` of 'charge' or 'payment' (a
+        // payment echoes the charged amount as its own entry, with a negative
+        // lineTotal). Only charges belong on the invoice — a payment record
+        // was previously being read as an extra accommodation-shaped line
+        // (its description is blank, which isAccommodationItem() treats as
+        // the native rate line), silently doubling the shown total. Found
+        // 2026-08-03 while sampling real bookings for the Gruppenrechnung
+        // work; `type` is absent on some raw webhook payloads, so only skip
+        // when it's explicitly present and not 'charge'.
+        if (isset($raw['type']) && $raw['type'] !== 'charge') continue;
+
         $desc  = trim($raw['description'] ?? $raw['desc'] ?? '');
         $unit  = (float)($raw['amount'] ?? $raw['unitPrice'] ?? 0);
         $qty   = (float)($raw['qty'] ?? $raw['quantity'] ?? 1);
@@ -332,6 +475,15 @@ function parseLineItems(array $booking, array $webhookItems = []): array {
  * duplicated it (see [[beds24-auto-preis-duplicate-accommodation]]) labeled
  * its extra line "Übernachtung". Everything else (Minibar, Parkplatz, ...) is
  * a genuinely separate service and must not be summed into the room total.
+ *
+ * The API also frequently returns the room-charge line with its Beds24 merge
+ * tags unresolved — literally "[ROOMNAME1] [FIRSTNIGHT] - [LEAVINGDAY]" —
+ * rather than real text. Confirmed 2026-08-03 by sampling ~80 real bookings:
+ * this exact placeholder is consistently the accommodation line (never
+ * breakfast/Hund/other extras, which always come through with resolved
+ * text), so without this check it was previously falling through to the
+ * generic 19%-VAT "extra" branch — wrong tax rate, and a guest-visible
+ * invoice showing raw template syntax instead of the room name.
  */
 function isAccommodationItem(string $desc): bool {
     if ($desc === '') return true;
@@ -340,7 +492,8 @@ function isAccommodationItem(string $desc): bool {
         || str_contains($lower, 'ubernachtung')
         || str_contains($lower, 'unterkunft')
         || str_contains($lower, 'overnight')
-        || str_contains($lower, 'accommodation');
+        || str_contains($lower, 'accommodation')
+        || str_contains($lower, '[roomname');
 }
 
 function resolveRoomName(array $b): string {
@@ -398,6 +551,78 @@ function makeLineItem(string $desc, float $gross, int $vatRate, float $qty = 1.0
         'netAmount'   => $net,
         'vatAmount'   => $vat,
     ];
+}
+
+/**
+ * Gauss's Easter algorithm — deliberately not using PHP's easter_date(),
+ * which requires the optional `calendar` extension that may not be enabled
+ * on shared hosting (would fatal-error in production if missing).
+ */
+function easterSunday(int $year): \DateTime {
+    $a = $year % 19;
+    $b = intdiv($year, 100);
+    $c = $year % 100;
+    $d = intdiv($b, 4);
+    $e = $b % 4;
+    $f = intdiv($b + 8, 25);
+    $g = intdiv($b - $f + 1, 3);
+    $h = (19 * $a + $b - $d - $g + 15) % 30;
+    $i = intdiv($c, 4);
+    $k = $c % 4;
+    $l = (32 + 2 * $e + 2 * $i - $h - $k) % 7;
+    $m = intdiv($a + 11 * $h + 22 * $l, 451);
+    $month = intdiv($h + $l - 7 * $m + 114, 31);
+    $day   = (($h + $l - 7 * $m + 114) % 31) + 1;
+    return new \DateTime(sprintf('%04d-%02d-%02d', $year, $month, $day));
+}
+
+/**
+ * Thuringia public holidays for a given year (fixed dates + Easter-derived).
+ * Used to compute the Firmenrechnung due date ("3 Werktage, sonst nächster
+ * Werktag" — Simone's rule, confirmed 2026-08-03).
+ */
+function germanPublicHolidays(int $year): array {
+    $easter = easterSunday($year);
+
+    $holidays = [
+        sprintf('%d-01-01', $year), // Neujahr
+        (clone $easter)->modify('-2 days')->format('Y-m-d'), // Karfreitag
+        (clone $easter)->modify('+1 day')->format('Y-m-d'),  // Ostermontag
+        sprintf('%d-05-01', $year), // Tag der Arbeit
+        (clone $easter)->modify('+39 days')->format('Y-m-d'), // Christi Himmelfahrt
+        (clone $easter)->modify('+50 days')->format('Y-m-d'), // Pfingstmontag
+        sprintf('%d-09-20', $year), // Weltkindertag (Thüringen)
+        sprintf('%d-10-03', $year), // Tag der Deutschen Einheit
+        sprintf('%d-10-31', $year), // Reformationstag (Thüringen)
+        sprintf('%d-12-25', $year), // 1. Weihnachtstag
+        sprintf('%d-12-26', $year), // 2. Weihnachtstag
+    ];
+
+    return array_flip($holidays); // keyed by date string for O(1) lookup
+}
+
+function isBusinessDay(\DateTime $d, array &$holidaysByYear): bool {
+    $weekday = (int)$d->format('N'); // 6=Sa, 7=So
+    if ($weekday >= 6) return false;
+    $year = (int)$d->format('Y');
+    $holidays = $holidaysByYear[$year] ??= germanPublicHolidays($year);
+    return !isset($holidays[$d->format('Y-m-d')]);
+}
+
+/**
+ * "3 Werktage nach Rechnungsstellung, sonst der nächste Werktag" — add the
+ * fixed number of calendar days, then roll forward to the next business day
+ * if that lands on a weekend/holiday. Not the same as "3 business days
+ * forward" (which would skip weekends during the count) — this matches
+ * Simone's actual wording.
+ */
+function computeDueDate(\DateTime $invoiceDate, int $days): \DateTime {
+    $due = (clone $invoiceDate)->modify("+{$days} days");
+    $holidaysByYear = [];
+    while (!isBusinessDay($due, $holidaysByYear)) {
+        $due->modify('+1 day');
+    }
+    return $due;
 }
 
 function calcTotals(array $items): array {

@@ -39,12 +39,13 @@ function setCorsHeaders(array $allowedOrigins): void {
 /**
  * Send an email via SMTP with STARTTLS + AUTH LOGIN.
  */
-function sendSmtp(string $host, int $port, string $user, string $pass, string $from, string $to, string $subject, string $body, string $replyToName, string $replyToEmail, string $cc = '', bool $html = false): array {
+function sendSmtp(string $host, int $port, string $user, string $pass, string $from, string $to, string $subject, string $body, string $replyToName, string $replyToEmail, string $cc = '', bool $html = false, string $bcc = ''): array {
     // Strip CRLF to prevent header injection
     $replyToName  = str_replace(["\r", "\n"], '', $replyToName);
     $replyToEmail = str_replace(["\r", "\n"], '', $replyToEmail);
     $to           = str_replace(["\r", "\n"], '', $to);
     $cc           = str_replace(["\r", "\n"], '', $cc);
+    $bcc          = str_replace(["\r", "\n"], '', $bcc);
 
     $errno = 0;
     $errstr = '';
@@ -131,12 +132,21 @@ function sendSmtp(string $host, int $port, string $user, string $pass, string $f
             return ['ok' => false, 'error' => "RCPT TO failed: " . trim($rcptTo)];
         }
 
-        // CC recipient (if set)
+        // CC recipient (if set) — visible to the primary recipient via the Cc: header
         if ($cc !== '') {
             $rcptCc = $cmd("RCPT TO:<$cc>");
             if (strpos($rcptCc, '250') !== 0) {
                 fclose($conn);
                 return ['ok' => false, 'error' => "RCPT TO (CC) failed: " . trim($rcptCc)];
+            }
+        }
+
+        // BCC recipient (if set) — added to the envelope only, no header line
+        if ($bcc !== '') {
+            $rcptBcc = $cmd("RCPT TO:<$bcc>");
+            if (strpos($rcptBcc, '250') !== 0) {
+                fclose($conn);
+                return ['ok' => false, 'error' => "RCPT TO (BCC) failed: " . trim($rcptBcc)];
             }
         }
 

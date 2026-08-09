@@ -76,6 +76,23 @@ function statusBadge(string $status): string {
     };
 }
 
+function followUpBadge(array $b): string {
+    if (($b['status'] ?? '') !== 'accepted') {
+        return '<span style="color:#ccc;font-size:12px;">&ndash;</span>';
+    }
+    if (empty($b['followUpSentAt'])) {
+        return '<span class="badge badge-yellow">Ausstehend</span>';
+    }
+    $reason = $b['followUpSkippedReason'] ?? '';
+    if ($reason === 'no_date') {
+        return '<span class="badge badge-grey">Kein Datum</span>';
+    }
+    $sentDate = date('d.m.Y H:i', strtotime($b['followUpSentAt']));
+    $variant  = $b['followUpVariant'] ?? '';
+    $variantLabel = $variant === 'inhouse_guest' ? ' (&Uuml;bern.-Gast)' : ($variant === 'day_guest' ? ' (Tagesgast)' : '');
+    return '<span class="badge badge-green">&#10003; ' . htmlspecialchars($sentDate, ENT_QUOTES, 'UTF-8') . '</span>' . $variantLabel;
+}
+
 function rowBg(string $status): string {
     return match ($status) {
         'pending'   => '#fffbf0',
@@ -219,6 +236,7 @@ foreach ($bookings as $b) {
       <th>Personen</th>
       <th>Betrag</th>
       <th>Status</th>
+      <th>Follow-up</th>
       <th>Aktionen</th>
     </tr>
   </thead>
@@ -243,6 +261,7 @@ foreach ($bookings as $b) {
     <td style="white-space:nowrap;"><?= htmlspecialchars($pers, ENT_QUOTES, 'UTF-8') ?></td>
     <td class="amount"><?= number_format((float)($b['amount'] ?? 0), 2, ',', '.') ?>&nbsp;&euro;</td>
     <td><?= statusBadge($s) ?></td>
+    <td><?= followUpBadge($b) ?></td>
     <td>
       <div class="actions">
         <?php if ($s === 'pending'): ?>

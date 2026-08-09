@@ -5,11 +5,12 @@
  * Deploy to: https://api.pension-volgenandt.de/picknick-followup.php
  *
  * For every accepted picnic booking that is at least 5 hours past its
- * pickup time and hasn't been processed yet:
- *   - Skip (no email) if the guest also has an overlapping Beds24
- *     accommodation booking — this follow-up is for day guests only.
- *   - Otherwise send a thank-you email with the shared 5% voucher codeword
- *     (PICKNICK_VOUCHER_CODE) and a request for a Google review.
+ * pickup time and hasn't been processed yet, sends a thank-you email with
+ * the shared 5% voucher codeword (PICKNICK_VOUCHER_CODE) and a request for
+ * a Google review. Two wordings, picked by whether the guest also has an
+ * overlapping Beds24 accommodation booking:
+ *   - 'inhouse_guest' — picnic was part of a room stay
+ *   - 'day_guest'     — picnic-only booking, no overnight stay
  *
  * The voucher codeword is the SAME for every guest (not per-guest random) —
  * it's redeemed automatically for picnic bookings via vouchers.php (one
@@ -48,10 +49,20 @@ if ($secret === '' || !hash_equals($secret, $_SERVER['HTTP_X_FOLLOWUP_SECRET'] ?
 // ---------------------------------------------------------------------------
 // Email template
 // ---------------------------------------------------------------------------
-function buildFollowUpEmail(string $name, string $voucherCode, int $discountPercent, string $reviewLink): string {
+function buildFollowUpEmail(string $name, string $voucherCode, int $discountPercent, string $reviewLink, string $variant = 'day_guest'): string {
     $name      = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
     $code      = htmlspecialchars($voucherCode, ENT_QUOTES, 'UTF-8');
     $reviewUrl = htmlspecialchars($reviewLink, ENT_QUOTES, 'UTF-8');
+
+    if ($variant === 'inhouse_guest') {
+        $headline = 'Danke f&uuml;r Ihren Aufenthalt, ' . $name . '!';
+        $intro    = 'wir hoffen, Sie hatten einen erholsamen Aufenthalt bei uns im Eichsfeld und Ihr Picknick war
+      ein sch&ouml;nes Highlight Ihres Besuchs!';
+    } else {
+        $headline = 'Danke f&uuml;r Ihren Besuch, ' . $name . '!';
+        $intro    = 'wir hoffen, Sie hatten heute ein wundersch&ouml;nes Picknick bei uns im Eichsfeld!
+      Es freut uns sehr, dass Sie sich f&uuml;r einen Tag bei Pension Volgenandt entschieden haben.';
+    }
 
     return '<!DOCTYPE html>
 <html lang="de"><head><meta charset="UTF-8"></head>
@@ -65,13 +76,12 @@ function buildFollowUpEmail(string $name, string $voucherCode, int $discountPerc
   </td></tr>
   <tr><td style="background:#f0f7ee;padding:20px 32px;text-align:center;border-bottom:1px solid #dde8db;">
     <p style="margin:0;font-size:26px;">&#127811;</p>
-    <h2 style="margin:8px 0 4px;font-size:20px;color:#3d5a3e;">Danke f&uuml;r Ihren Besuch, ' . $name . '!</h2>
+    <h2 style="margin:8px 0 4px;font-size:20px;color:#3d5a3e;">' . $headline . '</h2>
   </td></tr>
   <tr><td style="padding:32px;">
     <p style="margin:0 0 18px;font-size:15px;line-height:1.7;">
       Liebe/r ' . $name . ',<br><br>
-      wir hoffen, Sie hatten heute ein wundersch&ouml;nes Picknick bei uns im Eichsfeld!
-      Es freut uns sehr, dass Sie sich f&uuml;r einen Tag bei Pension Volgenandt entschieden haben.
+      ' . $intro . '
     </p>
 
     <h2 style="margin:0 0 12px;font-size:16px;color:#3d5a3e;border-bottom:2px solid #e8e4dc;padding-bottom:8px;">Wie hat es Ihnen gefallen?</h2>
@@ -148,19 +158,20 @@ foreach ($files as $file) {
 
     $bookingDate = $booking['bookingDate'] ?? '';
     $bookingTime = $booking['bookingTime'] ?? '';
-    $pickupAt    = ($bookingDate !== '' && $bookingTime !== '')
-        ? strtotime("$bookingDate $bookingTime")
-        : false;
 
-    if ($pickupAt === false) {
-        // No structured pickup time (booking predates this feature) — mark
-        // as handled so we don't re-check it on every run.
+    if ($bookingDate === '') {
+        // No date at all — nothing to compute a pickup time from. Mark as
+        // handled so we don't re-check it on every run.
         $booking['followUpSentAt']        = date('c');
-        $booking['followUpSkippedReason'] = 'no_time';
+        $booking['followUpSkippedReason'] = 'no_date';
         file_put_contents($file, json_encode($booking, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
         $skipped++;
         continue;
     }
+
+    $pickupAt = $bookingTime !== ''
+        ? strtotime("$bookingDate $bookingTime")
+        : strtotime("$bookingDate 00:00"); // bookings predating the bookingTime field
 
     if (time() < $pickupAt + $followUpDelayHours * 3600) {
         // Not due yet — leave untouched, checked again on the next run.
@@ -170,14 +181,6 @@ foreach ($files as $file) {
     $email = $booking['email'] ?? '';
     $name  = $booking['name'] ?? '';
 
-    if ($beds24->hasAccommodationOverlap($email, $bookingDate)) {
-        $booking['followUpSentAt']        = date('c');
-        $booking['followUpSkippedReason'] = 'accommodation_guest';
-        file_put_contents($file, json_encode($booking, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-        $skipped++;
-        continue;
-    }
-
     $voucherCode     = defined('PICKNICK_VOUCHER_CODE') ? PICKNICK_VOUCHER_CODE : '';
     $discountPercent = defined('PICKNICK_VOUCHER_DISCOUNT_PERCENT') ? (int)PICKNICK_VOUCHER_DISCOUNT_PERCENT : 5;
 
@@ -186,20 +189,26 @@ foreach ($files as $file) {
         continue;
     }
 
-    $emailHtml = buildFollowUpEmail($name, $voucherCode, $discountPercent, $reviewLink);
+    $variant = $beds24->hasAccommodationOverlap($email, $bookingDate) ? 'inhouse_guest' : 'day_guest';
+    $subject = $variant === 'inhouse_guest'
+        ? "Danke für Ihren Aufenthalt – {$discountPercent}% Gutschein für Ihre nächste Übernachtung"
+        : "Danke für Ihren Besuch – {$discountPercent}% Gutschein für Ihr nächstes Picknick";
+
+    $emailHtml = buildFollowUpEmail($name, $voucherCode, $discountPercent, $reviewLink, $variant);
     $result = sendSmtp(
         $smtpHost, $smtpPort, $smtpUser, $smtpPass,
         $adminEmail,
         $email,
-        "Danke für Ihren Besuch – {$discountPercent}% Gutschein für Ihr nächstes Picknick",
+        $subject,
         $emailHtml,
         'Simone & Ralf Volgenandt', $adminEmail,
-        '', true
+        '', true, $adminEmail
     );
 
     if ($result['ok']) {
-        $booking['followUpSentAt']    = date('c');
+        $booking['followUpSentAt']      = date('c');
         $booking['followUpVoucherCode'] = $voucherCode;
+        $booking['followUpVariant']     = $variant;
         $sent++;
     } else {
         // Sending failed — do NOT mark as sent, so the next run retries.

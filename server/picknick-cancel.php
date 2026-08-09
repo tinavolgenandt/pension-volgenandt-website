@@ -184,7 +184,7 @@ $result = sendSmtp(
     'Stornierung Ihrer Picknick-Buchung &ndash; Pension Volgenandt',
     $emailHtml,
     'Simone & Ralf Volgenandt', $adminEmail,
-    $adminEmail, true
+    '', true, $adminEmail
 );
 
 if (!$result['ok']) {

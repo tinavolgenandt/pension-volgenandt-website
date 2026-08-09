@@ -430,7 +430,7 @@ $result = sendSmtp(
     $emailSubject,
     $emailHtml,
     'Simone & Ralf Volgenandt', $adminEmail,
-    $adminEmail, true
+    '', true, $adminEmail
 );
 
 if (!$result['ok']) {
