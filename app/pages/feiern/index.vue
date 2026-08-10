@@ -74,7 +74,7 @@ const included = [
   {
     icon: 'ph:key-duotone',
     title: 'Das ganze Grundstück für Sie allein',
-    text: 'Für Ihr Festwochenende buchen Sie die komplette Pension exklusiv: alle Zimmer und Ferienwohnungen für bis zu 18 Übernachtungsgäste. Keine anderen Gäste, nur Sie, Ihre Familie und Ihre Freunde, ganz unter sich.',
+    text: 'Für Ihr Festwochenende buchen Sie die komplette Pension exklusiv: alle Zimmer und Ferienwohnungen für bis zu 23 Übernachtungsgäste in Zimmern und auf Schlafcouches. Weitere Gäste können bei uns im Garten zelten oder mit dem Wohnmobil übernachten. Keine anderen Gäste, nur Sie, Ihre Familie und Ihre Freunde, ganz unter sich.',
   },
   {
     icon: 'ph:tree-duotone',
@@ -199,14 +199,48 @@ const included = [
     <!-- Panorama-Trennbild -->
     <div class="relative h-48 overflow-hidden md:h-64">
       <NuxtImg
-        src="/img/garten/garten-eingang-rudbeckia-abend.webp"
-        alt="Abendstimmung im Garten der Pension Volgenandt mit blühenden Rudbeckien"
+        src="/img/events/ambiente-tisch-apfelbaum.webp"
+        alt="Gedeckter Tisch unter einem tragenden Apfelbaum im Garten der Pension Volgenandt"
         class="absolute inset-0 h-full w-full object-cover"
         width="1600"
-        height="1060"
+        height="1067"
         loading="lazy"
       />
     </div>
+
+    <!-- Impressionen: echte Fotos vom Garten als Festkulisse -->
+    <section class="px-6 py-12 md:py-16">
+      <div class="mx-auto max-w-6xl">
+        <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">Impressionen</h2>
+        <p class="mb-10 text-center text-sage-600">So könnte Ihr Fest bei uns aussehen.</p>
+        <div class="grid gap-5 sm:grid-cols-3">
+          <NuxtImg
+            src="/img/events/ambiente-tisch-gedeck.webp"
+            alt="Festlich gedeckter Tisch im Garten mit Weingläsern"
+            class="h-64 w-full rounded-xl object-cover"
+            width="1600"
+            height="1067"
+            loading="lazy"
+          />
+          <NuxtImg
+            src="/img/events/ambiente-tisch-aperol.webp"
+            alt="Gedeckter Tisch mit Aperol Spritz im Abendlicht"
+            class="h-64 w-full rounded-xl object-cover"
+            width="1600"
+            height="1067"
+            loading="lazy"
+          />
+          <NuxtImg
+            src="/img/events/ambiente-aperol-minze.webp"
+            alt="Aperol Spritz mit frischer Minze auf dem Gartentisch"
+            class="h-64 w-full rounded-xl object-cover"
+            width="1600"
+            height="1067"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </section>
 
     <!-- 5. So läuft's ab -->
     <section class="bg-sage-50 px-6 py-12 md:py-16">

@@ -90,14 +90,15 @@ const form = reactive({
 
 // --- The catalogue steps (the "click-by-click" interview) ------------------
 // Each step is one screen with an explanatory intro, a photo, and its option
-// cards. Photos below are PLACEHOLDERS from the existing garden gallery — swap
-// them for real event photography once available (or set `image` per option in
-// content/events/config.yml).
+// cards. Step photos illustrate the category itself; a few still use PLACE-
+// HOLDERS from the garden gallery where no dedicated photo exists yet — swap
+// them for real event photography once available (or set `image` per option
+// in content/events/config.yml).
 const optionSteps = computed<WizardStep[]>(() => [
   {
     title: 'Catering',
-    image: '/img/picknick/abendschmaus.webp',
-    imageAlt: 'Liebevoll angerichtetes Buffet',
+    image: '/img/events/catering-klassisch.webp',
+    imageAlt: 'Reich gedecktes klassisches Festbuffet',
     intro:
       'Das Herzstück jeder Feier: Unser Partner-Caterer richtet seine Küche bei uns in der Garage ein und verwöhnt Ihre Gäste. Der Preis gilt pro Person und wächst mit der Gästezahl.',
     groups: [
@@ -106,8 +107,8 @@ const optionSteps = computed<WizardStep[]>(() => [
   },
   {
     title: 'Getränke',
-    image: '/img/picknick/garten-pavillon-sitzecke.webp',
-    imageAlt: 'Gemütliche Sitzecke im Garten',
+    image: '/img/events/getraenke-selbstbedienung.webp',
+    imageAlt: 'Getränkestation zur Selbstbedienung',
     intro:
       'Die Getränke laufen über uns: Wählen Sie zwischen Selbstbedienung und Service am Tisch. Abgerechnet pro Person und Stunde, richtet sich also nach Gästezahl und Dauer Ihrer Feier.',
     groups: [
@@ -122,8 +123,8 @@ const optionSteps = computed<WizardStep[]>(() => [
   },
   {
     title: 'Freie Trauung',
-    image: '/img/garten/garten-sitzbank-apfelbaum-bluete.webp',
-    imageAlt: 'Blühender Apfelbaum mit Sitzbank im Garten',
+    image: '/img/events/trauung-freie-trauung.webp',
+    imageAlt: 'Freie Trauzeremonie im Garten',
     intro:
       'Möchten Sie direkt bei uns im Garten heiraten? Ein professioneller Trauredner gestaltet Ihre freie Zeremonie: Trauung und Feier finden an einem Ort statt, ganz ohne Fahrt dazwischen. Für alle anderen Anlässe lassen Sie diese Auswahl einfach bei „Keine Trauung“.',
     groups: [
@@ -137,8 +138,8 @@ const optionSteps = computed<WizardStep[]>(() => [
   },
   {
     title: 'Fotograf & Video',
-    image: '/img/garten/garten-eingang-rudbeckia-abend.webp',
-    imageAlt: 'Abendstimmung im Garten',
+    image: '/img/events/foto-fotograf.webp',
+    imageAlt: 'Hochzeitsfotograf hält einen Moment der Feier fest',
     intro:
       'Damit die schönsten Momente für immer bleiben: Wir vermitteln erfahrene Fotografen und Videografen. Ein fester Preis für Ihren gesamten Tag.',
     groups: [
@@ -152,8 +153,8 @@ const optionSteps = computed<WizardStep[]>(() => [
   },
   {
     title: 'Musik',
-    image: '/img/garten/garten-laube-herbst.webp',
-    imageAlt: 'Gartenlaube',
+    image: '/img/events/musik-dj.webp',
+    imageAlt: 'DJ sorgt auf der Feier für Stimmung',
     intro:
       'Von der eigenen Playlist über die reine Musikanlage bis zum kompletten DJ für die Abendgestaltung. Der Strom kommt direkt aus dem Haus.',
     groups: [{ key: 'musicId', unit: 'flat', legend: 'Musik', options: opts('musicOptions') }],
@@ -210,8 +211,8 @@ const optionSteps = computed<WizardStep[]>(() => [
   },
   {
     title: 'Mobiliar & Ausstattung',
-    image: '/img/garten/garten-sitzecke-apfelbaum.webp',
-    imageAlt: 'Sitzgelegenheit unter dem Apfelbaum',
+    image: '/img/events/tische-rund.webp',
+    imageAlt: 'Elegante runde Festtische mit Bestuhlung',
     intro:
       'Vom rustikalen bis zum eleganten Look: Stellen Sie Tische, Stuhlhussen, Geschirr und Bodenbelag zusammen. Die jeweils erste Option ist bereits im Basispreis enthalten. Jede Aufwertung wird pro Person berechnet.',
     groups: [
@@ -540,8 +541,8 @@ const inputClass =
           <div>
             <p class="text-sage-700">
               Beantworten Sie zunächst ein paar kurze Fragen. Danach führen wir Sie Schritt für
-              Schritt durch alle Möglichkeiten. Bei jeder Auswahl sehen Sie sofort, was sie für
-              Ihre Feier bedeutet und was sie kostet.
+              Schritt durch alle Möglichkeiten. Bei jeder Auswahl sehen Sie sofort, was sie für Ihre
+              Feier bedeutet und was sie kostet.
             </p>
 
             <div class="mt-5 grid gap-5 sm:grid-cols-2">
