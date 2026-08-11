@@ -113,7 +113,14 @@ function generateInvoiceDraftIfNeeded(int $bookingId, array $webhookItems = []):
 
     $existing = findDraftsForBooking($groupMasterId);
     $pending  = array_values(array_filter($existing, fn(array $d) => ($d['status'] ?? '') === 'pending'));
-    $approved = array_values(array_filter($existing, fn(array $d) => ($d['status'] ?? '') === 'approved'));
+    // 'ready' = number assigned + PDF generated on the review page, but not
+    // yet sent to the guest (see invoice-review.php's pending→ready→approved
+    // flow). Treated as "already invoiced" here, same as 'approved' — a
+    // webhook firing while a draft sits in 'ready' must diff against its
+    // charges (Nachtrag for genuinely new items) rather than spawning a
+    // second full-stay draft, since the number/PDF are already fixed and
+    // can't be silently refreshed like a true 'pending' draft can.
+    $approved = array_values(array_filter($existing, fn(array $d) => in_array($d['status'] ?? '', ['ready', 'approved'], true)));
 
     // A draft is already awaiting Simone's review — don't spawn a second one
     // just because Beds24 re-fired the webhook. Refresh it in place if the
@@ -322,7 +329,12 @@ function buildInvoiceDraft(array $booking, array $items, string $scenario, array
         ],
         'lineItems'     => $items,
         'totals'        => $totals,
-        'paymentNote'   => 'Zahlbar innerhalb von 7 Tagen nach Rechnungsstellung.',
+        // Firmenrechnungen (auto-detected below) get the 3-Werktage note right
+        // away instead of the generic 7-day text — otherwise the draft/preview
+        // shows the wrong term until Simone explicitly re-saves the form.
+        'paymentNote'   => !empty($extra['isFirmenrechnung'])
+            ? firmenPaymentNote()
+            : 'Zahlbar innerhalb von 7 Tagen nach Rechnungsstellung.',
         'note'          => $extra['note'] ?? '',
         'approvedAt'    => null,
         // Firmenrechnung (e.g. Fero Fensterbau, Barczewski) — auto-detected
@@ -401,9 +413,18 @@ function parseLineItems(array $booking, array $webhookItems = []): array {
     // invoices are indistinguishable ("Übernachtung" on all of them).
     $roomLabel = 'Übernachtung – ' . resolveRoomName($booking);
 
+    // Accommodation is billed per night — qty/unit price here (not just the
+    // summed gross) is what makeLineItem() shows in the "Anzahl"/"Einzelpreis"
+    // columns, previously always defaulted to qty=1/unit=total because neither
+    // was passed at all.
+    $in  = $booking['arrival']   ?? $booking['checkIn']  ?? $booking['arrivalDate']   ?? '';
+    $out = $booking['departure'] ?? $booking['checkOut'] ?? $booking['departureDate'] ?? '';
+    $nights = ($in && $out) ? (int)(new \DateTime($in))->diff(new \DateTime($out))->days : 0;
+    $nights = max(1, $nights);
+
     // No itemized invoice — fall back to room price only
     if (empty($invoiceItems)) {
-        return $basePrice > 0 ? [makeLineItem($roomLabel, $basePrice, 7)] : [];
+        return $basePrice > 0 ? [makeLineItem($roomLabel, $basePrice, 7, $nights, round($basePrice / $nights, 2))] : [];
     }
 
     $accommodationGross = 0.0;
@@ -461,9 +482,9 @@ function parseLineItems(array $booking, array $webhookItems = []): array {
         $label = $accommodationCount > 1
             ? $roomLabel . " ({$accommodationCount} Posten summiert – bitte Betrag in Beds24 prüfen!)"
             : $roomLabel;
-        $items[] = makeLineItem($label, $accommodationGross, 7);
+        $items[] = makeLineItem($label, $accommodationGross, 7, $nights, round($accommodationGross / $nights, 2));
     } elseif (empty($breakfastItems) && empty($extraItems) && $basePrice > 0) {
-        $items[] = makeLineItem($roomLabel, $basePrice, 7);
+        $items[] = makeLineItem($roomLabel, $basePrice, 7, $nights, round($basePrice / $nights, 2));
     }
 
     return array_merge($items, $breakfastItems, $extraItems);
@@ -623,6 +644,20 @@ function computeDueDate(\DateTime $invoiceDate, int $days): \DateTime {
         $due->modify('+1 day');
     }
     return $due;
+}
+
+/**
+ * Firmenrechnung payment-term text — "3 Werktage, sonst nächster Werktag"
+ * (Simone's rule, see computeDueDate()), computed from today's date. Used
+ * both at draft creation (when a company rate auto-detects Firmenrechnung)
+ * and whenever the review-page draft is re-saved with the checkbox on, so
+ * the shown term never drifts back to the generic 7-day text. The real,
+ * authoritative computation (from the actual invoiceDate) still happens
+ * again at final approval.
+ */
+function firmenPaymentNote(): string {
+    $due = computeDueDate(new \DateTime(date('Y-m-d')), 3);
+    return 'Zahlbar bis zum ' . $due->format('d.m.Y') . '.';
 }
 
 function calcTotals(array $items): array {
