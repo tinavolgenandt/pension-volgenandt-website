@@ -5,7 +5,9 @@
  * Public API:
  *   sendMail(string $to, string $toName, string $subject, string $html, string $text, array $attachments): bool
  *   notifySimone(array $draft, bool $isRefresh = false): bool — sends review-link email to ADMIN_EMAIL
- *   sendInvoiceToGuest(array $draft, string $pdfBytes): bool
+ *   buildGuestInvoiceEmailParts(array $draft, bool $isPaid): array — subject+intro only, for the editable preview form
+ *   buildGuestInvoiceEmailHtml(array $draft, bool $isPaid, ?string $subjectOverride, ?string $introOverride): array — full subject+html, for preview or send
+ *   sendInvoiceToGuest(array $draft, string $pdfBytes, bool $isPaid, ?string $subjectOverride, ?string $introOverride): bool
  */
 
 require_once __DIR__ . '/config.php';
@@ -131,10 +133,78 @@ function notifySimone(array $draft, bool $isRefresh = false): bool {
 }
 
 // ---------------------------------------------------------------------------
+// Guest email — subject/intro (previewable/editable) vs. full send
+// ---------------------------------------------------------------------------
+
+/**
+ * The scenario-dependent subject and opening paragraph of the guest invoice
+ * email — the only two pieces Simone can edit on the review page before
+ * sending (see [[invoicing-review-edits]]). Everything else (payment block,
+ * bank details, cancellation warning, sign-off) is fixed and built in
+ * sendInvoiceToGuest() itself, so those legally/financially relevant parts
+ * can't be accidentally edited away.
+ *
+ * Returns ['subject' => string, 'intro' => string] — 'intro' is inner HTML
+ * (inline tags like <strong> allowed), not wrapped in a <p> yet.
+ */
+function buildGuestInvoiceEmailParts(array $draft, bool $isPaid = false): array {
+    $stay     = $draft['stay'];
+    $invNum   = $draft['invoiceNumber'] ?? '';
+    $scenario = $draft['scenario'] ?? 'B';
+
+    $esc      = fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
+    $checkIn  = ($stay['checkIn']  ?? '') ? date('d.m.Y', strtotime($stay['checkIn']))  : '–';
+    $checkOut = ($stay['checkOut'] ?? '') ? date('d.m.Y', strtotime($stay['checkOut'])) : '–';
+
+    if ($scenario === 'A') {
+        return [
+            'subject' => 'Ihre Rechnung zu Ihrer Buchung – Pension Volgenandt',
+            'intro'   => 'vielen Dank für Ihre Buchung — Ihre Buchungsbestätigung haben Sie bereits separat erhalten. '
+                . 'Anbei erhalten Sie nun Ihre Rechnung Nr. <strong>' . $esc($invNum) . '</strong> für Ihren Aufenthalt '
+                . 'vom ' . $checkIn . ' bis ' . $checkOut . '.',
+        ];
+    }
+
+    if ($scenario === 'C') {
+        $relatesTo = $draft['relatesTo'] ?? [];
+        $relatesToText = !empty($relatesTo)
+            ? ' Sie ergänzt Ihre bereits erhaltene Rechnung Nr. ' . $esc(implode(', ', $relatesTo)) . '.'
+            : '';
+        return [
+            'subject' => 'Ihre Rechnung für zusätzliche Leistungen – Pension Volgenandt',
+            'intro'   => 'anbei erhalten Sie Ihre Rechnung Nr. <strong>' . $esc($invNum) . '</strong> für zusätzliche Leistungen '
+                . 'während Ihres Aufenthalts vom ' . $checkIn . ' bis ' . $checkOut . '.' . $relatesToText,
+        ];
+    }
+
+    return [
+        'subject' => 'Ihre aktualisierte Rechnung – Pension Volgenandt',
+        'intro'   => 'anbei erhalten Sie Ihre aktualisierte Rechnung Nr. <strong>' . $esc($invNum) . '</strong> für Ihren Aufenthalt '
+            . 'vom ' . $checkIn . ' bis ' . $checkOut . '.',
+    ];
+}
+
+// ---------------------------------------------------------------------------
 // Send approved invoice PDF to the guest
 // ---------------------------------------------------------------------------
 
-function sendInvoiceToGuest(array $draft, string $pdfBytes, bool $isPaid = false): bool {
+/**
+ * Builds the complete guest invoice email (subject + full HTML body) without
+ * sending it — used both by sendInvoiceToGuest() and by the "ready" review
+ * screen to show Simone exactly what will go out before she clicks send.
+ *
+ * $subjectOverride/$introOverride come from that review screen, where Simone
+ * can tweak the subject/opening paragraph — see buildGuestInvoiceEmailParts()
+ * for the defaults they start from. Overrides are treated as plain text
+ * (escaped, newlines→<br>), not HTML, since they're typed into a plain
+ * textarea.
+ */
+function buildGuestInvoiceEmailHtml(
+    array $draft,
+    bool $isPaid = false,
+    ?string $subjectOverride = null,
+    ?string $introOverride = null
+): array {
     $guest    = $draft['guest'];
     $stay     = $draft['stay'];
     $issuer   = $draft['issuer'];
@@ -142,9 +212,7 @@ function sendInvoiceToGuest(array $draft, string $pdfBytes, bool $isPaid = false
     $invNum   = $draft['invoiceNumber'] ?? '';
     $scenario = $draft['scenario'] ?? 'B';
 
-    $email = $guest['email'] ?? '';
-    $name  = $guest['name']  ?? '';
-    if (!$email) return false;
+    $name = $guest['name'] ?? '';
 
     $isFirmenrechnung = !empty($draft['isFirmenrechnung']);
 
@@ -155,6 +223,13 @@ function sendInvoiceToGuest(array $draft, string $pdfBytes, bool $isPaid = false
     $nights    = (int)($stay['nights']   ?? 0);
     $roomName  = $esc($stay['roomName'] ?? 'Zimmer');
     $total     = number_format((float)($totals['total'] ?? 0), 2, ',', '.') . '&nbsp;&euro;';
+
+    $parts    = buildGuestInvoiceEmailParts($draft, $isPaid);
+    $subject  = ($subjectOverride !== null && trim($subjectOverride) !== '') ? $subjectOverride : $parts['subject'];
+    $introHtml = ($introOverride !== null && trim($introOverride) !== '')
+        ? nl2br($esc($introOverride))
+        : $parts['intro'];
+    $introBlock = '<p style="line-height:1.7;margin:0 0 20px;">' . $introHtml . '</p>';
 
     // Payment section: either "please pay" (bank/PayPal/cancellation warning)
     // or, for bookings already paid in full via PayPal, a receipt confirmation.
@@ -174,7 +249,7 @@ function sendInvoiceToGuest(array $draft, string $pdfBytes, bool $isPaid = false
             $bic      = !empty($issuer['bic'])      ? 'BIC: ' . $esc($issuer['bic']) . '<br>' : '';
             $bankHtml = '
 <p style="background:#f0f7ee;padding:12px 16px;border-radius:6px;font-size:13px;line-height:1.9;margin:0 0 16px;">
-  ' . $bn . 'IBAN: ' . $esc($issuer['iban']) . '<br>' . $bic . '
+  Kontoinhaber: Ralf Volgenandt<br>' . $bn . 'IBAN: ' . $esc($issuer['iban']) . '<br>' . $bic . '
   Verwendungszweck: Rechnung ' . $esc($invNum) . ' &ndash; ' . $guestName . '
 </p>';
         }
@@ -213,15 +288,10 @@ function sendInvoiceToGuest(array $draft, string $pdfBytes, bool $isPaid = false
         // this email's only job is to deliver the reviewed, compliant invoice
         // that follows once Simone has checked it. Don't restate the booking
         // confirmation, just introduce the attached Rechnung.
-        $subject = 'Ihre Rechnung zu Ihrer Buchung – Pension Volgenandt';
         $html = '
 <div style="font-family:Arial,sans-serif;font-size:14px;color:#333;max-width:560px;">
   <p style="margin:0 0 12px;">Sehr geehrte/r ' . $guestName . ',</p>
-  <p style="line-height:1.7;margin:0 0 20px;">
-    vielen Dank für Ihre Buchung — Ihre Buchungsbestätigung haben Sie bereits separat erhalten.
-    Anbei erhalten Sie nun Ihre Rechnung Nr. <strong>' . $esc($invNum) . '</strong> für Ihren Aufenthalt
-    vom ' . $checkIn . ' bis ' . $checkOut . '.
-  </p>
+  ' . $introBlock . '
 
   <table style="width:100%;border-collapse:collapse;margin:0 0 20px;background:#f9f7f3;border-radius:6px;">
     <tr>
@@ -252,18 +322,10 @@ function sendInvoiceToGuest(array $draft, string $pdfBytes, bool $isPaid = false
   ' . $signOff . '
 </div>';
     } elseif ($scenario === 'C') {
-        $relatesTo = $draft['relatesTo'] ?? [];
-        $relatesToText = !empty($relatesTo)
-            ? ' Sie ergänzt Ihre bereits erhaltene Rechnung Nr. ' . $esc(implode(', ', $relatesTo)) . '.'
-            : '';
-        $subject = 'Ihre Rechnung für zusätzliche Leistungen – Pension Volgenandt';
         $html = '
 <div style="font-family:Arial,sans-serif;font-size:14px;color:#333;max-width:560px;">
   <p style="margin:0 0 12px;">Sehr geehrte/r ' . $guestName . ',</p>
-  <p style="line-height:1.7;margin:0 0 20px;">
-    anbei erhalten Sie Ihre Rechnung Nr. <strong>' . $esc($invNum) . '</strong> für zusätzliche Leistungen
-    während Ihres Aufenthalts vom ' . $checkIn . ' bis ' . $checkOut . '.' . $relatesToText . '
-  </p>
+  ' . $introBlock . '
   <table style="width:100%;border-collapse:collapse;margin:0 0 20px;background:#f9f7f3;border-radius:6px;">
     <tr><td style="padding:10px 14px;color:#666;width:38%;">Zimmer</td><td style="padding:10px 14px;">' . $roomName . '</td></tr>
     <tr style="border-top:1px solid #ede9e1;background:#f0f7ee;"><td style="padding:10px 14px;color:#666;">Gesamtbetrag</td><td style="padding:10px 14px;font-weight:700;color:#3d5a3e;">' . $total . '</td></tr>
@@ -274,13 +336,10 @@ function sendInvoiceToGuest(array $draft, string $pdfBytes, bool $isPaid = false
   ' . $paidNote . $bankHtml . $ppBtn . $cancelNote . $signOff . '
 </div>';
     } else {
-        $subject = 'Ihre aktualisierte Rechnung – Pension Volgenandt';
         $html = '
 <div style="font-family:Arial,sans-serif;font-size:14px;color:#333;max-width:560px;">
   <p style="margin:0 0 12px;">Sehr geehrte/r ' . $guestName . ',</p>
-  <p style="line-height:1.7;margin:0 0 20px;">anbei erhalten Sie Ihre aktualisierte Rechnung Nr.
-     <strong>' . $esc($invNum) . '</strong> für Ihren Aufenthalt
-     vom ' . $checkIn . ' bis ' . $checkOut . '.</p>
+  ' . $introBlock . '
   <table style="width:100%;border-collapse:collapse;margin:0 0 20px;background:#f9f7f3;border-radius:6px;">
     <tr><td style="padding:10px 14px;color:#666;width:38%;">Zimmer</td><td style="padding:10px 14px;">' . $roomName . '</td></tr>
     <tr style="border-top:1px solid #ede9e1;"><td style="padding:10px 14px;color:#666;">Zeitraum</td><td style="padding:10px 14px;">' . $checkIn . ' – ' . $checkOut . '</td></tr>
@@ -293,12 +352,35 @@ function sendInvoiceToGuest(array $draft, string $pdfBytes, bool $isPaid = false
 </div>';
     }
 
+    return ['subject' => $subject, 'html' => $html];
+}
+
+/**
+ * Sends the invoice PDF + email built by buildGuestInvoiceEmailHtml() to the
+ * guest, BCC'ing the office/Steuerbüro. Returns false without sending if the
+ * guest has no email on file.
+ */
+function sendInvoiceToGuest(
+    array $draft,
+    string $pdfBytes,
+    bool $isPaid = false,
+    ?string $subjectOverride = null,
+    ?string $introOverride = null
+): bool {
+    $guest = $draft['guest'];
+    $email = $guest['email'] ?? '';
+    $name  = $guest['name']  ?? '';
+    if (!$email) return false;
+
+    $invNum = $draft['invoiceNumber'] ?? '';
+    $built  = buildGuestInvoiceEmailHtml($draft, $isPaid, $subjectOverride, $introOverride);
+
     $bcc = [ADMIN_EMAIL];
     if (defined('STEUERBUERO_EMAIL') && STEUERBUERO_EMAIL !== '') {
         $bcc[] = STEUERBUERO_EMAIL;
     }
 
-    return sendMail($email, $name, $subject, $html, '', [
+    return sendMail($email, $name, $built['subject'], $built['html'], '', [
         ['data' => $pdfBytes, 'filename' => 'Rechnung-' . $invNum . '.pdf', 'mime' => 'application/pdf'],
     ], [], $bcc);
 }

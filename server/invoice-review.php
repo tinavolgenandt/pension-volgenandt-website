@@ -3,9 +3,12 @@
  * Invoice draft review page.
  * Simone visits this page via the link in her notification email.
  *
- * GET  ?token=UUID          — show draft + approve/reject form
- * GET  ?token=UUID&dl=1     — download approved PDF
- * POST action=approve       — finalize: generate PDF, email guest, mark approved
+ * GET  ?token=UUID          — show draft (editable while pending, review-before-send while ready)
+ * GET  ?token=UUID&dl=1     — download the generated PDF (status ready or approved)
+ * POST action=save          — persist edits, stay pending (no number/PDF/email yet)
+ * POST action=approve       — assign invoice number, generate PDF, status → ready (NOT sent yet)
+ * POST action=send          — send the (possibly re-worded) email + PDF to the guest, status → approved
+ * POST action=back          — ready → pending again; the assigned invoice number stays reserved
  * POST action=reject        — mark rejected
  */
 
@@ -13,6 +16,61 @@ require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/invoice-draft.php';
 require_once __DIR__ . '/invoice-pdf.php';
 require_once __DIR__ . '/invoice-mailer.php';
+
+// ---------------------------------------------------------------------------
+// Shared: apply the editable form fields onto a draft (used by save+approve)
+// ---------------------------------------------------------------------------
+
+/**
+ * Applies every editable field from the pending review form onto $draft:
+ * guest data, line items (+recomputed totals), Firmenrechnung fields (incl.
+ * the always-current 3-Werktage paymentNote), the free-text note, and the
+ * "already paid" flag. Never touches invoiceNumber/invoiceDate/status — those
+ * are only set by the approve/send/back handlers below.
+ */
+function applyDraftEdits(array &$draft, array $post): void {
+    $draft['guest']['name']    = trim($post['guest_name']    ?? '') ?: ($draft['guest']['name'] ?? 'Unbekannt');
+    $draft['guest']['email']   = trim($post['guest_email']   ?? ($draft['guest']['email']   ?? ''));
+    $draft['guest']['address'] = trim($post['guest_address'] ?? ($draft['guest']['address'] ?? ''));
+    $draft['guest']['zip']     = trim($post['guest_zip']     ?? ($draft['guest']['zip']     ?? ''));
+    $draft['guest']['city']    = trim($post['guest_city']    ?? ($draft['guest']['city']    ?? ''));
+
+    // Line-item edits — blank description rows (the spare ones) are dropped
+    $editedItems = [];
+    foreach (($post['item_desc'] ?? []) as $i => $desc) {
+        $desc = trim((string)$desc);
+        if ($desc === '') continue;
+        $qty   = (float)($post['item_qty'][$i]  ?? 1);
+        $unit  = (float)str_replace(',', '.', (string)($post['item_unit'][$i] ?? 0));
+        $vat   = (int)($post['item_vat'][$i] ?? 7);
+        $gross = round($qty * $unit, 2);
+        if (abs($gross) < 0.01) continue;
+        $editedItems[] = makeLineItem($desc, $gross, $vat, $qty, $unit);
+    }
+    if (!empty($editedItems)) {
+        $draft['lineItems'] = $editedItems;
+        $draft['totals']    = calcTotals($editedItems);
+    }
+
+    $isFirmenrechnung = ($post['is_firmenrechnung'] ?? '') === '1';
+    $draft['isFirmenrechnung'] = $isFirmenrechnung;
+    $draft['companyName']      = trim($post['company_name']      ?? '');
+    $draft['bookingReference'] = trim($post['booking_reference'] ?? '');
+    $draft['ohneFruehstueck']  = $isFirmenrechnung && ($post['ohne_fruehstueck'] ?? '') === '1';
+
+    // Firmenrechnung: 3 Werktage statt der üblichen 7 Tage (Simones Regel,
+    // 2026-08-03) — always recomputed from today's date rather than trusting
+    // free text, both here (live preview while still editing) and at the
+    // actual approval (invoiceDate is always today too, so the two never
+    // disagree). Keeps the field from drifting back to the generic 7-Tage
+    // text after the checkbox is toggled.
+    $draft['paymentNote'] = $isFirmenrechnung
+        ? firmenPaymentNote()
+        : (trim($post['payment_note'] ?? '') ?: ($draft['paymentNote'] ?? ''));
+
+    $draft['note'] = trim($post['note'] ?? '');
+    $draft['manuallyMarkedPaid'] = ($post['already_paid'] ?? '') === '1';
+}
 
 // ---------------------------------------------------------------------------
 // Load and validate draft
@@ -32,10 +90,10 @@ $invNum = $draft['invoiceNumber'] ?? '';
 $pdfPath = __DIR__ . '/invoices/sent/' . $token . '.pdf';
 
 // ---------------------------------------------------------------------------
-// PDF download
+// PDF download — available once the PDF has been generated (ready or sent)
 // ---------------------------------------------------------------------------
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['dl']) && $status === 'approved' && file_exists($pdfPath)) {
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['dl']) && in_array($status, ['ready', 'approved'], true) && file_exists($pdfPath)) {
     header('Content-Type: application/pdf');
     header('Content-Disposition: attachment; filename="Rechnung-' . $invNum . '.pdf"');
     header('Content-Length: ' . filesize($pdfPath));
@@ -44,94 +102,86 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['dl']) && $status === 'a
 }
 
 // ---------------------------------------------------------------------------
-// POST: approve or reject
+// POST: save / approve / send / back / reject
 // ---------------------------------------------------------------------------
 
 $flash = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $status === 'pending') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
-    $note   = trim($_POST['note'] ?? '');
 
-    if ($action === 'approve') {
+    if ($action === 'save' && $status === 'pending') {
+        applyDraftEdits($draft, $_POST);
+        file_put_contents($draftPath, json_encode($draft, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        draftLog((int)($draft['bookingId'] ?? 0), 'saved', "token={$token}");
+        $flash = 'ok:Änderungen gespeichert.';
+
+    } elseif ($action === 'approve' && $status === 'pending') {
         $requestedNumber = trim($_POST['invoice_number'] ?? '') ?: peekNextInvoiceNumber();
 
         if (!tryAssignInvoiceNumber($draft, $requestedNumber, $draftPath)) {
             $flash = 'err:Rechnungsnummer ' . htmlspecialchars($requestedNumber) . ' ist ungültig oder wird bereits verwendet. Bitte eine andere Nummer wählen.';
         } else {
-            // Apply guest-data edits
-            $draft['guest']['name']    = trim($_POST['guest_name']    ?? '') ?: ($draft['guest']['name'] ?? 'Unbekannt');
-            $draft['guest']['email']   = trim($_POST['guest_email']   ?? ($draft['guest']['email']   ?? ''));
-            $draft['guest']['address'] = trim($_POST['guest_address'] ?? ($draft['guest']['address'] ?? ''));
-            $draft['guest']['zip']     = trim($_POST['guest_zip']     ?? ($draft['guest']['zip']     ?? ''));
-            $draft['guest']['city']    = trim($_POST['guest_city']    ?? ($draft['guest']['city']    ?? ''));
-
-            // Apply line-item edits — blank description rows (the spare ones) are dropped
-            $editedItems = [];
-            foreach (($_POST['item_desc'] ?? []) as $i => $desc) {
-                $desc = trim((string)$desc);
-                if ($desc === '') continue;
-                $qty   = (float)($_POST['item_qty'][$i]  ?? 1);
-                $unit  = (float)str_replace(',', '.', (string)($_POST['item_unit'][$i] ?? 0));
-                $vat   = (int)($_POST['item_vat'][$i] ?? 7);
-                $gross = round($qty * $unit, 2);
-                if (abs($gross) < 0.01) continue;
-                $editedItems[] = makeLineItem($desc, $gross, $vat, $qty, $unit);
-            }
-            if (!empty($editedItems)) {
-                $draft['lineItems'] = $editedItems;
-                $draft['totals']    = calcTotals($editedItems);
-            }
-
-            $isFirmenrechnung = ($_POST['is_firmenrechnung'] ?? '') === '1';
-            $draft['isFirmenrechnung'] = $isFirmenrechnung;
-            $draft['companyName']      = trim($_POST['company_name']      ?? '');
-            $draft['bookingReference'] = trim($_POST['booking_reference'] ?? '');
-            $draft['ohneFruehstueck']  = $isFirmenrechnung && ($_POST['ohne_fruehstueck'] ?? '') === '1';
+            applyDraftEdits($draft, $_POST);
 
             $draft['invoiceDate'] = date('Y-m-d');
             $draft['approvedAt']  = date('c');
-            $draft['status']      = 'approved';
+            $draft['status']      = 'ready';
 
-            // Firmenrechnung: 3 Werktage statt der üblichen 7 Tage (Simones
-            // Regel, 2026-08-03) — always computed from the actual due date
-            // rather than trusting free text, so it can't drift out of sync
-            // with the "Wichtiger Hinweis" storno wording below.
-            if ($isFirmenrechnung) {
-                $due = computeDueDate(new \DateTime($draft['invoiceDate']), 3);
-                $draft['paymentNote'] = 'Zahlbar bis zum ' . $due->format('d.m.Y') . '.';
-            } else {
-                $draft['paymentNote'] = trim($_POST['payment_note'] ?? '') ?: ($draft['paymentNote'] ?? '');
-            }
-            $draft['note']        = $note;
+            $isPaid = !empty($draft['manuallyMarkedPaid']);
 
-            $isPaid = ($_POST['already_paid'] ?? '') === '1';
-            $draft['manuallyMarkedPaid'] = $isPaid;
-
-            // Generate PDF
+            // Generate + save the real PDF now, so the "ready" screen can
+            // offer an exact download, not just the HTML approximation.
             $pdfBytes = generateInvoicePdf($draft);
-
-            // Save PDF file
             $sentDir = __DIR__ . '/invoices/sent';
             if (!is_dir($sentDir)) mkdir($sentDir, 0750, true);
             file_put_contents($pdfPath, $pdfBytes);
 
-            // Email guest (Steuerbüro receives a BCC copy automatically)
-            $emailSent = sendInvoiceToGuest($draft, $pdfBytes, $isPaid);
-            $draft['guestEmailSent'] = $emailSent;
+            // Prefill the editable email subject/intro with sensible
+            // defaults — Simone can adjust before the actual send.
+            $emailParts = buildGuestInvoiceEmailParts($draft, $isPaid);
+            $draft['emailSubject'] = $emailParts['subject'];
+            $draft['emailIntro']   = trim(preg_replace('/\s+/u', ' ', strip_tags($emailParts['intro'])));
 
-            // Persist
             file_put_contents($draftPath, json_encode($draft, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-            draftLog((int)($draft['bookingId'] ?? 0), 'approved', "token={$token} invoiceNumber={$draft['invoiceNumber']} emailSent=" . ($emailSent ? '1' : '0') . ' paid=' . ($isPaid ? '1' : '0'));
+            draftLog((int)($draft['bookingId'] ?? 0), 'ready', "token={$token} invoiceNumber={$draft['invoiceNumber']}");
 
-            $status = 'approved';
-            $flash  = $emailSent
-                ? 'ok:Rechnung ' . htmlspecialchars($draft['invoiceNumber']) . ' genehmigt und an ' . htmlspecialchars($draft['guest']['email'] ?? '') . ' gesendet.'
-                : 'ok:Rechnung ' . htmlspecialchars($draft['invoiceNumber']) . ' genehmigt. Kein E-Mail-Versand — Gast hat keine E-Mail-Adresse hinterlegt.';
+            $status = 'ready';
+            $flash  = 'ok:Rechnung ' . htmlspecialchars($draft['invoiceNumber']) . ' erzeugt — bitte PDF und E-Mail-Text unten prüfen, bevor sie an den Gast geht.';
         }
 
-    } elseif ($action === 'reject') {
-        $draft['note']       = $note;
+    } elseif ($action === 'send' && $status === 'ready') {
+        $subjectOverride = trim($_POST['email_subject'] ?? '');
+        $introOverride   = trim($_POST['email_intro']   ?? '');
+        $isPaid = !empty($draft['manuallyMarkedPaid']);
+
+        $pdfBytes = file_exists($pdfPath) ? file_get_contents($pdfPath) : generateInvoicePdf($draft);
+
+        $emailSent = sendInvoiceToGuest($draft, $pdfBytes, $isPaid, $subjectOverride, $introOverride);
+        $draft['guestEmailSent'] = $emailSent;
+        if ($subjectOverride !== '') $draft['emailSubject'] = $subjectOverride;
+        if ($introOverride   !== '') $draft['emailIntro']   = $introOverride;
+        $draft['status'] = 'approved';
+        $draft['sentAt'] = date('c');
+
+        file_put_contents($draftPath, json_encode($draft, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        draftLog((int)($draft['bookingId'] ?? 0), 'approved', "token={$token} invoiceNumber={$draft['invoiceNumber']} emailSent=" . ($emailSent ? '1' : '0') . ' paid=' . ($isPaid ? '1' : '0'));
+
+        $status = 'approved';
+        $flash  = $emailSent
+            ? 'ok:Rechnung ' . htmlspecialchars($draft['invoiceNumber']) . ' gesendet an ' . htmlspecialchars($draft['guest']['email'] ?? '') . '.'
+            : 'ok:Rechnung ' . htmlspecialchars($draft['invoiceNumber']) . ' genehmigt. Kein E-Mail-Versand — Gast hat keine E-Mail-Adresse hinterlegt.';
+
+    } elseif ($action === 'back' && $status === 'ready') {
+        $draft['status'] = 'pending';
+        file_put_contents($draftPath, json_encode($draft, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        draftLog((int)($draft['bookingId'] ?? 0), 'back_to_pending', "token={$token} invoiceNumber=" . ($draft['invoiceNumber'] ?? ''));
+
+        $status = 'pending';
+        $flash  = 'ok:Zurück zur Bearbeitung. Rechnungsnummer ' . htmlspecialchars($draft['invoiceNumber'] ?? '') . ' bleibt reserviert.';
+
+    } elseif ($action === 'reject' && $status === 'pending') {
+        $draft['note']       = trim($_POST['note'] ?? '');
         $draft['status']     = 'rejected';
         $draft['rejectedAt'] = date('c');
         file_put_contents($draftPath, json_encode($draft, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
@@ -157,10 +207,17 @@ $total    = number_format((float)($totals['total'] ?? 0), 2, ',', '.');
 // may still be unset (pending), in which case show a live suggestion.
 $invNum = $draft['invoiceNumber'] ?? ($status === 'pending' ? peekNextInvoiceNumber() : '');
 
-$statusLabels = ['pending' => 'Ausstehend', 'approved' => 'Genehmigt', 'rejected' => 'Abgelehnt'];
-$statusColors = ['pending' => '#e67e22',    'approved' => '#27ae60',   'rejected' => '#c0392b'];
+$statusLabels = ['pending' => 'Ausstehend', 'ready' => 'Bereit zum Versand', 'approved' => 'Gesendet', 'rejected' => 'Abgelehnt'];
+$statusColors = ['pending' => '#e67e22',    'ready' => '#2980b9',           'approved' => '#27ae60',  'rejected' => '#c0392b'];
 $statusLabel  = $statusLabels[$status] ?? $status;
 $statusColor  = $statusColors[$status] ?? '#888';
+
+// "Bereits bezahlt" checkbox default: once Save/Genehmigen has run at least
+// once, manuallyMarkedPaid reflects Simone's own choice — otherwise fall
+// back to the Beds24-detected prePaid default.
+$alreadyPaidChecked = array_key_exists('manuallyMarkedPaid', $draft)
+    ? !empty($draft['manuallyMarkedPaid'])
+    : !empty($draft['prePaid']);
 
 // Preview needs a non-empty invoice number even before approval — use the
 // same live suggestion shown in the form, without persisting it to the draft.
@@ -195,6 +252,8 @@ table.info td:first-child { color: #777; width: 150px; white-space: nowrap; }
 .btn { padding: 11px 22px; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; }
 .btn-green { background: #3d5a3e; color: #fff; }
 .btn-green:hover { background: #2e4530; }
+.btn-blue  { background: #2980b9; color: #fff; }
+.btn-blue:hover  { background: #216a99; }
 .btn-red   { background: #c0392b; color: #fff; }
 .btn-red:hover   { background: #a93226; }
 .btn-link  { background: none; border: 1px solid #ccc; color: #555; }
@@ -217,6 +276,8 @@ table.items-edit td { padding: 4px 6px; }
 .checkbox-row input { width: auto; margin-top: 3px; }
 .flash-ok  { background: #eafaf1; border: 1px solid #a9dfbf; color: #1e8449; border-radius: 6px; padding: 13px 16px; margin-bottom: 18px; }
 .flash-err { background: #fdecea; border: 1px solid #f5b7b1; color: #c0392b; border-radius: 6px; padding: 13px 16px; margin-bottom: 18px; }
+.warn-note { background: #fff3cd; border-left: 3px solid #e6a817; border-radius: 4px; padding: 8px 12px; font-size: 12px; color: #7a5c00; margin: -2px 0 14px; display: none; }
+.hint { font-size: 12px; color: #999; margin: -2px 0 14px; }
 .preview iframe { width: 100%; height: 680px; border: none; display: block; border-radius: 0 0 8px 8px; }
 .preview-head { background: #f8f8f8; border-bottom: 1px solid #e0e0e0; padding: 10px 16px; font-size: 12px; color: #888; border-radius: 8px 8px 0 0; }
 label { display: block; font-weight: 600; margin-bottom: 6px; }
@@ -228,7 +289,7 @@ label { display: block; font-weight: 600; margin-bottom: 6px; }
   <?php if ($flashMsg): ?>
   <div class="flash-<?= $flashType === 'ok' ? 'ok' : 'err' ?>">
     <?= $flashType === 'ok' ? '✓' : '✗' ?> <?= htmlspecialchars($flashMsg) ?>
-    <?php if ($status === 'approved' && file_exists($pdfPath)): ?>
+    <?php if (in_array($status, ['ready', 'approved'], true) && file_exists($pdfPath)): ?>
     &nbsp;·&nbsp; <a href="?token=<?= urlencode($token) ?>&dl=1" style="font-weight:700;">PDF herunterladen</a>
     <?php endif; ?>
   </div>
@@ -254,7 +315,7 @@ label { display: block; font-weight: 600; margin-bottom: 6px; }
       <?php if (!empty($draft['isFirmenrechnung'])): ?>
       <tr><td>Firma</td><td><strong><?= htmlspecialchars($draft['companyName'] ?? '–') ?></strong></td></tr>
       <?php if (!empty($draft['bookingReference'])): ?>
-      <tr><td>Buchungsnummer</td><td><?= htmlspecialchars($draft['bookingReference']) ?></td></tr>
+      <tr><td>Referenz Firma</td><td><?= htmlspecialchars($draft['bookingReference']) ?></td></tr>
       <?php endif; ?>
       <?php endif; ?>
       <tr><td>Zimmer</td><td><?= htmlspecialchars($stay['roomName'] ?? '–') ?></td></tr>
@@ -264,7 +325,10 @@ label { display: block; font-weight: 600; margin-bottom: 6px; }
       <tr><td>Zahlungsstatus</td><td><span style="color:#27ae60;font-weight:600;">Bereits vollständig bezahlt</span> (laut Beds24 bei Buchungseingang)</td></tr>
       <?php endif; ?>
       <?php if (!empty($draft['approvedAt'])): ?>
-      <tr><td>Genehmigt</td><td><?= date('d.m.Y H:i', strtotime($draft['approvedAt'])) ?></td></tr>
+      <tr><td>Erzeugt</td><td><?= date('d.m.Y H:i', strtotime($draft['approvedAt'])) ?></td></tr>
+      <?php endif; ?>
+      <?php if (!empty($draft['sentAt'])): ?>
+      <tr><td>Gesendet</td><td><?= date('d.m.Y H:i', strtotime($draft['sentAt'])) ?></td></tr>
       <?php endif; ?>
       <?php if (!empty($draft['note'])): ?>
       <tr><td>Notiz</td><td><?= htmlspecialchars($draft['note']) ?></td></tr>
@@ -292,14 +356,15 @@ label { display: block; font-weight: 600; margin-bottom: 6px; }
       <label class="checkbox-row">
         <input type="checkbox" id="is_firmenrechnung" name="is_firmenrechnung" value="1"
                <?= !empty($draft['isFirmenrechnung']) ? 'checked' : '' ?>
-               onchange="document.getElementById('firmen-fields').style.display = this.checked ? 'block' : 'none';">
+               onchange="document.getElementById('firmen-fields').style.display = this.checked ? 'block' : 'none'; checkNameCompanyMatch();">
         Firmenrechnung (z.&nbsp;B. Fero Fensterbau, Barczewski) — 3 Werktage Zahlungsziel statt 7 Tage
       </label>
       <div id="firmen-fields" style="display:<?= !empty($draft['isFirmenrechnung']) ? 'block' : 'none' ?>;margin-bottom:16px;">
         <div class="field-row">
-          <div><label for="company_name">Firma</label><input type="text" id="company_name" name="company_name" value="<?= htmlspecialchars($draft['companyName'] ?? '') ?>"></div>
-          <div><label for="booking_reference">Buchungsnummer <span style="font-weight:400;color:#999;">(optional)</span></label><input type="text" id="booking_reference" name="booking_reference" value="<?= htmlspecialchars($draft['bookingReference'] ?? '') ?>"></div>
+          <div><label for="company_name">Firma</label><input type="text" id="company_name" name="company_name" value="<?= htmlspecialchars($draft['companyName'] ?? '') ?>" oninput="checkNameCompanyMatch();"></div>
+          <div><label for="booking_reference">Referenz Firma <span style="font-weight:400;color:#999;">(optional, interne Nummer der Firma)</span></label><input type="text" id="booking_reference" name="booking_reference" value="<?= htmlspecialchars($draft['bookingReference'] ?? '') ?>"></div>
         </div>
+        <div id="name-company-warn" class="warn-note">Name und Firma sehen identisch aus — bitte prüfen, ob hier eine Ansprechperson statt der Firma stehen sollte (siehe Hinweis zur Rechnungsempfänger-Eingabe).</div>
         <label class="checkbox-row">
           <input type="checkbox" name="ohne_fruehstueck" value="1" <?= !empty($draft['ohneFruehstueck']) ? 'checked' : '' ?>>
           Preis ohne Frühstück — erscheint als Hinweis auf der Rechnung
@@ -344,20 +409,62 @@ label { display: block; font-weight: 600; margin-bottom: 6px; }
       <textarea id="note" name="note" rows="2" placeholder="z.B. Rabatt, Sondervereinbarung ..."><?= htmlspecialchars($draft['note'] ?? '') ?></textarea>
 
       <label class="checkbox-row">
-        <input type="checkbox" name="already_paid" value="1" <?= !empty($draft['prePaid']) ? 'checked' : '' ?>>
+        <input type="checkbox" name="already_paid" value="1" <?= $alreadyPaidChecked ? 'checked' : '' ?>>
         Bereits bezahlt (z.&nbsp;B. bar/Karte vor Ort) — Gast erhält eine Zahlungsbestätigung statt einer Zahlungsaufforderung
       </label>
 
       <div class="actions">
-        <button type="submit" name="action" value="approve" class="btn btn-green">✓ Genehmigen &amp; an Gast senden</button>
+        <button type="submit" name="action" value="save" class="btn btn-link">💾 Speichern</button>
+        <button type="submit" name="action" value="approve" class="btn btn-green">✓ Genehmigen (Rechnung erzeugen)</button>
         <button type="submit" name="action" value="reject"  class="btn btn-red"
                 onclick="return confirm('Entwurf wirklich ablehnen?');">✗ Ablehnen</button>
       </div>
     </form>
   </div>
+
+  <script>
+  function checkNameCompanyMatch() {
+    var isFirma = document.getElementById('is_firmenrechnung').checked;
+    var name    = (document.getElementById('guest_name').value || '').trim().toLowerCase();
+    var company = (document.getElementById('company_name').value || '').trim().toLowerCase();
+    var warn    = document.getElementById('name-company-warn');
+    warn.style.display = (isFirma && name !== '' && company !== '' && name === company) ? 'block' : 'none';
+  }
+  document.getElementById('guest_name').addEventListener('input', checkNameCompanyMatch);
+  checkNameCompanyMatch();
+  </script>
+
+  <?php elseif ($status === 'ready'): ?>
+  <div class="card">
+    <p style="margin:0 0 14px;font-size:13px;color:#555;line-height:1.6;">
+      Rechnung <strong><?= htmlspecialchars($invNum) ?></strong> wurde erzeugt, aber <strong>noch nicht an den Gast gesendet</strong>.
+      PDF unten prüfen und den Mailtext bei Bedarf anpassen, bevor sie rausgeht.
+    </p>
+    <a href="?token=<?= urlencode($token) ?>&dl=1" class="btn btn-link">⬇ PDF herunterladen</a>
+
+    <?php if (empty($guest['email'])): ?>
+    <div class="warn-note" style="display:block;margin-top:16px;">Gast hat keine E-Mail-Adresse hinterlegt — es kann nichts automatisch gesendet werden. Über "Zurück zur Bearbeitung" ergänzen.</div>
+    <?php endif; ?>
+
+    <h2 class="section-title">E-Mail an den Gast</h2>
+    <form method="post">
+      <label for="email_subject">Betreff</label>
+      <input type="text" id="email_subject" name="email_subject" value="<?= htmlspecialchars($draft['emailSubject'] ?? '') ?>">
+
+      <label for="email_intro">Einleitungstext</label>
+      <textarea id="email_intro" name="email_intro" rows="4"><?= htmlspecialchars($draft['emailIntro'] ?? '') ?></textarea>
+      <p class="hint">Zahlungshinweis, Bankdaten/QR-Code und Signatur werden automatisch angehängt und sind hier nicht editierbar (siehe Rechnungsvorschau unten für den genauen Inhalt).</p>
+
+      <div class="actions">
+        <button type="submit" name="action" value="send" class="btn btn-green">✓ Jetzt an Gast senden</button>
+        <button type="submit" name="action" value="back" class="btn btn-link"
+                onclick="return confirm('Zurück zur Bearbeitung? Die Rechnungsnummer <?= htmlspecialchars($invNum) ?> bleibt reserviert.');">← Zurück zur Bearbeitung</button>
+      </div>
+    </form>
+  </div>
   <?php elseif ($status === 'approved' && file_exists($pdfPath)): ?>
   <div class="card">
-    <a href="?token=<?= urlencode($token) ?>&dl=1" class="btn btn-link">⬇ Genehmigte Rechnung herunterladen</a>
+    <a href="?token=<?= urlencode($token) ?>&dl=1" class="btn btn-link">⬇ Gesendete Rechnung herunterladen</a>
   </div>
   <?php endif; ?>
 

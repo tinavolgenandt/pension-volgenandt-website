@@ -97,9 +97,15 @@ function buildInvoiceHtml(array $draft): string {
     if ($isFirmenrechnung && !empty($draft['companyName'])) {
         $companyLine = h($draft['companyName']) . '<br>';
     }
+    // Beds24 booking ID — always present on the draft, shown on every invoice
+    // so the guest/company reference matches what's in Beds24. Kept separate
+    // from the manually-entered Firmenrechnung reference below (a company's
+    // own internal order number, when they provide one).
+    $bookingIdLine = '<p style="margin:8px 0 0;font-size:11px;color:#666;">Buchungsnummer: ' . h((string)($draft['bookingId'] ?? '')) . '</p>';
+
     $bookingRefLine = '';
     if ($isFirmenrechnung && !empty($draft['bookingReference'])) {
-        $bookingRefLine = '<p style="margin:8px 0 0;font-size:11px;color:#666;">Buchungsnummer: ' . h($draft['bookingReference']) . '</p>';
+        $bookingRefLine = '<p style="margin:2px 0 0;font-size:11px;color:#666;">Referenz Firma: ' . h($draft['bookingReference']) . '</p>';
     }
 
     $checkIn  = formatDate($stay['checkIn']  ?? '');
@@ -170,7 +176,8 @@ function buildInvoiceHtml(array $draft): string {
     if (!empty($issuer['iban'])) {
         $bnName    = !empty($issuer['bankName']) ? h($issuer['bankName']) . '<br>' : '';
         $bicStr    = !empty($issuer['bic'])      ? 'BIC:&nbsp;' . h($issuer['bic']) . '<br>' : '';
-        $bankLines = $bnName
+        $bankLines = 'Kontoinhaber:&nbsp;Ralf Volgenandt<br>'
+            . $bnName
             . 'IBAN:&nbsp;' . h($issuer['iban']) . '<br>'
             . $bicStr
             . 'Verwendungszweck:&nbsp;Rechnung&nbsp;' . $invNum . '&nbsp;&ndash;&nbsp;' . $guestName;
@@ -220,6 +227,7 @@ function buildInvoiceHtml(array $draft): string {
           ' . ($addrStreet ? $addrStreet . '<br>' : '') . '
           ' . ($addrZipCity ?: '<span style="color:#aaa;">(Adresse nicht angegeben)</span>') . '
         </p>
+        ' . $bookingIdLine . '
         ' . $bookingRefLine . '
       </td>
       <td style="vertical-align:top;text-align:right;">
@@ -261,6 +269,8 @@ function buildInvoiceHtml(array $draft): string {
     </tr>
   </table>
 
+  ' . $ohneFruehstueckBlock . '
+
   <!-- Payment info -->
   <div style="margin-top:28px;padding:14px 0;font-size:12px;line-height:1.8;">
     <p style="margin:0 0 8px;font-size:13px;"><strong>Zahlungsbedingungen:</strong> ' . h($draft['paymentNote'] ?? '') . '</p>
@@ -282,7 +292,6 @@ function buildInvoiceHtml(array $draft): string {
     ' . $paypalBlock . '
   </div>
 
-  ' . $ohneFruehstueckBlock . '
   ' . $noteBlock . '
 
   <!-- Page footer -->
