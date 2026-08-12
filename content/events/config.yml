@@ -5,13 +5,28 @@
 # Versicherung) bestätigt werden. Diese Datei lässt sich ohne Code-Änderung
 # anpassen – einfach Werte ändern und neu veröffentlichen.
 #
-# FOTOS (pro Option): Jede greifbare Option hat unten bereits einen `image`-Platz-
-# halter, der auf `/img/events/…webp` zeigt. Die Dateien existieren noch nicht –
-# der Konfigurator blendet ein fehlendes Bild automatisch aus. Sobald ein Foto
-# vorliegt: als WebP unter genau diesem Pfad in `public/img/events/` ablegen
-# (vorher optimieren, siehe CLAUDE.md), fertig – das Bild erscheint dann von
-# selbst. `imageAlt` ist der Alternativtext (Barrierefreiheit/SEO); bei Bedarf
-# anpassen. Pfad ändern ist erlaubt, muss aber auf die abgelegte Datei zeigen.
+# FOTOS (pro Option): Jede greifbare Option hat unten einen `image`-Platzhalter,
+# der auf `/img/events/…webp` zeigt. Der Konfigurator blendet ein fehlendes Bild
+# automatisch aus. Sobald ein Foto vorliegt: als WebP unter genau diesem Pfad in
+# `public/img/events/` ablegen (vorher optimieren, siehe CLAUDE.md), fertig –
+# das Bild erscheint dann von selbst und wird oben im Konfigurator groß gezeigt,
+# sobald die Option ausgewählt ist. `imageAlt` ist der Alternativtext
+# (Barrierefreiheit/SEO); bei Bedarf anpassen. Pfad ändern ist erlaubt, muss
+# aber auf die abgelegte Datei zeigen.
+#
+# STATUS (Stand 2026-08-12): Die meisten Optionen haben bereits ein Foto (echte
+# Fotos oder KI-generiert). Noch OHNE Foto, vor Livegang per KI zu erstellen:
+#   - dishwareOptions.mietgeschirr    → geschirr-mietgeschirr.webp
+#   - flooringOptions.tanzflaeche     → boden-tanzflaeche.webp
+#   - flooringOptions.komplett        → boden-komplett.webp
+#   - decorationOptions.schlicht      → deko-schlicht.webp
+#   - decorationOptions.klassisch     → deko-klassisch.webp
+#   - decorationOptions.premium       → deko-premium.webp
+#   - cakeOptions.torte               → torte-festtorte.webp
+#   - cakeOptions.torte_sweet         → torte-sweet-table.webp
+#   - photoboothOptions.fotobox       → fotobox.webp
+#   - stylingOptions.braut            → styling-braut.webp
+#   - stylingOptions.braut_partner    → styling-braut-partner.webp
 
 guestRange:
   min: 10

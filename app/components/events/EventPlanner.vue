@@ -48,8 +48,6 @@ interface WizardGroup {
 interface WizardStep {
   title: string
   intro?: string
-  image?: string
-  imageAlt?: string
   groups: WizardGroup[]
 }
 
@@ -89,28 +87,23 @@ const form = reactive({
 })
 
 // --- The catalogue steps (the "click-by-click" interview) ------------------
-// Each step is one screen with an explanatory intro, a photo, and its option
-// cards. Step photos illustrate the category itself; a few still use PLACE-
-// HOLDERS from the garden gallery where no dedicated photo exists yet — swap
-// them for real event photography once available (or set `image` per option
-// in content/events/config.yml).
+// Each step is one screen with an explanatory intro and its option cards. The
+// large photo at the top of a step is NOT set here — it's the currently
+// selected option's own `image` from content/events/config.yml (see
+// `topOption` below), so it updates live as the visitor picks an option.
 const optionSteps = computed<WizardStep[]>(() => [
   {
     title: 'Catering',
-    image: '/img/events/catering-klassisch.webp',
-    imageAlt: 'Reich gedecktes klassisches Festbuffet',
     intro:
-      'Das Herzstück jeder Feier: Unser Partner-Caterer richtet seine Küche bei uns in der Garage ein und verwöhnt Ihre Gäste. Der Preis gilt pro Person und wächst mit der Gästezahl.',
+      'Unser Partner richtet seine Küche bei uns ein und verwöhnt Ihre Gäste. Preis pro Person.',
     groups: [
       { key: 'cateringId', unit: 'person', legend: 'Catering', options: opts('cateringTiers') },
     ],
   },
   {
     title: 'Getränke',
-    image: '/img/events/getraenke-selbstbedienung.webp',
-    imageAlt: 'Getränkestation zur Selbstbedienung',
     intro:
-      'Die Getränke laufen über uns: Wählen Sie zwischen Selbstbedienung und Service am Tisch. Abgerechnet pro Person und Stunde, richtet sich also nach Gästezahl und Dauer Ihrer Feier.',
+      'Getränke laufen über uns: Selbstbedienung oder Service am Tisch. Abgerechnet pro Person und Stunde.',
     groups: [
       {
         key: 'drinkId',
@@ -123,10 +116,8 @@ const optionSteps = computed<WizardStep[]>(() => [
   },
   {
     title: 'Freie Trauung',
-    image: '/img/events/trauung-freie-trauung.webp',
-    imageAlt: 'Freie Trauzeremonie im Garten',
     intro:
-      'Möchten Sie direkt bei uns im Garten heiraten? Ein professioneller Trauredner gestaltet Ihre freie Zeremonie: Trauung und Feier finden an einem Ort statt, ganz ohne Fahrt dazwischen. Für alle anderen Anlässe lassen Sie diese Auswahl einfach bei „Keine Trauung“.',
+      'Heiraten Sie direkt bei uns im Garten: Ein Trauredner gestaltet Ihre freie Zeremonie. Sonst einfach bei „Keine Trauung“ lassen.',
     groups: [
       {
         key: 'ceremonyId',
@@ -138,10 +129,7 @@ const optionSteps = computed<WizardStep[]>(() => [
   },
   {
     title: 'Fotograf & Video',
-    image: '/img/events/foto-fotograf.webp',
-    imageAlt: 'Hochzeitsfotograf hält einen Moment der Feier fest',
-    intro:
-      'Damit die schönsten Momente für immer bleiben: Wir vermitteln erfahrene Fotografen und Videografen. Ein fester Preis für Ihren gesamten Tag.',
+    intro: 'Wir vermitteln erfahrene Fotografen und Videografen, fester Preis für den ganzen Tag.',
     groups: [
       {
         key: 'photographyId',
@@ -153,18 +141,13 @@ const optionSteps = computed<WizardStep[]>(() => [
   },
   {
     title: 'Musik',
-    image: '/img/events/musik-dj.webp',
-    imageAlt: 'DJ sorgt auf der Feier für Stimmung',
-    intro:
-      'Von der eigenen Playlist über die reine Musikanlage bis zum kompletten DJ für die Abendgestaltung. Der Strom kommt direkt aus dem Haus.',
+    intro: 'Eigene Playlist, Musikanlage oder kompletter DJ. Strom kommt aus dem Haus.',
     groups: [{ key: 'musicId', unit: 'flat', legend: 'Musik', options: opts('musicOptions') }],
   },
   {
     title: 'Dekoration',
-    image: '/img/garten/garten-haengekorb-blumen.webp',
-    imageAlt: 'Blühender Hängekorb im Garten',
     intro:
-      'Die Tischdekoration gibt Ihrer Feier den festlichen Rahmen – von schlicht bis zur aufwändigen Blumengestaltung. Abgerechnet pro Person, passend zur Anzahl der Tische.',
+      'Von schlicht bis aufwändig: Tischdekoration passend zu Ihrer Feier. Abgerechnet pro Person.',
     groups: [
       {
         key: 'decorationId',
@@ -176,10 +159,7 @@ const optionSteps = computed<WizardStep[]>(() => [
   },
   {
     title: 'Torte & Sweet Table',
-    image: '/img/picknick/kuchen-streusel.webp',
-    imageAlt: 'Frischer Kuchen',
-    intro:
-      'Der süße Höhepunkt: eine Festtorte vom Konditor, auf Wunsch mit dekorativem Sweet Table zum Naschen. Abgerechnet pro Person.',
+    intro: 'Festtorte vom Konditor, auf Wunsch mit Sweet Table. Abgerechnet pro Person.',
     groups: [
       {
         key: 'cakeId',
@@ -191,30 +171,23 @@ const optionSteps = computed<WizardStep[]>(() => [
   },
   {
     title: 'Fotobox',
-    image: '/img/picknick/garten-sitzecke-rosen.webp',
-    imageAlt: 'Sitzecke mit Rosen im Garten',
     intro:
-      'Der Unterhaltungs-Hit für Ihre Gäste: eine Fotobox mit Requisiten und Sofortdruck, für viele Lacher und ein Gästebuch voller Erinnerungen.',
+      'Fotobox mit Requisiten und Sofortdruck, für viele Lacher und ein Gästebuch voller Erinnerungen.',
     groups: [
       { key: 'photoboothId', unit: 'flat', legend: 'Fotobox', options: opts('photoboothOptions') },
     ],
   },
   {
     title: 'Styling',
-    image: '/img/garten/garten-narzissen-weiss.webp',
-    imageAlt: 'Weiße Narzissen im Garten',
-    intro:
-      'Entspannt in den großen Tag starten: professionelles Haar- und Make-up-Styling direkt bei uns vor Ort, mit Typberatung und Probetermin.',
+    intro: 'Professionelles Haar- und Make-up-Styling direkt vor Ort, mit Probetermin.',
     groups: [
       { key: 'stylingId', unit: 'flat', legend: 'Styling', options: opts('stylingOptions') },
     ],
   },
   {
     title: 'Mobiliar & Ausstattung',
-    image: '/img/events/tische-rund.webp',
-    imageAlt: 'Elegante runde Festtische mit Bestuhlung',
     intro:
-      'Vom rustikalen bis zum eleganten Look: Stellen Sie Tische, Stuhlhussen, Geschirr und Bodenbelag zusammen. Die jeweils erste Option ist bereits im Basispreis enthalten. Jede Aufwertung wird pro Person berechnet.',
+      'Tische, Stuhlhussen, Geschirr und Bodenbelag: Die erste Option ist im Basispreis enthalten, jede Aufwertung wird pro Person berechnet.',
     groups: [
       { key: 'tableId', unit: 'person', legend: 'Tische', options: opts('tableOptions') },
       {
@@ -273,6 +246,14 @@ function unitPriceLabel(opt: CatalogOption, unit: Unit): string {
 function selectedOption(group: WizardGroup): CatalogOption | undefined {
   return group.options.find((o) => o.id === form[group.key]) ?? group.options[0]
 }
+
+// The large photo at the top of a catalogue step: the currently selected
+// option's own image (of the step's first/primary group), so it updates live
+// as the visitor picks a different option.
+const topOption = computed<CatalogOption | undefined>(() => {
+  const group = activeStep.value?.groups[0]
+  return group ? selectedOption(group) : undefined
+})
 function formatEuro(value: number): string {
   return value.toLocaleString('de-DE')
 }
@@ -436,6 +417,9 @@ async function handleSubmit() {
         phone: form.phone,
         message: buildMessage(),
         _subject: `Garten-Feier Anfrage: ${occasionLabel.value || 'Feier'} (${form.guests} Gäste${form.date ? `, ${form.date}` : ''})`,
+        // Catering runs exclusively over our partner Grillverein Thalwenden —
+        // forward the complete request directly to them (see send-mail.php).
+        _partner: form.cateringId ? 'grillverein-thalwenden' : undefined,
       }),
     })
     const data = await response.json()
@@ -477,7 +461,6 @@ watch(
   () => {
     const step = activeStep.value
     if (!step) return
-    probeImage(step.image)
     for (const group of step.groups) for (const o of group.options) probeImage(o.image)
   },
   { immediate: true },
@@ -621,9 +604,9 @@ const inputClass =
         <!-- ============ STEPS 1..N: Catalogue ============ -->
         <div v-else-if="activeStep" class="space-y-6">
           <NuxtImg
-            v-if="activeStep.image && readyImages[activeStep.image]"
-            :src="activeStep.image"
-            :alt="activeStep.imageAlt ?? activeStep.title"
+            v-if="topOption?.image && readyImages[topOption.image]"
+            :src="topOption.image"
+            :alt="topOption.imageAlt ?? topOption.label"
             class="h-48 w-full rounded-xl object-cover md:h-56"
             width="800"
             height="450"

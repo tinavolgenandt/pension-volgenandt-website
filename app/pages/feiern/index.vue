@@ -25,6 +25,12 @@ useHead({
 
 const appConfig = useAppConfig()
 
+// Prefix static asset paths with baseURL for GitHub Pages subpath deployment —
+// a static src="/video/..." gets rewritten by Vite's template asset transform,
+// so we bind :src with the runtime baseURL instead (same pattern as HeroVideo).
+const baseURL = useRuntimeConfig().app.baseURL
+const droneVideoSrc = `${baseURL}video/garten-drohne.mp4`
+
 const { data: config } = await useAsyncData('event-config-page', () =>
   queryCollection('eventConfig').first(),
 )
@@ -54,19 +60,19 @@ useJsonLd(
 const steps = [
   {
     title: 'Anfrage',
-    text: 'Senden Sie uns über den Rechner unverbindlich Ihre Eckdaten: Anlass, Termin und Gästezahl.',
+    text: 'Anlass, Termin und Gästezahl unverbindlich über den Rechner senden.',
   },
   {
     title: 'Beratung',
-    text: 'Wir melden uns persönlich und besprechen in Ruhe Ihre Wünsche, Catering und Ablauf.',
+    text: 'Wir melden uns persönlich und besprechen Ihre Wünsche.',
   },
   {
     title: 'Planung',
-    text: 'Sie erhalten ein individuelles Angebot. Wir kümmern uns um alle Details rund um Ihr Fest.',
+    text: 'Sie erhalten ein individuelles Angebot, wir kümmern uns um alle Details.',
   },
   {
     title: 'Feiern',
-    text: 'Verbringen Sie Ihren Tag im Grünen: Wir koordinieren vor Ort, Ihre Gäste übernachten bei uns.',
+    text: 'Sie feiern im Grünen, wir koordinieren vor Ort.',
   },
 ]
 
@@ -74,22 +80,22 @@ const included = [
   {
     icon: 'ph:key-duotone',
     title: 'Das ganze Grundstück für Sie allein',
-    text: 'Für Ihr Festwochenende buchen Sie die komplette Pension exklusiv: alle Zimmer und Ferienwohnungen für bis zu 23 Übernachtungsgäste in Zimmern und auf Schlafcouches. Weitere Gäste können bei uns im Garten zelten oder mit dem Wohnmobil übernachten. Keine anderen Gäste, nur Sie, Ihre Familie und Ihre Freunde, ganz unter sich.',
+    text: 'Die komplette Pension exklusiv für Ihr Festwochenende: alle Zimmer, bis zu 23 Übernachtungsgäste, keine fremden Gäste.',
   },
   {
     icon: 'ph:tree-duotone',
     title: 'Unser Garten als festliche Kulisse',
-    text: 'Ein gepflegter, ruhiger Garten im Eichsfeld, intim und mitten im Grünen. Hier feiern Sie stimmungsvoll und ungestört, auf Wunsch mit Festzelt.',
+    text: 'Ein gepflegter, ruhiger Garten mitten im Grünen, auf Wunsch mit Festzelt.',
   },
   {
     icon: 'ph:fork-knife-duotone',
-    title: 'Catering vom Partner-Caterer',
-    text: 'Vom rustikalen Buffet bis zum servierten Menü: regional und auf Ihren Anlass abgestimmt, geliefert von unserem erfahrenen Partner-Caterer.',
+    title: 'Catering von unserem Partner',
+    text: 'Vom rustikalen Buffet bis zum servierten Menü, passend zu Ihrem Anlass, von unserem Partner Grillverein Thalwenden.',
   },
   {
     icon: 'ph:calendar-check-duotone',
     title: 'Eventplanung aus einer Hand',
-    text: 'Wir planen, organisieren und koordinieren im Vorfeld, damit Sie sich an Ihrem Tag ganz auf Ihre Gäste konzentrieren können.',
+    text: 'Wir planen und koordinieren alles im Vorfeld, damit Sie sich an Ihrem Tag nur um Ihre Gäste kümmern.',
   },
 ]
 </script>
@@ -115,10 +121,10 @@ const included = [
           Pension Volgenandt · Eichsfeld
         </p>
         <h1 class="mt-2 max-w-3xl font-serif text-4xl font-bold text-white md:text-5xl">
-          Feiern Sie Ihr Fest in unserem Garten
+          Feiern bei Pension Volgenandt
         </h1>
         <p class="mt-3 max-w-2xl text-lg text-white/90 md:text-xl">
-          Hochzeit, Jugendweihe, Kommunion oder runder Geburtstag: rundum sorglos im Grünen.
+          Hochzeit, Jugendweihe oder Geburtstag: rundum sorglos im Grünen.
         </p>
         <a
           href="#rechner"
@@ -132,14 +138,12 @@ const included = [
     <!-- 2. Intro -->
     <section class="mx-auto max-w-3xl px-6 py-12 text-center md:py-16">
       <h2 class="font-serif text-2xl font-semibold text-sage-900 md:text-3xl">
-        Ihr Sommerfest im Eichsfeld, ganz ohne Stress
+        Ihr Fest ganz ohne Stress
       </h2>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
-        Für Ihr Festwochenende gehört Ihnen das <strong>gesamte Grundstück ganz allein</strong>: Sie
-        buchen die komplette Pension mit allen Zimmern für das Wochenende, Ihre Gäste übernachten
-        direkt vor Ort, und wir organisieren Ihr Fest von A bis Z. Dazu ein
-        <strong>Rundum-sorglos-Paket</strong> mit Catering über unseren Partner-Caterer und
-        persönlicher Eventplanung.
+        Fürs Festwochenende gehört Ihnen das <strong>gesamte Grundstück allein</strong>: alle
+        Zimmer, Ihre Gäste übernachten vor Ort, wir organisieren alles von A bis Z, inklusive
+        Catering über unseren Partner und persönlicher Eventplanung.
       </p>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
         Keine Nachbarn, keine Sperrstunde, kein Stress: Sie feiern, wir kümmern uns um den Rest.
@@ -165,7 +169,6 @@ const included = [
             <h3 class="mt-3 font-serif text-lg font-semibold text-sage-900">
               {{ occasion.label }}
             </h3>
-            <p class="mt-2 text-sm leading-relaxed text-sage-600">{{ occasion.description }}</p>
           </div>
         </div>
       </div>
@@ -242,6 +245,86 @@ const included = [
       </div>
     </section>
 
+    <!-- Drohnenvideo: der Garten von oben -->
+    <section class="px-6 py-12 md:py-16">
+      <div class="mx-auto max-w-4xl">
+        <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">
+          Der Garten von oben
+        </h2>
+        <p class="mb-10 text-center text-sage-600">Ein kurzer Rundflug über unser Grundstück.</p>
+        <div class="relative aspect-video overflow-hidden rounded-xl bg-[#2C3E2D] shadow-sm">
+          <video
+            controls
+            preload="none"
+            poster="/img/events/drohne-poster.webp"
+            class="absolute inset-0 h-full w-full object-cover"
+          >
+            <source :src="droneVideoSrc" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kooperationspartner: Grillverein Thalwenden -->
+    <section class="bg-sage-50 px-6 py-12 md:py-16">
+      <div class="mx-auto max-w-6xl">
+        <div class="mb-10 flex flex-col items-center text-center">
+          <img
+            src="/img/events/partner-grillverein-logo.webp"
+            alt="Logo Grillverein Thalwenden"
+            class="size-20 object-contain"
+            width="192"
+            height="192"
+            loading="lazy"
+          />
+          <h2 class="mt-4 font-serif text-3xl font-bold text-sage-900">
+            Unser Partner: Grillverein Thalwenden
+          </h2>
+          <p class="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-sage-700">
+            Für herzhafte Grillspezialitäten arbeiten wir mit dem Grillverein Thalwenden zusammen.
+            Das Team grillt live bei Ihrer Feier, mit hochwertigen, regionalen Zutaten.
+          </p>
+        </div>
+        <div class="grid gap-5 sm:grid-cols-3">
+          <NuxtImg
+            src="/img/events/partner-grillverein-steak.webp"
+            alt="Steaks und Bratwurst brutzeln auf dem Grill des Grillverein Thalwenden"
+            class="h-64 w-full rounded-xl object-cover"
+            width="1600"
+            height="1067"
+            loading="lazy"
+          />
+          <NuxtImg
+            src="/img/events/partner-grillverein-grillplatte.webp"
+            alt="Große Grillplatte mit Fisch, Spießen, Bratwurst und Burgern"
+            class="h-64 w-full rounded-xl object-cover"
+            width="1600"
+            height="1067"
+            loading="lazy"
+          />
+          <NuxtImg
+            src="/img/events/partner-grillverein-team.webp"
+            alt="Team des Grillverein Thalwenden mit Grillstand im Garten"
+            class="h-64 w-full rounded-xl object-cover"
+            width="1600"
+            height="1067"
+            loading="lazy"
+          />
+        </div>
+        <div class="mt-8 text-center">
+          <a
+            href="http://grillverein-thalwenden.de/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-lg border border-sage-300 bg-white px-5 py-2.5 text-sm font-medium text-sage-700 transition-colors hover:bg-sage-100"
+          >
+            Grillverein Thalwenden entdecken
+            <Icon name="ph:arrow-square-out" class="size-4 text-waldhonig-600" />
+          </a>
+        </div>
+      </div>
+    </section>
+
     <!-- 5. So läuft's ab -->
     <section class="bg-sage-50 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-4xl">
@@ -270,13 +353,13 @@ const included = [
         <div
           class="grid gap-8 rounded-2xl bg-sage-50 p-8 sm:grid-cols-[auto_1fr] sm:items-center md:p-10"
         >
-          <div class="mx-auto size-28 overflow-hidden rounded-full sm:mx-0">
+          <div class="mx-auto size-48 overflow-hidden rounded-full sm:mx-0">
             <img
               src="/img/events/eventmanagerin-tina.webp"
               alt="Tina Volgenandt, Eventmanagerin"
               class="size-full object-cover"
-              width="112"
-              height="112"
+              width="192"
+              height="192"
             />
           </div>
           <div class="text-center sm:text-left">
@@ -285,9 +368,8 @@ const included = [
             </p>
             <h2 class="mt-1 font-serif text-2xl font-semibold text-sage-900">Tina Volgenandt</h2>
             <p class="mt-3 leading-relaxed text-sage-700">
-              Ihre Feier ist bei mir in erfahrenen Händen: Als Eventmanagerin plane, organisiere und
-              koordiniere ich Ihr Fest persönlich, von der ersten Idee bis zum letzten Detail am
-              Veranstaltungstag. So können Sie sich ganz auf Ihre Gäste und Ihren Tag konzentrieren.
+              Als Eventmanagerin plane und koordiniere ich Ihr Fest persönlich, von der ersten Idee
+              bis zum Veranstaltungstag.
             </p>
             <a
               href="https://www.linkedin.com/in/tina-volgenandt-9420a2136/"
@@ -310,10 +392,8 @@ const included = [
           Stellen Sie sich Ihre Feier zusammen
         </h2>
         <p class="mt-3 mb-8 text-center text-sage-600">
-          Unser Konfigurator führt Sie Schritt für Schritt durch alle Möglichkeiten. Bei jeder
-          Auswahl sehen Sie sofort, was sie für Ihre Feier bedeutet und was sie kostet. Am Ende
-          steht Ihr unverbindlicher Gesamt-Richtwert. Danach melden wir uns mit einem persönlichen
-          Angebot.
+          Unser Konfigurator erstellt Schritt für Schritt ein unverbindliches Angebot, damit Sie ein
+          Gefühl für den Preis bekommen. Danach melden wir uns persönlich.
         </p>
         <EventsEventPlanner />
       </div>
@@ -330,15 +410,14 @@ const included = [
             <Icon name="ph:shield-check-duotone" class="mx-auto size-9 text-waldhonig-500" />
             <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">Völlig privat</h3>
             <p class="mt-2 text-sm text-sage-600">
-              Das ganze Grundstück gehört für das Wochenende nur Ihnen: keine Nachbarn, keine
-              fremden Gäste.
+              Das Grundstück gehört fürs Wochenende nur Ihnen.
             </p>
           </div>
           <div class="rounded-xl bg-white p-6 text-center">
             <Icon name="ph:moon-stars-duotone" class="mx-auto size-9 text-waldhonig-500" />
             <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">Ohne Sperrstunde</h3>
             <p class="mt-2 text-sm text-sage-600">
-              Da es keine Nachbarn gibt, feiern Sie ohne Lärmauflagen so lange, wie Sie möchten.
+              Keine Nachbarn, keine Lärmauflagen: feiern Sie, so lange Sie möchten.
             </p>
           </div>
           <div class="rounded-xl bg-white p-6 text-center">
@@ -347,22 +426,20 @@ const included = [
               Schlechtwetter-Plan
             </h3>
             <p class="mt-2 text-sm text-sage-600">
-              Ein Festzelt mit schließbaren Seitenwänden schützt zuverlässig vor Regen und Sonne.
+              Ein Festzelt mit Seitenwänden schützt vor Regen und Sonne.
             </p>
           </div>
           <div class="rounded-xl bg-white p-6 text-center">
             <Icon name="ph:users-three-duotone" class="mx-auto size-9 text-waldhonig-500" />
             <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">10 bis 80 Gäste</h3>
             <p class="mt-2 text-sm text-sage-600">
-              Von der kleinen Familienfeier bis zum großen Fest, in der Saison von Mai bis
-              September.
+              Von der Familienfeier bis zum großen Fest, Mai bis September.
             </p>
           </div>
         </div>
         <p class="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-sage-600">
-          Praktisch gelöst: Sanitäranlagen nutzen Sie über die gebuchten Zimmer, unser
-          Partner-Caterer richtet seine Küche in der Garage ein, und der Strom für die Musik kommt
-          direkt aus dem Haus.
+          Sanitäranlagen nutzen Sie über die Zimmer, unser Partner richtet seine Küche in der Garage
+          ein, und der Strom für die Musik kommt aus dem Haus.
         </p>
       </div>
     </section>
@@ -371,10 +448,7 @@ const included = [
     <section class="bg-waldhonig-50 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-2xl text-center">
         <h2 class="font-serif text-2xl font-semibold text-sage-900">Lieber persönlich sprechen?</h2>
-        <p class="mt-3 text-sage-700">
-          Vereinbaren Sie einen Gesprächstermin: Geben Sie einfach Ihren Wunschtermin an, und wir
-          melden uns bei Ihnen.
-        </p>
+        <p class="mt-3 text-sage-700">Geben Sie Ihren Wunschtermin an, wir melden uns bei Ihnen.</p>
         <div class="mt-8">
           <EventsCallbackRequest />
         </div>
