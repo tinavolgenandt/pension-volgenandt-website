@@ -14,6 +14,13 @@ require_once __DIR__ . '/smtp.php';
 $recipientEmail = 'kontakt@pension-volgenandt.de';
 $subjectPrefix  = '[Pension Volgenandt]';
 
+// Verified partner inboxes we're allowed to route inquiries to directly.
+// Keyed by a fixed identifier the frontend sends — never trust a raw email
+// address from the client as the recipient.
+$partnerEmails = [
+    'grillverein-thalwenden' => 'grillverein-thalwenden@gmx.de',
+];
+
 // ---------------------------------------------------------------------------
 // CORS
 // ---------------------------------------------------------------------------
@@ -48,6 +55,8 @@ $email          = trim($input['email'] ?? '');
 $message        = trim($input['message'] ?? '');
 $gotcha         = trim($input['_gotcha'] ?? '');
 $customSubject  = trim($input['_subject'] ?? '');
+$partnerKey     = trim($input['_partner'] ?? '');
+$partnerEmail   = $partnerEmails[$partnerKey] ?? null;
 
 // ---------------------------------------------------------------------------
 // Honeypot – if filled, silently pretend success (bot trap)
@@ -93,10 +102,17 @@ $body = "Neue Kontaktanfrage über die Website:\r\n"
     . "Nachricht:\r\n"
     . $message;
 
+// Catering requests route directly to the partner, CC'd to us, instead of to us only.
+if ($partnerEmail !== null) {
+    $body = "Neue Catering-Anfrage über den Eventplaner der Pension Volgenandt:\r\n\r\n" . $body;
+}
+$recipientTo = $partnerEmail ?? $recipientEmail;
+$recipientCc = $partnerEmail !== null ? $recipientEmail : '';
+
 // ---------------------------------------------------------------------------
 // Send via SMTP
 // ---------------------------------------------------------------------------
-$result = sendSmtp($smtpHost, $smtpPort, $smtpUser, $smtpPass, $recipientEmail, $recipientEmail, $subject, $body, $name, $email);
+$result = sendSmtp($smtpHost, $smtpPort, $smtpUser, $smtpPass, $recipientEmail, $recipientTo, $subject, $body, $name, $email, $recipientCc);
 
 if ($result['ok']) {
     // Log inquiry to CSV for statistics collection
