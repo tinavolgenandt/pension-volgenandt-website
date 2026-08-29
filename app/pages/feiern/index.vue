@@ -80,7 +80,7 @@ const included = [
   {
     icon: 'ph:key-duotone',
     title: 'Das ganze Grundstück für Sie allein',
-    text: 'Die komplette Pension exklusiv für Ihr Festwochenende: alle Zimmer, bis zu 23 Übernachtungsgäste, keine fremden Gäste.',
+    text: 'Die komplette Pension exklusiv für Ihr Festwochenende: alle Zimmer, bis zu 28 Übernachtungsgäste, keine fremden Gäste.',
   },
   {
     icon: 'ph:tree-duotone',
@@ -431,9 +431,10 @@ const included = [
           </div>
           <div class="rounded-xl bg-white p-6 text-center">
             <Icon name="ph:users-three-duotone" class="mx-auto size-9 text-waldhonig-500" />
-            <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">10 bis 80 Gäste</h3>
+            <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">Bis zu 200 Gäste</h3>
             <p class="mt-2 text-sm text-sage-600">
-              Von der Familienfeier bis zum großen Fest, Mai bis September.
+              Feiern Sie mit bis zu 200 Gästen im Garten, bis zu 28 davon übernachten direkt bei
+              uns.
             </p>
           </div>
         </div>
