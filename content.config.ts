@@ -270,11 +270,19 @@ const eventOptionMediaFields = {
   imageAlt: z.string().optional(),
 }
 
+// Catering price bands — the partner-caterer's per-person price drops as the
+// guest count grows (bulk pricing). Pick the first band whose maxGuests covers
+// the selected guest count, same pattern as the base-package guest bands.
+const eventPriceBandSchema = z.object({
+  maxGuests: z.number(),
+  pricePerPerson: z.number(),
+})
+
 const eventCateringTierSchema = z.object({
   id: z.string(),
   label: z.string(),
   description: z.string(),
-  pricePerPerson: z.number(),
+  priceBands: z.array(eventPriceBandSchema).min(1),
   ...eventOptionMediaFields,
 })
 

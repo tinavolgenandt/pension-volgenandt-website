@@ -12,6 +12,10 @@ const { data: config } = await useAsyncData('event-config', () =>
 // A single catalogue option. Different groups use different price fields
 // (fixed `price`, `pricePerPerson`, or `pricePerPersonPerHour`); the unit on
 // the group decides which one applies and how it scales.
+interface PriceBand {
+  maxGuests: number
+  pricePerPerson: number
+}
 interface CatalogOption {
   id: string
   label: string
@@ -22,6 +26,7 @@ interface CatalogOption {
   price?: number
   pricePerPerson?: number
   pricePerPersonPerHour?: number
+  priceBands?: PriceBand[]
 }
 type Unit = 'flat' | 'person' | 'personHour'
 type SelectKey =
@@ -95,7 +100,7 @@ const optionSteps = computed<WizardStep[]>(() => [
   {
     title: 'Catering',
     intro:
-      'Unser Partner richtet seine Küche bei uns ein und verwöhnt Ihre Gäste. Preis pro Person.',
+      'Unser Partner Grillverein Thalwenden richtet seine Grillstation bei uns ein und verwöhnt Ihre Gäste live vor Ort. Der Preis pro Person sinkt mit steigender Gästezahl.',
     groups: [
       { key: 'cateringId', unit: 'person', legend: 'Catering', options: opts('cateringTiers') },
     ],
@@ -224,22 +229,39 @@ watchEffect(() => {
 })
 
 // --- Pricing ---------------------------------------------------------------
+// Some per-person options (e.g. catering) are banded by guest count instead of
+// a single flat rate — pick the first band whose maxGuests covers the current
+// guest count, same pattern as the base-package guest bands.
+function bandedPricePerPerson(bands: PriceBand[], guests: number): number {
+  const band = bands.find((b) => guests <= b.maxGuests) ?? bands[bands.length - 1]
+  return band?.pricePerPerson ?? 0
+}
 function rawPrice(opt: CatalogOption | undefined, unit: Unit): number {
   if (!opt) return 0
-  if (unit === 'person') return opt.pricePerPerson ?? 0
+  if (unit === 'person') {
+    if (opt.priceBands?.length) return bandedPricePerPerson(opt.priceBands, form.guests)
+    return opt.pricePerPerson ?? 0
+  }
   if (unit === 'personHour') return opt.pricePerPersonPerHour ?? 0
   return opt.price ?? 0
 }
 function optAmount(opt: CatalogOption | undefined, unit: Unit): number {
   const p = rawPrice(opt, unit)
-  if (unit === 'person') return p * form.guests
-  if (unit === 'personHour') return p * form.guests * form.hours
+  // Banded per-person prices carry cents (e.g. 49,90 €) — round the resulting
+  // total to whole euros, consistent with every other "ca." estimate line.
+  if (unit === 'person') return Math.round(p * form.guests)
+  if (unit === 'personHour') return Math.round(p * form.guests * form.hours)
   return p
 }
 function unitPriceLabel(opt: CatalogOption, unit: Unit): string {
   const p = rawPrice(opt, unit)
   if (p === 0) return '–'
-  if (unit === 'person') return `${p} € / Person`
+  if (unit === 'person') {
+    const perPerson = Number.isInteger(p)
+      ? `${p}`
+      : p.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    return `${perPerson} € / Person`
+  }
   if (unit === 'personHour') return `${p} € / Pers. · Std.`
   return `${formatEuro(p)} €`
 }
@@ -293,7 +315,7 @@ const summaryLines = computed<Line[]>(() => {
     if (amount <= 0) continue
     let detail = `${group.legend}: ${sel.label}`
     if (group.unit === 'person')
-      detail = `${group.legend}: ${sel.label} · ${form.guests} × ${sel.pricePerPerson} €`
+      detail = `${group.legend}: ${sel.label} · ${form.guests} × ${rawPrice(sel, 'person')} €`
     else if (group.unit === 'personHour')
       detail = `${group.legend}: ${sel.label} · ${form.guests} × ${sel.pricePerPersonPerHour} € × ${form.hours} h`
     lines.push({ label: group.legend, detail, amount })
