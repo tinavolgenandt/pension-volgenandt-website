@@ -1,8 +1,10 @@
 # Feiern im Garten – Konfiguration des Preisrechners
 #
-# WICHTIG: Alle Preise sind vorläufige RICHTWERTE auf Basis einer Marktrecherche
-# (Stand 2026). Vor dem Live-Gang müssen die echten Preise (v.a. Caterer,
-# Versicherung) bestätigt werden. Diese Datei lässt sich ohne Code-Änderung
+# WICHTIG: Die meisten Preise sind vorläufige RICHTWERTE auf Basis einer
+# Marktrecherche (Stand 2026) und müssen vor dem Live-Gang bestätigt werden
+# (v.a. Versicherung). AUSNAHME: cateringTiers sind das echte, bestätigte
+# Angebot unseres Partners Grillverein Thalwenden (Preisübersicht, Stand
+# 2026-08), keine Richtwerte. Diese Datei lässt sich ohne Code-Änderung
 # anpassen – einfach Werte ändern und neu veröffentlichen.
 #
 # FOTOS (pro Option): Jede greifbare Option hat unten einen `image`-Platzhalter,
@@ -27,6 +29,7 @@
 #   - photoboothOptions.fotobox       → fotobox.webp
 #   - stylingOptions.braut            → styling-braut.webp
 #   - stylingOptions.braut_partner    → styling-braut-partner.webp
+#   - cateringTiers.elite             → partner-grillverein-elite.webp (o.ä.)
 
 guestRange:
   min: 10
@@ -74,34 +77,75 @@ basePackage:
     - Stromversorgung für die Musik direkt aus dem Haus
     - Garage als Catering-Küche & Sanitäranlagen über die gebuchten Zimmer
 
-# Catering läuft IMMER über unseren Partner-Caterer (kein hauseigenes Catering).
-# Preis pro Person als Kundenpreis – ein Aufschlag von ~15% auf den Caterer-Preis
-# ist bereits enthalten (Caterer-Richtwert: ~39/59/89 €).
+# Catering läuft IMMER über unseren Partner-Caterer Grillverein Thalwenden (kein
+# hauseigenes Catering). ECHTES Angebot (Preisübersicht Stand 2026-08), keine
+# Richtwerte mehr: 4 Genusswelten, Preis pro Person sinkt mit der Gästezahl
+# (Grillservice inkl. Personal gemäß Veranstaltungsgröße; 2 Mitarbeiter bis 50
+# Gäste inklusive; Getränke nicht enthalten, siehe drinkOptions).
 cateringTiers:
-  - id: rustikal
-    label: Rustikales Buffet
-    image: /img/events/catering-rustikal.webp
-    imageAlt: Rustikales Buffet mit regionalen, saisonalen Gerichten
+  - id: classic
+    label: Classic – Der Klassiker
+    image: /img/events/partner-grillverein-steak.webp
+    imageAlt: Steaks und Bratwurst brutzeln auf dem Grill des Grillverein Thalwenden
     description: >-
-      Herzhaftes Buffet unseres Partner-Caterers mit regionalen, saisonalen
-      Gerichten, unkompliziert und reichhaltig. Ideal für entspannte Familienfeiern.
-    pricePerPerson: 45
-  - id: klassisch
-    label: Klassisches Festbuffet
-    image: /img/events/catering-klassisch.webp
-    imageAlt: Reich gedecktes klassisches Festbuffet
+      Bratwurst, Steak, Hähnchen, Feta, Gemüse und Grillbrot, dazu Salatauswahl
+      sowie Dips & Saucen.
+    priceBands:
+      - maxGuests: 20
+        pricePerPerson: 49.9
+      - maxGuests: 50
+        pricePerPerson: 34.9
+      - maxGuests: 75
+        pricePerPerson: 28.9
+      - maxGuests: 999
+        pricePerPerson: 24.9
+  - id: signature
+    label: Signature – Unsere besondere Auswahl
+    image: /img/events/partner-grillverein-grillplatte.webp
+    imageAlt: Große Grillplatte mit Fisch, Spießen, Bratwurst und Burgern
     description: >-
-      Vielfältiges Buffet mit warmen und kalten Speisen, Salaten und Dessert.
-      Der beliebte Klassiker unseres Partner-Caterers für Hochzeiten und große Feste.
-    pricePerPerson: 69
-  - id: premium
-    label: Premium-Menü am Platz
-    image: /img/events/catering-premium.webp
-    imageAlt: Serviertes Premium-Menü am festlich gedeckten Tisch
+      Rinderbratwurst, Lamm, Spareribs, Schweinefilet und Lachs, dazu erweiterte
+      Salatauswahl, Grillkäse sowie Dips & Saucen.
+    priceBands:
+      - maxGuests: 20
+        pricePerPerson: 59.9
+      - maxGuests: 50
+        pricePerPerson: 44.9
+      - maxGuests: 75
+        pricePerPerson: 38.9
+      - maxGuests: 999
+        pricePerPerson: 34.9
+  - id: prestige
+    label: Prestige – Premium vom Grill
+    image: /img/events/partner-grillverein-team.webp
+    imageAlt: Team des Grillverein Thalwenden mit Grillstand im Garten
     description: >-
-      Mehrgängiges, serviertes Menü mit Service am Tisch: die festlichste und
-      eleganteste Variante unseres Partner-Caterers für besondere Anlässe.
-    pricePerPerson: 105
+      Rinderfilet, Roastbeef, Lachs, Ente und Lammkotelett, dazu Premium-Beilagen,
+      Grillkäse und Dessert.
+    priceBands:
+      - maxGuests: 20
+        pricePerPerson: 69.9
+      - maxGuests: 50
+        pricePerPerson: 54.9
+      - maxGuests: 75
+        pricePerPerson: 48.9
+      - maxGuests: 999
+        pricePerPerson: 44.9
+  - id: elite
+    label: Élite – Das außergewöhnliche Grillerlebnis
+    imageAlt: Premium-Grillauswahl der Élite-Genusswelt
+    description: >-
+      Rinderfilet, Rib-Eye, T-Bone, Tomahawk, Hirsch, Wild und Thunfisch:
+      individuelle Premium-Auswahl mit hochwertigen Beilagen und Dessert.
+    priceBands:
+      - maxGuests: 20
+        pricePerPerson: 84.9
+      - maxGuests: 50
+        pricePerPerson: 69.9
+      - maxGuests: 75
+        pricePerPerson: 59.9
+      - maxGuests: 999
+        pricePerPerson: 54.9
 
 # Getränke laufen immer über uns: Selbstbedienung oder mit Service. Preis pro
 # Person PRO STUNDE – hängt von der Feierdauer ab. (Markt 2026: ~25–55 € pp für
