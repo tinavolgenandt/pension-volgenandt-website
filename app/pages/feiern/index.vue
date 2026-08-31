@@ -80,7 +80,7 @@ const included = [
   {
     icon: 'ph:key-duotone',
     title: 'Das ganze Grundstück für Sie allein',
-    text: 'Die komplette Pension exklusiv für Ihr Festwochenende: alle Zimmer, bis zu 23 Übernachtungsgäste, keine fremden Gäste.',
+    text: 'Die komplette Pension exklusiv für Ihr Festwochenende: alle Zimmer, bis zu 28 Übernachtungsgäste, keine fremden Gäste.',
   },
   {
     icon: 'ph:tree-duotone',
@@ -399,6 +399,60 @@ const included = [
       </div>
     </section>
 
+    <!-- 6.5 Planungshilfen -->
+    <section class="px-6 py-12 md:py-16">
+      <div class="mx-auto max-w-5xl">
+        <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">
+          Hilfreich für Ihre Planung
+        </h2>
+        <p class="mb-10 text-center text-sage-600">
+          Vorlagen und Infos, sobald Ihr Termin feststeht.
+        </p>
+        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <NuxtLink
+            to="/feiern/planungshilfen/#belegungsplan"
+            class="flex flex-col items-center rounded-xl border border-sage-200 bg-white p-6 text-center transition-colors hover:bg-sage-50"
+          >
+            <Icon name="ph:bed-duotone" class="size-9 text-waldhonig-500" />
+            <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">
+              Zimmerbelegungsplan
+            </h3>
+            <p class="mt-2 text-sm text-sage-600">Wer schläft in welchem Bett.</p>
+          </NuxtLink>
+          <NuxtLink
+            to="/feiern/planungshilfen/#anfahrt"
+            class="flex flex-col items-center rounded-xl border border-sage-200 bg-white p-6 text-center transition-colors hover:bg-sage-50"
+          >
+            <Icon name="ph:car-duotone" class="size-9 text-waldhonig-500" />
+            <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">
+              Anfahrt &amp; Parken
+            </h3>
+            <p class="mt-2 text-sm text-sage-600">Adresse, Karte und Parkplätze.</p>
+          </NuxtLink>
+          <NuxtLink
+            to="/feiern/planungshilfen/#ablaufplan"
+            class="flex flex-col items-center rounded-xl border border-sage-200 bg-white p-6 text-center transition-colors hover:bg-sage-50"
+          >
+            <Icon name="ph:clock-duotone" class="size-9 text-waldhonig-500" />
+            <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">
+              Ablaufplan für den Tag
+            </h3>
+            <p class="mt-2 text-sm text-sage-600">Zeitlicher Rahmen zum Ausfüllen.</p>
+          </NuxtLink>
+          <NuxtLink
+            to="/feiern/planungshilfen/#checkliste"
+            class="flex flex-col items-center rounded-xl border border-sage-200 bg-white p-6 text-center transition-colors hover:bg-sage-50"
+          >
+            <Icon name="ph:list-checks-duotone" class="size-9 text-waldhonig-500" />
+            <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">
+              Checkliste: Was wir stellen
+            </h3>
+            <p class="mt-2 text-sm text-sage-600">Was inklusive ist, was wir abstimmen.</p>
+          </NuxtLink>
+        </div>
+      </div>
+    </section>
+
     <!-- 7. Gut zu wissen -->
     <section class="bg-cream px-6 py-12 md:py-16">
       <div class="mx-auto max-w-4xl">
@@ -431,9 +485,10 @@ const included = [
           </div>
           <div class="rounded-xl bg-white p-6 text-center">
             <Icon name="ph:users-three-duotone" class="mx-auto size-9 text-waldhonig-500" />
-            <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">10 bis 80 Gäste</h3>
+            <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">Bis zu 200 Gäste</h3>
             <p class="mt-2 text-sm text-sage-600">
-              Von der Familienfeier bis zum großen Fest, Mai bis September.
+              Feiern Sie mit bis zu 200 Gästen im Garten, bis zu 28 davon übernachten direkt bei
+              uns.
             </p>
           </div>
         </div>
