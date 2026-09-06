@@ -76,6 +76,7 @@ const extrasOptions = [
     brunchOnly: false,
   },
   { id: 'hummus', label: 'Hausgemachter Hummus', price: 2, unit: '', brunchOnly: false },
+  { id: 'oliven', label: 'Oliven', price: 3, unit: '', brunchOnly: false },
   {
     id: 'lachs',
     label: 'Lachs mit Frischkäse & Dill',
@@ -95,8 +96,6 @@ const extrasOptions = [
     brunchOnly: false,
   },
 ]
-
-const isQuantifiable = (extra: (typeof extrasOptions)[0]) => extra.unit !== ''
 
 // Sekt and water are rendered with the drinks (Getränke), not in the generic extras grid.
 const DRINK_EXTRA_IDS = ['sekt', 'wasser']
@@ -760,64 +759,44 @@ if (import.meta.client) {
         Extras <span class="text-sm font-normal text-sage-500">(optional)</span>
       </legend>
       <div class="grid gap-3 sm:grid-cols-2">
-        <template v-for="extra in filteredExtras" :key="extra.id">
-          <!-- Checkbox für ja/nein-Extras -->
-          <label
-            v-if="!isQuantifiable(extra)"
-            class="flex cursor-pointer items-start gap-3 rounded-lg border border-sage-200 p-3 hover:bg-sage-50"
-            :class="{ 'border-sage-400 bg-sage-50': (form.extras[extra.id] ?? 0) > 0 }"
-          >
-            <input
-              type="checkbox"
-              :checked="(form.extras[extra.id] ?? 0) > 0"
-              class="mt-0.5 size-4 accent-waldhonig-500"
-              @change="form.extras[extra.id] = (form.extras[extra.id] ?? 0) > 0 ? 0 : 1"
-            />
-            <span class="text-sm text-sage-800">
-              {{ extra.label }}
-              <span
-                class="ml-1 text-xs"
-                :class="extra.price === 0 ? 'text-sage-400' : 'text-waldhonig-600'"
-              >
-                ({{ extraPriceLabel(extra) }})
-              </span>
+        <div
+          v-for="extra in filteredExtras"
+          :key="extra.id"
+          class="flex items-center justify-between rounded-lg border px-3 py-3"
+          :class="
+            (form.extras[extra.id] ?? 0) > 0 ? 'border-sage-400 bg-sage-50' : 'border-sage-200'
+          "
+        >
+          <span class="text-sm text-sage-800">
+            {{ extra.label }}
+            <span
+              class="ml-1 text-xs"
+              :class="extra.price === 0 ? 'text-sage-400' : 'text-waldhonig-600'"
+            >
+              ({{ extraPriceLabel(extra) }})
             </span>
-          </label>
-
-          <!-- +/− für Stück-Extras -->
-          <div
-            v-else
-            class="flex items-center justify-between rounded-lg border px-3 py-3"
-            :class="
-              (form.extras[extra.id] ?? 0) > 0 ? 'border-sage-400 bg-sage-50' : 'border-sage-200'
-            "
-          >
-            <span class="text-sm text-sage-800">
-              {{ extra.label }}
-              <span class="ml-1 text-xs text-waldhonig-600"> ({{ extraPriceLabel(extra) }}) </span>
+          </span>
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              class="flex size-7 items-center justify-center rounded-full border border-sage-300 text-sage-600 transition-colors hover:bg-sage-100 disabled:opacity-30"
+              :disabled="(form.extras[extra.id] ?? 0) <= 0"
+              @click="form.extras[extra.id] = (form.extras[extra.id] ?? 0) - 1"
+            >
+              −
+            </button>
+            <span class="w-5 text-center text-sm font-semibold text-sage-900">
+              {{ form.extras[extra.id] ?? 0 }}
             </span>
-            <div class="flex items-center gap-2">
-              <button
-                type="button"
-                class="flex size-7 items-center justify-center rounded-full border border-sage-300 text-sage-600 transition-colors hover:bg-sage-100 disabled:opacity-30"
-                :disabled="(form.extras[extra.id] ?? 0) <= 0"
-                @click="form.extras[extra.id] = (form.extras[extra.id] ?? 0) - 1"
-              >
-                −
-              </button>
-              <span class="w-5 text-center text-sm font-semibold text-sage-900">
-                {{ form.extras[extra.id] ?? 0 }}
-              </span>
-              <button
-                type="button"
-                class="flex size-7 items-center justify-center rounded-full border border-sage-300 text-sage-600 transition-colors hover:bg-sage-100"
-                @click="form.extras[extra.id] = (form.extras[extra.id] ?? 0) + 1"
-              >
-                +
-              </button>
-            </div>
+            <button
+              type="button"
+              class="flex size-7 items-center justify-center rounded-full border border-sage-300 text-sage-600 transition-colors hover:bg-sage-100"
+              @click="form.extras[extra.id] = (form.extras[extra.id] ?? 0) + 1"
+            >
+              +
+            </button>
           </div>
-        </template>
+        </div>
       </div>
     </fieldset>
 

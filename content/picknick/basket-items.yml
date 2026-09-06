@@ -44,3 +44,7 @@ extras:
     description: 'Als kleine Überraschung im Korb – ideal für besondere Anlässe'
     price: 6
     unit: 'Stück'
+  - id: oliven
+    label: 'Oliven'
+    description: 'Marinierte Oliven als kleine Ergänzung'
+    price: 3

@@ -28,13 +28,13 @@ $packageContents = [
         'Frisches, saisonales Obst',
     ],
     'Abendschmaus' => [
-        'Regionale Käse-Wurst-Platte',
+        'Wurstplatte',
+        'Käse-Trauben-Spieße',
         'Brezeln (2 pro Person)',
         'Hausgemachte Aufstriche',
         'Nussmischung',
         'Saisonales Obst',
         'Extra Wolldecke inklusive',
-        'Kerze / Windlicht',
     ],
 ];
 

@@ -22,19 +22,19 @@ items:
 
   - id: sonnenuntergang
     name: 'Abendschmaus'
-    subtitle: 'Romantischer Abend mit Sekt, Käse & Kerzenlicht'
+    subtitle: 'Romantischer Abend mit Sekt & Käse'
     timeSlot: 'Ca. 18:00 – 21:00 Uhr (saisonal)'
     pricePerPerson: 19
     minPersons: 2
     includes:
-      - 'Regionale Käse-Wurst-Platte'
+      - 'Wurstplatte'
+      - 'Käse-Trauben-Spieße'
       - 'Brezeln (2 pro Person)'
       - 'Hausgemachte Aufstriche'
       - 'Nussmischung'
       - 'Saisonales Obst'
       - 'Sekt, Wein oder lokales Pils'
       - 'Extra Wolldecke inklusive'
-      - 'Kerze / Windlicht'
     image: /img/picknick/abendschmaus.webp
     imageAlt: 'Abendschmaus mit Brezeln, Käse-Wurst-Platte und Getränken'
     sortOrder: 2
