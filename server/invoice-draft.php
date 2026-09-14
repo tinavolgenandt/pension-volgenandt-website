@@ -264,19 +264,27 @@ function refreshPendingDraft(array $draft, array $booking, array $items, array $
     if (!empty($groupBookingIds)) $draft['groupBookingIds'] = $groupBookingIds;
     foreach ($firmenExtra as $key => $value) $draft[$key] = $value;
 
+    // Payment status can change (guest pays via PayPal) on a webhook re-fire
+    // that carries no new line items — recompute prePaid on every refresh,
+    // not only in the "items changed" branch below, otherwise a stale
+    // prePaid=false survives, the review page's "bereits bezahlt" checkbox
+    // defaults to unchecked, and the guest gets a "zahlbar innerhalb von 7
+    // Tagen" hint on an invoice that's already paid (Militzer booking,
+    // 2026-09-02).
+    $balance          = extractBalance($booking);
+    $draft['prePaid'] = $balance <= 0.01;
+
     if (itemSetsEqual($items, $draft['lineItems'] ?? [])) {
         $path = INV_DRAFTS_DIR . '/' . $token . '.json';
         file_put_contents($path, json_encode($draft, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-        draftLog($bookingId, 'skip', "pending_draft_unchanged token={$token}");
+        draftLog($bookingId, 'skip', "pending_draft_unchanged token={$token} balance={$balance} prePaid=" . ($draft['prePaid'] ? '1' : '0'));
         return ['ok' => true, 'skipped' => true, 'reason' => 'pending_draft_unchanged'];
     }
 
-    $balance = extractBalance($booking);
     $draft['guest']     = parseGuest($booking);
     $draft['stay']      = parseStay($booking);
     $draft['lineItems'] = $items;
     $draft['totals']    = calcTotals($items);
-    $draft['prePaid']   = $balance <= 0.01;
 
     $path = INV_DRAFTS_DIR . '/' . $token . '.json';
     file_put_contents($path, json_encode($draft, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
