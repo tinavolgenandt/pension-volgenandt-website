@@ -208,6 +208,34 @@ const newsSchema = z.object({
   showRooms: z.boolean().default(false),
   eventStartDate: z.string().optional(),
   eventEndDate: z.string().optional(),
+
+  // Optional: additional photos. A photo with `afterParagraph` + `float` is
+  // anchored inline in the article text (0-indexed content paragraph, text
+  // wraps around it); photos without a position render in a grid below the
+  // text instead.
+  gallery: z
+    .array(
+      z.object({
+        image: z.string(),
+        alt: z.string(),
+        float: z.enum(['left', 'right']).optional(),
+        afterParagraph: z.number().optional(),
+      }),
+    )
+    .default([]),
+
+  // Optional: short "gut zu wissen" facts shown in a callout box
+  facts: z.array(z.string()).default([]),
+
+  // Optional: FAQ section, also emitted as FAQPage structured data
+  faq: z
+    .array(
+      z.object({
+        question: z.string(),
+        answer: z.string(),
+      }),
+    )
+    .default([]),
 })
 
 // Picknick schemas
