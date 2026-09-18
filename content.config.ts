@@ -208,6 +208,29 @@ const newsSchema = z.object({
   showRooms: z.boolean().default(false),
   eventStartDate: z.string().optional(),
   eventEndDate: z.string().optional(),
+
+  // Optional: additional photos shown as a small gallery below the article text
+  gallery: z
+    .array(
+      z.object({
+        image: z.string(),
+        alt: z.string(),
+      }),
+    )
+    .default([]),
+
+  // Optional: short "gut zu wissen" facts shown in a callout box
+  facts: z.array(z.string()).default([]),
+
+  // Optional: FAQ section, also emitted as FAQPage structured data
+  faq: z
+    .array(
+      z.object({
+        question: z.string(),
+        answer: z.string(),
+      }),
+    )
+    .default([]),
 })
 
 // Picknick schemas

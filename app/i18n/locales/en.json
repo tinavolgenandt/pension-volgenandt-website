@@ -218,7 +218,9 @@
       "pension": "Guesthouse"
     },
     "articleQuestion": "Have questions about this? We're happy to help.",
-    "stayWithUs": "Stay with us in the Eichsfeld"
+    "stayWithUs": "Stay with us in the Eichsfeld",
+    "goodToKnow": "Good to know",
+    "faq": "Frequently asked questions"
   },
   "activities": {
     "title": "Activities",

@@ -13,6 +13,11 @@ if (!article.value) {
   throw createError({ statusCode: 404, message: 'Article not found' })
 }
 
+// Normalize optional collection fields (default([]) still types as possibly undefined)
+const galleryPhotos = article.value.gallery ?? []
+const factsList = article.value.facts ?? []
+const faqItems = article.value.faq ?? []
+
 // Optional: load rooms for event articles with showRooms flag
 const { data: rooms } = await useAsyncData(
   `news-en-rooms-${slug}`,
@@ -64,7 +69,10 @@ const schemaItems: Record<string, unknown>[] = [
     url: `https://www.pension-volgenandt.de/en/news/${article.value.slug}/`,
     mainEntityOfPage: `https://www.pension-volgenandt.de/en/news/${article.value.slug}/`,
     description: article.value.seoDescription,
-    image: [`https://www.pension-volgenandt.de${article.value.heroImage}`],
+    image: [
+      `https://www.pension-volgenandt.de${article.value.heroImage}`,
+      ...galleryPhotos.map((photo) => `https://www.pension-volgenandt.de${photo.image}`),
+    ],
     datePublished: article.value.publishedDate,
     author: {
       '@type': 'Organization',
@@ -75,6 +83,22 @@ const schemaItems: Record<string, unknown>[] = [
     },
   },
 ]
+
+// FAQ structured data, when the article defines FAQ entries
+if (faqItems.length) {
+  schemaItems.push({
+    '@type': 'FAQPage',
+    '@id': `https://www.pension-volgenandt.de/en/news/${article.value.slug}/#faq`,
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  })
+}
 
 // Add Event schema when event dates are present
 if (article.value.eventStartDate && article.value.eventEndDate) {
@@ -185,6 +209,43 @@ function formatDate(dateStr: string) {
         >
           {{ paragraph }}
         </p>
+      </section>
+
+      <!-- Photo gallery -->
+      <section v-if="galleryPhotos.length" class="mb-10">
+        <NewsGallery
+          :hero-image="article.heroImage"
+          :hero-image-alt="article.heroImageAlt"
+          :gallery="galleryPhotos.map((photo) => ({ src: photo.image, alt: photo.alt }))"
+        />
+      </section>
+
+      <!-- Good-to-know facts callout -->
+      <section v-if="factsList.length" class="mb-10">
+        <h2 class="mb-4 font-serif text-xl font-semibold text-sage-900">
+          {{ t('news.goodToKnow', 'en') }}
+        </h2>
+        <div class="rounded-lg border border-sage-200 bg-sage-50 p-6">
+          <ul class="space-y-3">
+            <li v-for="(fact, index) in factsList" :key="index" class="flex items-start gap-3">
+              <Icon name="ph:leaf" class="mt-0.5 size-5 shrink-0 text-sage-600" />
+              <span class="leading-relaxed text-sage-700">{{ fact }}</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section v-if="faqItems.length" class="mb-10">
+        <h2 class="mb-4 font-serif text-xl font-semibold text-sage-900">
+          {{ t('news.faq', 'en') }}
+        </h2>
+        <div class="space-y-4">
+          <div v-for="(item, index) in faqItems" :key="index">
+            <h3 class="mb-1 font-semibold text-sage-900">{{ item.question }}</h3>
+            <p class="leading-relaxed text-sage-700">{{ item.answer }}</p>
+          </div>
+        </div>
       </section>
 
       <!-- Room cards (for event articles with showRooms) -->

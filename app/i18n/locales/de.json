@@ -218,7 +218,9 @@
       "pension": "Pension"
     },
     "articleQuestion": "Haben Sie Fragen dazu? Wir beraten Sie gerne.",
-    "stayWithUs": "Übernachten Sie bei uns im Eichsfeld"
+    "stayWithUs": "Übernachten Sie bei uns im Eichsfeld",
+    "goodToKnow": "Gut zu wissen",
+    "faq": "Häufige Fragen"
   },
   "activities": {
     "title": "Aktivitäten",
