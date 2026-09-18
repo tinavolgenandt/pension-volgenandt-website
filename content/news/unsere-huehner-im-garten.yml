@@ -65,36 +65,6 @@ gallery:
     alt: 'Vier frische braune Eier unserer Hühner in einer Schale'
     float: right
     afterParagraph: 5
-facts:
-  - 'Hühner werden je nach Rasse mit etwa 20 bis 24 Lebenswochen legereif.'
-  - 'Die Eibildung im Körper der Henne dauert ungefähr 24 bis 26 Stunden, deshalb legt eine Henne nicht jeden Tag ein Ei.'
-  - 'Ein frisches Ei sinkt im Wasserglas zu Boden, ein altes Ei schwimmt, weil seine Luftkammer mit der Zeit größer wird.'
-  - 'Die braune Schalenfarbe entsteht erst kurz vor dem Legen durch den Farbstoff Protoporphyrin.'
-faq:
-  - question: 'Ab wann legen Hühner Eier?'
-    answer: >-
-      Hühner werden je nach Rasse mit etwa 20 bis 24 Lebenswochen
-      legereif. Unsere Hennen Emma, Ida, Rosi und Thea sind seit
-      diesem Frühjahr bei uns und haben vor etwa vier Wochen mit dem
-      Legen begonnen.
-  - question: 'Braucht eine Henne einen Hahn, um Eier zu legen?'
-    answer: >-
-      Nein. Hennen legen auch ohne Hahn regelmäßig Eier, diese sind
-      dann nur unbefruchtet. Ein Hahn ist für die Eierproduktion
-      also nicht nötig.
-  - question: 'Wie erkennt man, ob ein Ei frisch ist?'
-    answer: >-
-      Ein einfacher Test hilft. Legt man das Ei in ein Glas Wasser,
-      sinkt ein frisches Ei auf den Boden. Ältere Eier haben eine
-      größere Luftkammer und richten sich im Wasser eher auf oder
-      schwimmen.
-  - question: 'Gibt es noch einen Hahn bei den Hühnern?'
-    answer: >-
-      Nein, inzwischen nicht mehr. Anfangs gehörte auch Hahn Theo
-      zur Herde, er wurde mit der Zeit aber so protektiv gegenüber
-      seinen Hennen, dass er auch auf Menschen losging, die sich dem
-      Stall näherten. Das ließ sich mit einem Gästebetrieb nicht
-      vereinbaren, deshalb musste er ausziehen.
 externalLinks:
   - label: 'Mehr zu unserer Nachhaltigkeit'
     url: 'https://www.pension-volgenandt.de/nachhaltigkeit/'
