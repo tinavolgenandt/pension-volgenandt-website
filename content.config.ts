@@ -209,12 +209,17 @@ const newsSchema = z.object({
   eventStartDate: z.string().optional(),
   eventEndDate: z.string().optional(),
 
-  // Optional: additional photos shown as a small gallery below the article text
+  // Optional: additional photos. A photo with `afterParagraph` + `float` is
+  // anchored inline in the article text (0-indexed content paragraph, text
+  // wraps around it); photos without a position render in a grid below the
+  // text instead.
   gallery: z
     .array(
       z.object({
         image: z.string(),
         alt: z.string(),
+        float: z.enum(['left', 'right']).optional(),
+        afterParagraph: z.number().optional(),
       }),
     )
     .default([]),

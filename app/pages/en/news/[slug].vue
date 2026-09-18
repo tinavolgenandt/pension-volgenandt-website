@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { t } from '~/utils/translations'
 import { useJsonLd } from '~/composables/useJsonLd'
+import type { GalleryImage } from '~/composables/useGallery'
 
 const route = useRoute()
 const slug = route.params.slug as string
@@ -17,6 +18,32 @@ if (!article.value) {
 const galleryPhotos = article.value.gallery ?? []
 const factsList = article.value.facts ?? []
 const faqItems = article.value.faq ?? []
+
+// Photos with a float + afterParagraph anchor are woven into the article
+// text; the rest fall back to a plain grid below the text.
+const positionedPhotos = galleryPhotos.filter((p) => p.float && p.afterParagraph !== undefined)
+const gridPhotos = galleryPhotos.filter((p) => !(p.float && p.afterParagraph !== undefined))
+
+const { onImgError } = useImageFallback()
+const inlineImages = ref<GalleryImage[]>([
+  { src: article.value.heroImage, alt: article.value.heroImageAlt },
+  ...positionedPhotos.map((photo) => ({ src: photo.image, alt: photo.alt })),
+])
+const {
+  currentIndex,
+  isLightboxOpen,
+  hasNext,
+  hasPrev,
+  goTo,
+  next,
+  prev,
+  openLightbox,
+  closeLightbox,
+} = useGallery(inlineImages)
+
+function inlinePhotoIndex(image: string) {
+  return inlineImages.value.findIndex((img) => img.src === image)
+}
 
 // Optional: load rooms for event articles with showRooms flag
 const { data: rooms } = await useAsyncData(
@@ -158,7 +185,9 @@ const categoryBadge: Record<string, { label: string; class: string }> = {
 
 const contentParagraphs = computed(() => {
   if (!article.value?.content) return []
-  return article.value.content.split(/\n\n+/).filter((p) => p.trim())
+  // YAML folded block scalars (`>-`) collapse a blank line between
+  // paragraphs into a single \n, never \n\n, so that's the real separator.
+  return article.value.content.split(/\n+/).filter((p) => p.trim())
 })
 
 function formatDate(dateStr: string) {
@@ -193,32 +222,66 @@ function formatDate(dateStr: string) {
         </span>
       </div>
 
-      <!-- Intro -->
-      <section class="mb-10">
-        <p class="text-lg leading-relaxed text-sage-800">
-          {{ article.intro }}
-        </p>
-      </section>
+      <!-- Intro + content, with positioned photos floated alongside the text -->
+      <div class="prose prose-lg mb-10 max-w-none">
+        <p class="lead">{{ article.intro }}</p>
 
-      <!-- Content paragraphs -->
-      <section class="mb-10 space-y-4">
-        <p
-          v-for="(paragraph, index) in contentParagraphs"
-          :key="index"
-          class="leading-relaxed text-sage-700"
-        >
-          {{ paragraph }}
-        </p>
-      </section>
+        <template v-for="(paragraph, index) in contentParagraphs" :key="index">
+          <button
+            v-for="photo in positionedPhotos.filter((p) => p.afterParagraph === index)"
+            :key="photo.image"
+            type="button"
+            class="group not-prose relative mb-4 block w-full overflow-hidden rounded-xl focus-visible:ring-2 focus-visible:ring-waldhonig-500 focus-visible:ring-offset-2 sm:clear-none sm:w-60"
+            :class="photo.float === 'right' ? 'sm:float-right sm:ml-6' : 'sm:float-left sm:mr-6'"
+            :aria-label="`Enlarge photo: ${photo.alt}`"
+            @click="openLightbox(inlinePhotoIndex(photo.image))"
+          >
+            <div class="aspect-[4/3] bg-sage-100">
+              <NuxtImg
+                :src="photo.image"
+                :alt="photo.alt"
+                loading="lazy"
+                width="480"
+                height="360"
+                sizes="(min-width: 640px) 240px, 100vw"
+                class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                @error="onImgError"
+              />
+            </div>
+            <span
+              class="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/10"
+              aria-hidden="true"
+            />
+          </button>
+          <p>{{ paragraph }}</p>
+        </template>
 
-      <!-- Photo gallery -->
-      <section v-if="galleryPhotos.length" class="mb-10">
+        <div class="clear-both" />
+      </div>
+
+      <!-- Fallback photo grid, for gallery photos without an inline position -->
+      <section v-if="gridPhotos.length" class="mb-10">
         <NewsGallery
           :hero-image="article.heroImage"
           :hero-image-alt="article.heroImageAlt"
-          :gallery="galleryPhotos.map((photo) => ({ src: photo.image, alt: photo.alt }))"
+          :gallery="gridPhotos.map((photo) => ({ src: photo.image, alt: photo.alt }))"
         />
       </section>
+
+      <!-- Lightbox for the inline-positioned photos -->
+      <ClientOnly>
+        <RoomsLightbox
+          :images="inlineImages"
+          :current-index="currentIndex"
+          :is-open="isLightboxOpen"
+          :has-next="hasNext"
+          :has-prev="hasPrev"
+          @close="closeLightbox"
+          @navigate="goTo"
+          @next="next"
+          @prev="prev"
+        />
+      </ClientOnly>
 
       <!-- Good-to-know facts callout -->
       <section v-if="factsList.length" class="mb-10">

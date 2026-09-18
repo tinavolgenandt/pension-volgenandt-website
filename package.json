@@ -73,6 +73,7 @@
     "@oxc-minify/binding-win32-x64-msvc": "0.112.0",
     "@oxc-parser/binding-win32-x64-msvc": "^0.112.0",
     "@oxc-transform/binding-win32-x64-msvc": "^0.112.0",
+    "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.2.4",
     "googleapis": "^171.4.0",
     "nodemailer": "^9.0.3",

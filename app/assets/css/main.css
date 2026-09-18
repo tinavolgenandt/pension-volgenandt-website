@@ -1,5 +1,6 @@
 @import 'leaflet/dist/leaflet.css';
 @import 'tailwindcss';
+@plugin '@tailwindcss/typography';
 
 @theme {
   /* Typography */
@@ -83,6 +84,28 @@ h3 {
 /* Prose container for content pages */
 .prose-content {
   max-width: 70ch;
+}
+
+/* @tailwindcss/typography: retheme `prose` to the site's sage/serif palette
+   instead of the plugin's default gray, so long-form articles (news body
+   copy) match the rest of the design system. */
+.prose {
+  --tw-prose-body: var(--color-sage-700);
+  --tw-prose-headings: var(--color-sage-900);
+  --tw-prose-lead: var(--color-sage-800);
+  --tw-prose-links: var(--color-waldhonig-600);
+  --tw-prose-bold: var(--color-sage-900);
+  --tw-prose-counters: var(--color-sage-500);
+  --tw-prose-bullets: var(--color-sage-300);
+  --tw-prose-hr: var(--color-sage-200);
+  --tw-prose-quotes: var(--color-sage-800);
+  --tw-prose-quote-borders: var(--color-sage-200);
+  --tw-prose-captions: var(--color-sage-500);
+  font-family: var(--font-sans);
+}
+
+.prose :where(h1, h2, h3, h4):not(:where([class~='not-prose'] *)) {
+  font-family: var(--font-serif);
 }
 
 /* Focus visible for accessibility */
