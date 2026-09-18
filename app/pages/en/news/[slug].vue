@@ -369,7 +369,7 @@ function formatDate(dateStr: string) {
       </section>
     </div>
 
-    <SharedSoftCta text="Have questions about this event? We're happy to help." />
-    <SharedBookingCta text="Stay with us in the Eichsfeld" />
+    <SharedSoftCta :text="t('news.articleQuestion', 'en')" />
+    <SharedBookingCta :text="t('news.stayWithUs', 'en')" />
   </div>
 </template>
