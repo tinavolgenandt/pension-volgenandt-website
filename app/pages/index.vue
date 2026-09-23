@@ -66,7 +66,7 @@ useHead({
     </UiScrollReveal>
 
     <ClientOnly>
-      <HomePicknickPromo />
+      <HomeSaunaPromo />
     </ClientOnly>
   </div>
 </template>

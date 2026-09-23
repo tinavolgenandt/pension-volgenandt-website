@@ -344,5 +344,15 @@
     "forWorkersTitle": "For longer assignments",
     "forWorkersText": "As a family-run guesthouse, we are set up for longer stays, as they are common with construction projects or installation work in the Eichsfeld. On request, we invoice directly to your company address. If you have questions about your stay, you can reach us directly by phone or email.",
     "bookNow": "Enquire about rooms"
+  },
+  "saunaPromo": {
+    "close": "Close",
+    "imageAlt": "Visualisation: barrel sauna in the garden of Pension Volgenandt",
+    "title": "Coming soon: a barrel sauna in our garden",
+    "subtitle": "Installation planned for the end of November",
+    "badge": "New",
+    "text": "We are having a barrel sauna installed in our garden for our guests, with a garden shower for cooling off. When the sun shines, we heat it with electricity from our own roof.",
+    "highlight": "Free for overnight guests. Visitors from outside: €29 for 2 hours, for the whole sauna.",
+    "cta": "Learn more"
   }
 }
