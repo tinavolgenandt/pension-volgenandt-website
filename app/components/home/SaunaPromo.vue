@@ -19,9 +19,15 @@ onMounted(() => {
     return
   }
 
+  // Show once the garden gallery scrolls into the middle of the viewport.
+  // Falls back to a scroll ratio if the gallery is not on the page.
+  const gallery = document.getElementById('garten-galerie')
+
   const onScroll = () => {
-    const scrollable = document.documentElement.scrollHeight - window.innerHeight
-    if (scrollable > 0 && window.scrollY / scrollable > 0.3) {
+    const reached = gallery
+      ? gallery.getBoundingClientRect().top < window.innerHeight * 0.5
+      : window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) > 0.15
+    if (reached) {
       show.value = true
       cleanupScroll?.()
     }
