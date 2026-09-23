@@ -44,7 +44,7 @@ const photos = computed(() => [
 </script>
 
 <template>
-  <section class="py-16 md:py-24">
+  <section id="garten-galerie" class="py-16 md:py-24">
     <div class="mx-auto max-w-6xl px-6">
       <!-- Heading -->
       <div class="mb-10 text-center">

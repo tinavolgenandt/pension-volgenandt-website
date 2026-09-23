@@ -344,5 +344,15 @@
     "forWorkersTitle": "Für längere Einsätze",
     "forWorkersText": "Als familiengeführte Pension sind wir auf längere Aufenthalte eingestellt, wie sie bei Bauprojekten oder Montageeinsätzen im Eichsfeld üblich sind. Auf Wunsch stellen wir die Rechnung direkt auf Ihre Firmenadresse aus. Bei Fragen zu Ihrem Aufenthalt erreichen Sie uns direkt und unkompliziert, telefonisch oder per E-Mail.",
     "bookNow": "Zimmer anfragen"
+  },
+  "saunaPromo": {
+    "close": "Schließen",
+    "imageAlt": "Visualisierung: Saunafass im Garten der Pension Volgenandt",
+    "title": "Bald bei uns: ein Saunafass im Garten",
+    "subtitle": "Aufbau geplant für Ende November",
+    "badge": "Neu",
+    "text": "Für unsere Gäste lassen wir ein Saunafass im Garten aufbauen, mit Gartendusche zum Abkühlen. Wenn die Sonne scheint, heizen wir mit Strom von unserem eigenen Dach.",
+    "highlight": "Für Übernachtungsgäste kostenlos. Gäste von außerhalb: 29 € für 2 Stunden, für die ganze Sauna.",
+    "cta": "Mehr erfahren"
   }
 }
