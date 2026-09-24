@@ -189,6 +189,8 @@ const newsSchema = z.object({
   seoDescription: z.string().max(155),
   heroImage: z.string(),
   heroImageAlt: z.string(),
+  heroImageCredit: z.string().optional(),
+  heroImageAiGenerated: z.boolean().default(false),
   publishedDate: z.string(),
   category: z.enum(['veranstaltung', 'region', 'pension']),
   excerpt: z.string(),

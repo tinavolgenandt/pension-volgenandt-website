@@ -59,5 +59,9 @@ useSeoMeta({
     <UiScrollReveal>
       <HomeLocationMap />
     </UiScrollReveal>
+
+    <ClientOnly>
+      <HomeSaunaPromo />
+    </ClientOnly>
   </div>
 </template>

@@ -347,7 +347,8 @@
   },
   "saunaPromo": {
     "close": "Close",
-    "imageAlt": "Visualisation: barrel sauna in the garden of Pension Volgenandt",
+    "imageAlt": "Visualisation (AI-generated): barrel sauna in the garden of Pension Volgenandt",
+    "aiBadge": "Illustrative image · AI-generated",
     "title": "Coming soon: a barrel sauna in our garden",
     "subtitle": "Installation planned for the end of November",
     "badge": "New",

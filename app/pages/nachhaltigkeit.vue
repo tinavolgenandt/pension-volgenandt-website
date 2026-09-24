@@ -127,7 +127,13 @@ const sustainabilityFeatures = [
           <p class="mt-4 leading-relaxed text-sage-800">
             Unsere Photovoltaikanlage auf dem Dach versorgt die Pension mit sauberem Strom. Was wir
             nicht selbst verbrauchen, speisen wir ins Netz ein. So tragen wir aktiv zur Energiewende
-            bei.
+            bei. Ab Ende November nutzen wir den Sonnenstrom auch direkt für unser neues
+            <NuxtLink
+              to="/aktuelles/saunafass-im-garten/"
+              class="font-medium text-waldhonig-700 underline hover:text-waldhonig-800"
+              >Saunafass im Garten</NuxtLink
+            >
+            – pure Entspannung mit grüner Energie.
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
             Auch beim Warmwasser setzen wir auf effiziente Technik und achten darauf, Ressourcen

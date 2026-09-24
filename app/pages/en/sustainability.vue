@@ -129,7 +129,14 @@ const sustainabilityFeatures = [
           <p class="mt-4 leading-relaxed text-sage-800">
             Our rooftop photovoltaic system supplies the guesthouse with clean electricity. Any
             surplus we do not use ourselves is fed into the grid. In this way, we actively
-            contribute to the energy transition.
+            contribute to the energy transition. From late November, we will also use our solar
+            power directly for our new
+            <NuxtLink
+              to="/en/news/saunafass-im-garten/"
+              class="font-medium text-waldhonig-700 underline hover:text-waldhonig-800"
+              >garden barrel sauna</NuxtLink
+            >
+            – pure relaxation powered by green energy.
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
             We also rely on efficient technology for hot water and take care to use resources

@@ -54,6 +54,17 @@ items:
     category: ausstattung
     sortOrder: 7
 
+  - question: 'Is there a sauna at the guesthouse?'
+    answer: >-
+      Yes! From late November 2026, a solar-powered wooden barrel sauna
+      will be available in our garden. It is free of charge for overnight
+      guests and can be booked exclusively by outside day visitors for
+      €29 for 2 hours. Learn more in our
+      <a href="/en/news/saunafass-im-garten/">barrel sauna article</a>.
+    category: ausstattung
+    relatedPage: /en/news/saunafass-im-garten/
+    sortOrder: 8
+
   - question: 'How do I get to the guesthouse?'
     answer: >-
       From the A38 motorway, take the Leinefelde exit and follow signs
@@ -61,7 +72,7 @@ items:
       10 minutes. From Leinefelde station it is 4 km – we are happy
       to pick you up!
     category: anreise
-    sortOrder: 8
+    sortOrder: 9
 
   - question: 'What is there to do in the area?'
     answer: >-
@@ -69,10 +80,10 @@ items:
       park (6 km), Burg Hanstein castle (40 km), the Hainich treetop
       walk (54 km) and wonderful hiking trails nearby.
     category: umgebung
-    sortOrder: 9
+    sortOrder: 10
 
   - question: 'Is there Wi-Fi?'
     answer: >-
       Yes, free Wi-Fi is available throughout all rooms and apartments.
     category: ausstattung
-    sortOrder: 10
+    sortOrder: 11

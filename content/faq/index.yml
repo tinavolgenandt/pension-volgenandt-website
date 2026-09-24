@@ -62,6 +62,17 @@ items:
     relatedPage: /familie/
     sortOrder: 7
 
+  - question: 'Gibt es eine Sauna in der Pension?'
+    answer: >-
+      Ja! Ende November 2026 zieht ein solarbeheiztes Saunafass in
+      unseren Naturgarten ein. Für Übernachtungsgäste ist die Nutzung
+      kostenlos im Zimmerpreis enthalten. Auch Tagesgäste können die Sauna
+      für 29 € für 2 Stunden exklusiv mieten. Mehr erfahren Sie in
+      unserem <a href="/aktuelles/saunafass-im-garten/">Artikel zum Saunafass</a>.
+    category: ausstattung
+    relatedPage: /aktuelles/saunafass-im-garten/
+    sortOrder: 8
+
   - question: 'Wie komme ich zur Pension?'
     answer: >-
       Von der A38 nehmen Sie die Ausfahrt Leinefelde und folgen der
@@ -69,7 +80,7 @@ items:
       dauert etwa 10 Minuten. Vom Bahnhof Leinefelde sind es 4 km –
       wir holen Sie gerne ab!
     category: anreise
-    sortOrder: 8
+    sortOrder: 9
 
   - question: 'Was kann man in der Umgebung unternehmen?'
     answer: >-
@@ -79,7 +90,7 @@ items:
       finden Sie auf unserer <a href="/ausflugsziele/">Ausflugsseite</a>.
     category: umgebung
     relatedPage: /ausflugsziele/
-    sortOrder: 9
+    sortOrder: 10
 
   - question: 'Wann ist die beste Reisezeit?'
     answer: >-
@@ -88,14 +99,14 @@ items:
       ein, der Herbst verzaubert mit Laubfärbung, und im Winter
       genießen Sie die Ruhe bei Spaziergängen durch verschneite Wälder.
     category: umgebung
-    sortOrder: 10
+    sortOrder: 11
 
   - question: 'Haben Sie WLAN?'
     answer: >-
       Ja, kostenloses WLAN steht Ihnen in allen Zimmern und
       Ferienwohnungen zur Verfügung.
     category: ausstattung
-    sortOrder: 11
+    sortOrder: 12
 
   - question: 'Gibt es einen Aufzug?'
     answer: >-
@@ -103,4 +114,4 @@ items:
       Erdgeschoss sind barrierefrei erreichbar. Bitte sprechen Sie
       uns bei Bedarf an – wir finden eine passende Lösung.
     category: ausstattung
-    sortOrder: 12
+    sortOrder: 13

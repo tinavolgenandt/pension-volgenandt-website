@@ -347,7 +347,8 @@
   },
   "saunaPromo": {
     "close": "Schließen",
-    "imageAlt": "Visualisierung: Saunafass im Garten der Pension Volgenandt",
+    "imageAlt": "Visualisierung (KI-generiert): Saunafass im Garten der Pension Volgenandt",
+    "aiBadge": "Symbolbild · KI-generiert",
     "title": "Bald bei uns: ein Saunafass im Garten",
     "subtitle": "Aufbau geplant für Ende November",
     "badge": "Neu",

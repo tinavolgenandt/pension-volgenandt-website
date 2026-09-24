@@ -4,7 +4,9 @@ import { t } from '~/utils/translations'
 const { locale } = useLocale()
 const show = ref(false)
 
-const ARTICLE_PATH = '/aktuelles/saunafass-im-garten/'
+const articlePath = computed(() =>
+  locale.value === 'en' ? '/en/news/saunafass-im-garten/' : '/aktuelles/saunafass-im-garten/',
+)
 
 // Bump the version suffix whenever the popup is redesigned so returning
 // visitors who dismissed an earlier version see the new one again.
@@ -71,16 +73,24 @@ function dismiss() {
           <Icon name="lucide:x" :size="15" />
         </button>
 
-        <!-- Image -->
-        <NuxtImg
-          src="/img/garten/saunafass-garten.webp"
-          :alt="t('saunaPromo.imageAlt', locale)"
-          class="h-56 w-full object-cover"
-          style="object-position: center 55%"
-          width="448"
-          height="224"
-          loading="lazy"
-        />
+        <!-- Image with AI label -->
+        <div class="relative">
+          <NuxtImg
+            src="/img/garten/saunafass-garten.webp"
+            :alt="t('saunaPromo.imageAlt', locale)"
+            class="h-56 w-full object-cover"
+            style="object-position: center 55%"
+            width="448"
+            height="224"
+            loading="lazy"
+          />
+          <span
+            class="absolute right-2 bottom-2 flex items-center gap-1 rounded bg-black/60 px-2 py-0.5 text-[11px] font-medium text-white/90 backdrop-blur-xs"
+          >
+            <Icon name="lucide:sparkles" class="size-3 text-waldhonig-400" aria-hidden="true" />
+            {{ t('saunaPromo.aiBadge', locale) }}
+          </span>
+        </div>
 
         <!-- Body -->
         <div class="p-5">
@@ -116,7 +126,7 @@ function dismiss() {
           </div>
 
           <NuxtLink
-            :to="ARTICLE_PATH"
+            :to="articlePath"
             class="mt-4 block rounded-xl bg-waldhonig-500 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-waldhonig-600"
             @click="dismiss"
           >

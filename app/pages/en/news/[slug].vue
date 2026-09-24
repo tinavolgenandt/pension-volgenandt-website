@@ -88,6 +88,22 @@ useHead({
 })
 
 // Article structured data
+const heroImageSchema = article.value.heroImageAiGenerated
+  ? {
+      '@type': 'ImageObject',
+      '@id': `https://www.pension-volgenandt.de${article.value.heroImage}#image`,
+      url: `https://www.pension-volgenandt.de${article.value.heroImage}`,
+      contentUrl: `https://www.pension-volgenandt.de${article.value.heroImage}`,
+      caption: article.value.heroImageAlt,
+      creditText: article.value.heroImageCredit || 'AI-generated visualisation',
+      digitalSourceType: 'https://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia',
+      creator: {
+        '@type': 'Organization',
+        name: 'Pension Volgenandt',
+      },
+    }
+  : `https://www.pension-volgenandt.de${article.value.heroImage}`
+
 const schemaItems: Record<string, unknown>[] = [
   {
     '@type': 'NewsArticle',
@@ -97,7 +113,7 @@ const schemaItems: Record<string, unknown>[] = [
     mainEntityOfPage: `https://www.pension-volgenandt.de/en/news/${article.value.slug}/`,
     description: article.value.seoDescription,
     image: [
-      `https://www.pension-volgenandt.de${article.value.heroImage}`,
+      heroImageSchema,
       ...galleryPhotos.map((photo) => `https://www.pension-volgenandt.de${photo.image}`),
     ],
     datePublished: article.value.publishedDate,
@@ -110,6 +126,10 @@ const schemaItems: Record<string, unknown>[] = [
     },
   },
 ]
+
+if (article.value.heroImageAiGenerated && typeof heroImageSchema === 'object') {
+  schemaItems.push(heroImageSchema)
+}
 
 // FAQ structured data, when the article defines FAQ entries
 if (faqItems.length) {
@@ -206,6 +226,7 @@ function formatDate(dateStr: string) {
       :image="article.heroImage"
       :image-alt="article.heroImageAlt"
       :title="article.title"
+      :image-credit="article.heroImageCredit"
     />
 
     <div class="mx-auto max-w-3xl px-6 py-12 md:py-16">
