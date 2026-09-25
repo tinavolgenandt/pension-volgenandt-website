@@ -58,6 +58,8 @@ const { data: articles } = await useAsyncData('en-news', () =>
             :published-date="article.publishedDate"
             :category="article.category"
             :excerpt="article.excerpt"
+            :hero-image-ai-generated="article.heroImageAiGenerated"
+            :hero-image-credit="article.heroImageCredit"
           />
         </div>
       </div>
