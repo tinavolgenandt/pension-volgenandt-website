@@ -11,9 +11,9 @@ useSeoMeta({
   title: 'Ausflugsziele im Eichsfeld',
   ogTitle: 'Ausflugsziele im Eichsfeld | Pension Volgenandt',
   description:
-    'Bärenpark, Burgen und Natur: Entdecken Sie die besten Ausflugsziele rund um die Pension Volgenandt im Eichsfeld.',
+    'Bärenpark, Burgen, Seen und Museen: die schönsten Ausflugsziele rund um die Pension Volgenandt im Eichsfeld, mit Entfernung und Fahrzeit ab Breitenbach.',
   ogDescription:
-    'Bärenpark, Burgen und Natur: Entdecken Sie die besten Ausflugsziele rund um die Pension Volgenandt im Eichsfeld.',
+    'Bärenpark, Burgen, Seen und Museen: die schönsten Ausflugsziele rund um die Pension Volgenandt im Eichsfeld, mit Entfernung und Fahrzeit ab Breitenbach.',
   ogImage: '/img/homepage/aussicht-panorama.webp',
   ogType: 'website',
 })

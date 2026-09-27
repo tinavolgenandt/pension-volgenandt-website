@@ -12,7 +12,7 @@ useHead({
 useSeoMeta({
   title: 'AGB',
   description:
-    'Allgemeine Geschäftsbedingungen der Pension Volgenandt. Buchungsbedingungen, Stornierung, An- und Abreise.',
+    'Allgemeine Geschäftsbedingungen der Pension Volgenandt in Breitenbach: Buchungsbedingungen, Zahlung, Stornierung sowie Regeln zu An- und Abreise.',
 })
 </script>
 

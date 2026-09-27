@@ -13,9 +13,9 @@ useSeoMeta({
   title: 'Aktivitäten im Eichsfeld',
   ogTitle: 'Aktivitäten im Eichsfeld | Pension Volgenandt',
   description:
-    'Wandern, Radfahren, Burgen und Natur: Entdecken Sie die Aktivitäten rund um die Pension Volgenandt im Eichsfeld.',
+    'Wandern, Radfahren, Burgen und Natur rund um die Pension Volgenandt im Eichsfeld. Viele Touren beginnen direkt vor unserer Haustür.',
   ogDescription:
-    'Wandern, Radfahren, Burgen und Natur: Entdecken Sie die Aktivitäten rund um die Pension Volgenandt im Eichsfeld.',
+    'Wandern, Radfahren, Burgen und Natur rund um die Pension Volgenandt im Eichsfeld. Viele Touren beginnen direkt vor unserer Haustür.',
   ogImage: '/img/homepage/aussicht-panorama.webp',
   ogType: 'website',
 })

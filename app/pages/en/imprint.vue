@@ -15,7 +15,7 @@ useHead({
 useSeoMeta({
   title: 'Legal Notice',
   description:
-    'Legal notice (Impressum) for Pension Volgenandt in Leinefelde-Worbis OT Breitenbach. Information according to DDG § 5.',
+    'Legal notice (Impressum) for Pension Volgenandt in Leinefelde-Worbis OT Breitenbach, Eichsfeld. Provider details according to § 5 DDG.',
 })
 </script>
 

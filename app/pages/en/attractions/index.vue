@@ -9,9 +9,9 @@ useSeoMeta({
   title: 'Attractions in the Eichsfeld',
   ogTitle: 'Attractions in the Eichsfeld | Pension Volgenandt',
   description:
-    'Bear park, castles and nature: Discover the best attractions around Pension Volgenandt in the Eichsfeld.',
+    'Bear park, castles, lakes and museums: the best days out around Pension Volgenandt in the Eichsfeld, with distance and driving time from Breitenbach.',
   ogDescription:
-    'Bear park, castles and nature: Discover the best attractions around Pension Volgenandt in the Eichsfeld.',
+    'Bear park, castles, lakes and museums: the best days out around Pension Volgenandt in the Eichsfeld, with distance and driving time from Breitenbach.',
   ogImage: '/img/homepage/aussicht-panorama.webp',
   ogType: 'website',
 })

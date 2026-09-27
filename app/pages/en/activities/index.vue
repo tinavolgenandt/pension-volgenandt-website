@@ -11,9 +11,9 @@ useSeoMeta({
   title: 'Activities in the Eichsfeld',
   ogTitle: 'Activities in the Eichsfeld | Pension Volgenandt',
   description:
-    'Hiking, cycling, castles and nature: Discover the activities around Pension Volgenandt in the Eichsfeld.',
+    'Hiking, cycling, castles and nature: things to do around Pension Volgenandt in the Eichsfeld. Many routes start right outside our door.',
   ogDescription:
-    'Hiking, cycling, castles and nature: Discover the activities around Pension Volgenandt in the Eichsfeld.',
+    'Hiking, cycling, castles and nature: things to do around Pension Volgenandt in the Eichsfeld. Many routes start right outside our door.',
   ogImage: '/img/homepage/aussicht-panorama.webp',
   ogType: 'website',
 })
@@ -80,13 +80,13 @@ const activityCards = [
     <!-- 2. Personal intro -->
     <section class="mx-auto max-w-3xl px-6 py-12 md:py-16">
       <p class="text-lg leading-relaxed text-sage-800">
-        The Eichsfeld is ideal for anyone who loves the outdoors. In the area around our
-        guesthouse you will find numerous hiking and cycling trails that lead through one of the
-        most beautiful landscapes in Thuringia.
+        The Eichsfeld is ideal for anyone who loves the outdoors. In the area around our guesthouse
+        you will find numerous hiking and cycling trails that lead through one of the most beautiful
+        landscapes in Thuringia.
       </p>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
-        Whether sporty or leisurely, alone or with the family, we are happy to advise you on
-        the best routes and attractions nearby.
+        Whether sporty or leisurely, alone or with the family, we are happy to advise you on the
+        best routes and attractions nearby.
       </p>
     </section>
 

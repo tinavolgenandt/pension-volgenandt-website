@@ -12,7 +12,7 @@ useHead({
 useSeoMeta({
   title: 'Impressum',
   description:
-    'Impressum der Pension Volgenandt in Leinefelde-Worbis OT Breitenbach. Angaben gemäß DDG § 5.',
+    'Impressum der Pension Volgenandt in Leinefelde-Worbis OT Breitenbach, Eichsfeld. Anbieterkennzeichnung und Kontaktangaben gemäß § 5 DDG.',
 })
 </script>
 
