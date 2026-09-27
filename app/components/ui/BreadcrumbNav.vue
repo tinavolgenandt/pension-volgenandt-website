@@ -1,8 +1,33 @@
 <script setup lang="ts">
+import { t } from '~/utils/translations'
+
+const { locale } = useLocale()
+
+// EN pages live under /en/, so treat /en as the root segment (otherwise the
+// trail reads "Startseite › En › …")
 const items = useBreadcrumbItems({
-  schemaOrg: true,
-  overrides: [{ label: 'Startseite' }],
+  rootSegment: locale.value === 'en' ? '/en' : '/',
+  overrides: [{ label: t('nav.home', locale.value) }],
 })
+
+// BreadcrumbList structured data, emitted via our own JSON-LD graph
+// (nuxt-schema-org emits no nodes, see nuxt.config.ts)
+const SITE = 'https://www.pension-volgenandt.de'
+const withSlash = (p: string) => (p.endsWith('/') ? p : `${p}/`)
+if (items.value.length > 1) {
+  useJsonLd(
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: items.value.map((item, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: item.label,
+        ...(item.to ? { item: SITE + withSlash(item.to) } : {}),
+      })),
+    },
+    'breadcrumb-list',
+  )
+}
 </script>
 
 <template>

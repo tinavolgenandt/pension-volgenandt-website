@@ -40,12 +40,10 @@ export default defineNuxtConfig({
     trailingSlash: true,
   },
 
-  // Structured data: keep nuxt-schema-org enabled (BreadcrumbNav relies on
-  // useBreadcrumbItems({ schemaOrg: true })), but disable its default
-  // WebPage/WebSite/Identity nodes. We emit those by hand via the useJsonLd
-  // composable so there is a single authoritative graph — this avoids
-  // duplicate WebSite entities and inconsistent (trailing-slash) canonical
-  // URLs in the generated output.
+  // Structured data: nuxt-schema-org stays installed (useBreadcrumbItems
+  // imports from it) but emits no nodes. All JSON-LD (WebSite,
+  // BedAndBreakfast, BreadcrumbList, page nodes) is emitted by hand via the
+  // useJsonLd composable, so there is a single authoritative graph.
   schemaOrg: {
     defaults: false,
   },
@@ -186,7 +184,6 @@ export default defineNuxtConfig({
         '/monteurzimmer/',
         // News pages
         '/aktuelles/',
-        '/aktuelles/landesgartenschau-2026/',
         '/aktuelles/open-air-burg-scharfenstein-2026/',
         '/aktuelles/neuer-radweg-unstrut-leine/',
         '/aktuelles/baerenpark-festival-2026/',
@@ -219,7 +216,6 @@ export default defineNuxtConfig({
         '/en/attractions/wartburg/',
         '/en/attractions/harz/',
         '/en/news/',
-        '/en/news/landesgartenschau-2026/',
         '/en/news/open-air-burg-scharfenstein-2026/',
         '/en/news/neuer-radweg-unstrut-leine/',
         '/en/news/baerenpark-festival-2026/',
@@ -245,8 +241,7 @@ export default defineNuxtConfig({
   // Global head defaults
   app: {
     head: {
-      // lang is set dynamically in app.vue based on locale
-      titleTemplate: '%s | Pension Volgenandt',
+      // lang and titleTemplate are set dynamically in app.vue
       title: 'Ruhe finden im Eichsfeld',
       meta: [
         { charset: 'utf-8' },

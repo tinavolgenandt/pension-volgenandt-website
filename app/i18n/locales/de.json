@@ -4,6 +4,7 @@
     "country": "Deutschland"
   },
   "nav": {
+    "home": "Startseite",
     "rooms": "Zimmer",
     "families": "Familien",
     "activities": "Aktivitäten",
@@ -305,24 +306,6 @@
     "foehn": "Föhn",
     "tisch": "Kleiner Tisch",
     "heizung": "Heizung"
-  },
-  "lgs": {
-    "bannerTitle": "Landesgartenschau 2026",
-    "countdown": "Noch {days} Tage",
-    "countdownOne": "Noch 1 Tag",
-    "liveNow": "Jetzt erleben!",
-    "linkText": "Unterkunft sichern",
-    "pageTitle": "Unterkunft zur Landesgartenschau 2026",
-    "pageSubtitle": "Nur 5 Autominuten vom Gelände entfernt",
-    "introHeading": "Die Landesgartenschau direkt vor unserer Tür",
-    "eventDates": "23. April – 11. Oktober 2026",
-    "distance": "5 Min. entfernt",
-    "ourRoomsHeading": "Unsere Zimmer für Ihren LGS-Aufenthalt",
-    "bookNow": "Jetzt Zimmer sichern",
-    "moreInfo": "Mehr erfahren",
-    "countdownLabel": "Tage noch",
-    "teaserTitle": "Landesgartenschau 2026 direkt vor unserer Tür",
-    "teaserText": "Vom 23. April bis 11. Oktober verwandelt sich Leinefelde-Worbis in einen blühenden Veranstaltungsort, nur 5 Autominuten von unserer Pension. Über 300.000 Besucher werden erwartet. Sichern Sie sich rechtzeitig Ihr Zimmer."
   },
   "ferienwohnungen": {
     "title": "Ferienwohnungen im Eichsfeld",

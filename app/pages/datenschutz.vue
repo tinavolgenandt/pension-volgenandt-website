@@ -1,6 +1,14 @@
 <script setup lang="ts">
 const config = useAppConfig()
 
+const siteUrl = 'https://www.pension-volgenandt.de'
+useHead({
+  link: [
+    { rel: 'alternate', hreflang: 'de', href: `${siteUrl}/datenschutz/` },
+    { rel: 'alternate', hreflang: 'en', href: `${siteUrl}/en/privacy/` },
+    { rel: 'alternate', hreflang: 'x-default', href: `${siteUrl}/datenschutz/` },
+  ],
+})
 useSeoMeta({
   title: 'Datenschutzerklärung',
   description:

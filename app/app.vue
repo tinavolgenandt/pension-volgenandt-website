@@ -2,8 +2,19 @@
 import { useJsonLd } from '~/composables/useJsonLd'
 
 const baseURL = useRuntimeConfig().app.baseURL
+const { locale } = useLocale()
+
+// nuxt-seo-utils sets <html lang> from site.defaultLocale ('de') with
+// tagPriority 'low', which unhead applies after normal-priority entries.
+// Register ours at the same priority (later wins) so /en/* renders lang="en".
+useHead({ htmlAttrs: { lang: locale } }, { tagPriority: 'low' })
+
+const BRAND = 'Pension Volgenandt'
 
 useHead({
+  // Append the brand only when the page title doesn't already contain it
+  titleTemplate: (title?: string) =>
+    !title ? BRAND : title.includes(BRAND) ? title : `${title} | ${BRAND}`,
   link: [
     { rel: 'icon', href: `${baseURL}favicon.ico`, sizes: '16x16 32x32 48x48' },
     { rel: 'icon', href: `${baseURL}favicon.svg`, type: 'image/svg+xml' },
@@ -15,10 +26,11 @@ useHead({
   ],
 })
 
-// Global social meta: twitter card + og:locale
+// Global social meta: twitter card + og:locale (follows the route locale)
 useSeoMeta({
   twitterCard: 'summary_large_image',
-  ogLocale: 'de_DE',
+  ogLocale: () => (locale.value === 'en' ? 'en_GB' : 'de_DE'),
+  ogLocaleAlternate: () => (locale.value === 'en' ? 'de_DE' : 'en_GB'),
   ogSiteName: 'Pension Volgenandt',
 })
 

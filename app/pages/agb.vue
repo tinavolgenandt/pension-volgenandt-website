@@ -1,6 +1,14 @@
 <script setup lang="ts">
 const config = useAppConfig()
 
+const siteUrl = 'https://www.pension-volgenandt.de'
+useHead({
+  link: [
+    { rel: 'alternate', hreflang: 'de', href: `${siteUrl}/agb/` },
+    { rel: 'alternate', hreflang: 'en', href: `${siteUrl}/en/terms/` },
+    { rel: 'alternate', hreflang: 'x-default', href: `${siteUrl}/agb/` },
+  ],
+})
 useSeoMeta({
   title: 'AGB',
   description:

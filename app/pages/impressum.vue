@@ -1,6 +1,14 @@
 <script setup lang="ts">
 const config = useAppConfig()
 
+const siteUrl = 'https://www.pension-volgenandt.de'
+useHead({
+  link: [
+    { rel: 'alternate', hreflang: 'de', href: `${siteUrl}/impressum/` },
+    { rel: 'alternate', hreflang: 'en', href: `${siteUrl}/en/imprint/` },
+    { rel: 'alternate', hreflang: 'x-default', href: `${siteUrl}/impressum/` },
+  ],
+})
 useSeoMeta({
   title: 'Impressum',
   description:
