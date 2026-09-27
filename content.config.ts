@@ -212,9 +212,6 @@ const newsSchema = z.object({
   sortOrder: z.number().default(0),
 
   // Optional: show room cards on event articles
-  showRooms: z.boolean().default(false),
-  eventStartDate: z.string().optional(),
-  eventEndDate: z.string().optional(),
 
   // Optional: additional photos. A photo with `afterParagraph` + `float` is
   // anchored inline in the article text (0-indexed content paragraph, text

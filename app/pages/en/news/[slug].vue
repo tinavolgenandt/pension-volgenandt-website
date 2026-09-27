@@ -45,13 +45,6 @@ function inlinePhotoIndex(image: string) {
   return inlineImages.value.findIndex((img) => img.src === image)
 }
 
-// Optional: load rooms for event articles with showRooms flag
-const { data: rooms } = await useAsyncData(
-  `news-en-rooms-${slug}`,
-  () => queryCollection('roomsEn').where('comingSoon', '=', false).order('sortOrder', 'ASC').all(),
-  { immediate: article.value.showRooms },
-)
-
 useSeoMeta({
   title: article.value.seoTitle,
   ogTitle: article.value.seoTitle,
@@ -144,50 +137,6 @@ if (faqItems.length) {
         text: item.answer,
       },
     })),
-  })
-}
-
-// Add Event schema when event dates are present
-if (article.value.eventStartDate && article.value.eventEndDate) {
-  schemaItems.push({
-    '@type': 'Event',
-    '@id': `https://www.pension-volgenandt.de/en/news/${article.value.slug}/#event`,
-    name: article.value.title,
-    url: `https://www.pension-volgenandt.de/en/news/${article.value.slug}/`,
-    description: article.value.seoDescription,
-    image: [`https://www.pension-volgenandt.de${article.value.heroImage}`],
-    startDate: article.value.eventStartDate,
-    endDate: article.value.eventEndDate,
-    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-    eventStatus: 'https://schema.org/EventScheduled',
-    location: {
-      '@type': 'Place',
-      name: 'State Garden Show Leinefelde-Worbis',
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: 'Leinefelde-Worbis',
-        addressRegion: 'Thuringia',
-        addressCountry: 'DE',
-      },
-    },
-    organizer: {
-      '@type': 'Organization',
-      name: 'Landesgartenschau Leinefelde-Worbis 2026 gGmbH',
-      url: 'https://www.lgs-leinefelde-worbis.de/',
-    },
-    performer: {
-      '@type': 'Organization',
-      name: 'Landesgartenschau Leinefelde-Worbis 2026 gGmbH',
-    },
-    offers: {
-      '@type': 'Offer',
-      name: 'Day ticket',
-      url: 'https://www.lgs-leinefelde-worbis.de/besuch/tickets-kaufen/',
-      price: '22',
-      priceCurrency: 'EUR',
-      availability: 'https://schema.org/InStock',
-      validFrom: '2025-10-06',
-    },
   })
 }
 
@@ -329,39 +278,6 @@ function formatDate(dateStr: string) {
             <h3 class="mb-1 font-semibold text-sage-900">{{ item.question }}</h3>
             <p class="leading-relaxed text-sage-700">{{ item.answer }}</p>
           </div>
-        </div>
-      </section>
-
-      <!-- Room cards (for event articles with showRooms) -->
-      <section v-if="article.showRooms && rooms?.length" class="mb-10">
-        <h2 class="mb-6 font-serif text-xl font-semibold text-sage-900">
-          {{ t('lgs.ourRoomsHeading', 'en') }}
-        </h2>
-        <div class="grid gap-6 sm:grid-cols-2">
-          <RoomsCard
-            v-for="room in rooms"
-            :key="room.slug"
-            :name="room.name"
-            :slug="room.slug"
-            :short-description="room.shortDescription"
-            :hero-image="room.heroImage"
-            :hero-image-alt="room.heroImageAlt"
-            :starting-price="room.startingPrice"
-            :max-guests="room.maxGuests"
-            :highlights="room.highlights"
-            :beds24-property-id="room.beds24PropertyId"
-            :beds24-room-id="room.beds24RoomId"
-            locale="en"
-            compact
-          />
-        </div>
-        <div class="mt-6 text-center">
-          <NuxtLink
-            to="/en/rooms/"
-            class="inline-block rounded-lg bg-waldhonig-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-waldhonig-600"
-          >
-            {{ t('lgs.bookNow', 'en') }}
-          </NuxtLink>
         </div>
       </section>
 

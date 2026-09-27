@@ -113,9 +113,6 @@ if (import.meta.client) {
       </div>
     </div>
 
-    <!-- LGS countdown banner (desktop only — mobile variant in page) -->
-    <HomeHeroLgsBanner />
-
     <!-- Scroll indicator -->
     <UiScrollIndicator
       :visible="scrollIndicatorVisible"
@@ -127,7 +124,7 @@ if (import.meta.client) {
 </template>
 
 <style scoped>
-/* Z-index stack: poster=1, video=2, gradient=3, text=10, LGS banner=20 */
+/* Z-index stack: poster=1, video=2, gradient=3, text=10 */
 
 /* Poster layers — always visible under the video */
 .hero-poster {

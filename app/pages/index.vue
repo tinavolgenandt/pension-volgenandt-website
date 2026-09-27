@@ -29,17 +29,9 @@ useHead({
 
     <HomeHeroVideo />
 
-    <ClientOnly>
-      <HomeHeroLgsBannerMobile />
-    </ClientOnly>
-
     <UiScrollReveal>
       <HomeWelcome />
     </UiScrollReveal>
-
-    <ClientOnly>
-      <HomeLgsTeaser />
-    </ClientOnly>
 
     <UiScrollReveal>
       <HomeGartenGallery />
