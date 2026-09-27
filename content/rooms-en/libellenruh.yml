@@ -1,0 +1,72 @@
+name: 'Holiday Apartment Libellenruh'
+slug: libellenruh
+seoTitle: 'Holiday Apartment Libellenruh | Pension Volgenandt'
+seoDescription: 'New holiday apartment with 2 bedrooms and a large kitchen-living room in Eichsfeld, Thuringia. Up to 4 guests, bookable from 1 March 2027.'
+type: ferienwohnung
+category: 'Ferienwohnung'
+shortDescription: >-
+  Our new holiday apartment with two bedrooms and a
+  spacious kitchen-living room. Plenty of room for
+  families and friends travelling together.
+description: >-
+  The holiday apartment Libellenruh sleeps up to 4
+  guests in comfort. The first bedroom has a double bed
+  and a sofa bed, the second a 140 cm bed and another
+  sofa bed. At the heart of the apartment is the
+  spacious kitchen-living room, made for cooking,
+  eating and spending the evening together. We are
+  currently furnishing the apartment and look forward
+  to welcoming our first guests from 1 March 2027.
+
+comingSoon: true
+availableFrom: '2027-03-01'
+
+beds24PropertyId: 261258
+
+maxGuests: 4
+beds: '1 double bed, 1 bed (140 cm), 2 sofa beds'
+
+pricing:
+  - label: 'Direct booking'
+    rates:
+      - occupancy: 4
+        pricePerNight: 98
+
+startingPrice: 98
+
+heroImage: /img/rooms/libellenruh-demnaechst.webp
+heroImageAlt: 'Holiday Apartment Libellenruh, opening on 1 March 2027'
+gallery: []
+
+amenities:
+  - wifi
+  - kueche
+  - kuehlschrank
+  - garten
+  - parkplatz
+  - bettwaesche
+  - handtuecher
+  - heizung
+
+highlights:
+  - '2 bedrooms'
+  - 'Large kitchen-living room'
+  - 'Ideal for families'
+
+extras:
+  - name: 'Breakfast'
+    description: '2 rolls, cheese & cold cuts, egg or yoghurt, homemade jam, coffee or tea'
+    price: 10
+    unit: 'per person / night'
+  - name: 'Gourmet breakfast'
+    description: '3 rolls, cheese & cold cuts, egg or yoghurt, homemade jam, seasonal fruit, fresh juice & coffee or tea'
+    price: 15
+    unit: 'per person / night'
+  - name: 'Dog'
+    description: 'Your four-legged friend is welcome. Our large garden offers plenty of space to run and explore.'
+    price: 5
+    unit: 'per night'
+
+# After the existing holiday apartments (1, 2), before the double rooms (3+)
+sortOrder: 2.5
+featured: false

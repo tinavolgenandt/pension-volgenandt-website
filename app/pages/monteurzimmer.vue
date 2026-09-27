@@ -55,7 +55,7 @@ useJsonLd(
 )
 
 const { data: rooms } = await useAsyncData('monteurzimmer', () =>
-  queryCollection('rooms').order('sortOrder', 'ASC').all(),
+  queryCollection('rooms').where('comingSoon', '=', false).order('sortOrder', 'ASC').all(),
 )
 </script>
 

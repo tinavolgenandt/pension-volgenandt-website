@@ -21,7 +21,8 @@
     "checkAvailability": "Verfügbarkeit prüfen",
     "allRooms": "Alle Zimmer ansehen",
     "learnMore": "Mehr erfahren",
-    "readMore": "Weiterlesen"
+    "readMore": "Weiterlesen",
+    "contactUs": "Kontakt aufnehmen"
   },
   "room": {
     "type": {
@@ -49,7 +50,11 @@
     "otherRooms": "Weitere Zimmer",
     "availability": "Verfügbarkeit",
     "booking": "Buchung",
-    "availabilityBooking": "Verfügbarkeit & Buchung"
+    "availabilityBooking": "Verfügbarkeit & Buchung",
+    "comingSoon": "Demnächst",
+    "availableFrom": "Ab {date}",
+    "comingSoonNotice": "Diese Ferienwohnung wird gerade eingerichtet. Wir begrüßen die ersten Gäste ab dem {date}.",
+    "comingSoonContact": "Sie haben Fragen zur neuen Wohnung? Sprechen Sie uns gerne an."
   },
   "rooms": {
     "title": "Unsere Zimmer",

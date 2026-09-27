@@ -56,6 +56,11 @@ const roomSchema = z.object({
   // Availability restrictions
   weekendOnly: z.boolean().default(false),
 
+  // Not yet bookable: card and detail page show a "coming soon" notice
+  // instead of booking links. availableFrom is an ISO date (YYYY-MM-DD).
+  comingSoon: z.boolean().default(false),
+  availableFrom: z.string().optional(),
+
   // Beds24 integration (needed in Phase 5, define now)
   beds24PropertyId: z.number(),
   beds24RoomId: z.number().optional(),

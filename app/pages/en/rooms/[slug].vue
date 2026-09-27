@@ -2,6 +2,7 @@
 import { t } from '~/utils/translations'
 import { getAmenityLabel } from '~/utils/amenities'
 import { useJsonLd } from '~/composables/useJsonLd'
+import { formatLongDate } from '~/utils/dates'
 
 const route = useRoute()
 const slug = route.params.slug as string
@@ -38,7 +39,7 @@ const showBooking = computed(() => isClient && isAllowed('booking'))
 
 // Direct booking URL for Beds24
 const bookingUrl = computed(() => {
-  if (!room.value?.beds24PropertyId) return null
+  if (room.value?.comingSoon || !room.value?.beds24PropertyId) return null
   const params = new URLSearchParams({
     propid: String(room.value.beds24PropertyId),
     lang: 'en',
@@ -73,6 +74,13 @@ useHead({
       href: `${siteUrl}/zimmer/${room.value.slug}/`,
     },
   ],
+})
+
+// Opening notice for rooms that are not bookable yet
+const comingSoonNotice = computed(() => {
+  if (!room.value?.comingSoon) return null
+  const date = room.value.availableFrom ? formatLongDate(room.value.availableFrom, 'en') : ''
+  return t('room.comingSoonNotice', 'en').replace('{date}', date)
 })
 
 const fallbackDescription =
@@ -121,7 +129,12 @@ useJsonLd(
           name: `${room.value!.name} - ${period.label}`,
           price: String(rate.pricePerNight),
           priceCurrency: 'EUR',
-          availability: 'https://schema.org/InStock',
+          availability: room.value!.comingSoon
+            ? 'https://schema.org/PreOrder'
+            : 'https://schema.org/InStock',
+          ...(room.value!.comingSoon && room.value!.availableFrom
+            ? { availabilityStarts: room.value!.availableFrom }
+            : {}),
           url: `${siteUrl}/en/rooms/${room.value!.slug}/`,
           businessFunction: 'http://purl.org/goodrelations/v1#LeaseOut',
           eligibleQuantity: {
@@ -173,6 +186,30 @@ useJsonLd(
           {{ t('cta.bookNow', 'en') }}
         </a>
 
+        <!-- Coming-soon notice (not bookable yet) -->
+        <div
+          v-if="comingSoonNotice"
+          class="mt-4 rounded-lg border border-waldhonig-200 bg-waldhonig-50 px-4 py-4 text-waldhonig-800"
+        >
+          <p class="flex items-start gap-2 font-semibold">
+            <Icon
+              name="lucide:calendar-clock"
+              :size="18"
+              class="mt-0.5 shrink-0"
+              aria-hidden="true"
+            />
+            {{ comingSoonNotice }}
+          </p>
+          <p class="mt-2 text-sm">{{ t('room.comingSoonContact', 'en') }}</p>
+          <NuxtLink
+            to="/en/contact/"
+            class="mt-3 inline-flex items-center gap-2 rounded-lg bg-waldhonig-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-waldhonig-600"
+          >
+            <Icon name="lucide:mail" :size="16" aria-hidden="true" />
+            {{ t('cta.contactUs', 'en') }}
+          </NuxtLink>
+        </div>
+
         <!-- Weekend-only notice -->
         <div
           v-if="room.weekendOnly"
@@ -192,7 +229,7 @@ useJsonLd(
       <!-- 3. Booking Widgets (consent-gated, completely absent when not granted) -->
       <ClientOnly>
         <section
-          v-if="showBooking && room.beds24PropertyId"
+          v-if="showBooking && room.beds24PropertyId && !room.comingSoon"
           :aria-label="t('room.availabilityBooking', 'en')"
         >
           <h2 class="mb-4 font-serif text-2xl font-semibold text-sage-800">

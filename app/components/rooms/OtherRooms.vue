@@ -11,6 +11,8 @@ interface Room {
   startingPrice: number
   maxGuests: number
   highlights: string[]
+  comingSoon?: boolean
+  availableFrom?: string
 }
 
 interface Props {
@@ -41,6 +43,8 @@ const props = withDefaults(defineProps<Props>(), {
         :starting-price="room.startingPrice"
         :max-guests="room.maxGuests"
         :highlights="room.highlights"
+        :coming-soon="room.comingSoon"
+        :available-from="room.availableFrom"
         :compact="true"
         :locale="props.locale"
       />
