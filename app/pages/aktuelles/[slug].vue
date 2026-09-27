@@ -49,7 +49,7 @@ function inlinePhotoIndex(image: string) {
 // Optional: load rooms for event articles with showRooms flag
 const { data: rooms } = await useAsyncData(
   `news-rooms-${slug}`,
-  () => queryCollection('rooms').order('sortOrder', 'ASC').all(),
+  () => queryCollection('rooms').where('comingSoon', '=', false).order('sortOrder', 'ASC').all(),
   { immediate: article.value.showRooms },
 )
 

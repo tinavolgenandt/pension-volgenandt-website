@@ -1,0 +1,73 @@
+name: 'Ferienwohnung Libellenruh'
+slug: libellenruh
+seoTitle: 'Ferienwohnung Libellenruh | Pension Volgenandt'
+seoDescription: 'Neue Ferienwohnung mit 2 Schlafzimmern und großer Wohnküche in Breitenbach, Eichsfeld. Für bis zu 4 Gäste, ab 1. März 2027 buchbar.'
+type: ferienwohnung
+category: 'Ferienwohnung'
+shortDescription: >-
+  Unsere neue Ferienwohnung mit zwei Schlafzimmern und
+  einer großzügigen Wohnküche. Viel Platz für Familien
+  und Freunde, die gemeinsam verreisen.
+description: >-
+  In der Ferienwohnung Libellenruh wohnen bis zu 4 Gäste
+  mit viel Platz. Im ersten Schlafzimmer stehen ein
+  Doppelbett und ein Schlafsofa, im zweiten ein 140 cm
+  breites Bett und ein weiteres Schlafsofa. Herzstück
+  der Wohnung ist die geräumige Wohnküche: Hier wird
+  zusammen gekocht, gegessen und der Abend verbracht.
+  Wir richten die Wohnung gerade liebevoll ein und
+  freuen uns, ab dem 1. März 2027 die ersten Gäste
+  begrüßen zu dürfen.
+
+comingSoon: true
+availableFrom: '2027-03-01'
+
+beds24PropertyId: 261258
+
+maxGuests: 4
+beds: '1 Doppelbett, 1 Bett (140 cm), 2 Schlafsofas'
+
+pricing:
+  - label: 'Direktbuchung'
+    rates:
+      - occupancy: 4
+        pricePerNight: 98
+
+startingPrice: 98
+
+heroImage: /img/rooms/libellenruh-demnaechst.webp
+heroImageAlt: 'Ferienwohnung Libellenruh, Eröffnung am 1. März 2027'
+gallery: []
+
+amenities:
+  - wifi
+  - kueche
+  - kuehlschrank
+  - garten
+  - parkplatz
+  - bettwaesche
+  - handtuecher
+  - heizung
+
+highlights:
+  - '2 Schlafzimmer'
+  - 'Große Wohnküche'
+  - 'Ideal für Familien'
+
+extras:
+  - name: 'Frühstück'
+    description: '2 Brötchen, Käse- & Wurst-Aufschnitt, Ei oder Joghurt, hausgemachte Marmelade, Kaffee oder Tee'
+    price: 10
+    unit: 'pro Person / Nacht'
+  - name: 'Genießer-Frühstück'
+    description: '3 Brötchen, Käse- & Wurst-Aufschnitt, Ei oder Joghurt, hausgemachte Marmelade, saisonales Obst, frischer Saft & Kaffee oder Tee'
+    price: 15
+    unit: 'pro Person / Nacht'
+  - name: 'Hund'
+    description: 'Ihr Vierbeiner ist bei uns herzlich willkommen. Unser großer Garten bietet viel Platz zum Toben und Schnüffeln.'
+    price: 5
+    unit: 'pro Nacht'
+
+# Nach den bestehenden Ferienwohnungen (1, 2), vor den Doppelzimmern (3+)
+sortOrder: 2.5
+featured: false

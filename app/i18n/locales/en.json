@@ -21,7 +21,8 @@
     "checkAvailability": "Check availability",
     "allRooms": "View all rooms",
     "learnMore": "Learn more",
-    "readMore": "Read more"
+    "readMore": "Read more",
+    "contactUs": "Get in touch"
   },
   "room": {
     "type": {
@@ -49,7 +50,11 @@
     "otherRooms": "Other Rooms",
     "availability": "Availability",
     "booking": "Booking",
-    "availabilityBooking": "Availability & Booking"
+    "availabilityBooking": "Availability & Booking",
+    "comingSoon": "Coming soon",
+    "availableFrom": "From {date}",
+    "comingSoonNotice": "This holiday apartment is currently being furnished. We look forward to welcoming our first guests from {date}.",
+    "comingSoonContact": "Any questions about the new apartment? Just get in touch."
   },
   "rooms": {
     "title": "Our Rooms",

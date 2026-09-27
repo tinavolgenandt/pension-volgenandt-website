@@ -76,6 +76,8 @@ const groupedRooms = computed(() => {
             :starting-price="room.startingPrice"
             :max-guests="room.maxGuests"
             :highlights="room.highlights"
+            :coming-soon="room.comingSoon"
+            :available-from="room.availableFrom"
             :beds24-property-id="room.beds24PropertyId"
             :beds24-room-id="room.beds24RoomId"
             locale="en"

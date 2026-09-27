@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Locale } from '~/composables/useLocale'
 import { t } from '~/utils/translations'
+import { formatLongDate } from '~/utils/dates'
 
 interface Props {
   name: string
@@ -15,6 +16,8 @@ interface Props {
   beds24RoomId?: number
   compact?: boolean
   locale?: Locale
+  comingSoon?: boolean
+  availableFrom?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -22,6 +25,8 @@ const props = withDefaults(defineProps<Props>(), {
   beds24RoomId: undefined,
   compact: false,
   locale: 'de',
+  comingSoon: false,
+  availableFrom: undefined,
 })
 
 // Locale-aware room detail path
@@ -30,9 +35,21 @@ const roomPath = computed(() => {
   return `/zimmer/${props.slug}/`
 })
 
+// "Demnächst · Ab 1. März 2027" badge for rooms that are not bookable yet
+const comingSoonLabel = computed(() => {
+  if (!props.comingSoon) return null
+  const label = t('room.comingSoon', props.locale)
+  if (!props.availableFrom) return label
+  const from = t('room.availableFrom', props.locale).replace(
+    '{date}',
+    formatLongDate(props.availableFrom, props.locale),
+  )
+  return `${label} · ${from}`
+})
+
 // Direct booking URL for rooms with Beds24 integration
 const bookingUrl = computed(() => {
-  if (!props.beds24PropertyId) return null
+  if (props.comingSoon || !props.beds24PropertyId) return null
   const params = new URLSearchParams({
     propid: String(props.beds24PropertyId),
     lang: props.locale === 'en' ? 'en' : 'de',
@@ -76,6 +93,13 @@ const guestLabel = computed(() => {
           class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           @error="onImgError"
         />
+        <span
+          v-if="comingSoonLabel"
+          class="absolute top-3 left-3 rounded-full bg-waldhonig-500 font-semibold text-white shadow-sm"
+          :class="compact ? 'px-2 py-0.5 text-[11px]' : 'px-3 py-1 text-xs'"
+        >
+          {{ comingSoonLabel }}
+        </span>
       </div>
 
       <!-- Card body -->
