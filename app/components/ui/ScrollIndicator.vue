@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { t } from '~/utils/translations'
+
+const { locale } = useLocale()
+
 defineProps<{
   visible: boolean
 }>()
@@ -12,7 +16,7 @@ defineEmits<{
   <button
     class="scroll-indicator absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 cursor-pointer flex-col items-center gap-2 border-none bg-transparent p-3 transition-opacity duration-400"
     :class="visible ? 'opacity-100' : 'pointer-events-none opacity-0'"
-    aria-label="Zum Inhalt scrollen"
+    :aria-label="t('common.scrollToContent', locale)"
     @click="$emit('click')"
   >
     <!-- Mouse outline with animated scroll dot -->

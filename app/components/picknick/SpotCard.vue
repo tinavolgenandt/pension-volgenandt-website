@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { t } from '~/utils/translations'
+
 defineProps<{
   name: string
   location: string
@@ -8,6 +10,8 @@ defineProps<{
   imageAlt: string | null
   imagePosition?: string
 }>()
+
+const { locale } = useLocale()
 </script>
 
 <template>
@@ -32,7 +36,7 @@ defineProps<{
         v-if="distanceKm === 0"
         class="absolute top-3 right-3 rounded-full bg-sage-700/90 px-2.5 py-1 text-xs font-medium text-white"
       >
-        Im Garten
+        {{ t('picnic.inGarden', locale) }}
       </span>
       <span
         v-else

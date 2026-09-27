@@ -145,6 +145,7 @@
     "mobileNav": "Mobile navigation"
   },
   "home": {
+    "heroImageAlt": "Aerial view of Pension Volgenandt in the green Eichsfeld countryside",
     "title": "Pension Volgenandt | Find Peace in the Eichsfeld",
     "description": "Family-run guesthouse in Breitenbach, Eichsfeld. Holiday apartments and rooms with views of the countryside.",
     "heroButton": "Discover rooms",
@@ -213,7 +214,12 @@
     "bestTime": "Best time to visit",
     "gallery": "Gallery",
     "planTrip": "Planning a trip? We're happy to advise.",
-    "bookAccommodation": "Book your accommodation for the perfect day trip"
+    "bookAccommodation": "Book your accommodation for the perfect day trip",
+    "category": {
+      "natur": "Nature",
+      "kultur": "Culture",
+      "aktivitaet": "Activity"
+    }
   },
   "news": {
     "notFound": "Article not found",
@@ -343,5 +349,160 @@
     "text": "We are having a barrel sauna installed in our garden for our guests, with a garden shower for cooling off. When the sun shines, we heat it with electricity from our own roof.",
     "highlight": "Free for overnight guests. Visitors from outside: €29 for 2 hours, for the whole sauna (max. 2 people).",
     "cta": "Learn more"
+  },
+  "common": {
+    "close": "Close",
+    "scrollToContent": "Scroll to content",
+    "starRating": "{rating} out of 5 stars"
+  },
+  "cookie": {
+    "settings": "Cookie settings",
+    "bannerText": "We use cookies to give you the best possible experience. You can find more information in our",
+    "privacyLink": "privacy policy",
+    "rejectAll": "Essential only",
+    "acceptAll": "Accept all",
+    "settingsIntro": "Here you can manage your cookie preferences. Essential cookies are required for the basic functions of the website.",
+    "save": "Save selection",
+    "enabled": "enabled",
+    "disabled": "disabled",
+    "category": {
+      "essential": {
+        "label": "Essential cookies",
+        "description": "These cookies are required for the basic functions of the website and cannot be disabled."
+      },
+      "booking": {
+        "label": "Booking",
+        "description": "Enables the embedded booking widget (Beds24) for room reservations."
+      },
+      "media": {
+        "label": "Media",
+        "description": "Enables embedded external media such as YouTube videos and Google Maps."
+      },
+      "statistics": {
+        "label": "Statistics",
+        "description": "Enables anonymous analysis of website usage with Google Analytics to help us improve our offer."
+      }
+    }
+  },
+  "gallery": {
+    "label": "Image gallery",
+    "close": "Close gallery",
+    "prev": "Previous image",
+    "next": "Next image",
+    "fullscreen": "Open fullscreen",
+    "thumbnails": "Image gallery preview",
+    "thumbnailNav": "Image gallery navigation",
+    "imageN": "Image {n}: {alt}",
+    "enlarge": "Enlarge photo: {alt}"
+  },
+  "map": {
+    "consentText": "Loading the interactive map connects to OpenStreetMap servers.",
+    "load": "Load map",
+    "viewOnOsm": "View on OpenStreetMap",
+    "directionsPlaceholderAlt": "Map showing the location of Pension Volgenandt in Breitenbach"
+  },
+  "picnic": {
+    "inGarden": "In the garden",
+    "form": {
+      "dateLegend": "Your preferred date",
+      "date": "Date *",
+      "dateBlocked": "Unfortunately this date is fully booked. Please choose another day.",
+      "time": "Time *",
+      "pleaseSelect": "Please select",
+      "timeOption": "{time}",
+      "package": "Package *",
+      "brunchNote": "Fresh bread rolls are included. A croissant can be added as an option.",
+      "eveningNote": "Pretzels (2 per person) are already included in the evening basket.",
+      "maxPersons": "Max. 4 people per basket (including children).",
+      "adults": "Adults *",
+      "kids": "Children",
+      "kidsAge": "(up to 6 years)",
+      "packageIncludes": "Included in the “{name}” package",
+      "kidsBasketTitle": "Children's basket (€{price} / child)",
+      "kidsBasketIntro": "Put together especially for our young guests, including a little surprise",
+      "kidsItem1": "1 bread roll",
+      "kidsItem2": "Homemade jam with fruit from our own garden",
+      "kidsItem3": "Yoghurt",
+      "kidsItem4": "Tea or apple spritzer",
+      "kidsItem5": "Fresh seasonal fruit",
+      "kidsItem6": "1 hard-boiled egg",
+      "kidsItem7": "A little surprise",
+      "drinks": "Drinks",
+      "drinksInfoBrunch": "1 drink per adult and 1 drink per child included. Each additional drink +€{price}.",
+      "drinksInfoEvening": "2 drinks per adult and 1 drink per child included. Each additional drink +€{price}.",
+      "drinksRemaining": "({n} more to choose)",
+      "drinksExtra": "({n} extra = +€{price})",
+      "still": "Still",
+      "sparkling": "Sparkling",
+      "waterTypeRequired": "Please choose still or sparkling.",
+      "extras": "Extras",
+      "optional": "(optional)",
+      "free": "free",
+      "priceExtra": "+€{price}",
+      "priceExtraPerUnit": "+€{price} / {unit}",
+      "unit": {
+        "person": "person",
+        "piece": "piece",
+        "bottle": "bottle"
+      },
+      "contactLegend": "Your contact details",
+      "name": "Name *",
+      "email": "Email *",
+      "phone": "Phone *",
+      "notes": "Special requests",
+      "voucher": "Voucher code",
+      "voucherPlaceholder": "e.g. DANKE-A1B2C3D4",
+      "voucherChecking": "Checking…",
+      "voucherRedeem": "Redeem",
+      "voucherApplied": "A {percent}% discount will be applied.",
+      "voucherInvalid": "This voucher code is invalid.",
+      "voucherCheckFailed": "The voucher could not be checked. Please try again.",
+      "priceSummary": "Price summary",
+      "adultsLine": "{n} × €{price} (adults)",
+      "kidsLine": "{n} × €{price} (children)",
+      "extraDrinksLine": "{n} extra drinks (€{price} each)",
+      "oatMilkSurcharge": "Oat milk surcharge",
+      "voucherLine": "Voucher ({percent}%)",
+      "toPay": "Total due",
+      "depositNote": "In addition: a €50 basket deposit in cash on pickup (refunded on return). No deposit for overnight guests.",
+      "weatherNote": "In bad weather our covered terrace is ready for you. Free cancellation up to 48 h in advance.",
+      "paypalLoading": "Loading PayPal...",
+      "fillRequired": "Please fill in all required fields to proceed to payment.",
+      "processing": "Processing your booking...",
+      "errorWaterType": "Please choose your water: still or sparkling.",
+      "errorRequired": "Please fill in all required fields and choose your drinks.",
+      "errorGeneric": "Unfortunately an error occurred. Please contact us.",
+      "errorSubmit": "Payment successful, but the booking could not be submitted. Please contact us at kontakt@pension-volgenandt.de.",
+      "errorCancelled": "Payment cancelled. You can try again.",
+      "errorPayment": "An error occurred during payment. Please try again.",
+      "item": {
+        "kaffee": "Coffee",
+        "tee": "Tea",
+        "apfelschorle": "Apple spritzer",
+        "schwarz": "Black",
+        "milch": "With milk",
+        "hafermilch": "Oat milk (+€1)",
+        "schwarztee": "Black tea",
+        "gruentee": "Green tea",
+        "fruechtetee": "Fruit tea",
+        "kraeutertee": "Herbal tea",
+        "pfefferminztee": "Peppermint tea",
+        "kamillentee": "Chamomile tea",
+        "sekt": "Sparkling wine",
+        "weiss-wein": "White wine",
+        "rot-wein": "Red wine",
+        "bier": "Local pilsner",
+        "aperol": "Aperol Spritz",
+        "sekt-alkoholfrei": "Alcohol-free sparkling wine",
+        "bier-alkoholfrei": "Alcohol-free beer",
+        "vegetarisch": "Vegetarian selection only",
+        "hummus": "Homemade hummus",
+        "lachs": "Salmon with cream cheese & dill",
+        "croissants": "Croissant",
+        "wasser": "Bottle of water",
+        "decke-extra": "Extra blanket",
+        "blumenstrauss": "Small bouquet of flowers"
+      }
+    }
   }
 }

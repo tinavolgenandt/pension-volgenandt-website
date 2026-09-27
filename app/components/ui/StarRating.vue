@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { t } from '~/utils/translations'
+
 interface Props {
   rating: number
   size?: string
@@ -8,13 +10,19 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'size-5',
 })
 
+const { locale } = useLocale()
+
 const fullStars = computed(() => Math.floor(props.rating))
 const hasHalfStar = computed(() => props.rating % 1 >= 0.5)
 const emptyStars = computed(() => 5 - fullStars.value - (hasHalfStar.value ? 1 : 0))
 </script>
 
 <template>
-  <div class="flex items-center gap-0.5" :aria-label="`${rating} von 5 Sternen`" role="img">
+  <div
+    class="flex items-center gap-0.5"
+    :aria-label="t('common.starRating', locale).replace('{rating}', String(rating))"
+    role="img"
+  >
     <Icon
       v-for="n in fullStars"
       :key="`full-${n}`"

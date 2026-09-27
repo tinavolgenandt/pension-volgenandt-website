@@ -206,7 +206,7 @@ function formatDate(dateStr: string) {
             type="button"
             class="group not-prose relative mb-4 block w-full overflow-hidden rounded-xl focus-visible:ring-2 focus-visible:ring-waldhonig-500 focus-visible:ring-offset-2 sm:clear-none sm:w-60"
             :class="photo.float === 'right' ? 'sm:float-right sm:ml-6' : 'sm:float-left sm:mr-6'"
-            :aria-label="`Bild vergrößern: ${photo.alt}`"
+            :aria-label="t('gallery.enlarge', locale).replace('{alt}', photo.alt)"
             @click="openLightbox(inlinePhotoIndex(photo.image))"
           >
             <div class="aspect-[4/3] bg-sage-100">

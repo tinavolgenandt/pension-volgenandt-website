@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import type { Locale } from '~/composables/useLocale'
+import { t } from '~/utils/translations'
+
 const appConfig = useAppConfig()
+const { locale } = useLocale()
 const router = useRouter()
 const { isReady: paypalReady } = usePayPal()
 const { trackEvent } = useAnalytics()
@@ -7,11 +11,26 @@ const { trackEvent } = useAnalytics()
 const KIDS_PRICE = 9.5
 const EXTRA_DRINK_PRICE = 3
 
+/** Translate a `picnic.form.*` key for the current page locale and fill `{placeholders}`. */
+function tr(key: string, vars: Record<string, string | number> = {}): string {
+  return Object.entries(vars).reduce(
+    (text, [name, value]) => text.replace(`{${name}}`, String(value)),
+    t(`picnic.form.${key}`, locale.value),
+  )
+}
+
+/** Display label for a drink, coffee/tea variant or extra (the German `label` stays for the booking email). */
+function itemLabel(id: string): string {
+  return tr(`item.${id}`)
+}
+
+const numLocale = computed(() => (locale.value === 'en' ? 'en-GB' : 'de-DE'))
+
 const timeSlots = Array.from({ length: 49 }, (_, i) => {
   const h = Math.floor(i / 4) + 8
   const m = (i % 4) * 15
   return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`
-}).filter((t) => t <= '20:00')
+}).filter((slot) => slot <= '20:00')
 
 // Load package data from YAML for ingredient display
 const { data: packagesData } = await useAsyncData('booking-packages', () =>
@@ -57,15 +76,7 @@ const abendDrinkOptions = [
   { id: 'bier-alkoholfrei', label: 'Alkoholfreies Bier' },
 ]
 
-const kidsKorbInhalt = [
-  '1 Brötchen',
-  'Hausgemachte Marmelade mit Obst aus dem eigenen Garten',
-  'Joghurt',
-  'Tee oder Apfelschorle',
-  'Frisches, saisonales Obst',
-  '1 hartgekochtes Ei',
-  'Kleine Überraschung',
-]
+const kidsKorbInhalt = computed(() => [1, 2, 3, 4, 5, 6, 7].map((n) => tr(`kidsItem${n}`)))
 
 const extrasOptions = [
   {
@@ -107,10 +118,17 @@ const drinkExtras = computed(() =>
   extrasOptions.filter((e) => DRINK_EXTRA_IDS.includes(e.id) && (!e.brunchOnly || isBrunch.value)),
 )
 
-function extraPriceLabel(extra: (typeof extrasOptions)[0]): string {
-  if (extra.price === 0) return 'kostenlos'
-  if (extra.unit) return `+${extra.price} € / ${extra.unit}`
-  return `+${extra.price} €`
+const unitKeys: Record<string, string> = { Person: 'person', Stück: 'piece', Flasche: 'bottle' }
+
+// Defaults to German: the booking email sent to the pension is always German.
+function extraPriceLabel(extra: (typeof extrasOptions)[0], loc: Locale = 'de'): string {
+  if (extra.price === 0) return t('picnic.form.free', loc)
+  if (extra.unit) {
+    return t('picnic.form.priceExtraPerUnit', loc)
+      .replace('{price}', String(extra.price))
+      .replace('{unit}', t(`picnic.form.unit.${unitKeys[extra.unit]}`, loc))
+  }
+  return t('picnic.form.priceExtra', loc).replace('{price}', String(extra.price))
 }
 
 function extraCost(extra: (typeof extrasOptions)[0], qty: number): number {
@@ -214,16 +232,16 @@ async function applyVoucher() {
     if (result.valid) {
       voucherStatus.value = 'valid'
       voucherDiscountPercent.value = result.discountPercent
-      voucherMessage.value = `${result.discountPercent} % Rabatt wird abgezogen.`
+      voucherMessage.value = tr('voucherApplied', { percent: result.discountPercent })
     } else {
       voucherStatus.value = 'invalid'
       voucherDiscountPercent.value = 0
-      voucherMessage.value = result.reason || 'Dieser Gutschein-Code ist ungültig.'
+      voucherMessage.value = result.reason || tr('voucherInvalid')
     }
   } catch {
     voucherStatus.value = 'invalid'
     voucherDiscountPercent.value = 0
-    voucherMessage.value = 'Gutschein konnte nicht geprüft werden. Bitte versuchen Sie es erneut.'
+    voucherMessage.value = tr('voucherCheckFailed')
   }
 }
 
@@ -369,12 +387,11 @@ function renderPayPalButton() {
       createOrder: (_data: any, actions: any) => {
         errorMessage.value = ''
         if ((form.extras['wasser'] ?? 0) > 0 && form.waterType === '') {
-          errorMessage.value = 'Bitte wählen Sie beim Wasser: still oder mit Kohlensäure.'
+          errorMessage.value = tr('errorWaterType')
           return Promise.reject(new Error('Water type required'))
         }
         if (!isFormValid.value) {
-          errorMessage.value =
-            'Bitte füllen Sie alle Pflichtfelder aus und wählen Sie die Getränke.'
+          errorMessage.value = tr('errorRequired')
           return Promise.reject(new Error('Form invalid'))
         }
         trackEvent('begin_checkout', {
@@ -432,7 +449,7 @@ function renderPayPalButton() {
               ],
             })
             await router.push({
-              path: '/picknick/danke/',
+              path: locale.value === 'en' ? '/en/picnic/thanks/' : '/picknick/danke/',
               query: {
                 betrag: String(grandTotal.value),
                 personen: String(totalPersons.value),
@@ -443,22 +460,19 @@ function renderPayPalButton() {
           } else if (result.errors) {
             errorMessage.value = result.errors.map((e: { message: string }) => e.message).join(', ')
           } else {
-            errorMessage.value =
-              result.error || 'Leider ist ein Fehler aufgetreten. Bitte kontaktieren Sie uns.'
+            errorMessage.value = result.error || tr('errorGeneric')
           }
         } catch {
-          errorMessage.value =
-            'Zahlung erfolgreich, aber Übermittlung fehlgeschlagen. Bitte kontaktieren Sie uns unter kontakt@pension-volgenandt.de.'
+          errorMessage.value = tr('errorSubmit')
         } finally {
           isSubmitting.value = false
         }
       },
       onCancel: () => {
-        errorMessage.value = 'Zahlung abgebrochen. Sie können es erneut versuchen.'
+        errorMessage.value = tr('errorCancelled')
       },
       onError: () => {
-        errorMessage.value =
-          'Bei der Zahlung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.'
+        errorMessage.value = tr('errorPayment')
       },
       style: {
         layout: 'vertical',
@@ -488,11 +502,13 @@ if (import.meta.client) {
   <div class="space-y-8">
     <!-- Datum & Paket -->
     <fieldset class="space-y-5">
-      <legend class="font-serif text-lg font-semibold text-sage-900">Ihr Wunschtermin</legend>
+      <legend class="font-serif text-lg font-semibold text-sage-900">{{ tr('dateLegend') }}</legend>
 
       <div class="grid gap-5 sm:grid-cols-3">
         <div>
-          <label for="pk-date" class="block text-sm font-medium text-sage-800">Datum *</label>
+          <label for="pk-date" class="block text-sm font-medium text-sage-800">{{
+            tr('date')
+          }}</label>
           <input
             id="pk-date"
             v-model="form.date"
@@ -502,25 +518,31 @@ if (import.meta.client) {
             class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
           />
           <p v-if="isDateBlocked" class="mt-1 text-xs font-medium text-red-600">
-            Dieses Datum ist leider ausgebucht. Bitte wählen Sie einen anderen Tag.
+            {{ tr('dateBlocked') }}
           </p>
         </div>
 
         <div>
-          <label for="pk-time" class="block text-sm font-medium text-sage-800">Uhrzeit *</label>
+          <label for="pk-time" class="block text-sm font-medium text-sage-800">{{
+            tr('time')
+          }}</label>
           <select
             id="pk-time"
             v-model="form.time"
             name="time"
             class="mt-1 w-full rounded-lg border border-sage-300 px-4 py-3 focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
           >
-            <option value="" disabled>Bitte wählen</option>
-            <option v-for="t in timeSlots" :key="t" :value="t">{{ t }} Uhr</option>
+            <option value="" disabled>{{ tr('pleaseSelect') }}</option>
+            <option v-for="slot in timeSlots" :key="slot" :value="slot">
+              {{ tr('timeOption', { time: slot }) }}
+            </option>
           </select>
         </div>
 
         <div>
-          <label for="pk-package" class="block text-sm font-medium text-sage-800">Paket *</label>
+          <label for="pk-package" class="block text-sm font-medium text-sage-800">{{
+            tr('package')
+          }}</label>
           <select
             id="pk-package"
             v-model="form.packageId"
@@ -535,18 +557,18 @@ if (import.meta.client) {
       </div>
 
       <p v-if="isBrunch" class="text-xs text-sage-500">
-        Frische Brötchen sind enthalten. Ein Croissant ist optional zubuchbar.
+        {{ tr('brunchNote') }}
       </p>
       <p v-else class="text-xs text-sage-500">
-        Brezeln (2 pro Person) sind im Abendschmaus bereits enthalten.
+        {{ tr('eveningNote') }}
       </p>
 
-      <p class="text-xs text-sage-500">Max. 4 Personen pro Korb (inkl. Kinder).</p>
+      <p class="text-xs text-sage-500">{{ tr('maxPersons') }}</p>
       <div class="grid gap-5 sm:grid-cols-2">
         <div>
-          <label for="pk-adults" class="block text-sm font-medium text-sage-800"
-            >Erwachsene *</label
-          >
+          <label for="pk-adults" class="block text-sm font-medium text-sage-800">{{
+            tr('adults')
+          }}</label>
           <input
             id="pk-adults"
             v-model.number="form.adults"
@@ -559,7 +581,7 @@ if (import.meta.client) {
         </div>
         <div>
           <label for="pk-kids" class="block text-sm font-medium text-sage-800">
-            Kinder <span class="text-sage-400">(bis 6 Jahre)</span>
+            {{ tr('kids') }} <span class="text-sage-400">{{ tr('kidsAge') }}</span>
           </label>
           <input
             id="pk-kids"
@@ -577,7 +599,7 @@ if (import.meta.client) {
     <!-- Paket-Inhalt -->
     <div v-if="selectedPackage?.includes?.length" class="rounded-lg border border-sage-200 p-5">
       <h3 class="font-serif text-base font-semibold text-sage-900">
-        Im Paket „{{ selectedPackage.name }}" enthalten
+        {{ tr('packageIncludes', { name: selectedPackage.name }) }}
       </h3>
       <ul class="mt-3 space-y-1.5">
         <li
@@ -594,11 +616,14 @@ if (import.meta.client) {
     <!-- Kinder-Korb Info -->
     <div v-if="form.kids > 0" class="rounded-lg border border-waldhonig-200 bg-waldhonig-50/50 p-5">
       <h3 class="font-serif text-base font-semibold text-sage-900">
-        Kinder-Korb ({{ KIDS_PRICE.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} € /
-        Kind)
+        {{
+          tr('kidsBasketTitle', {
+            price: KIDS_PRICE.toLocaleString(numLocale, { minimumFractionDigits: 2 }),
+          })
+        }}
       </h3>
       <p class="mt-1 text-xs text-sage-500">
-        Eigens für unsere kleinen Gäste zusammengestellt, inklusive kleiner Überraschung
+        {{ tr('kidsBasketIntro') }}
       </p>
       <ul class="mt-3 space-y-1.5">
         <li
@@ -614,19 +639,19 @@ if (import.meta.client) {
 
     <!-- Getränke -->
     <fieldset class="space-y-4">
-      <legend class="font-serif text-lg font-semibold text-sage-900">Getränke</legend>
+      <legend class="font-serif text-lg font-semibold text-sage-900">{{ tr('drinks') }}</legend>
       <p class="text-sm text-sage-500">
-        {{ isBrunch ? '1 Getränk' : '2 Getränke' }} pro Erwachsener, 1 Getränk pro Kind inklusive.
-        Jedes weitere +{{ EXTRA_DRINK_PRICE }}
-        €.
+        {{ tr(isBrunch ? 'drinksInfoBrunch' : 'drinksInfoEvening', { price: EXTRA_DRINK_PRICE }) }}
         <span v-if="totalDrinks < includedDrinks" class="font-medium text-waldhonig-600">
-          (noch {{ includedDrinks - totalDrinks }} wählen)
+          {{ tr('drinksRemaining', { n: includedDrinks - totalDrinks }) }}
         </span>
         <span v-if="extraDrinkCount > 0" class="font-medium text-waldhonig-600">
-          ({{ extraDrinkCount }} Extra = +{{
-            (extraDrinkCount * EXTRA_DRINK_PRICE).toLocaleString('de-DE')
+          {{
+            tr('drinksExtra', {
+              n: extraDrinkCount,
+              price: (extraDrinkCount * EXTRA_DRINK_PRICE).toLocaleString(numLocale),
+            })
           }}
-          €)
         </span>
       </p>
       <div class="space-y-2">
@@ -639,7 +664,7 @@ if (import.meta.client) {
           "
         >
           <div class="flex items-center justify-between">
-            <span class="text-sm text-sage-800">{{ drink.label }}</span>
+            <span class="text-sm text-sage-800">{{ itemLabel(drink.id) }}</span>
             <div class="flex items-center gap-2">
               <button
                 type="button"
@@ -671,7 +696,7 @@ if (import.meta.client) {
               class="w-full rounded-lg border border-sage-300 px-3 py-2 text-sm focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none sm:w-56"
             >
               <option v-for="v in kaffeeVarianten" :key="v.id" :value="v.id">
-                {{ v.label }}
+                {{ itemLabel(v.id) }}
               </option>
             </select>
           </div>
@@ -682,7 +707,7 @@ if (import.meta.client) {
               class="w-full rounded-lg border border-sage-300 px-3 py-2 text-sm focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none sm:w-56"
             >
               <option v-for="v in teeVarianten" :key="v.id" :value="v.id">
-                {{ v.label }}
+                {{ itemLabel(v.id) }}
               </option>
             </select>
           </div>
@@ -700,7 +725,7 @@ if (import.meta.client) {
           "
         >
           <div class="flex items-center justify-between">
-            <span class="text-sm text-sage-800">{{ extra.label }}</span>
+            <span class="text-sm text-sage-800">{{ itemLabel(extra.id) }}</span>
             <div class="flex items-center gap-2">
               <button
                 type="button"
@@ -733,7 +758,7 @@ if (import.meta.client) {
                   name="water-type"
                   class="size-4 accent-waldhonig-500"
                 />
-                Still
+                {{ tr('still') }}
               </label>
               <label class="flex cursor-pointer items-center gap-2 text-sm text-sage-700">
                 <input
@@ -743,11 +768,11 @@ if (import.meta.client) {
                   name="water-type"
                   class="size-4 accent-waldhonig-500"
                 />
-                Mit Kohlensäure
+                {{ tr('sparkling') }}
               </label>
             </div>
             <p v-if="form.waterType === ''" class="mt-2 text-xs text-red-600">
-              Bitte wählen Sie still oder mit Kohlensäure.
+              {{ tr('waterTypeRequired') }}
             </p>
           </div>
         </div>
@@ -757,7 +782,8 @@ if (import.meta.client) {
     <!-- Extras -->
     <fieldset class="space-y-3">
       <legend class="font-serif text-lg font-semibold text-sage-900">
-        Extras <span class="text-sm font-normal text-sage-500">(optional)</span>
+        {{ tr('extras') }}
+        <span class="text-sm font-normal text-sage-500">{{ tr('optional') }}</span>
       </legend>
       <div class="grid gap-3 sm:grid-cols-2">
         <template v-for="extra in filteredExtras" :key="extra.id">
@@ -774,12 +800,12 @@ if (import.meta.client) {
               @change="form.extras[extra.id] = (form.extras[extra.id] ?? 0) > 0 ? 0 : 1"
             />
             <span class="text-sm text-sage-800">
-              {{ extra.label }}
+              {{ itemLabel(extra.id) }}
               <span
                 class="ml-1 text-xs"
                 :class="extra.price === 0 ? 'text-sage-400' : 'text-waldhonig-600'"
               >
-                ({{ extraPriceLabel(extra) }})
+                ({{ extraPriceLabel(extra, locale) }})
               </span>
             </span>
           </label>
@@ -793,8 +819,10 @@ if (import.meta.client) {
             "
           >
             <span class="text-sm text-sage-800">
-              {{ extra.label }}
-              <span class="ml-1 text-xs text-waldhonig-600"> ({{ extraPriceLabel(extra) }}) </span>
+              {{ itemLabel(extra.id) }}
+              <span class="ml-1 text-xs text-waldhonig-600">
+                ({{ extraPriceLabel(extra, locale) }})
+              </span>
             </span>
             <div class="flex items-center gap-2">
               <button
@@ -823,11 +851,15 @@ if (import.meta.client) {
 
     <!-- Kontaktdaten -->
     <fieldset class="space-y-5">
-      <legend class="font-serif text-lg font-semibold text-sage-900">Ihre Kontaktdaten</legend>
+      <legend class="font-serif text-lg font-semibold text-sage-900">
+        {{ tr('contactLegend') }}
+      </legend>
 
       <div class="grid gap-5 sm:grid-cols-2">
         <div>
-          <label for="pk-name" class="block text-sm font-medium text-sage-800">Name *</label>
+          <label for="pk-name" class="block text-sm font-medium text-sage-800">{{
+            tr('name')
+          }}</label>
           <input
             id="pk-name"
             v-model="form.name"
@@ -839,7 +871,9 @@ if (import.meta.client) {
           />
         </div>
         <div>
-          <label for="pk-email" class="block text-sm font-medium text-sage-800">E-Mail *</label>
+          <label for="pk-email" class="block text-sm font-medium text-sage-800">{{
+            tr('email')
+          }}</label>
           <input
             id="pk-email"
             v-model="form.email"
@@ -853,7 +887,9 @@ if (import.meta.client) {
       </div>
 
       <div>
-        <label for="pk-phone" class="block text-sm font-medium text-sage-800">Telefon *</label>
+        <label for="pk-phone" class="block text-sm font-medium text-sage-800">{{
+          tr('phone')
+        }}</label>
         <input
           id="pk-phone"
           v-model="form.phone"
@@ -868,7 +904,7 @@ if (import.meta.client) {
 
       <div>
         <label for="pk-notes" class="block text-sm font-medium text-sage-800">
-          Sonderwünsche <span class="text-sage-400">(optional)</span>
+          {{ tr('notes') }} <span class="text-sage-400">{{ tr('optional') }}</span>
         </label>
         <textarea
           id="pk-notes"
@@ -883,14 +919,15 @@ if (import.meta.client) {
     <!-- Gutschein-Code -->
     <fieldset class="space-y-2">
       <legend class="font-serif text-lg font-semibold text-sage-900">
-        Gutschein-Code <span class="text-sm font-normal text-sage-500">(optional)</span>
+        {{ tr('voucher') }}
+        <span class="text-sm font-normal text-sage-500">{{ tr('optional') }}</span>
       </legend>
       <div class="flex gap-2">
         <input
           v-model="voucherCode"
           type="text"
           name="voucher-code"
-          placeholder="z. B. DANKE-A1B2C3D4"
+          :placeholder="tr('voucherPlaceholder')"
           class="w-full rounded-lg border border-sage-300 px-4 py-3 uppercase focus:border-sage-500 focus:ring-2 focus:ring-sage-500/20 focus:outline-none"
         />
         <button
@@ -901,41 +938,49 @@ if (import.meta.client) {
           "
           @click="applyVoucher"
         >
-          {{ voucherStatus === 'checking' ? 'Prüfe…' : 'Einlösen' }}
+          {{ voucherStatus === 'checking' ? tr('voucherChecking') : tr('voucherRedeem') }}
         </button>
       </div>
-      <p v-if="voucherMessage" class="text-xs" :class="voucherStatus === 'valid' ? 'text-sage-600' : 'text-red-600'">
+      <p
+        v-if="voucherMessage"
+        class="text-xs"
+        :class="voucherStatus === 'valid' ? 'text-sage-600' : 'text-red-600'"
+      >
         {{ voucherMessage }}
       </p>
     </fieldset>
 
     <!-- Preisübersicht -->
     <div class="rounded-lg bg-waldhonig-50 p-5">
-      <h3 class="font-serif text-base font-semibold text-sage-900">Preisübersicht</h3>
+      <h3 class="font-serif text-base font-semibold text-sage-900">{{ tr('priceSummary') }}</h3>
       <dl class="mt-3 space-y-2 text-sm">
         <div class="flex justify-between">
           <dt class="text-sage-700">
-            {{ form.adults }} × {{ selectedPackage?.price ?? 19 }} € (Erwachsene)
+            {{ tr('adultsLine', { n: form.adults, price: selectedPackage?.price ?? 19 }) }}
           </dt>
           <dd class="font-semibold text-sage-900">
-            {{ adultsTotal.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €
+            {{ adultsTotal.toLocaleString(numLocale, { minimumFractionDigits: 2 }) }} €
           </dd>
         </div>
         <div v-if="form.kids > 0" class="flex justify-between">
           <dt class="text-sage-700">
-            {{ form.kids }} ×
-            {{ KIDS_PRICE.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} € (Kinder)
+            {{
+              tr('kidsLine', {
+                n: form.kids,
+                price: KIDS_PRICE.toLocaleString(numLocale, { minimumFractionDigits: 2 }),
+              })
+            }}
           </dt>
           <dd class="font-semibold text-sage-900">
-            {{ kidsTotal.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €
+            {{ kidsTotal.toLocaleString(numLocale, { minimumFractionDigits: 2 }) }} €
           </dd>
         </div>
         <div v-if="extraDrinkCount > 0" class="flex justify-between text-sage-600">
-          <dt>{{ extraDrinkCount }} Extra-Getränke (à {{ EXTRA_DRINK_PRICE }} €)</dt>
+          <dt>{{ tr('extraDrinksLine', { n: extraDrinkCount, price: EXTRA_DRINK_PRICE }) }}</dt>
           <dd>
             +
             {{
-              (extraDrinkCount * EXTRA_DRINK_PRICE).toLocaleString('de-DE', {
+              (extraDrinkCount * EXTRA_DRINK_PRICE).toLocaleString(numLocale, {
                 minimumFractionDigits: 2,
               })
             }}
@@ -943,30 +988,29 @@ if (import.meta.client) {
           </dd>
         </div>
         <div v-if="hafermilchExtra > 0" class="flex justify-between text-sage-600">
-          <dt>Hafermilch-Aufpreis</dt>
-          <dd>+ {{ hafermilchExtra.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €</dd>
+          <dt>{{ tr('oatMilkSurcharge') }}</dt>
+          <dd>+ {{ hafermilchExtra.toLocaleString(numLocale, { minimumFractionDigits: 2 }) }} €</dd>
         </div>
         <div
           v-for="extra in selectedExtrasWithCost"
           :key="extra.id"
           class="flex justify-between text-sage-600"
         >
-          <dt>{{ extra.qty > 1 ? `${extra.qty}× ` : '' }}{{ extra.label }}</dt>
-          <dd>+ {{ extra.cost.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €</dd>
+          <dt>{{ extra.qty > 1 ? `${extra.qty}× ` : '' }}{{ itemLabel(extra.id) }}</dt>
+          <dd>+ {{ extra.cost.toLocaleString(numLocale, { minimumFractionDigits: 2 }) }} €</dd>
         </div>
         <div v-if="voucherStatus === 'valid'" class="flex justify-between text-sage-600">
-          <dt>Gutschein ({{ voucherDiscountPercent }} %)</dt>
-          <dd>- {{ discountAmount.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €</dd>
+          <dt>{{ tr('voucherLine', { percent: voucherDiscountPercent }) }}</dt>
+          <dd>- {{ discountAmount.toLocaleString(numLocale, { minimumFractionDigits: 2 }) }} €</dd>
         </div>
         <div class="flex justify-between border-t border-waldhonig-200 pt-2">
-          <dt class="font-semibold text-sage-900">Zu zahlen</dt>
+          <dt class="font-semibold text-sage-900">{{ tr('toPay') }}</dt>
           <dd class="text-base font-bold text-waldhonig-700">
-            {{ grandTotal.toLocaleString('de-DE', { minimumFractionDigits: 2 }) }} €
+            {{ grandTotal.toLocaleString(numLocale, { minimumFractionDigits: 2 }) }} €
           </dd>
         </div>
         <p class="mt-2 text-xs text-sage-500">
-          Zusätzlich: 50 € Korbpfand in bar bei Abholung (bei Rückgabe zurück). Für
-          Übernachtungsgäste entfällt das Pfand.
+          {{ tr('depositNote') }}
         </p>
       </dl>
     </div>
@@ -979,17 +1023,16 @@ if (import.meta.client) {
     <!-- Wetter & Stornierung -->
     <p class="text-sm leading-relaxed text-sage-500">
       <Icon name="ph:cloud-sun-duotone" class="inline-block size-4 align-text-bottom" />
-      Bei schlechtem Wetter steht unsere überdachte Terrasse bereit. Kostenfreie Stornierung bis
-      48&#8201;h vorher.
+      {{ tr('weatherNote') }}
     </p>
 
     <!-- PayPal Button -->
     <div v-if="paypalReady" ref="paypalContainer" class="min-h-[55px]" />
     <div v-else class="rounded-lg bg-sage-100 p-4 text-center text-sm text-sage-600">
-      <p>PayPal wird geladen...</p>
+      <p>{{ tr('paypalLoading') }}</p>
     </div>
     <p v-if="paypalReady && !isFormValid" class="text-center text-sm text-sage-500">
-      Bitte füllen Sie alle Pflichtfelder aus, um bezahlen zu können.
+      {{ tr('fillRequired') }}
     </p>
 
     <!-- Loading overlay after payment -->
@@ -998,7 +1041,7 @@ if (import.meta.client) {
       class="rounded-lg bg-waldhonig-50 p-4 text-center text-sm text-sage-700"
     >
       <Icon name="ph:spinner" class="mr-2 inline-block size-4 animate-spin" />
-      Buchung wird verarbeitet...
+      {{ tr('processing') }}
     </div>
   </div>
 </template>

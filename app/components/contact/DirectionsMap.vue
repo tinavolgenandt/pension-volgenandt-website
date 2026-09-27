@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { t } from '~/utils/translations'
+
+const { locale } = useLocale()
+
 // Pension coordinates
 const pensionCoords = [51.4124, 10.322] as [number, number]
 </script>
@@ -6,7 +10,7 @@ const pensionCoords = [51.4124, 10.322] as [number, number]
 <template>
   <AttractionsMapConsent
     placeholder-image="/img/map/kontakt-placeholder.webp"
-    placeholder-alt="Karte mit Standort der Pension Volgenandt in Breitenbach"
+    :placeholder-alt="t('map.directionsPlaceholderAlt', locale)"
   >
     <LMap
       :zoom="13"

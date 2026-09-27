@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import { t } from '~/utils/translations'
+
 defineProps<{
   placeholderImage: string
   placeholderAlt: string
   height?: string
 }>()
 
+const { locale } = useLocale()
 const mapConsented = ref(false)
 const { isAllowed } = useCookieConsent()
 
@@ -30,14 +33,13 @@ function loadMap() {
       <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/50 px-4">
         <Icon name="ph:map-pin-duotone" class="mb-3 size-12 text-white" />
         <p class="mb-4 max-w-md text-center text-white">
-          Zum Laden der interaktiven Karte wird eine Verbindung zu OpenStreetMap-Servern
-          hergestellt.
+          {{ t('map.consentText', locale) }}
         </p>
         <button
           class="rounded-lg bg-waldhonig-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-waldhonig-600"
           @click="loadMap"
         >
-          Karte laden
+          {{ t('map.load', locale) }}
         </button>
         <a
           href="https://www.openstreetmap.org/?mlat=51.4124&mlon=10.3220#map=13/51.4124/10.3220"
@@ -45,7 +47,7 @@ function loadMap() {
           rel="noopener noreferrer"
           class="mt-2 text-sm text-white/80 underline"
         >
-          Auf OpenStreetMap ansehen
+          {{ t('map.viewOnOsm', locale) }}
         </a>
       </div>
     </div>

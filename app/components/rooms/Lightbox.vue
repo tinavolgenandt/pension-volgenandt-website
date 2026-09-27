@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useFocusTrap } from '@vueuse/integrations/useFocusTrap'
 import type { GalleryImage } from '~/composables/useGallery'
+import { t } from '~/utils/translations'
 
 interface Props {
   images: GalleryImage[]
@@ -11,6 +12,8 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+
+const { locale } = useLocale()
 
 const emit = defineEmits<{
   close: []
@@ -79,7 +82,7 @@ const { direction } = useSwipe(imageContainerRef, {
       ref="dialogRef"
       role="dialog"
       aria-modal="true"
-      aria-label="Bildergalerie"
+      :aria-label="t('gallery.label', locale)"
       class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/90"
       @keydown="onKeydown"
     >
@@ -87,7 +90,7 @@ const { direction } = useSwipe(imageContainerRef, {
       <button
         type="button"
         class="absolute top-3 right-3 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white"
-        aria-label="Galerie schließen"
+        :aria-label="t('gallery.close', locale)"
         @click="emit('close')"
       >
         <Icon name="lucide:x" :size="24" aria-hidden="true" />
@@ -98,7 +101,7 @@ const { direction } = useSwipe(imageContainerRef, {
         v-if="hasPrev"
         type="button"
         class="absolute top-1/2 left-3 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white"
-        aria-label="Vorheriges Bild"
+        :aria-label="t('gallery.prev', locale)"
         @click="emit('prev')"
       >
         <Icon name="lucide:chevron-left" :size="28" aria-hidden="true" />
@@ -109,7 +112,7 @@ const { direction } = useSwipe(imageContainerRef, {
         v-if="hasNext"
         type="button"
         class="absolute top-1/2 right-3 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-white"
-        aria-label="Nächstes Bild"
+        :aria-label="t('gallery.next', locale)"
         @click="emit('next')"
       >
         <Icon name="lucide:chevron-right" :size="28" aria-hidden="true" />
@@ -141,7 +144,7 @@ const { direction } = useSwipe(imageContainerRef, {
       <div
         class="flex w-full justify-center gap-2 overflow-x-auto px-4 pb-4"
         role="list"
-        aria-label="Bildergalerie Navigation"
+        :aria-label="t('gallery.thumbnailNav', locale)"
       >
         <button
           v-for="(image, index) in images"
@@ -154,7 +157,11 @@ const { direction } = useSwipe(imageContainerRef, {
               ? 'opacity-100 ring-2 ring-white'
               : 'opacity-60 hover:opacity-90',
           ]"
-          :aria-label="`Bild ${index + 1}: ${image.alt}`"
+          :aria-label="
+            t('gallery.imageN', locale)
+              .replace('{n}', String(index + 1))
+              .replace('{alt}', image.alt)
+          "
           :aria-current="index === currentIndex ? 'true' : undefined"
           @click="emit('navigate', index)"
         >
