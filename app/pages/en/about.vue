@@ -20,9 +20,9 @@ useSeoMeta({
   title: 'About Us – Simone & Ralf Volgenandt',
   ogTitle: 'About Us | Pension Volgenandt',
   description:
-    'Meet your hosts: Simone & Ralf Volgenandt run their guesthouse in Breitenbach with warmth and a love of nature.',
+    'Meet your hosts: Simone and Ralf Volgenandt run their family guesthouse in Breitenbach, Eichsfeld, with a large garden and a love of nature.',
   ogDescription:
-    'Meet your hosts: Simone & Ralf Volgenandt run their guesthouse in Breitenbach with warmth and a love of nature.',
+    'Meet your hosts: Simone and Ralf Volgenandt run their family guesthouse in Breitenbach, Eichsfeld, with a large garden and a love of nature.',
   ogImage: '/img/content/gastgeber-portrait.webp',
   ogType: 'profile',
 })
@@ -35,7 +35,7 @@ useJsonLd(
       url: 'https://www.pension-volgenandt.de/en/about/',
       name: 'About Us – Simone & Ralf Volgenandt',
       description:
-        'Meet your hosts: Simone & Ralf Volgenandt run their guesthouse in Breitenbach with warmth and a love of nature.',
+        'Meet your hosts: Simone and Ralf Volgenandt run their family guesthouse in Breitenbach, Eichsfeld, with a large garden and a love of nature.',
     },
     {
       '@type': 'Person',
@@ -135,8 +135,8 @@ useJsonLd(
           </h2>
           <p class="leading-relaxed">
             Our guesthouse sits quietly on the edge of Breitenbach, in the green hills of the
-            Eichsfeld. Seven rooms and holiday apartments accommodate couples, families
-            and also business travellers.
+            Eichsfeld. Seven rooms and holiday apartments accommodate couples, families and also
+            business travellers.
           </p>
           <p class="leading-relaxed">
             From here you can reach nature within minutes and the town of Leinefelde-Worbis with all

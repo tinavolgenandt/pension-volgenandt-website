@@ -19,11 +19,17 @@ const attractionLink = computed(() =>
   locale.value === 'de' ? `/ausflugsziele/${props.slug}/` : `/en/attractions/${props.slug}/`,
 )
 
-const categoryBadge: Record<string, { label: string; class: string }> = {
-  natur: { label: 'Natur', class: 'bg-sage-700 text-white' },
-  kultur: { label: 'Kultur', class: 'bg-waldhonig-500 text-white' },
-  aktivitaet: { label: 'Aktivität', class: 'bg-charcoal-600 text-white' },
-}
+const categoryBadge = computed<Record<string, { label: string; class: string }>>(() => ({
+  natur: { label: t('attraction.category.natur', locale.value), class: 'bg-sage-700 text-white' },
+  kultur: {
+    label: t('attraction.category.kultur', locale.value),
+    class: 'bg-waldhonig-500 text-white',
+  },
+  aktivitaet: {
+    label: t('attraction.category.aktivitaet', locale.value),
+    class: 'bg-charcoal-600 text-white',
+  },
+}))
 </script>
 
 <template>

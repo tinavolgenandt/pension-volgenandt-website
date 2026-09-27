@@ -10,7 +10,7 @@ useSeoMeta({
     'Entdecken Sie unsere 6 gemütlichen Zimmer und Ferienwohnungen in Breitenbach im Eichsfeld. Ab 50 EUR pro Nacht inkl. MwSt.',
   ogDescription:
     'Entdecken Sie unsere 6 gemütlichen Zimmer und Ferienwohnungen in Breitenbach im Eichsfeld. Ab 50 EUR pro Nacht inkl. MwSt.',
-  ogImage: '/img/rooms/emils-kuhwiese-schlafzimmer-2.webp',
+  ogImage: '/img/rooms/emils-kuhwiese-schlafzimmer.webp',
   ogType: 'website',
 })
 useHead({

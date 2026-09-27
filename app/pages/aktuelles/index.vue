@@ -7,9 +7,9 @@ useSeoMeta({
   title: 'Aktuelles aus dem Eichsfeld',
   ogTitle: 'Aktuelles aus dem Eichsfeld | Pension Volgenandt',
   description:
-    'Neuigkeiten, Veranstaltungen und Tipps rund um die Pension Volgenandt und das Eichsfeld.',
+    'Neuigkeiten aus der Pension Volgenandt, Veranstaltungen im Eichsfeld und Tipps für Ihren Aufenthalt in Breitenbach bei Leinefelde-Worbis.',
   ogDescription:
-    'Neuigkeiten, Veranstaltungen und Tipps rund um die Pension Volgenandt und das Eichsfeld.',
+    'Neuigkeiten aus der Pension Volgenandt, Veranstaltungen im Eichsfeld und Tipps für Ihren Aufenthalt in Breitenbach bei Leinefelde-Worbis.',
   ogImage: '/img/content/garten-bluehwiese-fruehsommer.webp',
   ogType: 'website',
 })

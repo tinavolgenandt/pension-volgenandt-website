@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { GalleryImage } from '~/composables/useGallery'
+import { t } from '~/utils/translations'
 
 interface Props {
   heroImage: string
@@ -9,6 +10,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const { locale } = useLocale()
 const { onImgError } = useImageFallback()
 
 // Hero image counts as the first slide so the lightbox can page through everything
@@ -38,7 +40,7 @@ const {
         :key="image.src"
         type="button"
         class="group relative overflow-hidden rounded-xl focus-visible:ring-2 focus-visible:ring-waldhonig-500 focus-visible:ring-offset-2"
-        :aria-label="`Bild vergrößern: ${image.alt}`"
+        :aria-label="t('gallery.enlarge', locale).replace('{alt}', image.alt)"
         @click="openLightbox(index + 1)"
       >
         <div class="aspect-[4/3] bg-sage-100">

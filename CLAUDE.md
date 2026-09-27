@@ -102,7 +102,7 @@ scripts/          # CI/automation scripts (collect-stats.mjs)
 
 4. **New source images** go in `public/img/source-uploads/` (gitignored). After optimization, only the WebP output in `public/img/` is committed.
 
-5. **Image provider:** The custom `static` provider in `app/providers/static.ts` is a pass-through — it does NOT optimize. All optimization must happen before build time via the script above.
+5. **Image provider:** The custom `static` provider in `app/providers/static.ts` does NOT optimize source files; all optimization of `public/img/` must happen before commit via the script above. In production builds, `modules/image-variants.ts` generates 480/800/1280px copies of every `/img/**/*.webp` into `.output/public/_img/` (never into the repo) and the provider points srcset widths at them. Widths are defined in `app/utils/imageVariants.ts`.
 
 ### Content
 

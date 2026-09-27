@@ -14,6 +14,20 @@ const videoSources = {
 }
 const posterPath = `${baseURL}img/hero/hero-poster.webp`
 
+// The desktop poster is a CSS background (the video crossfades over it), which
+// the browser's preload scanner can't discover. Preload it as the LCP image.
+useHead({
+  link: [
+    {
+      rel: 'preload',
+      as: 'image',
+      href: posterPath,
+      media: '(min-width: 768px)',
+      fetchpriority: 'high',
+    },
+  ],
+})
+
 function handleScrollIndicatorClick() {
   const welcome = document.getElementById('willkommen')
   welcome?.scrollIntoView({ behavior: 'smooth' })
@@ -50,7 +64,7 @@ if (import.meta.client) {
     <NuxtImg
       v-if="!posterError"
       src="/img/hero/hero-mobile.webp"
-      alt="Luftaufnahme der Pension Volgenandt im grünen Eichsfeld"
+      :alt="t('home.heroImageAlt', locale)"
       class="hero-poster absolute inset-0 h-full w-full object-cover md:hidden"
       loading="eager"
       fetchpriority="high"
@@ -113,9 +127,6 @@ if (import.meta.client) {
       </div>
     </div>
 
-    <!-- LGS countdown banner (desktop only — mobile variant in page) -->
-    <HomeHeroLgsBanner />
-
     <!-- Scroll indicator -->
     <UiScrollIndicator
       :visible="scrollIndicatorVisible"
@@ -127,7 +138,7 @@ if (import.meta.client) {
 </template>
 
 <style scoped>
-/* Z-index stack: poster=1, video=2, gradient=3, text=10, LGS banner=20 */
+/* Z-index stack: poster=1, video=2, gradient=3, text=10 */
 
 /* Poster layers — always visible under the video */
 .hero-poster {

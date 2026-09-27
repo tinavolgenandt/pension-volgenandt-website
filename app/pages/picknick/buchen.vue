@@ -6,7 +6,7 @@ definePageMeta({
 useSeoMeta({
   title: 'Picknick-Korb buchen – Pension Volgenandt',
   description:
-    'Picknick-Korb buchen: Datum, Paket und Personen auswählen und direkt per PayPal bezahlen.',
+    'Picknick-Korb der Pension Volgenandt buchen: Datum, Paket und Personenzahl auswählen und direkt per PayPal bezahlen. Regional und hausgemacht, ab 19 €.',
 })
 
 useHead({

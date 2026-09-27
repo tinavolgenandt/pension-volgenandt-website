@@ -38,9 +38,9 @@ useSeoMeta({
   title: 'Contact',
   ogTitle: 'Contact | Pension Volgenandt',
   description:
-    'Contact Pension Volgenandt: phone, email or contact form. Directions from the A38 motorway and Leinefelde station.',
+    'Contact Pension Volgenandt in Breitenbach by phone, email or contact form. Directions from the A38 motorway and from Leinefelde railway station.',
   ogDescription:
-    'Contact Pension Volgenandt: phone, email or contact form. Directions from the A38 motorway and Leinefelde station.',
+    'Contact Pension Volgenandt in Breitenbach by phone, email or contact form. Directions from the A38 motorway and from Leinefelde railway station.',
   ogImage: '/img/homepage/gebaeude-innenhof.webp',
   ogType: 'website',
 })

@@ -17,10 +17,10 @@ useSeoMeta({
   title: 'Rooms & Apartments',
   ogTitle: 'Rooms & Apartments | Pension Volgenandt',
   description:
-    'Discover our 6 cosy rooms and holiday apartments in Breitenbach, Eichsfeld. From 50 EUR per night incl. VAT.',
+    'Our 6 cosy rooms and holiday apartments in Breitenbach, Eichsfeld, Thuringia. From 50 EUR per night incl. VAT, breakfast available, book direct.',
   ogDescription:
-    'Discover our 6 cosy rooms and holiday apartments in Breitenbach, Eichsfeld. From 50 EUR per night incl. VAT.',
-  ogImage: '/img/rooms/emils-kuhwiese-schlafzimmer-2.webp',
+    'Our 6 cosy rooms and holiday apartments in Breitenbach, Eichsfeld, Thuringia. From 50 EUR per night incl. VAT, breakfast available, book direct.',
+  ogImage: '/img/rooms/emils-kuhwiese-schlafzimmer.webp',
   ogType: 'website',
 })
 

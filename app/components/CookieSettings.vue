@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import type { ConsentPreferences } from '~/composables/useCookieConsent'
+import { t } from '~/utils/translations'
+
+const { locale } = useLocale()
 
 const { consent, settingsOpen, acceptAll, updateCategory, closeSettings } = useCookieConsent()
 
@@ -50,34 +53,16 @@ interface CategoryInfo {
   disabled: boolean
 }
 
-const categories: CategoryInfo[] = [
-  {
-    key: 'essential',
-    label: 'Notwendige Cookies',
-    description:
-      'Diese Cookies sind für die Grundfunktionen der Website erforderlich und können nicht deaktiviert werden.',
-    disabled: true,
-  },
-  {
-    key: 'booking',
-    label: 'Buchung',
-    description: 'Ermöglicht die Einbindung des Buchungswidgets (Beds24) zur Zimmerbuchung.',
-    disabled: false,
-  },
-  {
-    key: 'media',
-    label: 'Medien',
-    description: 'Ermöglicht die Einbindung externer Medien wie YouTube-Videos und Google Maps.',
-    disabled: false,
-  },
-  {
-    key: 'statistics',
-    label: 'Statistik',
-    description:
-      'Ermöglicht die anonyme Auswertung der Websitenutzung mit Google Analytics zur Verbesserung unseres Angebots.',
-    disabled: false,
-  },
-]
+const categoryKeys: (keyof ConsentPreferences)[] = ['essential', 'booking', 'media', 'statistics']
+
+const categories = computed<CategoryInfo[]>(() =>
+  categoryKeys.map((key) => ({
+    key,
+    label: t(`cookie.category.${key}.label`, locale.value),
+    description: t(`cookie.category.${key}.description`, locale.value),
+    disabled: key === 'essential',
+  })),
+)
 </script>
 
 <template>
@@ -99,7 +84,7 @@ const categories: CategoryInfo[] = [
         <!-- Settings panel -->
         <div
           role="dialog"
-          aria-label="Cookie-Einstellungen"
+          :aria-label="t('cookie.settings', locale)"
           aria-modal="true"
           class="relative w-full max-w-lg rounded-lg bg-warm-white p-6 shadow-xl sm:p-8"
         >
@@ -107,7 +92,7 @@ const categories: CategoryInfo[] = [
           <button
             type="button"
             class="absolute top-4 right-4 rounded-lg p-2 text-sage-500 transition-colors duration-200 hover:text-sage-700"
-            aria-label="Schließen"
+            :aria-label="t('common.close', locale)"
             @click="closeSettings"
           >
             <svg
@@ -126,10 +111,11 @@ const categories: CategoryInfo[] = [
           </button>
 
           <!-- Heading -->
-          <h2 class="font-serif text-xl font-semibold text-sage-900">Cookie-Einstellungen</h2>
+          <h2 class="font-serif text-xl font-semibold text-sage-900">
+            {{ t('cookie.settings', locale) }}
+          </h2>
           <p class="mt-2 font-sans text-sm text-sage-600">
-            Hier können Sie Ihre Cookie-Präferenzen verwalten. Notwendige Cookies sind für die
-            Grundfunktionen der Website erforderlich.
+            {{ t('cookie.settingsIntro', locale) }}
           </p>
 
           <!-- Category toggles -->
@@ -149,7 +135,7 @@ const categories: CategoryInfo[] = [
                 type="button"
                 role="switch"
                 :aria-checked="cat.key === 'essential' ? true : draft[cat.key]"
-                :aria-label="`${cat.label} ${cat.key === 'essential' || draft[cat.key] ? 'aktiviert' : 'deaktiviert'}`"
+                :aria-label="`${cat.label} ${cat.key === 'essential' || draft[cat.key] ? t('cookie.enabled', locale) : t('cookie.disabled', locale)}`"
                 :disabled="cat.disabled"
                 class="relative mt-1 inline-flex h-6 w-11 shrink-0 rounded-full transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-waldhonig-500"
                 :class="[
@@ -175,14 +161,14 @@ const categories: CategoryInfo[] = [
               class="rounded-lg bg-sage-700 px-6 py-3 font-sans font-semibold text-white transition-colors duration-200 hover:bg-sage-800"
               @click="saveAndClose"
             >
-              Auswahl speichern
+              {{ t('cookie.save', locale) }}
             </button>
             <button
               type="button"
               class="rounded-lg bg-waldhonig-500 px-6 py-3 font-sans font-semibold text-white transition-colors duration-200 hover:bg-waldhonig-600"
               @click="acceptAllAndClose"
             >
-              Alle akzeptieren
+              {{ t('cookie.acceptAll', locale) }}
             </button>
           </div>
         </div>

@@ -15,7 +15,7 @@ useHead({
 useSeoMeta({
   title: 'Terms & Conditions',
   description:
-    'Terms and conditions for Pension Volgenandt. Booking conditions, cancellation, check-in and check-out.',
+    'Terms and conditions for Pension Volgenandt in Breitenbach, Eichsfeld: booking conditions, payment, cancellation, check-in and check-out rules.',
 })
 </script>
 

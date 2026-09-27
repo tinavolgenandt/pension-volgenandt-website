@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { GalleryImage } from '~/composables/useGallery'
+import { t } from '~/utils/translations'
 
 interface Props {
   heroImage: string
@@ -9,6 +10,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const { locale } = useLocale()
 const { onImgError } = useImageFallback()
 
 // Combine hero image with gallery into a single array (hero first)
@@ -52,7 +54,7 @@ const {
         v-if="hasPrev"
         type="button"
         class="absolute top-1/2 left-2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/70 text-sage-800 shadow transition-colors hover:bg-white focus-visible:ring-2 focus-visible:ring-waldhonig-500"
-        aria-label="Vorheriges Bild"
+        :aria-label="t('gallery.prev', locale)"
         @click="prev"
       >
         <Icon name="lucide:chevron-left" :size="22" aria-hidden="true" />
@@ -63,7 +65,7 @@ const {
         v-if="hasNext"
         type="button"
         class="absolute top-1/2 right-2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/70 text-sage-800 shadow transition-colors hover:bg-white focus-visible:ring-2 focus-visible:ring-waldhonig-500"
-        aria-label="Nächstes Bild"
+        :aria-label="t('gallery.next', locale)"
         @click="next"
       >
         <Icon name="lucide:chevron-right" :size="22" aria-hidden="true" />
@@ -73,7 +75,7 @@ const {
       <button
         type="button"
         class="absolute top-2 right-2 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/70 text-sage-800 shadow transition-colors hover:bg-white focus-visible:ring-2 focus-visible:ring-waldhonig-500"
-        aria-label="Vollbild öffnen"
+        :aria-label="t('gallery.fullscreen', locale)"
         @click="openLightbox(currentIndex)"
       >
         <Icon name="lucide:maximize" :size="18" aria-hidden="true" />
@@ -89,7 +91,7 @@ const {
     <div
       class="mt-3 flex gap-2 overflow-x-auto pb-2"
       role="list"
-      aria-label="Bildergalerie Vorschau"
+      :aria-label="t('gallery.thumbnails', locale)"
     >
       <button
         v-for="(image, index) in allImages"
@@ -102,7 +104,11 @@ const {
             ? 'opacity-100 ring-2 ring-waldhonig-500'
             : 'opacity-60 hover:opacity-90',
         ]"
-        :aria-label="`Bild ${index + 1}: ${image.alt}`"
+        :aria-label="
+          t('gallery.imageN', locale)
+            .replace('{n}', String(index + 1))
+            .replace('{alt}', image.alt)
+        "
         :aria-current="index === currentIndex ? 'true' : undefined"
         @click="goTo(index)"
       >

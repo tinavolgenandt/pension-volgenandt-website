@@ -11,9 +11,9 @@ useSeoMeta({
   title: 'For Families',
   ogTitle: 'For Families | Pension Volgenandt',
   description:
-    'Family holiday in the Eichsfeld: playground, garden, ride-on toys, cots and more. Pension Volgenandt in Breitenbach.',
+    'Family holiday in the Eichsfeld: playground, large garden, ride-on toys, free cots and high chairs. Pension Volgenandt in Breitenbach, Thuringia.',
   ogDescription:
-    'Family holiday in the Eichsfeld: playground, garden, ride-on toys, cots and more. Pension Volgenandt in Breitenbach.',
+    'Family holiday in the Eichsfeld: playground, large garden, ride-on toys, free cots and high chairs. Pension Volgenandt in Breitenbach, Thuringia.',
   ogImage: '/img/content/terrasse-grill.webp',
   ogType: 'website',
 })
@@ -127,8 +127,8 @@ const familyFeatures = [
           </p>
           <p class="mt-4 leading-relaxed text-sage-800">
             Bobby cars and tricycles are ready to go, and in the evening we watch the fireflies in
-            the garden together. For us, a family holiday is more than just a room: it is the
-            little moments that count.
+            the garden together. For us, a family holiday is more than just a room: it is the little
+            moments that count.
           </p>
         </div>
       </div>
@@ -218,8 +218,8 @@ const familyFeatures = [
           <li class="flex items-start gap-3">
             <Icon name="ph:check-circle-duotone" class="mt-0.5 size-6 shrink-0 text-sage-600" />
             <span class="leading-relaxed text-sage-800">
-              Hiking trails and cycling routes nearby, easily accessible by car or rental bike,
-              also suitable for little legs.
+              Hiking trails and cycling routes nearby, easily accessible by car or rental bike, also
+              suitable for little legs.
             </span>
           </li>
         </ul>

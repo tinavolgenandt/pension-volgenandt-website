@@ -8,8 +8,10 @@ definePageMeta({
 useSeoMeta({
   title: 'News from the Eichsfeld',
   ogTitle: 'News from the Eichsfeld | Pension Volgenandt',
-  description: 'News, events and tips from Pension Volgenandt and the Eichsfeld region.',
-  ogDescription: 'News, events and tips from Pension Volgenandt and the Eichsfeld region.',
+  description:
+    'News from Pension Volgenandt, events in the Eichsfeld and tips for your stay in Breitenbach near Leinefelde-Worbis, Thuringia.',
+  ogDescription:
+    'News from Pension Volgenandt, events in the Eichsfeld and tips for your stay in Breitenbach near Leinefelde-Worbis, Thuringia.',
   ogImage: '/img/content/garten-bluehwiese-fruehsommer.webp',
   ogType: 'website',
 })

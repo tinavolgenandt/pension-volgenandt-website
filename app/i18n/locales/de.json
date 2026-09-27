@@ -4,6 +4,7 @@
     "country": "Deutschland"
   },
   "nav": {
+    "home": "Startseite",
     "rooms": "Zimmer",
     "families": "Familien",
     "activities": "Aktivitäten",
@@ -144,6 +145,7 @@
     "mobileNav": "Mobile Navigation"
   },
   "home": {
+    "heroImageAlt": "Luftaufnahme der Pension Volgenandt im grünen Eichsfeld",
     "title": "Pension Volgenandt | Ruhe finden im Eichsfeld",
     "description": "Familiär geführte Pension in Breitenbach, Eichsfeld. Ferienwohnungen und Zimmer mit Blick ins Grüne.",
     "heroButton": "Zimmer entdecken",
@@ -212,7 +214,12 @@
     "bestTime": "Beste Reisezeit",
     "gallery": "Impressionen",
     "planTrip": "Planen Sie Ihren Ausflug? Wir beraten Sie gerne.",
-    "bookAccommodation": "Buchen Sie Ihre Unterkunft für den perfekten Tagesausflug"
+    "bookAccommodation": "Buchen Sie Ihre Unterkunft für den perfekten Tagesausflug",
+    "category": {
+      "natur": "Natur",
+      "kultur": "Kultur",
+      "aktivitaet": "Aktivität"
+    }
   },
   "news": {
     "notFound": "Artikel nicht gefunden",
@@ -306,24 +313,6 @@
     "tisch": "Kleiner Tisch",
     "heizung": "Heizung"
   },
-  "lgs": {
-    "bannerTitle": "Landesgartenschau 2026",
-    "countdown": "Noch {days} Tage",
-    "countdownOne": "Noch 1 Tag",
-    "liveNow": "Jetzt erleben!",
-    "linkText": "Unterkunft sichern",
-    "pageTitle": "Unterkunft zur Landesgartenschau 2026",
-    "pageSubtitle": "Nur 5 Autominuten vom Gelände entfernt",
-    "introHeading": "Die Landesgartenschau direkt vor unserer Tür",
-    "eventDates": "23. April – 11. Oktober 2026",
-    "distance": "5 Min. entfernt",
-    "ourRoomsHeading": "Unsere Zimmer für Ihren LGS-Aufenthalt",
-    "bookNow": "Jetzt Zimmer sichern",
-    "moreInfo": "Mehr erfahren",
-    "countdownLabel": "Tage noch",
-    "teaserTitle": "Landesgartenschau 2026 direkt vor unserer Tür",
-    "teaserText": "Vom 23. April bis 11. Oktober verwandelt sich Leinefelde-Worbis in einen blühenden Veranstaltungsort, nur 5 Autominuten von unserer Pension. Über 300.000 Besucher werden erwartet. Sichern Sie sich rechtzeitig Ihr Zimmer."
-  },
   "ferienwohnungen": {
     "title": "Ferienwohnungen im Eichsfeld",
     "subtitle": "Voll ausgestattete Küche, Terrasse & Garten",
@@ -360,5 +349,160 @@
     "text": "Für unsere Gäste lassen wir ein Saunafass im Garten aufbauen, mit Gartendusche zum Abkühlen. Wenn die Sonne scheint, heizen wir mit Strom von unserem eigenen Dach.",
     "highlight": "Für Übernachtungsgäste kostenlos. Gäste von außerhalb: 29 € für 2 Stunden, für die ganze Sauna (max. 2 Personen).",
     "cta": "Mehr erfahren"
+  },
+  "common": {
+    "close": "Schließen",
+    "scrollToContent": "Zum Inhalt scrollen",
+    "starRating": "{rating} von 5 Sternen"
+  },
+  "cookie": {
+    "settings": "Cookie-Einstellungen",
+    "bannerText": "Wir verwenden Cookies, um Ihnen die bestmögliche Erfahrung zu bieten. Weitere Informationen finden Sie in unserer",
+    "privacyLink": "Datenschutzerklärung",
+    "rejectAll": "Nur Notwendige",
+    "acceptAll": "Alle akzeptieren",
+    "settingsIntro": "Hier können Sie Ihre Cookie-Präferenzen verwalten. Notwendige Cookies sind für die Grundfunktionen der Website erforderlich.",
+    "save": "Auswahl speichern",
+    "enabled": "aktiviert",
+    "disabled": "deaktiviert",
+    "category": {
+      "essential": {
+        "label": "Notwendige Cookies",
+        "description": "Diese Cookies sind für die Grundfunktionen der Website erforderlich und können nicht deaktiviert werden."
+      },
+      "booking": {
+        "label": "Buchung",
+        "description": "Ermöglicht die Einbindung des Buchungswidgets (Beds24) zur Zimmerbuchung."
+      },
+      "media": {
+        "label": "Medien",
+        "description": "Ermöglicht die Einbindung externer Medien wie YouTube-Videos und Google Maps."
+      },
+      "statistics": {
+        "label": "Statistik",
+        "description": "Ermöglicht die anonyme Auswertung der Websitenutzung mit Google Analytics zur Verbesserung unseres Angebots."
+      }
+    }
+  },
+  "gallery": {
+    "label": "Bildergalerie",
+    "close": "Galerie schließen",
+    "prev": "Vorheriges Bild",
+    "next": "Nächstes Bild",
+    "fullscreen": "Vollbild öffnen",
+    "thumbnails": "Bildergalerie Vorschau",
+    "thumbnailNav": "Bildergalerie Navigation",
+    "imageN": "Bild {n}: {alt}",
+    "enlarge": "Bild vergrößern: {alt}"
+  },
+  "map": {
+    "consentText": "Zum Laden der interaktiven Karte wird eine Verbindung zu OpenStreetMap-Servern hergestellt.",
+    "load": "Karte laden",
+    "viewOnOsm": "Auf OpenStreetMap ansehen",
+    "directionsPlaceholderAlt": "Karte mit Standort der Pension Volgenandt in Breitenbach"
+  },
+  "picnic": {
+    "inGarden": "Im Garten",
+    "form": {
+      "dateLegend": "Ihr Wunschtermin",
+      "date": "Datum *",
+      "dateBlocked": "Dieses Datum ist leider ausgebucht. Bitte wählen Sie einen anderen Tag.",
+      "time": "Uhrzeit *",
+      "pleaseSelect": "Bitte wählen",
+      "timeOption": "{time} Uhr",
+      "package": "Paket *",
+      "brunchNote": "Frische Brötchen sind enthalten. Ein Croissant ist optional zubuchbar.",
+      "eveningNote": "Brezeln (2 pro Person) sind im Abendschmaus bereits enthalten.",
+      "maxPersons": "Max. 4 Personen pro Korb (inkl. Kinder).",
+      "adults": "Erwachsene *",
+      "kids": "Kinder",
+      "kidsAge": "(bis 6 Jahre)",
+      "packageIncludes": "Im Paket „{name}\" enthalten",
+      "kidsBasketTitle": "Kinder-Korb ({price} € / Kind)",
+      "kidsBasketIntro": "Eigens für unsere kleinen Gäste zusammengestellt, inklusive kleiner Überraschung",
+      "kidsItem1": "1 Brötchen",
+      "kidsItem2": "Hausgemachte Marmelade mit Obst aus dem eigenen Garten",
+      "kidsItem3": "Joghurt",
+      "kidsItem4": "Tee oder Apfelschorle",
+      "kidsItem5": "Frisches, saisonales Obst",
+      "kidsItem6": "1 hartgekochtes Ei",
+      "kidsItem7": "Kleine Überraschung",
+      "drinks": "Getränke",
+      "drinksInfoBrunch": "1 Getränk pro Erwachsener, 1 Getränk pro Kind inklusive. Jedes weitere +{price} €.",
+      "drinksInfoEvening": "2 Getränke pro Erwachsener, 1 Getränk pro Kind inklusive. Jedes weitere +{price} €.",
+      "drinksRemaining": "(noch {n} wählen)",
+      "drinksExtra": "({n} Extra = +{price} €)",
+      "still": "Still",
+      "sparkling": "Mit Kohlensäure",
+      "waterTypeRequired": "Bitte wählen Sie still oder mit Kohlensäure.",
+      "extras": "Extras",
+      "optional": "(optional)",
+      "free": "kostenlos",
+      "priceExtra": "+{price} €",
+      "priceExtraPerUnit": "+{price} € / {unit}",
+      "unit": {
+        "person": "Person",
+        "piece": "Stück",
+        "bottle": "Flasche"
+      },
+      "contactLegend": "Ihre Kontaktdaten",
+      "name": "Name *",
+      "email": "E-Mail *",
+      "phone": "Telefon *",
+      "notes": "Sonderwünsche",
+      "voucher": "Gutschein-Code",
+      "voucherPlaceholder": "z. B. DANKE-A1B2C3D4",
+      "voucherChecking": "Prüfe…",
+      "voucherRedeem": "Einlösen",
+      "voucherApplied": "{percent} % Rabatt wird abgezogen.",
+      "voucherInvalid": "Dieser Gutschein-Code ist ungültig.",
+      "voucherCheckFailed": "Gutschein konnte nicht geprüft werden. Bitte versuchen Sie es erneut.",
+      "priceSummary": "Preisübersicht",
+      "adultsLine": "{n} × {price} € (Erwachsene)",
+      "kidsLine": "{n} × {price} € (Kinder)",
+      "extraDrinksLine": "{n} Extra-Getränke (à {price} €)",
+      "oatMilkSurcharge": "Hafermilch-Aufpreis",
+      "voucherLine": "Gutschein ({percent} %)",
+      "toPay": "Zu zahlen",
+      "depositNote": "Zusätzlich: 50 € Korbpfand in bar bei Abholung (bei Rückgabe zurück). Für Übernachtungsgäste entfällt das Pfand.",
+      "weatherNote": "Bei schlechtem Wetter steht unsere überdachte Terrasse bereit. Kostenfreie Stornierung bis 48 h vorher.",
+      "paypalLoading": "PayPal wird geladen...",
+      "fillRequired": "Bitte füllen Sie alle Pflichtfelder aus, um bezahlen zu können.",
+      "processing": "Buchung wird verarbeitet...",
+      "errorWaterType": "Bitte wählen Sie beim Wasser: still oder mit Kohlensäure.",
+      "errorRequired": "Bitte füllen Sie alle Pflichtfelder aus und wählen Sie die Getränke.",
+      "errorGeneric": "Leider ist ein Fehler aufgetreten. Bitte kontaktieren Sie uns.",
+      "errorSubmit": "Zahlung erfolgreich, aber Übermittlung fehlgeschlagen. Bitte kontaktieren Sie uns unter kontakt@pension-volgenandt.de.",
+      "errorCancelled": "Zahlung abgebrochen. Sie können es erneut versuchen.",
+      "errorPayment": "Bei der Zahlung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+      "item": {
+        "kaffee": "Kaffee",
+        "tee": "Tee",
+        "apfelschorle": "Apfelschorle",
+        "schwarz": "Schwarz",
+        "milch": "Mit Milch",
+        "hafermilch": "Hafermilch (+1 €)",
+        "schwarztee": "Schwarztee",
+        "gruentee": "Grüntee",
+        "fruechtetee": "Früchtetee",
+        "kraeutertee": "Kräutertee",
+        "pfefferminztee": "Pfefferminztee",
+        "kamillentee": "Kamillentee",
+        "sekt": "Sekt",
+        "weiss-wein": "Weißwein",
+        "rot-wein": "Rotwein",
+        "bier": "Lokales Pils",
+        "aperol": "Aperol Spritz",
+        "sekt-alkoholfrei": "Alkoholfreier Sekt",
+        "bier-alkoholfrei": "Alkoholfreies Bier",
+        "vegetarisch": "Ausschließlich vegetarische Auswahl",
+        "hummus": "Hausgemachter Hummus",
+        "lachs": "Lachs mit Frischkäse & Dill",
+        "croissants": "Croissant",
+        "wasser": "Flasche Wasser",
+        "decke-extra": "Extra Decke",
+        "blumenstrauss": "Kleiner Blumenstrauß"
+      }
+    }
   }
 }

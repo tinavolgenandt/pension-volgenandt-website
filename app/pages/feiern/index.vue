@@ -6,10 +6,10 @@ definePageMeta({
 })
 
 useSeoMeta({
-  title: 'Feiern im Garten | Hochzeit & Feste im Eichsfeld – Pension Volgenandt',
+  title: 'Feiern im Garten: Hochzeit & Feste',
   ogTitle: 'Feiern im Garten | Pension Volgenandt',
   description:
-    'Hochzeit, Jugendweihe, Kommunion oder runder Geburtstag: Feiern Sie im Garten der Pension Volgenandt im Eichsfeld. Rundum-sorglos-Paket mit Catering, Eventplanung und Übernachtung. Jetzt Preis berechnen.',
+    'Hochzeit, Jugendweihe oder runder Geburtstag im Garten der Pension Volgenandt im Eichsfeld. Mit Catering, Eventplanung und Übernachtung. Preis online berechnen.',
   ogDescription:
     'Ihr Fest im Grünen im Eichsfeld: Rundum-sorglos mit Catering, Eventplanung und Übernachtung für Ihre Gäste.',
   ogImage: '/img/garten/garten-rasen-baeume-sommer.webp',
