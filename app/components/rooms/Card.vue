@@ -47,13 +47,14 @@ const comingSoonLabel = computed(() => {
   return `${label} · ${from}`
 })
 
-// Direct booking URL for rooms with Beds24 integration
+// Direct booking URL for rooms with Beds24 integration (referer GoogleAds for visitors from an ad, see useAdArrival)
+const { beds24Referer } = useAdArrival()
 const bookingUrl = computed(() => {
   if (props.comingSoon || !props.beds24PropertyId) return null
   const params = new URLSearchParams({
     propid: String(props.beds24PropertyId),
     lang: props.locale === 'en' ? 'en' : 'de',
-    referer: 'Website',
+    referer: beds24Referer.value,
     numnight: '2',
     numadult: '2',
   })

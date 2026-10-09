@@ -62,10 +62,11 @@ const navItems = computed(() => {
   ]
 })
 
-// Locale-aware booking URL (centralized in app.config.ts)
+// Locale-aware booking URL (centralized in app.config.ts); referer GoogleAds for visitors from an ad, see useAdArrival
+const { beds24Referer } = useAdArrival()
 const bookingUrl = computed(() => {
   const { baseUrl, propId } = config.beds24
-  return `${baseUrl}?propid=${propId}&lang=${beds24Lang.value}&referer=Website&numnight=2&numadult=2`
+  return `${baseUrl}?propid=${propId}&lang=${beds24Lang.value}&referer=${beds24Referer.value}&numnight=2&numadult=2`
 })
 
 // Locale-aware logo link

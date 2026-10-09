@@ -29,13 +29,14 @@ const { isAllowed } = useCookieConsent()
 const isClient = import.meta.client
 const showBooking = computed(() => isClient && isAllowed('booking'))
 
-// Direct booking URL for Beds24
+// Direct booking URL for Beds24 (referer GoogleAds for visitors from an ad, see useAdArrival)
+const { beds24Referer } = useAdArrival()
 const bookingUrl = computed(() => {
   if (room.value?.comingSoon || !room.value?.beds24PropertyId) return null
   const params = new URLSearchParams({
     propid: String(room.value.beds24PropertyId),
     lang: 'de',
-    referer: 'Website',
+    referer: beds24Referer.value,
     numnight: '2',
     numadult: '2',
   })
