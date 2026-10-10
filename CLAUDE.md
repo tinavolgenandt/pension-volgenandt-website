@@ -32,7 +32,7 @@ scripts/          # CI/automation scripts (collect-stats.mjs)
 
 2. **NEVER commit unprocessed/raw images** (HEIC, large JPGs, WhatsApp exports) to git. Source images belong in `public/img/source-uploads/` (gitignored, local only). Only optimized WebP files go in `public/img/`.
 
-3. **NEVER commit planning docs, research notes, or development documentation to git.** All planning and research files go in `.planning/` (gitignored). The only committed markdown files should be `README.md` and `CLAUDE.md`.
+3. **NEVER commit planning docs, research notes, or development documentation to git.** All planning and research files go in `.planning/` (gitignored). The only committed markdown files should be `README.md`, `CLAUDE.md` and `.github/copilot-instructions.md` (review instructions for GitHub Copilot).
 
 4. **NEVER commit sync scripts, one-off utility scripts, or result files to the project root.** Utility scripts go in `.archive/scripts/` (gitignored). Only scripts used by CI (`scripts/collect-stats.mjs`) are committed.
 
@@ -116,3 +116,8 @@ scripts/          # CI/automation scripts (collect-stats.mjs)
 - GitHub Pages has **no server-side redirects** and ignores `.htaccess`. Legacy URL redirects are static meta-refresh stubs under `public/` (e.g. `public/kind-kegel/index.html`). Non-ASCII (umlaut) paths break the Pages deploy, so `/aktivitäten/` has no stub
 - `scripts/collect-stats.mjs` runs monthly via GitHub Actions (do not remove)
 - `scripts/optimize-images.mjs` — run manually before committing new images (not in CI)
+
+### Google Ads
+
+- **Next time, choose the campaign type on purpose.** Use a Search campaign (Suchkampagne) whenever we want to know which search words bring guests and what each costs. Display and Performance Max campaigns report no keywords: for the 2026 campaigns ("LGS Eichsfeld 2026", "Picknick-Korb Eichsfeld", "Ruhe finden im Eichsfeld") Google Analytics returned not a single keyword in 400 days, only "(not set)". Decided by Tina on 06.10.2026.
+- Keep auto-tagging on in Google Ads: the `gclid` in the ad link is what marks a visitor as coming from an ad. Visitors from an ad get `referer=GoogleAds` on the Beds24 booking links (`app/composables/useAdArrival.ts`, website PR #57), and the booking engine's Statistik counts those stays as bookings from ads.
