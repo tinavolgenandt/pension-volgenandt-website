@@ -9,6 +9,8 @@ const props = defineProps<{
   publishedDate: string
   category: 'veranstaltung' | 'region' | 'pension'
   excerpt: string
+  heroImageAiGenerated?: boolean
+  heroImageCredit?: string
 }>()
 
 const { locale } = useLocale()
@@ -63,6 +65,13 @@ function formatDate(dateStr: string) {
         class="absolute top-3 right-3 rounded-full px-3 py-1 text-xs font-semibold"
       >
         {{ categoryBadge[category]?.label }}
+      </span>
+      <span
+        v-if="heroImageAiGenerated"
+        class="absolute right-2 bottom-2 flex items-center gap-1 rounded bg-black/60 px-2 py-0.5 text-[11px] font-medium text-white/90 backdrop-blur-xs"
+      >
+        <Icon name="lucide:sparkles" class="size-3 text-waldhonig-400" aria-hidden="true" />
+        {{ heroImageCredit || t('news.aiBadge', locale) }}
       </span>
     </div>
 
