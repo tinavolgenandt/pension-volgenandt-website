@@ -50,7 +50,7 @@
       "node-forge": ">=1.4.0",
       "h3": ">=1.15.9",
       "socket.io-parser": ">=4.2.6",
-      "devalue": ">=5.9.2",
+      "devalue": ">=5.9.4",
       "unhead": ">=3.3.1",
       "@unhead/vue": ">=3.3.1",
       "js-yaml": ">=4.3.2 <5.0.0",
@@ -82,7 +82,7 @@
     "nodemailer": "^10.0.9",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.7.4",
-    "sharp": "^0.35.4",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4.2.4",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.2.7"
