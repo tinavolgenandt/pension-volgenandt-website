@@ -127,7 +127,7 @@ $subject = $customSubject !== ''
 $body = "Neue Kontaktanfrage über die Website:\r\n"
     . "\r\n"
     . "Name:    $name\r\n"
-    . "E-Mail:  $email\r\n"
+    . "E-Mail:  " . ($email ?: '–') . "\r\n"
     . ($phone !== '' ? "Telefon: $phone\r\n" : '')
     . "\r\n"
     . "Nachricht:\r\n"
