@@ -12,7 +12,13 @@ require_once __DIR__ . '/smtp.php';
 // Configuration
 // ---------------------------------------------------------------------------
 $recipientEmail = 'kontakt@pension-volgenandt.de';
-$eventsEmail    = 'events@pension-volgenandt.de'; // CC on every mail to a service partner
+$eventsEmail    = 'events@pension-volgenandt.de'; // event inquiries + CC on partner mails
+
+// Inquiries the frontend marks with _topic go to that inbox instead of kontakt@.
+// Allow-listed like $partnerEmails, never a raw address from the client.
+$topicRecipients = [
+    'events' => $eventsEmail,
+];
 $subjectPrefix  = '[Pension Volgenandt]';
 
 // Verified partner inboxes we're allowed to route inquiries to directly.
@@ -59,6 +65,8 @@ $gotcha         = trim($input['_gotcha'] ?? '');
 $customSubject  = trim($input['_subject'] ?? '');
 $partnerKey     = trim($input['_partner'] ?? '');
 $partnerEmail   = $partnerEmails[$partnerKey] ?? null;
+$topic          = trim($input['_topic'] ?? '');
+$internalTo     = $topicRecipients[$topic] ?? $recipientEmail;
 
 $occasion       = trim($input['occasion'] ?? '');
 $eventDate      = trim($input['date'] ?? '');
@@ -84,7 +92,12 @@ $errors = [];
 if ($name === '') {
     $errors[] = ['field' => 'name', 'message' => 'Bitte geben Sie Ihren Namen an.'];
 }
-if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+// Event callback requests only ask for a phone number, so for them a phone
+// number is enough. Everyone else needs a valid e-mail address.
+$phoneIsEnough = ($topic === 'events' && $phone !== '');
+if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $errors[] = ['field' => 'email', 'message' => 'Bitte geben Sie eine gültige E-Mail-Adresse an.'];
+} elseif ($email === '' && !$phoneIsEnough) {
     $errors[] = ['field' => 'email', 'message' => 'Bitte geben Sie eine gültige E-Mail-Adresse an.'];
 }
 if ($message === '') {
@@ -100,7 +113,8 @@ if (!empty($errors)) {
 // ---------------------------------------------------------------------------
 // Build email
 // ---------------------------------------------------------------------------
-// Every inquiry reaches us as a plain-text mail with the full message,
+// Every inquiry reaches us as a plain-text mail with the full message
+// (kontakt@, or events@ for event inquiries),
 // including our package price. A catering inquiry additionally goes to the
 // partner as a separate HTML mail without our prices (CC to events@, so we see
 // their reply to the guest).
@@ -198,7 +212,8 @@ if ($isPartnerInquiry) {
         . $body;
 }
 
-$result = sendSmtp($smtpHost, $smtpPort, $smtpUser, $smtpPass, $recipientEmail, $recipientEmail, $subject, $body, $name, $email);
+// Without a guest e-mail, Reply-To points back to our own inbox.
+$result = sendSmtp($smtpHost, $smtpPort, $smtpUser, $smtpPass, $recipientEmail, $internalTo, $subject, $body, $name, $email ?: $internalTo);
 
 if ($result['ok']) {
     // Log inquiry to CSV for statistics collection
