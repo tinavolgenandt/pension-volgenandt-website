@@ -21,6 +21,12 @@ export default defineAppConfig({
       country: 'Deutschland',
     },
   },
+  // Contact for garden parties: shown instead of the pension phone on /feiern/
+  eventsContact: {
+    phone: '+49 176 55229201',
+    phoneDisplay: '0176 55229201',
+    email: 'events@pension-volgenandt.de',
+  },
   legal: {
     ownerName: 'Ralf Volgenandt',
     taxId: '157/299/10837',
