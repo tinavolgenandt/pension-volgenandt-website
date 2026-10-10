@@ -466,6 +466,7 @@ async function handleSubmit() {
         notes: form.notes,
         message: buildMessage(),
         partnerMessage: buildPartnerMessage(),
+        _topic: 'events',
         _subject: `Garten-Feier Anfrage: ${occasionLabel.value || 'Feier'} (${form.guests} Gäste${form.date ? `, ${form.date}` : ''})`,
         // Catering runs exclusively over our partner Grillverein Thalwenden.
         // They get partnerMessage, we get the full message (see send-mail.php).

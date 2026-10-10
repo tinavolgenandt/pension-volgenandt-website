@@ -39,6 +39,7 @@ async function handleSubmit() {
           `Wunschtermin für das Gespräch: ${form.preferredTime}`,
           `Anmerkung: ${form.notes || '–'}`,
         ].join('\n'),
+        _topic: 'events',
         _subject: `Gesprächstermin-Wunsch (Gartenfeier): ${form.name}`,
       }),
     })
