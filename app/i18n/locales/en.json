@@ -504,5 +504,9 @@
         "blumenstrauss": "Small bouquet of flowers"
       }
     }
+  },
+  "events": {
+    "contactHeading": "Prefer to write?",
+    "contactText": "Your question about a garden party goes straight to Tina Volgenandt."
   }
 }
