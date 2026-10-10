@@ -109,8 +109,8 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
     <section class="mx-auto max-w-3xl px-6 py-12 text-center md:py-16">
       <p class="text-lg leading-relaxed text-sage-800">
         We pack a hand-filled wicker basket for you with homemade products, a real picnic blanket,
-        dishes and cutlery. You choose your favourite spot: in the garden right at the guesthouse
-        or somewhere in the beautiful surrounding countryside.
+        dishes and cutlery. You choose your favourite spot: in the garden right at the guesthouse or
+        somewhere in the beautiful surrounding countryside.
       </p>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
         From <strong class="text-waldhonig-600">19 EUR per person</strong>. Basket deposit 50 EUR
@@ -244,9 +244,7 @@ const { data: basket } = await useAsyncData('picknick-basket', () =>
     <!-- 7. What is always included? -->
     <section class="mx-auto max-w-5xl px-6 py-12 md:py-16">
       <h2 class="mb-2 font-serif text-2xl font-semibold text-sage-900">What is always included?</h2>
-      <p class="mb-8 text-sage-600">
-        Every basket is fully equipped: real dishes, no disposables.
-      </p>
+      <p class="mb-8 text-sage-600">Every basket is fully equipped: real dishes, no disposables.</p>
       <PicknickBasketContents v-if="basket" :always="basket.always" :extras="basket.extras" />
     </section>
 

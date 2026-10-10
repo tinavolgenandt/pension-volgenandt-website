@@ -113,7 +113,9 @@ function dismiss() {
               class="shrink-0 text-waldhonig-500"
               aria-hidden="true"
             />
-            <span>Auch ohne Zimmerbuchung sind <strong>Tagesgäste herzlich willkommen.</strong></span>
+            <span
+              >Auch ohne Zimmerbuchung sind <strong>Tagesgäste herzlich willkommen.</strong></span
+            >
           </div>
 
           <NuxtLink
