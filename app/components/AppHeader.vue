@@ -4,6 +4,7 @@ import { t } from '~/utils/translations'
 const { isCompressed } = useScrollHeader()
 const config = useAppConfig()
 const route = useRoute()
+const contactPhone = useContactPhone()
 const { locale, beds24Lang } = useLocale()
 
 const isMenuOpen = ref(false)
@@ -117,7 +118,7 @@ const logoLink = computed(() => (locale.value === 'en' ? '/en/' : '/'))
       <div class="hidden items-center gap-4 nav:flex">
         <!-- Phone link -->
         <a
-          :href="`tel:${config.contact.phone}`"
+          :href="`tel:${contactPhone.phone}`"
           class="flex items-center gap-2 font-sans text-sm text-sage-200 transition-colors duration-200 hover:text-white"
         >
           <svg
@@ -134,7 +135,7 @@ const logoLink = computed(() => (locale.value === 'en' ? '/en/' : '/'))
               d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
             />
           </svg>
-          <span>{{ config.contact.phoneDisplay }}</span>
+          <span>{{ contactPhone.phoneDisplay }}</span>
         </a>
 
         <!-- CTA button — direct to Beds24 booking -->
@@ -240,7 +241,7 @@ const logoLink = computed(() => (locale.value === 'en' ? '/en/' : '/'))
 
           <!-- Phone number (full, tap-to-call) -->
           <a
-            :href="`tel:${config.contact.phone}`"
+            :href="`tel:${contactPhone.phone}`"
             class="flex items-center gap-3 rounded-lg px-4 py-3 font-sans text-base text-sage-200 transition-colors duration-200 hover:bg-charcoal-800 hover:text-white"
           >
             <svg
@@ -257,7 +258,7 @@ const logoLink = computed(() => (locale.value === 'en' ? '/en/' : '/'))
                 d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
               />
             </svg>
-            <span>{{ config.contact.phoneDisplay }}</span>
+            <span>{{ contactPhone.phoneDisplay }}</span>
           </a>
 
           <!-- CTA button (full-width) -->

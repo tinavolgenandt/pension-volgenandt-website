@@ -511,10 +511,10 @@ const included = [
         <p class="mt-6 text-sm text-sage-500">
           Oder rufen Sie uns direkt an:
           <a
-            :href="`tel:${appConfig.contact.phone}`"
+            :href="`tel:${appConfig.eventsContact.phone}`"
             class="font-medium text-waldhonig-700 hover:underline"
           >
-            {{ appConfig.contact.phoneDisplay }}
+            {{ appConfig.eventsContact.phoneDisplay }}
           </a>
         </p>
       </div>
