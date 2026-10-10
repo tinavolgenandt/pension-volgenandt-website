@@ -412,6 +412,7 @@ function buildMessage(): string {
     `Wunschtermin: ${form.date || 'noch offen'}`,
     `Gäste: ${form.guests}`,
     `Dauer: ca. ${form.hours} Stunden`,
+    `Telefon: ${form.phone || '–'}`,
     '',
     ...summaryLines.value.map((l) => `${l.detail} = ${formatEuro(l.amount)} €`),
     '',
@@ -419,6 +420,24 @@ function buildMessage(): string {
     '',
     `Nachricht: ${form.notes || '–'}`,
   ]
+  return lines.join('\n')
+}
+
+// What the Grillverein sees: their own catering line with its price, the other
+// chosen extras by name only. Our package price and the total stay internal.
+function buildPartnerMessage(): string {
+  const lines: string[] = []
+  for (const group of allGroups.value) {
+    const sel = selectedOption(group)
+    if (!sel) continue
+    const amount = optAmount(sel, group.unit)
+    if (amount <= 0) continue
+    lines.push(
+      group.key === 'cateringId'
+        ? `${group.legend}: ${sel.label} · ${form.guests} × ${rawPrice(sel, 'person')} € = ${formatEuro(amount)} €`
+        : `${group.legend}: ${sel.label}`,
+    )
+  }
   return lines.join('\n')
 }
 
@@ -430,6 +449,7 @@ async function handleSubmit() {
   }
   isSubmitting.value = true
   try {
+    const selectedCatering = opts('cateringTiers').find((t) => t.id === form.cateringId)
     const response = await fetch(appConfig.contactFormUrl, {
       method: 'POST',
       headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
@@ -437,10 +457,18 @@ async function handleSubmit() {
         name: form.name,
         email: form.email,
         phone: form.phone,
+        occasion: occasionLabel.value || 'Feier im Garten',
+        date: form.date,
+        guests: form.guests,
+        hours: form.hours,
+        cateringId: form.cateringId,
+        cateringTier: selectedCatering ? selectedCatering.label : undefined,
+        notes: form.notes,
         message: buildMessage(),
+        partnerMessage: buildPartnerMessage(),
         _subject: `Garten-Feier Anfrage: ${occasionLabel.value || 'Feier'} (${form.guests} Gäste${form.date ? `, ${form.date}` : ''})`,
-        // Catering runs exclusively over our partner Grillverein Thalwenden —
-        // forward the complete request directly to them (see send-mail.php).
+        // Catering runs exclusively over our partner Grillverein Thalwenden.
+        // They get partnerMessage, we get the full message (see send-mail.php).
         _partner: form.cateringId ? 'grillverein-thalwenden' : undefined,
       }),
     })

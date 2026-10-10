@@ -52,11 +52,20 @@ if (!is_array($input)) {
 
 $name           = trim($input['name'] ?? '');
 $email          = trim($input['email'] ?? '');
+$phone          = trim($input['phone'] ?? '');
 $message        = trim($input['message'] ?? '');
 $gotcha         = trim($input['_gotcha'] ?? '');
 $customSubject  = trim($input['_subject'] ?? '');
 $partnerKey     = trim($input['_partner'] ?? '');
 $partnerEmail   = $partnerEmails[$partnerKey] ?? null;
+
+$occasion       = trim($input['occasion'] ?? '');
+$eventDate      = trim($input['date'] ?? '');
+$guests         = trim($input['guests'] ?? '');
+$hours          = trim($input['hours'] ?? '');
+$cateringTier   = trim($input['cateringTier'] ?? '');
+$notes          = trim($input['notes'] ?? '');
+$partnerMessage = trim($input['partnerMessage'] ?? '');
 
 // ---------------------------------------------------------------------------
 // Honeypot – if filled, silently pretend success (bot trap)
@@ -90,6 +99,12 @@ if (!empty($errors)) {
 // ---------------------------------------------------------------------------
 // Build email
 // ---------------------------------------------------------------------------
+// Every inquiry reaches us as a plain-text mail with the full message,
+// including our package price. A catering inquiry additionally goes to the
+// partner as a separate HTML mail without our prices (CC to us, so we see
+// their reply to the guest).
+$isPartnerInquiry = ($partnerEmail !== null && $partnerKey === 'grillverein-thalwenden');
+
 $subject = $customSubject !== ''
     ? "$subjectPrefix $customSubject"
     : "$subjectPrefix Nachricht von $name";
@@ -98,21 +113,91 @@ $body = "Neue Kontaktanfrage über die Website:\r\n"
     . "\r\n"
     . "Name:    $name\r\n"
     . "E-Mail:  $email\r\n"
+    . ($phone !== '' ? "Telefon: $phone\r\n" : '')
     . "\r\n"
     . "Nachricht:\r\n"
     . $message;
 
-// Catering requests route directly to the partner, CC'd to us, instead of to us only.
-if ($partnerEmail !== null) {
-    $body = "Neue Catering-Anfrage über den Eventplaner der Pension Volgenandt:\r\n\r\n" . $body;
+if ($isPartnerInquiry) {
+    $details = array_filter([$guests !== '' ? "$guests Gäste" : '', $eventDate]);
+    $partnerSubject = $customSubject !== ''
+        ? "$subjectPrefix $customSubject"
+        : "$subjectPrefix Catering-Anfrage: " . ($occasion ?: 'Feier im Garten') . ($details ? ' (' . implode(', ', $details) . ')' : '');
+
+    $safeName         = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+    $safeEmail        = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
+    $safePhone        = htmlspecialchars($phone ?: '–', ENT_QUOTES, 'UTF-8');
+    $safeOccasion     = htmlspecialchars($occasion ?: '–', ENT_QUOTES, 'UTF-8');
+    $safeDate         = htmlspecialchars($eventDate ?: 'noch offen', ENT_QUOTES, 'UTF-8');
+    $safeGuests       = htmlspecialchars($guests ?: '–', ENT_QUOTES, 'UTF-8');
+    $safeHours        = htmlspecialchars($hours ? "ca. $hours Stunden" : '–', ENT_QUOTES, 'UTF-8');
+    $safeCateringTier = htmlspecialchars($cateringTier ?: 'Catering gewünscht', ENT_QUOTES, 'UTF-8');
+    $safeNotes        = nl2br(htmlspecialchars($notes, ENT_QUOTES, 'UTF-8'));
+    $safeSelection    = nl2br(htmlspecialchars($partnerMessage, ENT_QUOTES, 'UTF-8'));
+
+    $row = static fn (string $label, string $value): string =>
+        "<tr><td style=\"padding: 6px 12px 6px 0; color: #4a5d3f; font-weight: 600; vertical-align: top; width: 35%;\">$label</td>"
+        . "<td style=\"padding: 6px 0;\">$value</td></tr>";
+
+    $notesBlock = $notes !== ''
+        ? "<h3 style=\"font-size: 15px; margin: 24px 0 8px;\">Wünsche und Notizen</h3><p style=\"margin: 0;\">$safeNotes</p>"
+        : '';
+
+    $selectionBlock = $partnerMessage !== ''
+        ? "<h3 style=\"font-size: 15px; margin: 24px 0 8px;\">Gewählte Leistungen</h3><p style=\"margin: 0;\">$safeSelection</p>"
+        : '';
+
+    $partnerBody = "<!DOCTYPE html>
+<html>
+<head><meta charset=\"UTF-8\"></head>
+<body style=\"font-family: Arial, Helvetica, sans-serif; color: #2d3748; font-size: 14px; line-height: 1.5; padding: 16px;\">
+  <div style=\"max-width: 640px; margin: 0 auto;\">
+    <p>Hallo Grillverein Thalwenden,</p>
+    <p>über den Eventplaner auf unserer Website hat jemand eine Feier im Garten angefragt und euer Catering ausgewählt.</p>
+
+    <table style=\"width: 100%; border-collapse: collapse; margin: 16px 0;\">"
+        . $row('Anlass', $safeOccasion)
+        . $row('Wunschtermin', $safeDate)
+        . $row('Gäste', $safeGuests)
+        . $row('Dauer', $safeHours)
+        . $row('Catering', $safeCateringTier)
+        . "</table>
+
+    <h3 style=\"font-size: 15px; margin: 24px 0 8px;\">Kontakt</h3>
+    <table style=\"width: 100%; border-collapse: collapse;\">"
+        . $row('Name', $safeName)
+        . $row('E-Mail', "<a href=\"mailto:$safeEmail\" style=\"color: #4a5d3f;\">$safeEmail</a>")
+        . $row('Telefon', $safePhone)
+        . "</table>
+
+    $notesBlock
+
+    $selectionBlock
+
+    <h3 style=\"font-size: 15px; margin: 24px 0 8px;\">Ort der Feier</h3>
+    <p style=\"margin: 0;\">Pension Volgenandt, Otto-Reutter-Straße 28, 37327 Leinefelde-Worbis OT Breitenbach.<br>
+    Die Garage dient als Catering-Küche.<br>
+    Ansprechpartnerin vor Ort: Tina Volgenandt, 0176 55229201, events@pension-volgenandt.de</p>
+
+    <p style=\"margin-top: 24px;\">Wenn ihr auf diese Mail antwortet, geht die Antwort direkt an {$safeName}. Wir stehen in Kopie.</p>
+    <p>Viele Grüße aus Breitenbach<br>Tina Volgenandt</p>
+  </div>
+</body>
+</html>";
 }
-$recipientTo = $partnerEmail ?? $recipientEmail;
-$recipientCc = $partnerEmail !== null ? $recipientEmail : '';
 
 // ---------------------------------------------------------------------------
 // Send via SMTP
 // ---------------------------------------------------------------------------
-$result = sendSmtp($smtpHost, $smtpPort, $smtpUser, $smtpPass, $recipientEmail, $recipientTo, $subject, $body, $name, $email, $recipientCc);
+if ($isPartnerInquiry) {
+    $partnerResult = sendSmtp($smtpHost, $smtpPort, $smtpUser, $smtpPass, $recipientEmail, $partnerEmail, $partnerSubject, $partnerBody, $name, $email, $recipientEmail, true);
+    $body = ($partnerResult['ok']
+            ? "An Grillverein Thalwenden weitergeleitet ($partnerEmail), ohne unsere Preise.\r\n\r\n"
+            : "ACHTUNG: Weiterleitung an Grillverein Thalwenden fehlgeschlagen. Bitte selbst weitergeben.\r\n\r\n")
+        . $body;
+}
+
+$result = sendSmtp($smtpHost, $smtpPort, $smtpUser, $smtpPass, $recipientEmail, $recipientEmail, $subject, $body, $name, $email);
 
 if ($result['ok']) {
     // Log inquiry to CSV for statistics collection
@@ -121,7 +206,7 @@ if ($result['ok']) {
         date('Y-m-d H:i:s'),
         $name,
         $email,
-        $customSubject !== '' ? $customSubject : 'Kontaktanfrage',
+        $customSubject !== '' ? $customSubject : ($isPartnerInquiry ? 'Catering-Anfrage' : 'Kontaktanfrage'),
         $_SERVER['HTTP_REFERER'] ?? '',
     ];
     $fp = @fopen($logFile, 'a');
