@@ -4,6 +4,8 @@ import { t } from '~/utils/translations'
 
 interface Props {
   locale?: Locale
+  // 'events' sends the message to events@ instead of kontakt@ (see server/send-mail.php)
+  topic?: 'events'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -38,6 +40,9 @@ async function handleSubmit() {
         name: formData.name,
         email: formData.email,
         message: formData.message,
+        _topic: props.topic,
+        _subject:
+          props.topic === 'events' ? `Frage zur Feier im Garten: ${formData.name}` : undefined,
       }),
     })
 

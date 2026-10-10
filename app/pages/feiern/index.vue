@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useJsonLd } from '~/composables/useJsonLd'
+import { t } from '~/utils/translations'
 
 definePageMeta({
   breadcrumb: { label: 'Feiern im Garten' },
@@ -516,6 +517,19 @@ const included = [
             {{ appConfig.contact.phoneDisplay }}
           </a>
         </p>
+      </div>
+    </section>
+
+    <!-- 9. Kontaktformular für Fragen zu Feiern (geht an events@) -->
+    <section class="bg-white px-6 py-12 md:py-16">
+      <div class="mx-auto max-w-2xl">
+        <h2 class="text-center font-serif text-2xl font-semibold text-sage-900">
+          {{ t('events.contactHeading', 'de') }}
+        </h2>
+        <p class="mt-3 text-center text-sage-700">{{ t('events.contactText', 'de') }}</p>
+        <div class="mt-8">
+          <ContactForm topic="events" />
+        </div>
       </div>
     </section>
   </div>

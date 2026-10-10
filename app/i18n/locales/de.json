@@ -504,5 +504,9 @@
         "blumenstrauss": "Kleiner Blumenstrauß"
       }
     }
+  },
+  "events": {
+    "contactHeading": "Lieber schreiben?",
+    "contactText": "Ihre Frage zur Feier im Garten geht direkt an Tina Volgenandt."
   }
 }
