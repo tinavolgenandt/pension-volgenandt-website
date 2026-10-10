@@ -12,6 +12,7 @@ require_once __DIR__ . '/smtp.php';
 // Configuration
 // ---------------------------------------------------------------------------
 $recipientEmail = 'kontakt@pension-volgenandt.de';
+$eventsEmail    = 'events@pension-volgenandt.de'; // CC on every mail to a service partner
 $subjectPrefix  = '[Pension Volgenandt]';
 
 // Verified partner inboxes we're allowed to route inquiries to directly.
@@ -101,7 +102,7 @@ if (!empty($errors)) {
 // ---------------------------------------------------------------------------
 // Every inquiry reaches us as a plain-text mail with the full message,
 // including our package price. A catering inquiry additionally goes to the
-// partner as a separate HTML mail without our prices (CC to us, so we see
+// partner as a separate HTML mail without our prices (CC to events@, so we see
 // their reply to the guest).
 $isPartnerInquiry = ($partnerEmail !== null && $partnerKey === 'grillverein-thalwenden');
 
@@ -190,7 +191,7 @@ if ($isPartnerInquiry) {
 // Send via SMTP
 // ---------------------------------------------------------------------------
 if ($isPartnerInquiry) {
-    $partnerResult = sendSmtp($smtpHost, $smtpPort, $smtpUser, $smtpPass, $recipientEmail, $partnerEmail, $partnerSubject, $partnerBody, $name, $email, $recipientEmail, true);
+    $partnerResult = sendSmtp($smtpHost, $smtpPort, $smtpUser, $smtpPass, $recipientEmail, $partnerEmail, $partnerSubject, $partnerBody, $name, $email, $eventsEmail, true);
     $body = ($partnerResult['ok']
             ? "An Grillverein Thalwenden weitergeleitet ($partnerEmail), ohne unsere Preise.\r\n\r\n"
             : "ACHTUNG: Weiterleitung an Grillverein Thalwenden fehlgeschlagen. Bitte selbst weitergeben.\r\n\r\n")
