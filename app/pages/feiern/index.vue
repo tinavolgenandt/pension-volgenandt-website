@@ -7,8 +7,8 @@ definePageMeta({
 })
 
 useSeoMeta({
-  title: 'Feiern im Garten: Hochzeit & Feste',
-  ogTitle: 'Feiern im Garten | Pension Volgenandt',
+  title: 'Eventlocation im Eichsfeld',
+  ogTitle: 'Eventlocation im Eichsfeld | Pension Volgenandt',
   description:
     'Hochzeit, Jugendweihe oder runder Geburtstag im Garten der Pension Volgenandt im Eichsfeld. Mit Catering, Eventplanung und Übernachtung. Preis online berechnen.',
   ogDescription:
@@ -119,14 +119,12 @@ const included = [
         class="relative z-10 flex h-full flex-col items-center justify-end px-6 pb-12 text-center md:pb-16"
       >
         <p class="text-sm font-medium tracking-widest text-white/70 uppercase">
-          Pension Volgenandt · Eichsfeld
+          Pension Volgenandt
         </p>
         <h1 class="mt-2 max-w-3xl font-serif text-4xl font-bold text-white md:text-5xl">
-          Feiern bei Pension Volgenandt
+          Eventlocation im Eichsfeld
         </h1>
-        <p class="mt-3 max-w-2xl text-lg text-white/90 md:text-xl">
-          Hochzeit, Jugendweihe oder Geburtstag: rundum sorglos im Grünen.
-        </p>
+        <p class="mt-3 max-w-2xl text-lg text-white/90 md:text-xl">Ihr Fest bei uns im Garten</p>
         <a
           href="#rechner"
           class="mt-6 inline-block rounded-lg bg-waldhonig-500 px-8 py-3.5 text-base font-semibold text-white transition-colors hover:bg-waldhonig-600"
