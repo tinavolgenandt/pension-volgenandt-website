@@ -119,7 +119,7 @@ const included = [
         class="relative z-10 flex h-full flex-col items-center justify-end px-6 pb-12 text-center md:pb-16"
       >
         <p class="text-sm font-medium tracking-widest text-white/70 uppercase">
-          Pension Volgenandt · Eichsfeld
+          Pension Volgenandt
         </p>
         <h1 class="mt-2 max-w-3xl font-serif text-4xl font-bold text-white md:text-5xl">
           Eventlocation im Eichsfeld
