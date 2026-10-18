@@ -81,17 +81,17 @@ const included = [
   {
     icon: 'ph:key-duotone',
     title: 'Das ganze Grundstück für Sie allein',
-    text: 'Fürs Wochenende gibt es keine fremden Gäste im Haus. Bis zu 28 Gäste schlafen in den Zimmern, weitere gegen Aufpreis im eigenen Zelt oder Wohnmobil im Garten.',
+    text: 'Am Festwochenende sind nur Ihre Gäste im Haus. Bis zu 28 schlafen in den Zimmern, weitere im eigenen Zelt oder Wohnmobil im Garten.',
   },
   {
     icon: 'ph:tree-duotone',
     title: 'Garten für bis zu 200 Gäste',
-    text: 'Ein ruhiger Garten mitten im Grünen. Ein Festzelt mit Seitenwänden ist nicht im Basispreis enthalten, wir empfehlen es aber für jede Feier.',
+    text: 'Ein ruhiger Garten mitten im Grünen. Für Regen empfehlen wir ein Festzelt mit Seitenwänden.',
   },
   {
     icon: 'ph:fork-knife-duotone',
     title: 'Catering von unseren Partnern',
-    text: 'Sie wählen im Rechner, wer für Sie kocht. Das Catering ist nicht im Basispreis enthalten.',
+    text: 'Zwei Partner kochen für Sie: ein Grillbuffet für jede Gästezahl und regionale Küche für Feiern ab 80 Gästen.',
   },
   {
     icon: 'ph:moon-stars-duotone',
@@ -122,16 +122,16 @@ const cateringPartners = [
   {
     name: 'Grillverein Thalwenden',
     fit: 'Grillbuffet, für jede Gästezahl',
-    text: 'Das Team grillt live bei Ihrer Feier, mit hochwertigen, regionalen Zutaten. Vier Menüs vom Klassiker bis zur Premium-Auswahl, der Preis pro Person sinkt mit der Gästezahl.',
+    text: 'Das Team grillt live bei Ihrer Feier, mit regionalen Zutaten. Es gibt vier Menüs vom Klassiker bis zur Premium-Auswahl. Je mehr Gäste, desto günstiger wird es pro Person.',
     url: 'http://grillverein-thalwenden.de/',
-    image: '/img/events/partner-grillverein-grillplatte.webp',
-    imageAlt: 'Große Grillplatte mit Fisch, Spießen, Bratwurst und Burgern',
+    image: '/img/events/partner-grillverein-team.webp',
+    imageAlt: 'Grillmeister des Grillverein Thalwenden in seinem Catering-Zelt',
     icon: '',
   },
   {
     name: 'Anja kocht',
     fit: 'Regionale Küche, für Feiern ab 80 Gästen',
-    text: 'Anja Randau und ihr Partyservice aus Witzenhausen kochen regional und frisch. Wegen der Anfahrt kommt Anja für Feiern ab 80 Gästen zu uns.',
+    text: 'Anja Randau und ihr Partyservice aus Witzenhausen kochen regional und frisch. Was auf den Tisch kommt, stimmen wir gemeinsam mit Ihnen ab.',
     url: 'https://www.anjakocht.de/',
     image: '',
     imageAlt: '',
@@ -217,12 +217,11 @@ function chooseOccasion(id: string) {
     <!-- 2. Intro + Anlässe: ein Klick wählt den Anlass im Rechner vor -->
     <section class="mx-auto max-w-3xl px-6 py-12 text-center md:py-16">
       <h2 class="font-serif text-2xl font-semibold text-sage-900 md:text-3xl">
-        Ihr Fest ganz ohne Stress
+        Feiern, wo Ihre Gäste auch schlafen
       </h2>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
-        Fürs Festwochenende gehört Ihnen das <strong>gesamte Grundstück allein</strong>. Ihre Gäste
-        übernachten vor Ort, das Catering kommt von unseren Partnern, und ich plane die Feier
-        persönlich mit Ihnen.
+        Sie feiern im Garten, Ihre Gäste schlafen gleich nebenan in unseren Zimmern. Das Essen kommt
+        von unseren Catering-Partnern, und ich plane die Feier persönlich mit Ihnen.
       </p>
       <p class="mt-8 text-sm font-medium tracking-wide text-sage-500 uppercase">Ihr Anlass</p>
       <div class="mt-3 flex flex-wrap justify-center gap-2">
@@ -265,8 +264,7 @@ function chooseOccasion(id: string) {
           <p class="text-sm leading-relaxed text-sage-700">
             <strong class="text-sage-900">Unsere Planungs-App:</strong> Nach der Buchung pflegen Sie
             dort Gästeliste und Zimmerverteilung, sehen Ablaufplan und Kosten und schicken mir
-            Wünsche und Dateien. Sie melden sich mit einem Link per E-Mail an, ein Passwort brauchen
-            Sie nicht.
+            Wünsche und Dateien.
           </p>
         </div>
       </div>
@@ -355,7 +353,7 @@ function chooseOccasion(id: string) {
           Unsere Catering-Partner
         </h2>
         <p class="mb-10 text-center text-sage-600">
-          Das Catering ist nicht im Basispreis enthalten. Sie wählen es im Rechner aus.
+          Das Catering wählen Sie im Rechner aus. Es kommt zum Basispreis dazu.
         </p>
         <div class="grid gap-6 sm:grid-cols-2">
           <article
@@ -419,14 +417,26 @@ function chooseOccasion(id: string) {
               Abschied am Sonntag. Ich war viele Jahre in der Gastronomie und im Verkauf von
               Veranstaltungen tätig. Seit Jahren unterstütze ich meine Eltern in der Pension.
             </p>
-            <p class="mt-3 text-sage-700">
-              <a
-                :href="`tel:${appConfig.eventsContact.phone}`"
-                class="font-medium text-waldhonig-700 hover:underline"
-              >
-                {{ appConfig.eventsContact.phoneDisplay }}
-              </a>
-            </p>
+            <ul class="mt-4 space-y-2 text-sage-800">
+              <li>
+                <a
+                  :href="`mailto:${appConfig.eventsContact.email}`"
+                  class="inline-flex items-center gap-2 font-medium hover:text-waldhonig-700"
+                >
+                  <Icon name="ph:envelope-simple-duotone" class="size-5 text-waldhonig-500" />
+                  {{ appConfig.eventsContact.email }}
+                </a>
+              </li>
+              <li>
+                <a
+                  :href="`tel:${appConfig.eventsContact.phone}`"
+                  class="inline-flex items-center gap-2 font-medium hover:text-waldhonig-700"
+                >
+                  <Icon name="ph:phone-duotone" class="size-5 text-waldhonig-500" />
+                  {{ appConfig.eventsContact.phoneDisplay }}
+                </a>
+              </li>
+            </ul>
             <a
               href="https://www.linkedin.com/in/tina-volgenandt-9420a2136/"
               target="_blank"
@@ -515,15 +525,24 @@ function chooseOccasion(id: string) {
           <EventsCallbackRequest v-if="contactTab === 'rueckruf'" />
           <ContactForm v-else topic="events" />
         </div>
-        <p class="mt-6 text-center text-sm text-sage-500">
-          Oder rufen Sie mich direkt an:
+        <div
+          class="mt-8 flex flex-col items-center justify-center gap-3 text-sage-800 sm:flex-row sm:gap-8"
+        >
+          <a
+            :href="`mailto:${appConfig.eventsContact.email}`"
+            class="inline-flex items-center gap-2 font-medium hover:text-waldhonig-700"
+          >
+            <Icon name="ph:envelope-simple-duotone" class="size-5 text-waldhonig-500" />
+            {{ appConfig.eventsContact.email }}
+          </a>
           <a
             :href="`tel:${appConfig.eventsContact.phone}`"
-            class="font-medium text-waldhonig-700 hover:underline"
+            class="inline-flex items-center gap-2 font-medium hover:text-waldhonig-700"
           >
+            <Icon name="ph:phone-duotone" class="size-5 text-waldhonig-500" />
             {{ appConfig.eventsContact.phoneDisplay }}
           </a>
-        </p>
+        </div>
       </div>
     </section>
   </div>

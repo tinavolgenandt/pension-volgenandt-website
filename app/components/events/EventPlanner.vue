@@ -180,7 +180,7 @@ const allOptionSteps = computed<WizardStep[]>(() => [
   {
     title: 'Getränke',
     intro:
-      'Getränke laufen über uns: Selbstbedienung oder Service am Tisch. Abgerechnet pro Person und Stunde.',
+      'Die Getränke kommen von uns, zur Selbstbedienung oder mit Service am Tisch. Abgerechnet pro Person und Stunde.',
     groups: [
       {
         key: 'drinkId',
