@@ -95,7 +95,7 @@ basePackage:
       Sie nutzen Toiletten und Bäder in den Zimmern mit
     - 'Persönliche Planung und Koordination durch Tina Volgenandt'
     - Bestuhlung für alle Gäste
-    - Professionelle Endreinigung nach der Feier
+    - Endreinigung nach der Feier
     - Stromversorgung für die Musik direkt aus dem Haus
     - Garage als Catering-Küche
     - Zugang zu unserer Planungs-App für Zimmerverteilung, Ablauf und Wünsche
@@ -221,7 +221,7 @@ drinkOptions:
     image: /img/events/getraenke-service.webp
     imageAlt: Getränkeservice am Tisch und an der Bar
     description: >-
-      Getränke werden von unserem Personal am Tisch und an der Bar serviert.
+      Getränke werden am Tisch und an der Bar serviert.
       Abgerechnet pro Person und Stunde.
     pricePerPersonPerHour: 9
 
@@ -269,12 +269,11 @@ photographyOptions:
     image: /img/events/foto-fotograf.webp
     imageAlt: Hochzeitsfotograf hält einen Moment der Feier fest
     description: >-
-      Professionelle Foto-Reportage Ihres Tages: natürliche Momentaufnahmen und
-      Gruppenbilder, als bearbeitete Bildergalerie zum Download.
+      Foto-Reportage Ihres Tages: Momentaufnahmen und Gruppenbilder, als
+      bearbeitete Bilder zum Download.
     detail: >-
-      Ein erfahrener Fotograf begleitet Ihre Feier und hält die schönsten Momente
-      fest, vom Empfang bis zum Abend. Sie erhalten die bearbeiteten Bilder digital.
-      Ein Klassiker, den fast alle Hochzeitspaare wählen.
+      Ein Fotograf begleitet Ihre Feier vom Empfang bis zum Abend. Sie erhalten
+      die bearbeiteten Bilder digital.
     onRequest: true
   - id: foto_video
     label: Foto + Video
@@ -298,9 +297,9 @@ musicOptions:
   - id: anlage
     label: Nur Musikanlage (eigene Playlist)
     image: /img/events/musik-anlage.webp
-    imageAlt: Professionelle Musikanlage mit Lautsprechern
+    imageAlt: Musikanlage mit Lautsprechern
     description: >-
-      Professionelle Musikanlage inkl. Lieferung, Aufbau und Anschluss Ihres eigenen
+      Musikanlage inkl. Lieferung, Aufbau und Anschluss Ihres eigenen
       Geräts. Sie spielen Ihre eigene Playlist. Strom aus dem Haus.
     onRequest: true
   - id: dj
@@ -308,8 +307,8 @@ musicOptions:
     image: /img/events/musik-dj.webp
     imageAlt: DJ sorgt auf der Feier für Stimmung
     description: >-
-      Professioneller DJ mit kompletter Anlage für die Abendgestaltung, inkl.
-      Organisation und Technik. Strom aus dem Haus.
+      DJ mit kompletter Anlage für den Abend, inkl. Organisation und
+      Technik. Strom aus dem Haus.
     onRequest: true
 
 # Mobiliar & Ausstattung – jeweils pro Person, erste Option = im Basispreis
@@ -358,7 +357,7 @@ dishwareOptions:
     label: Komplettes Mietgeschirr
     image: /img/events/geschirr-mietgeschirr.webp
     imageAlt: Festlich eingedecktes Mietgeschirr mit Gläsern und Besteck
-    description: Hochwertiges Mietgeschirr mit Tellern, Gläsern und Besteck inkl. Spülservice.
+    description: Mietgeschirr mit Tellern, Gläsern und Besteck.
     onRequest: true
 
 # Bodenbelag schützt den Rasen vor Beschädigung. Standard = Holz-Tanzfläche.
@@ -425,12 +424,10 @@ cakeOptions:
     image: /img/events/torte-festtorte.webp
     imageAlt: Mehrstöckige Festtorte
     description: >-
-      Mehrstöckige Festtorte vom Konditor, abgestimmt auf Anlass, Geschmack und
-      Gästezahl: der süße Höhepunkt Ihrer Feier.
+      Mehrstöckige Festtorte, abgestimmt auf Anlass, Geschmack und Gästezahl.
     detail: >-
-      Der klassische Moment: das gemeinsame Anschneiden der Torte. Wir stimmen
-      Größe, Geschmack und Optik mit unserem Konditor auf Ihren Anlass ab.
-      Abgerechnet pro Person, damit die Torte zur Gästezahl passt.
+      Größe, Geschmack und Optik stimme ich mit Ihnen ab. Die Torte richtet sich
+      nach der Gästezahl.
     onRequest: true
   - id: torte_sweet
     label: Torte + Sweet Table
@@ -457,14 +454,13 @@ photoboothOptions:
     image: /img/events/fotobox.webp
     imageAlt: Fotobox mit lustigen Requisiten
     description: >-
-      Fotobox mit lustigen Requisiten und Sofortausdruck, für viele Lacher und ein
-      Gästebuch voller Erinnerungen.
+      Fotobox mit Requisiten und Sofortausdruck. Die Bilder können ins Gästebuch.
     detail: >-
-      Der Unterhaltungs-Hit für Ihre Gäste: Fotos mit Verkleidungen und Sofortdruck,
-      dazu ein Abzug fürs Gästebuch. Wir kümmern uns um Aufbau, Betreuung und Abbau.
+      Ihre Gäste fotografieren sich selbst mit Verkleidungen und bekommen den
+      Abzug sofort.
     onRequest: true
 
-# Styling: keine / Braut-Styling / Braut + Begleitung. Fester Preis, Hair & Make-up.
+# Styling: keine / eine Person / zwei Personen. Haare & Make-up.
 # (Markt 2026: Braut-Styling Haare & Make-up ~250–450 €.)
 stylingOptions:
   - id: keine
@@ -473,26 +469,23 @@ stylingOptions:
     detail: Diese Position bleibt bei 0 €.
     price: 0
   - id: braut
-    label: Braut-Styling (Haare & Make-up)
+    label: Styling für eine Person (Haare & Make-up)
     image: /img/events/styling-braut.webp
-    imageAlt: Braut beim Haar- und Make-up-Styling
+    imageAlt: Haar- und Make-up-Styling vor der Feier
     description: >-
-      Professionelles Haar- und Make-up-Styling für die Braut (bzw. das Geburtstags-
-      oder Ehrenkind), inkl. Vorprobe.
+      Haare und Make-up für die Hauptperson der Feier, zum Beispiel Braut oder
+      Geburtstagskind.
     detail: >-
-      Entspannt in den großen Tag starten: Haar- und Make-up-Styling direkt bei uns
-      vor Ort, damit Sie sich um nichts kümmern müssen. Mit vorheriger Typberatung
-      und Probetermin.
+      Das Styling findet vor der Feier bei uns vor Ort statt. Ob es vorher einen
+      Probetermin gibt, steht im Angebot.
     onRequest: true
   - id: braut_partner
-    label: Styling für Braut + Begleitung
+    label: Styling für zwei Personen
     image: /img/events/styling-braut-partner.webp
-    imageAlt: Styling für Braut und eine weitere Person
+    imageAlt: Styling für zwei Personen vor der Feier
     description: >-
-      Styling für die Braut plus eine weitere Person (Partnerin, Mutter, Trauzeugin).
-    detail: >-
-      Wie das Braut-Styling, zusätzlich für eine zweite Person: ideal, wenn Sie sich
-      gemeinsam vorbereiten möchten.
+      Haare und Make-up für die Hauptperson und eine weitere Person, zum Beispiel
+      Mutter oder Trauzeugin.
     onRequest: true
 
 # Anlässe (für die Auswahl im Rechner und die Anlass-Kacheln)
@@ -503,7 +496,7 @@ occasions:
     icon: ph:heart-duotone
   - id: jugendweihe
     label: Jugendweihe / Konfirmation
-    description: Den großen Tag standesgemäß und entspannt feiern.
+    description: Den großen Tag mit der ganzen Familie feiern.
     icon: ph:graduation-cap-duotone
   - id: kommunion
     label: Kommunion / Taufe
@@ -511,7 +504,7 @@ occasions:
     icon: ph:bird-duotone
   - id: geburtstag
     label: Runder Geburtstag
-    description: Ein besonderes Jahr gebührend im Garten begehen.
+    description: Ein besonderes Jahr im Garten feiern.
     icon: ph:cake-duotone
   - id: jubilaeum
     label: Jubiläum / Familienfeier

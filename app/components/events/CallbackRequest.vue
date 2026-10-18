@@ -67,7 +67,7 @@ async function handleSubmit() {
     <Icon name="ph:check-circle-duotone" class="mx-auto mb-4 size-12 text-sage-600" />
     <h3 class="font-serif text-xl font-semibold text-sage-900">Ihr Rückrufwunsch ist angekommen</h3>
     <p class="mt-2 text-sage-700">
-      Vielen Dank – ich rufe Sie zu Ihrem Wunschtermin zurück, um in Ruhe über Ihre Feier zu
+      Vielen Dank. Ich rufe Sie zu Ihrem Wunschtermin zurück, um in Ruhe über Ihre Feier zu
       sprechen.
     </p>
   </div>

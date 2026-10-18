@@ -125,7 +125,7 @@ const included = [
 
 const toDiscuss = [
   'Festzelt (nicht im Basispreis, wir empfehlen es für jede Feier)',
-  'Tische, Stühle & Geschirr',
+  'Tischform, Stuhlhussen & Geschirr',
   'Deko & Blumenschmuck',
   'Musik, DJ oder Band',
   'Getränke & Ausschank',

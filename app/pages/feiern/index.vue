@@ -10,9 +10,9 @@ useSeoMeta({
   title: 'Eventlocation im Eichsfeld',
   ogTitle: 'Eventlocation im Eichsfeld | Pension Volgenandt',
   description:
-    'Hochzeit, Jugendweihe oder runder Geburtstag im Garten der Pension Volgenandt im Eichsfeld. Mit Catering, Eventplanung und Übernachtung. Preis online berechnen.',
+    'Hochzeit, Jugendweihe oder runder Geburtstag im Garten der Pension Volgenandt im Eichsfeld. Mit Catering von Partnern, Eventplanung und Übernachtung. Preis online berechnen.',
   ogDescription:
-    'Ihr Fest im Grünen im Eichsfeld: Rundum-sorglos mit Catering, Eventplanung und Übernachtung für Ihre Gäste.',
+    'Ihr Fest im Grünen im Eichsfeld: Catering von unseren Partnern, persönliche Planung und Übernachtung für Ihre Gäste.',
   ogImage: '/img/garten/garten-rasen-baeume-sommer.webp',
   ogType: 'website',
   // Prices are still provisional (caterer/insurance not yet confirmed) and the
@@ -46,7 +46,7 @@ useJsonLd(
     url: 'https://www.pension-volgenandt.de/feiern/',
     image: ['https://www.pension-volgenandt.de/img/garten/garten-rasen-baeume-sommer.webp'],
     description:
-      'Full-Service-Eventlocation im Garten der Pension Volgenandt im Eichsfeld für Hochzeiten, Jugendweihe, Konfirmation, Kommunion, Taufe, runde Geburtstage und Jubiläen, inklusive Catering, Eventplanung und Übernachtungsmöglichkeit.',
+      'Full-Service-Eventlocation im Garten der Pension Volgenandt im Eichsfeld für Hochzeiten, Jugendweihe, Konfirmation, Kommunion, Taufe, runde Geburtstage und Jubiläen, mit Catering von Partnern, Eventplanung und Übernachtungsmöglichkeit.',
     areaServed: {
       '@type': 'Place',
       name: 'Eichsfeld, Thüringen',
@@ -91,7 +91,7 @@ const included = [
   {
     icon: 'ph:fork-knife-duotone',
     title: 'Catering von unseren Partnern',
-    text: 'Der Grillverein Thalwenden grillt live im Garten. Für große Feiern ab 80 Gästen kocht auch Anja kocht aus Witzenhausen.',
+    text: 'Der Grillverein Thalwenden grillt live im Garten. Für große Feiern ab 80 Gästen kocht auch der Partyservice Anja kocht aus Witzenhausen. Das Catering ist nicht im Basispreis enthalten.',
   },
   {
     icon: 'ph:calendar-check-duotone',
@@ -145,7 +145,7 @@ const included = [
         Catering über unsere Partner und persönlicher Eventplanung.
       </p>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
-        Keine Nachbarn, keine Sperrstunde, kein Stress: Sie feiern, wir kümmern uns um den Rest.
+        Keine fremden Gäste im Haus: Sie feiern, wir kümmern uns um den Rest.
       </p>
     </section>
 
@@ -177,10 +177,10 @@ const included = [
     <section class="px-6 py-12 md:py-16">
       <div class="mx-auto max-w-6xl">
         <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">
-          Unser Komplettpaket
+          Was Sie bei uns bekommen
         </h2>
         <p class="mb-10 text-center text-sage-600">
-          Alles aus einer Hand, damit Sie entspannt feiern können.
+          Eine Ansprechpartnerin für alles, damit Sie entspannt feiern können.
         </p>
         <div class="grid gap-6 sm:grid-cols-2">
           <div
@@ -376,7 +376,7 @@ const included = [
           <div class="mx-auto size-48 overflow-hidden rounded-full sm:mx-0">
             <img
               src="/img/events/eventmanagerin-tina.webp"
-              alt="Tina Volgenandt, Eventmanagerin"
+              alt="Tina Volgenandt, Ansprechpartnerin für Feiern"
               class="size-full object-cover"
               width="192"
               height="192"
@@ -421,8 +421,8 @@ const included = [
           Stellen Sie sich Ihre Feier zusammen
         </h2>
         <p class="mt-3 mb-8 text-center text-sage-600">
-          Unser Konfigurator erstellt Schritt für Schritt ein unverbindliches Angebot, damit Sie ein
-          Gefühl für den Preis bekommen. Danach melden wir uns persönlich.
+          Der Rechner zeigt Ihnen Schritt für Schritt einen ersten Richtwert, damit Sie ein Gefühl
+          für den Preis bekommen. Danach melde ich mich mit einem persönlichen Angebot.
         </p>
         <EventsEventPlanner />
       </div>
@@ -512,9 +512,12 @@ const included = [
           </div>
           <div class="rounded-xl bg-white p-6 text-center">
             <Icon name="ph:moon-stars-duotone" class="mx-auto size-9 text-waldhonig-500" />
-            <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">Ohne Sperrstunde</h3>
+            <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">
+              Feiern bis in die Nacht
+            </h3>
             <p class="mt-2 text-sm text-sage-600">
-              Keine Nachbarn, keine Lärmauflagen: feiern Sie, so lange Sie möchten.
+              Ihre Gäste schlafen vor Ort, niemand muss nachts fahren. Wie lange die Musik draußen
+              laufen kann, bespreche ich mit Ihnen.
             </p>
           </div>
           <div class="rounded-xl bg-white p-6 text-center">

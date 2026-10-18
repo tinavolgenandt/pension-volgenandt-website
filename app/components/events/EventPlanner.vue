@@ -123,7 +123,10 @@ const mealLabels = computed(() =>
 function clock(hour: number): string {
   return `${String(hour % 24).padStart(2, '0')}:00`
 }
-const timeWindow = computed(() => `${clock(form.startHour)} bis ${clock(endHour.value)} Uhr`)
+const timeWindow = computed(
+  () =>
+    `${clock(form.startHour)} bis ${clock(endHour.value)} Uhr${endHour.value > 24 ? ' (Folgetag)' : ''}`,
+)
 const startHourOptions = computed(() => {
   const hours: number[] = []
   for (let h = startTime.value.min; h <= startTime.value.max; h++) hours.push(h)
@@ -221,7 +224,7 @@ const allOptionSteps = computed<WizardStep[]>(() => [
   },
   {
     title: 'Torte & Sweet Table',
-    intro: 'Festtorte vom Konditor, auf Wunsch mit Sweet Table.',
+    intro: 'Festtorte, auf Wunsch mit Sweet Table.',
     groups: [
       {
         key: 'cakeId',
@@ -233,15 +236,14 @@ const allOptionSteps = computed<WizardStep[]>(() => [
   },
   {
     title: 'Fotobox',
-    intro:
-      'Fotobox mit Requisiten und Sofortdruck, für viele Lacher und ein Gästebuch voller Erinnerungen.',
+    intro: 'Fotobox mit Requisiten und Sofortdruck.',
     groups: [
       { key: 'photoboothId', unit: 'flat', legend: 'Fotobox', options: opts('photoboothOptions') },
     ],
   },
   {
     title: 'Styling',
-    intro: 'Professionelles Haar- und Make-up-Styling direkt vor Ort, mit Probetermin.',
+    intro: 'Haar- und Make-up-Styling vor der Feier, direkt vor Ort.',
     groups: [
       { key: 'stylingId', unit: 'flat', legend: 'Styling', options: opts('stylingOptions') },
     ],
@@ -280,14 +282,34 @@ const optionSteps = computed(() => allOptionSteps.value.filter((s) => s.show !==
 const allGroups = computed<WizardGroup[]>(() => optionSteps.value.flatMap((s) => s.groups))
 
 // Seed each selection with its first option once config has loaded, and fall
-// back to it when the chosen option disappears (guest count below minGuests).
-// The first option is the included/"Keine" one for opt-in extras.
+// back to it when the chosen option disappears. The first option is the
+// included/"Keine" one for opt-in extras.
+// Catering is the exception: the guest has to pick a caterer actively, because
+// the chosen partner receives the guest's contact details. If the choice
+// disappears (guest count below minGuests), it is cleared and a note shown.
+const cateringCleared = ref(false)
 watchEffect(() => {
   for (const group of allGroups.value) {
-    if (!group.options.some((o) => o.id === form[group.key]) && group.options[0])
-      form[group.key] = group.options[0].id
+    if (group.options.some((o) => o.id === form[group.key])) continue
+    if (group.key === 'cateringId') {
+      if (form.cateringId) {
+        form.cateringId = ''
+        cateringCleared.value = true
+      }
+      continue
+    }
+    if (group.options[0]) form[group.key] = group.options[0].id
   }
 })
+watch(
+  () => form.cateringId,
+  (id) => {
+    if (id) cateringCleared.value = false
+  },
+)
+const needsCatering = computed(
+  () => activeStep.value?.groups.some((g) => g.key === 'cateringId') === true && !form.cateringId,
+)
 
 // --- Pricing ---------------------------------------------------------------
 // Some per-person options (e.g. catering) are banded by guest count instead of
@@ -339,7 +361,7 @@ function unitPriceLabel(opt: CatalogOption, unit: Unit): string {
   return `${formatEuro(p)} €`
 }
 function selectedOption(group: WizardGroup): CatalogOption | undefined {
-  return group.options.find((o) => o.id === form[group.key]) ?? group.options[0]
+  return group.options.find((o) => o.id === form[group.key])
 }
 
 // The large photo at the top of a catalogue step: the currently selected
@@ -353,7 +375,7 @@ function formatEuro(value: number): string {
   return value.toLocaleString('de-DE')
 }
 
-// Base price is banded by guest count (the included tent scales with size).
+// Base price is banded by guest count (the effort fee grows with the party).
 const basePrice = computed(() => {
   const bands = basePackage.value?.guestBands ?? []
   const band = bands.find((b) => form.guests <= b.maxGuests) ?? bands[bands.length - 1]
@@ -437,7 +459,10 @@ const introValid = computed(
     form.occasionId !== '' &&
     (!isCustomOccasion.value || form.customOccasion.trim() !== '') &&
     form.guests >= guestRange.value.min &&
-    form.guests <= guestRange.value.max,
+    form.guests <= guestRange.value.max &&
+    Number.isInteger(form.hours) &&
+    form.hours >= partyDuration.value.min &&
+    form.hours <= partyDuration.value.max,
 )
 
 const scrollAnchor = ref<HTMLElement | null>(null)
@@ -446,6 +471,7 @@ function scrollToTop() {
 }
 function next() {
   if (isIntro.value && !introValid.value) return
+  if (needsCatering.value) return
   if (currentStep.value < totalSteps.value - 1) {
     currentStep.value++
     scrollToTop()
@@ -474,6 +500,7 @@ const errorMessage = ref('')
 const isFormValid = computed(
   () =>
     introValid.value &&
+    form.cateringId !== '' &&
     form.name.trim() !== '' &&
     form.email.trim() !== '' &&
     form.phone.trim() !== '',
@@ -531,7 +558,9 @@ function buildPartnerMessage(): string {
 async function handleSubmit() {
   errorMessage.value = ''
   if (!isFormValid.value) {
-    errorMessage.value = 'Bitte füllen Sie Anlass, Name, E-Mail und Telefon aus.'
+    errorMessage.value = form.cateringId
+      ? 'Bitte füllen Sie Anlass, Name, E-Mail und Telefon aus.'
+      : 'Bitte wählen Sie im Schritt Catering einen Partner aus.'
     return
   }
   isSubmitting.value = true
@@ -573,7 +602,7 @@ async function handleSubmit() {
         data.error || 'Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.'
     }
   } catch {
-    errorMessage.value = 'Netzwerkfehler. Bitte versuchen Sie es erneut oder rufen Sie uns an.'
+    errorMessage.value = 'Netzwerkfehler. Bitte versuchen Sie es erneut oder rufen Sie mich an.'
   } finally {
     isSubmitting.value = false
   }
@@ -615,7 +644,7 @@ const inputClass =
     <!-- Success state -->
     <div v-if="isSubmitted" class="rounded-xl bg-sage-50 p-8 text-center">
       <Icon name="ph:check-circle-duotone" class="mx-auto mb-4 size-12 text-sage-600" />
-      <h3 class="font-serif text-xl font-semibold text-sage-900">Vielen Dank für Ihre Anfrage!</h3>
+      <h3 class="font-serif text-xl font-semibold text-sage-900">Vielen Dank für Ihre Anfrage</h3>
       <p class="mx-auto mt-2 max-w-md text-sage-700">
         Ich habe Ihre Anfrage erhalten und melde mich innerhalb von 24 Stunden persönlich bei Ihnen,
         um Ihre Feier in Ruhe zu besprechen.
@@ -773,6 +802,16 @@ const inputClass =
           />
           <p v-if="activeStep.intro" class="leading-relaxed text-sage-700">
             {{ activeStep.intro }}
+          </p>
+          <p
+            v-if="needsCatering"
+            class="rounded-lg bg-waldhonig-50 px-4 py-3 text-sm text-waldhonig-800"
+          >
+            <template v-if="cateringCleared">
+              Ihre bisherige Auswahl gibt es bei {{ form.guests }} Gästen nicht. Bitte wählen Sie
+              neu.
+            </template>
+            <template v-else>Bitte wählen Sie ein Catering, um weiterzugehen.</template>
           </p>
 
           <fieldset v-for="group in activeStep.groups" :key="group.key" class="space-y-3">
@@ -968,7 +1007,7 @@ const inputClass =
           <button
             v-if="!isSummary"
             type="button"
-            :disabled="isIntro && !introValid"
+            :disabled="(isIntro && !introValid) || needsCatering"
             class="rounded-lg bg-waldhonig-500 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-waldhonig-600 disabled:cursor-not-allowed disabled:opacity-50"
             @click="next"
           >
