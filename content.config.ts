@@ -300,6 +300,11 @@ const eventOptionMediaFields = {
   detail: z.string().optional(),
   image: z.string().optional(),
   imageAlt: z.string().optional(),
+  // No offer yet: the option is selectable but has no price; it is listed as
+  // "Preis im Angebot" and left out of the total.
+  onRequest: z.boolean().optional(),
+  // Only offered from this guest count on (e.g. a caterer that travels far).
+  minGuests: z.number().optional(),
 }
 
 // Catering price bands — the partner-caterer's per-person price drops as the
@@ -312,9 +317,12 @@ const eventPriceBandSchema = z.object({
 
 const eventCateringTierSchema = z.object({
   id: z.string(),
+  // Partner key the enquiry is routed to (see server/send-mail.php)
+  partner: z.string(),
   label: z.string(),
   description: z.string(),
-  priceBands: z.array(eventPriceBandSchema).min(1),
+  // The partner's own prices, without our markup (cateringMarkupPercent)
+  priceBands: z.array(eventPriceBandSchema).min(1).optional(),
   ...eventOptionMediaFields,
 })
 
@@ -328,13 +336,14 @@ const eventDrinkOptionSchema = z.object({
   ...eventOptionMediaFields,
 })
 
-// Fixed-price option (radio incl. "none"): used for music, ceremony,
+// Fixed-price option (radio incl. "none"): used for tent, coffee, music,
 // photography, photobooth and styling. Total = price (independent of guests).
+// `price` is left out on options with `onRequest`.
 const eventFixedOptionSchema = z.object({
   id: z.string(),
   label: z.string(),
   description: z.string(),
-  price: z.number(),
+  price: z.number().optional(),
   ...eventOptionMediaFields,
 })
 
@@ -345,7 +354,7 @@ const eventPerPersonChoiceSchema = z.object({
   id: z.string(),
   label: z.string(),
   description: z.string(),
-  pricePerPerson: z.number(),
+  pricePerPerson: z.number().optional(),
   ...eventOptionMediaFields,
 })
 
@@ -362,6 +371,12 @@ const eventConfigSchema = z.object({
     max: z.number(),
     default: z.number(),
   }),
+  // Start hour of the party; with the duration it decides which meals fall in
+  startTime: z.object({
+    min: z.number(),
+    max: z.number(),
+    default: z.number(),
+  }),
   // Party duration in hours (drives the per-hour drinks pauschale)
   partyDuration: z.object({
     min: z.number(),
@@ -369,19 +384,23 @@ const eventConfigSchema = z.object({
     default: z.number(),
   }),
   // Base price = exclusive whole-property weekend + everything in `includes`
-  // (tent, cleaning, coordination, insurance, …). Banded by guest count because
-  // the included tent scales with size. Inclusions are listed WITHOUT prices.
+  // (cleaning, coordination, insurance, …). Banded by guest count; one band
+  // since the tent left the base. Inclusions are listed WITHOUT prices.
   basePackage: z.object({
     label: z.string(),
     description: z.string(),
     guestBands: z.array(eventGuestBandSchema).min(1),
     includes: z.array(z.string()).min(1),
   }),
+  // Our markup in percent on the partner prices in cateringTiers
+  cateringMarkupPercent: z.number(),
   cateringTiers: z.array(eventCateringTierSchema).min(1),
   // Drinks: radio incl. a "Keine" option; priced per person per hour
   drinkOptions: z.array(eventDrinkOptionSchema).min(1),
-  // Freie Trauung (on-site ceremony with a celebrant): radio incl. "Keine"; fixed
-  ceremonyOptions: z.array(eventFixedOptionSchema).min(1),
+  // Festzelt (recommended rain plan, not in the base): radio incl. "ohne"
+  tentOptions: z.array(eventFixedOptionSchema).min(1),
+  // Kaffee & Kuchen: only asked when the party covers the afternoon
+  coffeeOptions: z.array(eventFixedOptionSchema).min(1),
   // Photographer / videographer: radio incl. "Keine"; fixed price
   photographyOptions: z.array(eventFixedOptionSchema).min(1),
   // Music: radio incl. a "Keine" option; fixed price

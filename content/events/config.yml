@@ -1,11 +1,18 @@
 # Feiern im Garten – Konfiguration des Preisrechners
 #
-# WICHTIG: Die meisten Preise sind vorläufige RICHTWERTE auf Basis einer
-# Marktrecherche (Stand 2026) und müssen vor dem Live-Gang bestätigt werden
-# (v.a. Versicherung). AUSNAHME: cateringTiers sind das echte, bestätigte
-# Angebot unseres Partners Grillverein Thalwenden (Preisübersicht, Stand
-# 2026-08), keine Richtwerte. Diese Datei lässt sich ohne Code-Änderung
-# anpassen – einfach Werte ändern und neu veröffentlichen.
+# PREISE (Stand 2026-10-18): Der Rechner nennt nur Preise, hinter denen ein
+# echtes Angebot oder unsere eigene Kalkulation steht:
+#   - cateringTiers des Grillverein Thalwenden: echtes Angebot (Preisübersicht
+#     2026-08). Eingetragen sind die Preise des Grillvereins, der Rechner schlägt
+#     cateringMarkupPercent darauf. Der Grillverein sieht in seiner Mail nur
+#     seinen eigenen Preis.
+#   - basePackage und drinkOptions: unsere eigenen Preise.
+# Alles von Dritten ohne Angebot (Zelt, Fotograf, Musik, Deko, Torte, Fotobox,
+# Styling, Mobiliar, Kaffee & Kuchen) steht mit `onRequest: true` und ohne
+# Preis drin: Gäste können es auswählen, der Preis kommt ins persönliche
+# Angebot. Liegt ein Angebot vor: `onRequest` entfernen, `price` bzw.
+# `pricePerPerson` eintragen. Diese Datei lässt sich ohne Code-Änderung
+# anpassen.
 #
 # FOTOS (pro Option): Jede greifbare Option hat unten einen `image`-Platzhalter,
 # der auf `/img/events/…webp` zeigt. Der Konfigurator blendet ein fehlendes Bild
@@ -33,8 +40,15 @@
 
 guestRange:
   min: 10
-  max: 80
+  max: 200
   default: 40
+
+# Beginn der Feier (volle Stunde). Zusammen mit der Dauer ergibt sich daraus,
+# welche Mahlzeiten in die Feier fallen (Kaffee & Kuchen, Abendessen …).
+startTime:
+  min: 10
+  max: 20
+  default: 14
 
 # Dauer der Feier in Stunden – bestimmt die Getränkepauschale (pro Person/Stunde).
 partyDuration:
@@ -43,47 +57,49 @@ partyDuration:
   default: 6
 
 # BASISPREIS: exklusive Buchung der gesamten Pension fürs Wochenende inkl. aller
-# "immer enthaltenen" Leistungen (Festzelt, Endreinigung, Koordination,
-# Versicherung …). Banded nach Gästezahl, weil das enthaltene Festzelt mit der
-# Größe wächst. Richtwert-Kalkulation pro Stufe:
-#   Fixkern = Zimmerblock ~860 + Versicherung ~130 (Platzhalter) +
-#             Organisationspauschale ~800 + Endreinigung ~500 = ~2.290 €
-#   + Festzelt: ≤20 +500, ≤40 +1.000, ≤60 +1.500, ≤80 +2.200
+# "immer enthaltenen" Leistungen. Das Festzelt ist NICHT mehr enthalten (eigener
+# Schritt, Preis auf Anfrage). Kalkulation:
+#   Zimmerblock ~860 + Versicherung ~130 (Platzhalter) +
+#   Organisationspauschale ~800 + Endreinigung ~500 = 2.290 €
 basePackage:
   label: Basispreis – Exklusives Festwochenende
   description: >-
     Das gesamte Grundstück gehört für ein ganzes Wochenende (Fr–So, 2 Nächte) Ihnen.
-    Wir kümmern uns um die komplette Organisation und sind während Ihrer Feier für
-    Sie da. Im Basispreis ist bereits alles Folgende enthalten:
+    Ich plane die Feier mit Ihnen und bin während der Feier vor Ort. Im Basispreis
+    ist bereits Folgendes enthalten:
   guestBands:
-    - maxGuests: 20
-      price: 2790
-    - maxGuests: 40
-      price: 3290
-    - maxGuests: 60
-      price: 3790
-    - maxGuests: 80
-      price: 4490
+    - maxGuests: 200
+      price: 2290
   includes:
     - >-
-      Exklusive Buchung der gesamten Pension fürs Wochenende: alle 6 Zimmer &
-      Ferienwohnungen für bis zu 28 Übernachtungsgäste in Zimmern und auf
-      Schlafcouches. Weitere Gäste können im Garten zelten oder mit dem
-      Wohnmobil übernachten
-    - 'Persönliche Eventplanung, Organisation und Koordination: Wir sind für Sie da'
-    - Festzelt mit schließbaren Seitenwänden und Beleuchtung (Ihr Schlechtwetter-Plan), passend zur Gästezahl
+      Exklusive Buchung der gesamten Pension fürs Wochenende: alle Zimmer und
+      Ferienwohnungen für bis zu 28 Übernachtungsgäste in Betten und auf
+      Schlafcouches
+    - >-
+      Weitere Gäste können im Garten zelten oder mit dem Wohnmobil übernachten.
+      Sie nutzen Toiletten und Bäder in den Zimmern mit
+    - 'Persönliche Planung und Koordination durch Tina Volgenandt'
     - Bestuhlung für alle Gäste
     - Professionelle Endreinigung nach der Feier
     - Stromversorgung für die Musik direkt aus dem Haus
-    - Garage als Catering-Küche & Sanitäranlagen über die gebuchten Zimmer
+    - Garage als Catering-Küche
+    - Zugang zu unserer Planungs-App für Zimmerverteilung, Ablauf und Wünsche
 
-# Catering läuft IMMER über unseren Partner-Caterer Grillverein Thalwenden (kein
-# hauseigenes Catering). ECHTES Angebot (Preisübersicht Stand 2026-08), keine
-# Richtwerte mehr: 4 Genusswelten, Preis pro Person sinkt mit der Gästezahl
-# (Grillservice inkl. Personal gemäß Veranstaltungsgröße; 2 Mitarbeiter bis 50
-# Gäste inklusive; Getränke nicht enthalten, siehe drinkOptions).
+# Catering läuft IMMER über einen Partner (kein hauseigenes Catering).
+# `partner` bestimmt, an wen die Anfrage geht (send-mail.php kennt bisher nur
+# grillverein-thalwenden; Anfragen für andere Partner landen nur bei events@).
+#
+# Grillverein Thalwenden: ECHTES Angebot (Preisübersicht Stand 2026-08), 4
+# Genusswelten, Preis pro Person sinkt mit der Gästezahl (Grillservice inkl.
+# Personal; 2 Mitarbeiter bis 50 Gäste inklusive; Getränke nicht enthalten).
+# priceBands = Preise des Grillvereins OHNE unseren Aufschlag.
+#
+# Anja kocht (Anja Randau, Witzenhausen): liefert wegen der Entfernung (60 km)
+# erst ab 80 Gästen (Mail vom 23.07.2026). Noch kein Preisangebot.
+cateringMarkupPercent: 10
 cateringTiers:
   - id: classic
+    partner: grillverein-thalwenden
     label: Classic – Der Klassiker
     image: /img/events/partner-grillverein-steak.webp
     imageAlt: Steaks und Bratwurst brutzeln auf dem Grill des Grillverein Thalwenden
@@ -100,6 +116,7 @@ cateringTiers:
       - maxGuests: 999
         pricePerPerson: 24.9
   - id: signature
+    partner: grillverein-thalwenden
     label: Signature – Unsere besondere Auswahl
     image: /img/events/partner-grillverein-grillplatte.webp
     imageAlt: Große Grillplatte mit Fisch, Spießen, Bratwurst und Burgern
@@ -116,6 +133,7 @@ cateringTiers:
       - maxGuests: 999
         pricePerPerson: 34.9
   - id: prestige
+    partner: grillverein-thalwenden
     label: Prestige – Premium vom Grill
     image: /img/events/partner-grillverein-team.webp
     imageAlt: Team des Grillverein Thalwenden mit Grillstand im Garten
@@ -132,6 +150,7 @@ cateringTiers:
       - maxGuests: 999
         pricePerPerson: 44.9
   - id: elite
+    partner: grillverein-thalwenden
     label: Élite – Das außergewöhnliche Grillerlebnis
     imageAlt: Premium-Grillauswahl der Élite-Genusswelt
     description: >-
@@ -146,6 +165,16 @@ cateringTiers:
         pricePerPerson: 59.9
       - maxGuests: 999
         pricePerPerson: 54.9
+
+  - id: anja-kocht
+    partner: anja-kocht
+    label: Anja kocht – Regionale Küche für große Feiern
+    description: >-
+      Partyservice Anja kocht aus Witzenhausen mit regionaler, frischer Küche.
+      Für Feiern ab 80 Gästen. Was auf den Tisch kommt, stimmen wir gemeinsam
+      mit Ihnen ab.
+    minGuests: 80
+    onRequest: true
 
 # Getränke laufen immer über uns: Selbstbedienung oder mit Service. Preis pro
 # Person PRO STUNDE – hängt von der Feierdauer ab. (Markt 2026: ~25–55 € pp für
@@ -168,30 +197,36 @@ drinkOptions:
       Abgerechnet pro Person und Stunde.
     pricePerPersonPerHour: 9
 
-# Freie Trauung: Zeremonie im Garten mit professionellem Trauredner. Fester Preis
-# inkl. Vermittlung. (Markt 2026: Trauredner ~800–1.500 €.) Platzhalter-Richtwert.
-ceremonyOptions:
-  - id: keine
-    label: Keine Trauung vor Ort
-    description: Sie feiern bei uns, die Trauung findet woanders statt (Standesamt/Kirche).
-    detail: >-
-      Wählen Sie diese Option, wenn Sie standesamtlich oder kirchlich an einem
-      anderen Ort heiraten und bei uns "nur" feiern. Für alle anderen Anlässe
-      (Geburtstag, Jubiläum …) bleibt diese Option einfach ausgewählt.
-    price: 0
-  - id: freie_trauung
-    label: Freie Trauung im Garten
-    image: /img/events/trauung-freie-trauung.webp
-    imageAlt: Freie Trauzeremonie im Garten
+# Festzelt: nicht im Basispreis. Wir empfehlen es als Schlechtwetter-Plan für
+# jede Feier, deshalb ist es vorausgewählt. Noch kein Angebot → onRequest.
+tentOptions:
+  - id: festzelt
+    label: Festzelt mit Seitenwänden (empfohlen)
     description: >-
-      Persönliche, freie Trauzeremonie unter freiem Himmel mit einem professionellen
-      Trauredner, individuell auf Ihre Geschichte abgestimmt.
-    detail: >-
-      Sie heiraten direkt bei uns im Garten: ein erfahrener freier Trauredner
-      gestaltet Ihre Zeremonie ganz persönlich. Wir richten den Traubereich her,
-      sodass Trauung und Feier zu einem stimmungsvollen Tag an einem Ort werden, ohne
-      Fahrt dazwischen. Enthält Vorgespräch, persönliche Rede und Zeremonie.
-    price: 1190
+      Zelt mit schließbaren Seitenwänden und Beleuchtung, passend zur Gästezahl.
+      Wir empfehlen, es immer einzuplanen. So hat jeder Gast einen trockenen
+      Platz, falls es regnet.
+    onRequest: true
+  - id: ohne
+    label: Ohne Festzelt
+    description: >-
+      Sie feiern unter freiem Himmel. Bei Regen gibt es dann keinen geschützten
+      Platz für alle Gäste.
+    price: 0
+
+# Kaffee & Kuchen: wird im Rechner nur gezeigt, wenn die Feier in den
+# Nachmittag fällt, damit diese Mahlzeit immer eingeplant ist.
+coffeeOptions:
+  - id: ueber-uns
+    label: Kaffee & Kuchen über uns
+    description: Wir organisieren Kaffee und Kuchen für alle Gäste.
+    onRequest: true
+  - id: selbst
+    label: Kuchen bringen Sie selbst mit
+    description: >-
+      Sie oder Ihre Familie backen selbst. Kaffee und Ausschank nehme ich ins
+      Angebot auf.
+    onRequest: true
 
 # Fotograf / Video: keine / Fotoreportage / Foto + Video. Fester Preis inkl.
 # Vermittlung. (Markt 2026: Hochzeitsfotograf ~1.200–2.000 €, Video zusätzlich.)
@@ -212,7 +247,7 @@ photographyOptions:
       Ein erfahrener Fotograf begleitet Ihre Feier und hält die schönsten Momente
       fest, vom Empfang bis zum Abend. Sie erhalten die bearbeiteten Bilder digital.
       Ein Klassiker, den fast alle Hochzeitspaare wählen.
-    price: 1490
+    onRequest: true
   - id: foto_video
     label: Foto + Video
     image: /img/events/foto-video.webp
@@ -223,7 +258,7 @@ photographyOptions:
       Zusätzlich zur Fotoreportage entsteht ein professioneller Film Ihres Tages:
       ein bewegendes Andenken, das Sie immer wieder ansehen können. Ideal für
       Hochzeiten und große Jubiläen.
-    price: 2290
+    onRequest: true
 
 # Musik: keine / nur Anlage (eigene Playlist) / kompletter DJ. Fester Preis inkl.
 # Organisation, Lieferung/Aufbau und unserer Vermittlungsmarge.
@@ -239,7 +274,7 @@ musicOptions:
     description: >-
       Professionelle Musikanlage inkl. Lieferung, Aufbau und Anschluss Ihres eigenen
       Geräts. Sie spielen Ihre eigene Playlist. Strom aus dem Haus.
-    price: 290
+    onRequest: true
   - id: dj
     label: DJ komplett
     image: /img/events/musik-dj.webp
@@ -247,7 +282,7 @@ musicOptions:
     description: >-
       Professioneller DJ mit kompletter Anlage für die Abendgestaltung, inkl.
       Organisation und Technik. Strom aus dem Haus.
-    price: 1200
+    onRequest: true
 
 # Mobiliar & Ausstattung – jeweils pro Person, erste Option = im Basispreis
 # enthalten/Standard. (Markt 2026: Stühle ~3 €, Hussen ~3,50 €, Biertischgarnitur
@@ -264,13 +299,13 @@ tableOptions:
     image: /img/events/tische-bankett.webp
     imageAlt: Lange eckige Bankett-Tafeln mit Einzelstühlen
     description: 'Lange Tafeln mit Einzelstühlen: festlich und gesellig.'
-    pricePerPerson: 5
+    onRequest: true
   - id: rund
     label: Runde Festtische
     image: /img/events/tische-rund.webp
     imageAlt: Elegante runde Festtische mit Bestuhlung
     description: Elegante runde Tische für 8–10 Personen, die klassische Hochzeitsbestuhlung.
-    pricePerPerson: 6
+    onRequest: true
 
 chairCoverOptions:
   - id: ohne
@@ -282,7 +317,7 @@ chairCoverOptions:
     image: /img/events/hussen-mit.webp
     imageAlt: Stühle mit festlichen Stuhlhussen
     description: Festliche Stuhlhussen für einen edlen, einheitlichen Look.
-    pricePerPerson: 4
+    onRequest: true
 
 dishwareOptions:
   - id: caterer
@@ -294,7 +329,7 @@ dishwareOptions:
     image: /img/events/geschirr-mietgeschirr.webp
     imageAlt: Festlich eingedecktes Mietgeschirr mit Gläsern und Besteck
     description: Hochwertiges Mietgeschirr mit Tellern, Gläsern und Besteck inkl. Spülservice.
-    pricePerPerson: 8
+    onRequest: true
 
 # Bodenbelag schützt den Rasen vor Beschädigung. Standard = Holz-Tanzfläche.
 flooringOptions:
@@ -305,7 +340,7 @@ flooringOptions:
     description: >-
       Ausgelegte Holz-Tanzfläche: schützt den Rasen im Hauptbereich und schafft
       eine schöne Fläche zum Tanzen.
-    pricePerPerson: 5
+    onRequest: true
   - id: komplett
     label: Kompletter Holzboden im Zelt
     image: /img/events/boden-komplett.webp
@@ -313,7 +348,7 @@ flooringOptions:
     description: >-
       Durchgehender Holzboden im gesamten Zelt: maximaler Schutz für Ihren Rasen
       und ein edles Ambiente, auch bei Nässe.
-    pricePerPerson: 12
+    onRequest: true
   - id: keiner
     label: Kein Bodenbelag
     description: Feier direkt auf dem Rasen (nur bei trockenem Wetter empfehlenswert).
@@ -331,13 +366,13 @@ decorationOptions:
     image: /img/events/deko-schlicht.webp
     imageAlt: Schlichte Tischdekoration mit Blumen und Kerzen
     description: Dezenter Blumenschmuck und Kerzen auf den Tischen, schlicht und stimmungsvoll.
-    pricePerPerson: 8
+    onRequest: true
   - id: klassisch
     label: Klassische Festdekoration
     image: /img/events/deko-klassisch.webp
     imageAlt: Klassische Festdekoration mit frischen Blumen
     description: Liebevolle Tisch- und Festdekoration mit frischen Blumen, passend zu Ihren Farbwünschen.
-    pricePerPerson: 13
+    onRequest: true
   - id: premium
     label: Premium-Blumendekoration
     image: /img/events/deko-premium.webp
@@ -345,7 +380,7 @@ decorationOptions:
     description: >-
       Aufwändige florale Gestaltung mit hochwertigen Arrangements für Tische, Zelt
       und Eingang: das festliche Rundum-Paket.
-    pricePerPerson: 20
+    onRequest: true
 
 # Torte & Sweet Table: keine / Hochzeitstorte / Torte + Sweet Table. Pro Person.
 # (Markt 2026: Hochzeitstorte ~4–6 €/Stück, Candy/Sweet Table zusätzlich.)
@@ -366,7 +401,7 @@ cakeOptions:
       Der klassische Moment: das gemeinsame Anschneiden der Torte. Wir stimmen
       Größe, Geschmack und Optik mit unserem Konditor auf Ihren Anlass ab.
       Abgerechnet pro Person, damit die Torte zur Gästezahl passt.
-    pricePerPerson: 7
+    onRequest: true
   - id: torte_sweet
     label: Torte + Sweet Table
     image: /img/events/torte-sweet-table.webp
@@ -377,7 +412,7 @@ cakeOptions:
     detail: >-
       Zusätzlich zur Torte eine dekorative Süßigkeiten-Ecke, an der sich Ihre Gäste
       den ganzen Tag bedienen können, ein beliebter Hingucker, besonders für Kinder.
-    pricePerPerson: 14
+    onRequest: true
 
 # Fotobox: keine / Fotobox mit Requisiten. Fester Preis inkl. Aufbau & Betreuung.
 # (Markt 2026: Fotobox-Miete ~300–500 €.)
@@ -397,7 +432,7 @@ photoboothOptions:
     detail: >-
       Der Unterhaltungs-Hit für Ihre Gäste: Fotos mit Verkleidungen und Sofortdruck,
       dazu ein Abzug fürs Gästebuch. Wir kümmern uns um Aufbau, Betreuung und Abbau.
-    price: 390
+    onRequest: true
 
 # Styling: keine / Braut-Styling / Braut + Begleitung. Fester Preis, Hair & Make-up.
 # (Markt 2026: Braut-Styling Haare & Make-up ~250–450 €.)
@@ -418,7 +453,7 @@ stylingOptions:
       Entspannt in den großen Tag starten: Haar- und Make-up-Styling direkt bei uns
       vor Ort, damit Sie sich um nichts kümmern müssen. Mit vorheriger Typberatung
       und Probetermin.
-    price: 390
+    onRequest: true
   - id: braut_partner
     label: Styling für Braut + Begleitung
     image: /img/events/styling-braut-partner.webp
@@ -428,13 +463,13 @@ stylingOptions:
     detail: >-
       Wie das Braut-Styling, zusätzlich für eine zweite Person: ideal, wenn Sie sich
       gemeinsam vorbereiten möchten.
-    price: 650
+    onRequest: true
 
 # Anlässe (für die Auswahl im Rechner und die Anlass-Kacheln)
 occasions:
   - id: hochzeit
     label: Hochzeit
-    description: Heiraten im Grünen, intim und persönlich.
+    description: Ihre Hochzeitsfeier im Grünen, mit Familie und Freunden.
     icon: ph:heart-duotone
   - id: jugendweihe
     label: Jugendweihe / Konfirmation
@@ -458,9 +493,8 @@ occasions:
     icon: ph:briefcase-duotone
 
 disclaimer: >-
-  Alle Preise sind unverbindliche Richtwerte und dienen der ersten Orientierung.
-  Ein Wochenend-Fest setzt die exklusive Buchung der gesamten Pension für das
-  Wochenende voraus (im Basispreis enthalten). Das Catering läuft über unseren
-  Partner-Caterer. Der finale Preis hängt von Ihren individuellen Wünschen, der
-  Gästezahl und der Dauer Ihrer Feier ab. Sie erhalten von uns immer ein
-  persönliches, unverbindliches Angebot.
+  Alle Preise sind unverbindlich und dienen der ersten Orientierung. Positionen
+  mit dem Hinweis „Preis im Angebot“ sind nicht in der Summe enthalten. Ein
+  Wochenend-Fest setzt die exklusive Buchung der gesamten Pension für das
+  Wochenende voraus (im Basispreis enthalten). Das Catering kommt von unseren
+  Partnern. Sie erhalten von mir immer ein persönliches, unverbindliches Angebot.

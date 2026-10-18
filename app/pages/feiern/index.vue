@@ -65,15 +65,15 @@ const steps = [
   },
   {
     title: 'Beratung',
-    text: 'Wir melden uns persönlich und besprechen Ihre Wünsche.',
+    text: 'Ich melde mich persönlich und bespreche Ihre Wünsche mit Ihnen.',
   },
   {
     title: 'Planung',
-    text: 'Sie erhalten ein individuelles Angebot, wir kümmern uns um alle Details.',
+    text: 'Sie erhalten ein Angebot. Nach der Buchung planen wir alle Details gemeinsam in unserer Planungs-App.',
   },
   {
     title: 'Feiern',
-    text: 'Sie feiern im Grünen, wir koordinieren vor Ort.',
+    text: 'Sie feiern im Grünen, ich koordiniere vor Ort.',
   },
 ]
 
@@ -86,17 +86,17 @@ const included = [
   {
     icon: 'ph:tree-duotone',
     title: 'Unser Garten als festliche Kulisse',
-    text: 'Ein gepflegter, ruhiger Garten mitten im Grünen, auf Wunsch mit Festzelt.',
+    text: 'Ein gepflegter, ruhiger Garten mitten im Grünen. Für Regen empfehlen wir ein Festzelt.',
   },
   {
     icon: 'ph:fork-knife-duotone',
-    title: 'Catering von unserem Partner',
-    text: 'Vom rustikalen Buffet bis zum servierten Menü, passend zu Ihrem Anlass, von unserem Partner Grillverein Thalwenden.',
+    title: 'Catering von unseren Partnern',
+    text: 'Der Grillverein Thalwenden grillt live im Garten. Für große Feiern ab 80 Gästen kocht auch Anja kocht aus Witzenhausen.',
   },
   {
     icon: 'ph:calendar-check-duotone',
     title: 'Eventplanung aus einer Hand',
-    text: 'Wir planen und koordinieren alles im Vorfeld, damit Sie sich an Ihrem Tag nur um Ihre Gäste kümmern.',
+    text: 'Ich plane und koordiniere alles im Vorfeld, damit Sie sich an Ihrem Tag nur um Ihre Gäste kümmern.',
   },
 ]
 </script>
@@ -142,7 +142,7 @@ const included = [
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
         Fürs Festwochenende gehört Ihnen das <strong>gesamte Grundstück allein</strong>: alle
         Zimmer, Ihre Gäste übernachten vor Ort, wir organisieren alles von A bis Z, inklusive
-        Catering über unseren Partner und persönlicher Eventplanung.
+        Catering über unsere Partner und persönlicher Eventplanung.
       </p>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
         Keine Nachbarn, keine Sperrstunde, kein Stress: Sie feiern, wir kümmern uns um den Rest.
@@ -264,9 +264,12 @@ const included = [
       </div>
     </section>
 
-    <!-- Kooperationspartner: Grillverein Thalwenden -->
+    <!-- Catering-Partner: Grillverein Thalwenden und Anja kocht -->
     <section class="bg-sage-50 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-6xl">
+        <h2 class="mb-10 text-center font-serif text-3xl font-bold text-sage-900">
+          Unsere Catering-Partner
+        </h2>
         <div class="mb-10 flex flex-col items-center text-center">
           <img
             src="/img/events/partner-grillverein-logo.webp"
@@ -276,9 +279,9 @@ const included = [
             height="192"
             loading="lazy"
           />
-          <h2 class="mt-4 font-serif text-3xl font-bold text-sage-900">
-            Unser Partner: Grillverein Thalwenden
-          </h2>
+          <h3 class="mt-4 font-serif text-2xl font-semibold text-sage-900">
+            Grillverein Thalwenden
+          </h3>
           <p class="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-sage-700">
             Für herzhafte Grillspezialitäten arbeiten wir mit dem Grillverein Thalwenden zusammen.
             Das Team grillt live bei Ihrer Feier, mit hochwertigen, regionalen Zutaten.
@@ -318,6 +321,24 @@ const included = [
             class="inline-flex items-center gap-2 rounded-lg border border-sage-300 bg-white px-5 py-2.5 text-sm font-medium text-sage-700 transition-colors hover:bg-sage-100"
           >
             Grillverein Thalwenden entdecken
+            <Icon name="ph:arrow-square-out" class="size-4 text-waldhonig-600" />
+          </a>
+        </div>
+
+        <div class="mx-auto mt-14 max-w-2xl rounded-xl bg-white p-8 text-center">
+          <Icon name="ph:cooking-pot-duotone" class="mx-auto size-10 text-waldhonig-500" />
+          <h3 class="mt-3 font-serif text-2xl font-semibold text-sage-900">Anja kocht</h3>
+          <p class="mt-3 leading-relaxed text-sage-700">
+            Anja Randau und ihr Partyservice aus Witzenhausen kochen regional und frisch. Wegen der
+            Anfahrt kommt Anja für Feiern ab 80 Gästen zu uns.
+          </p>
+          <a
+            href="https://www.anjakocht.de/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-6 inline-flex items-center gap-2 rounded-lg border border-sage-300 bg-white px-5 py-2.5 text-sm font-medium text-sage-700 transition-colors hover:bg-sage-100"
+          >
+            Anja kocht entdecken
             <Icon name="ph:arrow-square-out" class="size-4 text-waldhonig-600" />
           </a>
         </div>
@@ -363,12 +384,21 @@ const included = [
           </div>
           <div class="text-center sm:text-left">
             <p class="text-sm font-medium tracking-wide text-waldhonig-600 uppercase">
-              Ihre Eventmanagerin
+              Ihre Ansprechpartnerin
             </p>
             <h2 class="mt-1 font-serif text-2xl font-semibold text-sage-900">Tina Volgenandt</h2>
             <p class="mt-3 leading-relaxed text-sage-700">
-              Als Eventmanagerin plane und koordiniere ich Ihr Fest persönlich, von der ersten Idee
-              bis zum Veranstaltungstag.
+              Für alles rund um Ihre Feier sprechen Sie nur mit mir, von der ersten Frage bis zum
+              Abschied am Sonntag. Ich war viele Jahre in der Gastronomie und im Verkauf von
+              Veranstaltungen tätig. Seit Jahren unterstütze ich meine Eltern in der Pension.
+            </p>
+            <p class="mt-3 text-sage-700">
+              <a
+                :href="`tel:${appConfig.eventsContact.phone}`"
+                class="font-medium text-waldhonig-700 hover:underline"
+              >
+                {{ appConfig.eventsContact.phoneDisplay }}
+              </a>
             </p>
             <a
               href="https://www.linkedin.com/in/tina-volgenandt-9420a2136/"
@@ -404,9 +434,23 @@ const included = [
         <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">
           Hilfreich für Ihre Planung
         </h2>
-        <p class="mb-10 text-center text-sage-600">
+        <p class="mb-6 text-center text-sage-600">
           Vorlagen und Infos, sobald Ihr Termin feststeht.
         </p>
+        <div
+          class="mx-auto mb-10 flex max-w-3xl items-start gap-4 rounded-xl border border-sage-200 bg-sage-50 p-6"
+        >
+          <Icon name="ph:device-mobile-duotone" class="mt-1 size-8 shrink-0 text-waldhonig-500" />
+          <div>
+            <h3 class="font-serif text-lg font-semibold text-sage-900">Unsere Planungs-App</h3>
+            <p class="mt-1 text-sm leading-relaxed text-sage-700">
+              Nach der Buchung bekommen Sie Zugang zu unserer Planungs-App. Dort pflegen Sie
+              Gästeliste und Zimmerverteilung, sehen Ablaufplan und Kosten und schicken mir Wünsche
+              und Dateien. Sie melden sich mit einem Link per E-Mail an, ein Passwort brauchen Sie
+              nicht.
+            </p>
+          </div>
+        </div>
         <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           <NuxtLink
             to="/feiern/planungshilfen/#belegungsplan"
@@ -479,21 +523,23 @@ const included = [
               Schlechtwetter-Plan
             </h3>
             <p class="mt-2 text-sm text-sage-600">
-              Ein Festzelt mit Seitenwänden schützt vor Regen und Sonne.
+              Das Festzelt mit Seitenwänden ist nicht im Basispreis enthalten. Wir empfehlen es für
+              jede Feier.
             </p>
           </div>
           <div class="rounded-xl bg-white p-6 text-center">
             <Icon name="ph:users-three-duotone" class="mx-auto size-9 text-waldhonig-500" />
             <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">Bis zu 200 Gäste</h3>
             <p class="mt-2 text-sm text-sage-600">
-              Feiern Sie mit bis zu 200 Gästen im Garten, bis zu 28 davon übernachten direkt bei
-              uns.
+              Feiern Sie mit bis zu 200 Gästen im Garten. Bis zu 28 übernachten in den Zimmern,
+              weitere im Zelt oder Wohnmobil im Garten.
             </p>
           </div>
         </div>
         <p class="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-sage-600">
-          Sanitäranlagen nutzen Sie über die Zimmer, unser Partner richtet seine Küche in der Garage
-          ein, und der Strom für die Musik kommt aus dem Haus.
+          Sanitäranlagen nutzen Sie über die Zimmer. Gäste im Zelt oder Wohnmobil nutzen Toiletten
+          und Bäder dort mit, eigene Sanitäranlagen im Garten gibt es nicht. Der Caterer richtet
+          seine Küche in der Garage ein, und der Strom für die Musik kommt aus dem Haus.
         </p>
       </div>
     </section>
@@ -502,12 +548,12 @@ const included = [
     <section class="bg-waldhonig-50 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-2xl text-center">
         <h2 class="font-serif text-2xl font-semibold text-sage-900">Lieber persönlich sprechen?</h2>
-        <p class="mt-3 text-sage-700">Geben Sie Ihren Wunschtermin an, wir melden uns bei Ihnen.</p>
+        <p class="mt-3 text-sage-700">Geben Sie Ihren Wunschtermin an, ich rufe Sie zurück.</p>
         <div class="mt-8">
           <EventsCallbackRequest />
         </div>
         <p class="mt-6 text-sm text-sage-500">
-          Oder rufen Sie uns direkt an:
+          Oder rufen Sie mich direkt an:
           <a
             :href="`tel:${appConfig.eventsContact.phone}`"
             class="font-medium text-waldhonig-700 hover:underline"

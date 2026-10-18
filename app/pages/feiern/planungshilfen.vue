@@ -104,7 +104,8 @@ const ablaufDefaults = [
   'Check-in / Anreise Übernachtungsgäste',
   'Ankunft Caterer (Aufbau Küche in der Garage)',
   'Aufbau Deko & Technik im Garten',
-  'Beginn Programm / Zeremonie',
+  'Beginn Programm',
+  'Kaffee & Kuchen',
   'Essen',
   'Reden / Anschnitt Torte',
   'Beginn Party / Musik',
@@ -115,14 +116,15 @@ const ablaufExtraCount = ref(0)
 
 const included = [
   'Alle Zimmer & Ferienwohnungen exklusiv, bis zu 28 Übernachtungsgäste',
-  'Garten als Festfläche, auf Wunsch Festzelt mit Seitenwänden',
+  'Garten als Festfläche',
   'Strom für Musik & Technik aus dem Haus',
-  'Sanitäranlagen über die gebuchten Zimmer',
-  'Küche in der Garage für unseren Partner-Caterer',
-  'Persönliche Eventplanung und Koordination vor Ort',
+  'Sanitäranlagen über die Zimmer, auch für Gäste im Zelt oder Wohnmobil',
+  'Küche in der Garage für den Caterer',
+  'Persönliche Planung und Koordination vor Ort durch Tina Volgenandt',
 ]
 
 const toDiscuss = [
+  'Festzelt (nicht im Basispreis, wir empfehlen es für jede Feier)',
   'Tische, Stühle & Geschirr',
   'Deko & Blumenschmuck',
   'Musik, DJ oder Band',
@@ -227,7 +229,7 @@ onMounted(() => {
 
       <div class="mt-8 rounded-xl border border-sage-200 p-5">
         <p class="mb-4 text-sm text-sage-600">
-          Anzahl der Stellplätze bitte vorab mit uns abstimmen. Hier nur Platzhalterzeilen.
+          Anzahl der Stellplätze bitte vorab mit mir abstimmen. Hier nur Platzhalterzeilen.
         </p>
         <p class="mb-2 text-xs tracking-wide text-sage-500 uppercase">Zeltplätze im Garten</p>
         <div v-for="n in tentRowCount" :key="'tent-' + n" class="mb-2 grid grid-cols-3 gap-3">
@@ -406,7 +408,7 @@ onMounted(() => {
             </li>
           </ul>
           <p class="mt-4 text-xs text-sage-500">
-            Wir besprechen diese Punkte persönlich mit Ihnen, sobald Ihr Termin feststeht.
+            Ich bespreche diese Punkte persönlich mit Ihnen, sobald Ihr Termin feststeht.
           </p>
         </div>
       </div>
