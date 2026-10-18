@@ -13,7 +13,7 @@ useSeoMeta({
     'Hochzeit, Jugendweihe oder runder Geburtstag im Garten der Pension Volgenandt im Eichsfeld. Mit Catering von Partnern, Eventplanung und Übernachtung. Preis online berechnen.',
   ogDescription:
     'Ihr Fest im Grünen im Eichsfeld: Catering von unseren Partnern, persönliche Planung und Übernachtung für Ihre Gäste.',
-  ogImage: '/img/garten/garten-rasen-baeume-sommer.webp',
+  ogImage: '/img/events/feiern-hero-poster.webp',
   ogType: 'website',
   // Prices are still provisional (caterer/insurance not yet confirmed) and the
   // page isn't linked from nav — noindex until it's ready for real customers.
@@ -26,11 +26,20 @@ useHead({
 
 const appConfig = useAppConfig()
 
-// Prefix static asset paths with baseURL for GitHub Pages subpath deployment —
-// a static src="/video/..." gets rewritten by Vite's template asset transform,
-// so we bind :src with the runtime baseURL instead (same pattern as HeroVideo).
+// Header video: two parts of the drone flight over the garden (meadow, then
+// the overview with the view), cut with HyperFrames. A static src="/video/..."
+// gets rewritten by Vite's template asset transform, so we bind :src with the
+// runtime baseURL instead (same pattern as HeroVideo).
 const baseURL = useRuntimeConfig().app.baseURL
-const droneVideoSrc = `${baseURL}video/garten-drohne.mp4`
+const heroVideoSources = {
+  webm: `${baseURL}video/feiern-hero.webm`,
+  mp4: `${baseURL}video/feiern-hero.mp4`,
+}
+// Fade the video in over the poster once its first frame is painted
+const heroVideoReady = ref(false)
+function onHeroVideoPlaying() {
+  requestAnimationFrame(() => requestAnimationFrame(() => (heroVideoReady.value = true)))
+}
 
 const { data: config } = await useAsyncData('event-config-page', () =>
   queryCollection('eventConfig').first(),
@@ -180,14 +189,31 @@ function chooseOccasion(id: string) {
     <!-- 1. Hero -->
     <section class="relative h-[60vh] min-h-[420px] overflow-hidden">
       <NuxtImg
-        src="/img/garten/garten-rasen-baeume-sommer.webp"
-        alt="Weitläufiger Sommergarten der Pension Volgenandt mit Rasen und alten Bäumen"
+        src="/img/events/feiern-hero-poster.webp"
+        alt="Blick aus der Luft auf die Wiese im Garten der Pension Volgenandt, dahinter Felder"
         class="absolute inset-0 h-full w-full object-cover"
-        style="object-position: center 55%"
-        width="1920"
-        height="1280"
+        width="1280"
+        height="720"
         loading="eager"
+        fetchpriority="high"
       />
+      <ClientOnly>
+        <video
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+          aria-hidden="true"
+          tabindex="-1"
+          class="feiern-hero-video absolute inset-0 h-full w-full object-cover"
+          :class="{ 'is-playing': heroVideoReady }"
+          @playing.once="onHeroVideoPlaying"
+        >
+          <source :src="heroVideoSources.webm" type="video/webm" />
+          <source :src="heroVideoSources.mp4" type="video/mp4" />
+        </video>
+      </ClientOnly>
       <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
       <div
         class="relative z-10 flex h-full flex-col items-center justify-end px-6 pb-12 text-center md:pb-16"
@@ -316,26 +342,6 @@ function chooseOccasion(id: string) {
             height="1067"
             loading="lazy"
           />
-        </div>
-      </div>
-    </section>
-
-    <!-- 6. Drohnenvideo: der Garten von oben -->
-    <section class="px-6 pb-12 md:pb-16">
-      <div class="mx-auto max-w-4xl">
-        <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">
-          Der Garten von oben
-        </h2>
-        <p class="mb-10 text-center text-sage-600">Ein kurzer Rundflug über unser Grundstück.</p>
-        <div class="relative aspect-video overflow-hidden rounded-xl bg-[#2C3E2D] shadow-sm">
-          <video
-            controls
-            preload="none"
-            poster="/img/events/drohne-poster.webp"
-            class="absolute inset-0 h-full w-full object-cover"
-          >
-            <source :src="droneVideoSrc" type="video/mp4" />
-          </video>
         </div>
       </div>
     </section>
@@ -530,3 +536,18 @@ function chooseOccasion(id: string) {
     </section>
   </div>
 </template>
+
+<style scoped>
+.feiern-hero-video {
+  opacity: 0;
+  transition: opacity 600ms ease-in-out;
+}
+.feiern-hero-video.is-playing {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .feiern-hero-video {
+    display: none;
+  }
+}
+</style>
