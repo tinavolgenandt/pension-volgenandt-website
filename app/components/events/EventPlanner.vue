@@ -27,6 +27,8 @@ interface CatalogOption {
   onRequest?: boolean
   minGuests?: number
   partner?: string
+  partnerName?: string
+  markupPercent?: number
   price?: number
   pricePerPerson?: number
   pricePerPersonPerHour?: number
@@ -135,7 +137,7 @@ const startHourOptions = computed(() => {
 // `topOption` below), so it updates live as the visitor picks an option.
 const cateringIntro = computed(() => {
   let text =
-    'Das Essen kommt von unseren Partnern. Der Grillverein Thalwenden grillt live bei Ihnen im Garten, der Preis pro Person sinkt mit der Gästezahl. Ab 80 Gästen kocht auf Wunsch auch Anja kocht aus Witzenhausen.'
+    'Das Essen kommt von unseren Catering-Partnern. Bei jeder Auswahl steht, wer kocht. Manche Partner kommen erst ab einer bestimmten Gästezahl, sie erscheinen dann hier.'
   if (meals.value.lunch && meals.value.dinner)
     text +=
       ' Ihre Feier umfasst Mittag- und Abendessen. Die Auswahl hier gilt für eine Mahlzeit, die zweite nehme ich ins Angebot auf.'
@@ -296,7 +298,8 @@ function bandedPricePerPerson(bands: PriceBand[], guests: number): number {
   return band?.pricePerPerson ?? 0
 }
 // Catering bands hold the partner's own price; the guest sees it with our
-// markup, rounded to 10 cents (34,90 € + 10 % = 38,40 €).
+// markup (the tier's own or the default), rounded to 10 cents
+// (34,90 € + 10 % = 38,40 €).
 function partnerPricePerPerson(opt: CatalogOption): number {
   return opt.priceBands?.length ? bandedPricePerPerson(opt.priceBands, form.guests) : 0
 }
@@ -304,7 +307,11 @@ function rawPrice(opt: CatalogOption | undefined, unit: Unit): number {
   if (!opt || opt.onRequest) return 0
   if (unit === 'person') {
     if (opt.priceBands?.length)
-      return Math.round(partnerPricePerPerson(opt) * (100 + cateringMarkup.value) * 0.1) / 10
+      return (
+        Math.round(
+          partnerPricePerPerson(opt) * (100 + (opt.markupPercent ?? cateringMarkup.value)) * 0.1,
+        ) / 10
+      )
     return opt.pricePerPerson ?? 0
   }
   if (unit === 'personHour') return opt.pricePerPersonPerHour ?? 0
@@ -379,16 +386,18 @@ const summaryLines = computed<Line[]>(() => {
     const sel = selectedOption(group)
     if (!sel) continue
     if (sel.onRequest) {
-      lines.push({ label: group.legend, detail: `${group.legend}: ${sel.label}`, amount: null })
+      const onRequestName = sel.partnerName ? `${sel.partnerName}, ${sel.label}` : sel.label
+      lines.push({ label: group.legend, detail: `${group.legend}: ${onRequestName}`, amount: null })
       continue
     }
     const amount = optAmount(sel, group.unit)
     if (amount <= 0) continue
-    let detail = `${group.legend}: ${sel.label}`
+    const name = sel.partnerName ? `${sel.partnerName}, ${sel.label}` : sel.label
+    let detail = `${group.legend}: ${name}`
     if (group.unit === 'person')
-      detail = `${group.legend}: ${sel.label} · ${form.guests} × ${perPersonLabel(rawPrice(sel, 'person'))} €`
+      detail = `${group.legend}: ${name} · ${form.guests} × ${perPersonLabel(rawPrice(sel, 'person'))} €`
     else if (group.unit === 'personHour')
-      detail = `${group.legend}: ${sel.label} · ${form.guests} × ${sel.pricePerPersonPerHour} € × ${form.hours} h`
+      detail = `${group.legend}: ${name} · ${form.guests} × ${sel.pricePerPersonPerHour} € × ${form.hours} h`
     lines.push({ label: group.legend, detail, amount })
   }
   return lines
@@ -794,6 +803,12 @@ const inputClass =
                 loading="lazy"
               />
               <span class="flex-1">
+                <span
+                  v-if="opt.partnerName"
+                  class="block text-xs font-medium tracking-wide text-waldhonig-600 uppercase"
+                >
+                  {{ opt.partnerName }}
+                </span>
                 <span class="flex items-baseline justify-between gap-2">
                   <span class="font-medium text-sage-900">{{ opt.label }}</span>
                   <span class="shrink-0 text-sm font-semibold text-waldhonig-700">

@@ -2,10 +2,11 @@
 #
 # PREISE (Stand 2026-10-18): Der Rechner nennt nur Preise, hinter denen ein
 # echtes Angebot oder unsere eigene Kalkulation steht:
-#   - cateringTiers des Grillverein Thalwenden: echtes Angebot (Preisübersicht
-#     2026-08). Eingetragen sind die Preise des Grillvereins, der Rechner schlägt
-#     cateringMarkupPercent darauf. Der Grillverein sieht in seiner Mail nur
-#     seinen eigenen Preis.
+#   - cateringTiers mit priceBands: echtes Angebot eines Partners (bisher nur
+#     Grillverein Thalwenden, Preisübersicht 2026-08). Eingetragen sind die
+#     Preise des Partners, der Rechner schlägt den Aufschlag darauf
+#     (markupPercent der Stufe, sonst cateringMarkupPercent). Der Partner
+#     sieht in seiner Mail nur seinen eigenen Preis.
 #   - basePackage und drinkOptions: unsere eigenen Preise.
 # Alles von Dritten ohne Angebot (Zelt, Fotograf, Musik, Deko, Torte, Fotobox,
 # Styling, Mobiliar, Kaffee & Kuchen) steht mit `onRequest: true` und ohne
@@ -57,10 +58,16 @@ partyDuration:
   default: 6
 
 # BASISPREIS: exklusive Buchung der gesamten Pension fürs Wochenende inkl. aller
-# "immer enthaltenen" Leistungen. Das Festzelt ist NICHT mehr enthalten (eigener
-# Schritt, Preis auf Anfrage). Kalkulation:
-#   Zimmerblock ~860 + Versicherung ~130 (Platzhalter) +
-#   Organisationspauschale ~800 + Endreinigung ~500 = 2.290 €
+# "immer enthaltenen" Leistungen. Das Festzelt ist NICHT enthalten (eigener
+# Schritt, Preis im Angebot). Kalkulation (Tina, 18.10.2026):
+#   Zimmerblock 1.156 € = alle Einheiten voll ausgebucht, 2 Nächte, jeweils der
+#     Preis bei voller Belegung: Balkonzimmer 58, Einzelzimmer 50, Emils
+#     Kuhwiese 83, Rosengarten 68, Schöne Aussicht 146, Wohlfühl-Appartement
+#     75, Libellenruh 98 = 578 €/Nacht (Stand content/rooms/*.yml)
+#   + Versicherung 130 (Platzhalter) + Endreinigung 500
+#   + Aufwandspauschale nach Gästezahl: 1.000 / 2.000 / 3.000 / 4.000 / 5.000 €
+#   = 1.786 € + Aufwandspauschale
+# Ändern sich Zimmerpreise, den Zimmerblock hier nachrechnen.
 basePackage:
   label: Basispreis – Exklusives Festwochenende
   description: >-
@@ -68,8 +75,16 @@ basePackage:
     Ich plane die Feier mit Ihnen und bin während der Feier vor Ort. Im Basispreis
     ist bereits Folgendes enthalten:
   guestBands:
+    - maxGuests: 30
+      price: 2786
+    - maxGuests: 60
+      price: 3786
+    - maxGuests: 100
+      price: 4786
+    - maxGuests: 150
+      price: 5786
     - maxGuests: 200
-      price: 2290
+      price: 6786
   includes:
     - >-
       Exklusive Buchung der gesamten Pension fürs Wochenende: alle Zimmer und
@@ -85,9 +100,13 @@ basePackage:
     - Garage als Catering-Küche
     - Zugang zu unserer Planungs-App für Zimmerverteilung, Ablauf und Wünsche
 
-# Catering läuft IMMER über einen Partner (kein hauseigenes Catering).
-# `partner` bestimmt, an wen die Anfrage geht (send-mail.php kennt bisher nur
-# grillverein-thalwenden; Anfragen für andere Partner landen nur bei events@).
+# Catering läuft IMMER über einen unserer Partner (kein hauseigenes Catering).
+# Jede Stufe nennt ihren Partner. `partner` bestimmt, an wen die Anfrage geht:
+# send-mail.php leitet nur an Partner in $partnerEmails weiter (bisher nur
+# grillverein-thalwenden), alle anderen Anfragen landen nur bei events@.
+# Stufen mit priceBands: Preis des Partners + markupPercent der Stufe (fehlt er,
+# gilt cateringMarkupPercent). Stufen ohne Angebot: onRequest: true.
+# Weiterer Partner: Stufen mit eigenem `partner` anhängen, fertig.
 #
 # Grillverein Thalwenden: ECHTES Angebot (Preisübersicht Stand 2026-08), 4
 # Genusswelten, Preis pro Person sinkt mit der Gästezahl (Grillservice inkl.
@@ -100,6 +119,8 @@ cateringMarkupPercent: 10
 cateringTiers:
   - id: classic
     partner: grillverein-thalwenden
+    partnerName: Grillverein Thalwenden
+    markupPercent: 10
     label: Classic – Der Klassiker
     image: /img/events/partner-grillverein-steak.webp
     imageAlt: Steaks und Bratwurst brutzeln auf dem Grill des Grillverein Thalwenden
@@ -117,6 +138,8 @@ cateringTiers:
         pricePerPerson: 24.9
   - id: signature
     partner: grillverein-thalwenden
+    partnerName: Grillverein Thalwenden
+    markupPercent: 10
     label: Signature – Unsere besondere Auswahl
     image: /img/events/partner-grillverein-grillplatte.webp
     imageAlt: Große Grillplatte mit Fisch, Spießen, Bratwurst und Burgern
@@ -134,6 +157,8 @@ cateringTiers:
         pricePerPerson: 34.9
   - id: prestige
     partner: grillverein-thalwenden
+    partnerName: Grillverein Thalwenden
+    markupPercent: 10
     label: Prestige – Premium vom Grill
     image: /img/events/partner-grillverein-team.webp
     imageAlt: Team des Grillverein Thalwenden mit Grillstand im Garten
@@ -151,6 +176,8 @@ cateringTiers:
         pricePerPerson: 44.9
   - id: elite
     partner: grillverein-thalwenden
+    partnerName: Grillverein Thalwenden
+    markupPercent: 10
     label: Élite – Das außergewöhnliche Grillerlebnis
     imageAlt: Premium-Grillauswahl der Élite-Genusswelt
     description: >-
@@ -168,7 +195,8 @@ cateringTiers:
 
   - id: anja-kocht
     partner: anja-kocht
-    label: Anja kocht – Regionale Küche für große Feiern
+    partnerName: Anja kocht, Witzenhausen
+    label: Regionale Küche für große Feiern
     description: >-
       Partyservice Anja kocht aus Witzenhausen mit regionaler, frischer Küche.
       Für Feiern ab 80 Gästen. Was auf den Tisch kommt, stimmen wir gemeinsam
@@ -322,7 +350,9 @@ chairCoverOptions:
 dishwareOptions:
   - id: caterer
     label: Geschirr über den Caterer
-    description: Teller, Gläser und Besteck stellt unser Partner-Caterer, im Catering enthalten.
+    description: >-
+      Teller, Gläser und Besteck bringt der Caterer mit. Was davon im Catering
+      enthalten ist, steht im Angebot.
     pricePerPerson: 0
   - id: mietgeschirr
     label: Komplettes Mietgeschirr

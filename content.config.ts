@@ -319,10 +319,14 @@ const eventCateringTierSchema = z.object({
   id: z.string(),
   // Partner key the enquiry is routed to (see server/send-mail.php)
   partner: z.string(),
+  // Shown above the tier label so guests see which partner cooks
+  partnerName: z.string(),
   label: z.string(),
   description: z.string(),
-  // The partner's own prices, without our markup (cateringMarkupPercent)
+  // The partner's own prices, without our markup
   priceBands: z.array(eventPriceBandSchema).min(1).optional(),
+  // Our markup on this partner's prices; falls back to cateringMarkupPercent
+  markupPercent: z.number().optional(),
   ...eventOptionMediaFields,
 })
 
@@ -384,15 +388,16 @@ const eventConfigSchema = z.object({
     default: z.number(),
   }),
   // Base price = exclusive whole-property weekend + everything in `includes`
-  // (cleaning, coordination, insurance, …). Banded by guest count; one band
-  // since the tent left the base. Inclusions are listed WITHOUT prices.
+  // (all rooms at full price, cleaning, insurance, effort fee). Banded by guest
+  // count because the effort fee grows with the party. Inclusions are listed
+  // WITHOUT prices.
   basePackage: z.object({
     label: z.string(),
     description: z.string(),
     guestBands: z.array(eventGuestBandSchema).min(1),
     includes: z.array(z.string()).min(1),
   }),
-  // Our markup in percent on the partner prices in cateringTiers
+  // Default markup in percent on partner prices (a tier can set its own)
   cateringMarkupPercent: z.number(),
   cateringTiers: z.array(eventCateringTierSchema).min(1),
   // Drinks: radio incl. a "Keine" option; priced per person per hour
