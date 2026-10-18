@@ -90,11 +90,7 @@ basePackage:
       Exklusive Buchung der gesamten Pension fürs Wochenende: alle Zimmer und
       Ferienwohnungen für bis zu 28 Übernachtungsgäste in Betten und auf
       Schlafcouches
-    - >-
-      Weitere Gäste können im Garten zelten oder mit dem Wohnmobil übernachten.
-      Sie nutzen Toiletten und Bäder in den Zimmern mit
     - 'Persönliche Planung und Koordination durch Tina Volgenandt'
-    - Bestuhlung für alle Gäste
     - Endreinigung nach der Feier
     - Stromversorgung für die Musik direkt aus dem Haus
     - Garage als Catering-Küche
@@ -242,6 +238,21 @@ tentOptions:
       Platz für alle Gäste.
     price: 0
 
+# Übernachten im Garten: Zelt oder Wohnmobil der Gäste. Nicht im Basispreis
+# (Tina, 18.10.2026), Preis im Angebot. Keine eigenen Sanitäranlagen im Garten.
+campingOptions:
+  - id: keine
+    label: Keine Zelte oder Wohnmobile
+    description: Alle Übernachtungsgäste schlafen in den Zimmern.
+    price: 0
+  - id: garten
+    label: Zelt- und Wohnmobilplätze im Garten
+    description: >-
+      Weitere Gäste übernachten im eigenen Zelt oder Wohnmobil im Garten. Sie
+      nutzen Toiletten und Bäder in den Zimmern mit, eigene Sanitäranlagen im
+      Garten gibt es nicht.
+    onRequest: true
+
 # Kaffee & Kuchen: wird im Rechner nur gezeigt, wenn die Feier in den
 # Nachmittag fällt, damit diese Mahlzeit immer eingeplant ist.
 coffeeOptions:
@@ -311,16 +322,16 @@ musicOptions:
       Technik. Strom aus dem Haus.
     onRequest: true
 
-# Mobiliar & Ausstattung – jeweils pro Person, erste Option = im Basispreis
-# enthalten/Standard. (Markt 2026: Stühle ~3 €, Hussen ~3,50 €, Biertischgarnitur
+# Mobiliar & Ausstattung – nichts davon ist im Basispreis (Tina, 18.10.2026):
+# auch Tische und Bestuhlung nicht. Erste Option = Standard-Vorauswahl. (Markt 2026: Stühle ~3 €, Hussen ~3,50 €, Biertischgarnitur
 # ~13 €, Banketttisch ~21 €, Mietgeschirr ~3–8 €/Person, Holzboden ~9,50 €/m².)
 tableOptions:
   - id: biertisch
     label: Biertischgarnituren (rustikal)
     image: /img/events/tische-biertisch.webp
     imageAlt: Rustikale Holz-Biertischgarnituren mit Bänken
-    description: Klassische Holz-Biertischgarnituren mit Bänken, im Basispreis enthalten.
-    pricePerPerson: 0
+    description: Klassische Holz-Biertischgarnituren mit Bänken.
+    onRequest: true
   - id: bankett
     label: Eckige Bankett-Tische
     image: /img/events/tische-bankett.webp

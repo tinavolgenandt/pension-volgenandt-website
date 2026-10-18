@@ -125,7 +125,8 @@ const included = [
 
 const toDiscuss = [
   'Festzelt (nicht im Basispreis, wir empfehlen es für jede Feier)',
-  'Tischform, Stuhlhussen & Geschirr',
+  'Zelt- und Wohnmobilplätze im Garten (nicht im Basispreis)',
+  'Tische, Stühle, Stuhlhussen & Geschirr',
   'Deko & Blumenschmuck',
   'Musik, DJ oder Band',
   'Getränke & Ausschank',
@@ -229,7 +230,8 @@ onMounted(() => {
 
       <div class="mt-8 rounded-xl border border-sage-200 p-5">
         <p class="mb-4 text-sm text-sage-600">
-          Anzahl der Stellplätze bitte vorab mit mir abstimmen. Hier nur Platzhalterzeilen.
+          Zelt- und Wohnmobilplätze sind nicht im Basispreis enthalten. Die Anzahl bitte vorab mit
+          mir abstimmen.
         </p>
         <p class="mb-2 text-xs tracking-wide text-sage-500 uppercase">Zeltplätze im Garten</p>
         <div v-for="n in tentRowCount" :key="'tent-' + n" class="mb-2 grid grid-cols-3 gap-3">

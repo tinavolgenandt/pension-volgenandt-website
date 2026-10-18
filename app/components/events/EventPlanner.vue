@@ -39,6 +39,7 @@ type SelectKey =
   | 'cateringId'
   | 'drinkId'
   | 'tentId'
+  | 'campingId'
   | 'coffeeId'
   | 'photographyId'
   | 'musicId'
@@ -87,6 +88,7 @@ const form = reactive({
   cateringId: '',
   drinkId: '',
   tentId: '',
+  campingId: '',
   coffeeId: '',
   photographyId: '',
   musicId: '',
@@ -194,6 +196,19 @@ const allOptionSteps = computed<WizardStep[]>(() => [
     groups: [{ key: 'tentId', unit: 'flat', legend: 'Festzelt', options: opts('tentOptions') }],
   },
   {
+    title: 'Übernachten im Garten',
+    intro:
+      'In den Zimmern schlafen bis zu 28 Gäste. Weitere Gäste können im eigenen Zelt oder Wohnmobil im Garten übernachten. Das ist nicht im Basispreis enthalten.',
+    groups: [
+      {
+        key: 'campingId',
+        unit: 'flat',
+        legend: 'Zelt & Wohnmobil',
+        options: opts('campingOptions'),
+      },
+    ],
+  },
+  {
     title: 'Fotograf & Video',
     intro: 'Wir vermitteln Fotografen und Videografen für den ganzen Tag.',
     groups: [
@@ -251,7 +266,7 @@ const allOptionSteps = computed<WizardStep[]>(() => [
   {
     title: 'Mobiliar & Ausstattung',
     intro:
-      'Tische, Stuhlhussen, Geschirr und Bodenbelag. Biertischgarnituren und Bestuhlung sind im Basispreis enthalten, alles Weitere nehme ich ins Angebot auf.',
+      'Tische, Stühle, Stuhlhussen, Geschirr und Bodenbelag sind nicht im Basispreis enthalten. Ich nehme Ihre Auswahl ins Angebot auf.',
     groups: [
       { key: 'tableId', unit: 'person', legend: 'Tische', options: opts('tableOptions') },
       {

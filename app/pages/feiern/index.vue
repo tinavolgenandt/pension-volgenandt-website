@@ -535,7 +535,7 @@ const included = [
             <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">Bis zu 200 Gäste</h3>
             <p class="mt-2 text-sm text-sage-600">
               Feiern Sie mit bis zu 200 Gästen im Garten. Bis zu 28 übernachten in den Zimmern,
-              weitere im Zelt oder Wohnmobil im Garten.
+              weitere gegen Aufpreis im Zelt oder Wohnmobil im Garten.
             </p>
           </div>
         </div>

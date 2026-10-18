@@ -404,6 +404,8 @@ const eventConfigSchema = z.object({
   drinkOptions: z.array(eventDrinkOptionSchema).min(1),
   // Festzelt (recommended rain plan, not in the base): radio incl. "ohne"
   tentOptions: z.array(eventFixedOptionSchema).min(1),
+  // Guests' own tents / campervans in the garden: radio incl. "keine"
+  campingOptions: z.array(eventFixedOptionSchema).min(1),
   // Kaffee & Kuchen: only asked when the party covers the afternoon
   coffeeOptions: z.array(eventFixedOptionSchema).min(1),
   // Photographer / videographer: radio incl. "Keine"; fixed price
