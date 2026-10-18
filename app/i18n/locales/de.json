@@ -122,6 +122,8 @@
     "copyright": "Alle Rechte vorbehalten.",
     "ctaHeading": "Bereit für Ihren Aufenthalt im Eichsfeld?",
     "ctaButton": "Verfügbarkeit prüfen",
+    "eventsCtaHeading": "Ihre Feier im Garten planen?",
+    "eventsCtaButton": "Preis berechnen & anfragen",
     "callUs": "Oder rufen Sie uns direkt an",
     "nav": {
       "roomsPrices": "Zimmer & Preise",
@@ -507,7 +509,7 @@
     }
   },
   "events": {
-    "contactHeading": "Lieber schreiben?",
-    "contactText": "Ihre Frage zur Feier im Garten geht direkt an Tina Volgenandt."
+    "contactHeading": "Fragen zu Ihrer Feier?",
+    "contactText": "Ich rufe Sie zurück oder antworte auf Ihre Nachricht. Beides geht direkt an mich, Tina Volgenandt."
   }
 }

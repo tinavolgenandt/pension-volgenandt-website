@@ -94,7 +94,7 @@ basePackage:
     - Endreinigung nach der Feier
     - Stromversorgung für die Musik direkt aus dem Haus
     - Garage als Catering-Küche
-    - Zugang zu unserer Planungs-App für Zimmerverteilung, Ablauf und Wünsche
+    - Zugang zu unserer Planungs-App
 
 # Catering läuft IMMER über einen unserer Partner (kein hauseigenes Catering).
 # Jede Stufe nennt ihren Partner. `partner` bestimmt, an wen die Anfrage geht:

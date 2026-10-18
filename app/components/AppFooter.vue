@@ -47,6 +47,23 @@ const legalNav = computed(() => {
 
 const roomsLink = computed(() => (locale.value === 'en' ? '/en/rooms/' : '/zimmer/'))
 
+// On the Feiern pages the bar above the footer asks for a party, not a room.
+const route = useRoute()
+const isEventsPage = computed(() => route.path.startsWith('/feiern'))
+const cta = computed(() =>
+  isEventsPage.value
+    ? {
+        heading: t('footer.eventsCtaHeading', locale.value),
+        button: t('footer.eventsCtaButton', locale.value),
+        to: '/feiern/#rechner',
+      }
+    : {
+        heading: t('footer.ctaHeading', locale.value),
+        button: t('footer.ctaButton', locale.value),
+        to: roomsLink.value,
+      },
+)
+
 const { openSettings } = useCookieConsent()
 
 function openCookieSettings() {
@@ -60,14 +77,14 @@ function openCookieSettings() {
     <section class="bg-waldhonig-500">
       <div class="mx-auto max-w-screen-xl px-4 py-8 text-center">
         <h2 class="font-serif text-2xl font-semibold text-white">
-          {{ t('footer.ctaHeading', locale) }}
+          {{ cta.heading }}
         </h2>
         <div class="mt-4">
           <NuxtLink
-            :to="roomsLink"
+            :to="cta.to"
             class="inline-flex items-center justify-center rounded-lg bg-white px-8 py-4 font-sans font-semibold text-waldhonig-600 transition-colors duration-200 hover:bg-waldhonig-50"
           >
-            {{ t('footer.ctaButton', locale) }}
+            {{ cta.button }}
           </NuxtLink>
         </div>
       </div>
@@ -124,7 +141,7 @@ function openCookieSettings() {
 
             <!-- Email -->
             <a
-              :href="`mailto:${config.contact.email}`"
+              :href="`mailto:${contactPhone.email}`"
               class="mt-2 flex items-center gap-2 text-sage-300 transition-colors duration-200 hover:text-white"
             >
               <svg
@@ -140,7 +157,7 @@ function openCookieSettings() {
                 <rect width="20" height="16" x="2" y="4" rx="2" />
                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
               </svg>
-              <span>{{ config.contact.email }}</span>
+              <span>{{ contactPhone.email }}</span>
             </a>
           </div>
 

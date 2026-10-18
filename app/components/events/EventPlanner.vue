@@ -63,6 +63,8 @@ interface WizardStep {
   intro?: string
   // false hides the step (e.g. Kaffee & Kuchen for an evening-only party)
   show?: boolean
+  // compact: option cards without photo and detail text (many groups per step)
+  compact?: boolean
   groups: WizardGroup[]
 }
 
@@ -209,8 +211,12 @@ const allOptionSteps = computed<WizardStep[]>(() => [
     ],
   },
   {
-    title: 'Fotograf & Video',
-    intro: 'Wir vermitteln Fotografen und Videografen für den ganzen Tag.',
+    // All optional extras on one screen instead of six steps. None has a
+    // confirmed price yet, so they are shown compact (no photo, no detail).
+    title: 'Weitere Wünsche',
+    intro:
+      'Fotograf, Musik, Deko, Torte, Fotobox und Styling vermitteln wir auf Wunsch. Wählen Sie, was Sie brauchen, ich nehme es ins Angebot auf.',
+    compact: true,
     groups: [
       {
         key: 'photographyId',
@@ -218,48 +224,20 @@ const allOptionSteps = computed<WizardStep[]>(() => [
         legend: 'Fotograf & Video',
         options: opts('photographyOptions'),
       },
-    ],
-  },
-  {
-    title: 'Musik',
-    intro: 'Eigene Playlist, Musikanlage oder kompletter DJ. Strom kommt aus dem Haus.',
-    groups: [{ key: 'musicId', unit: 'flat', legend: 'Musik', options: opts('musicOptions') }],
-  },
-  {
-    title: 'Dekoration',
-    intro: 'Von schlicht bis aufwändig: Tischdekoration passend zu Ihrer Feier.',
-    groups: [
+      { key: 'musicId', unit: 'flat', legend: 'Musik', options: opts('musicOptions') },
       {
         key: 'decorationId',
         unit: 'person',
         legend: 'Dekoration',
         options: opts('decorationOptions'),
       },
-    ],
-  },
-  {
-    title: 'Torte & Sweet Table',
-    intro: 'Festtorte, auf Wunsch mit Sweet Table.',
-    groups: [
       {
         key: 'cakeId',
         unit: 'person',
         legend: 'Torte & Sweet Table',
         options: opts('cakeOptions'),
       },
-    ],
-  },
-  {
-    title: 'Fotobox',
-    intro: 'Fotobox mit Requisiten und Sofortdruck.',
-    groups: [
       { key: 'photoboothId', unit: 'flat', legend: 'Fotobox', options: opts('photoboothOptions') },
-    ],
-  },
-  {
-    title: 'Styling',
-    intro: 'Haar- und Make-up-Styling vor der Feier, direkt vor Ort.',
-    groups: [
       { key: 'stylingId', unit: 'flat', legend: 'Styling', options: opts('stylingOptions') },
     ],
   },
@@ -446,6 +424,16 @@ function lineAmount(line: Line): string {
 
 // --- Occasion helpers ------------------------------------------------------
 const isCustomOccasion = computed(() => form.occasionId === 'andere')
+
+// The occasion chips on the page set this; the planner jumps back to the
+// first step with that occasion selected.
+const occasionPreset = useState<string>('event-occasion-preset', () => '')
+watch(occasionPreset, (id) => {
+  if (!id) return
+  form.occasionId = id
+  currentStep.value = 0
+  occasionPreset.value = ''
+})
 const occasionLabel = computed(() => {
   if (isCustomOccasion.value) return form.customOccasion.trim() || 'Eigener Anlass'
   return occasions.value.find((o) => o.id === form.occasionId)?.label ?? ''
@@ -688,9 +676,20 @@ const inputClass =
       <div class="p-6 md:p-8">
         <!-- ============ STEP 0: Intro & Eckdaten ============ -->
         <div v-if="isIntro" class="space-y-8">
-          <div v-if="basePackage" class="rounded-xl border border-sage-200 bg-sage-50/60 p-6">
-            <h4 class="font-serif text-lg font-semibold text-sage-900">{{ basePackage.label }}</h4>
-            <p class="mt-1 text-sm text-sage-600">{{ basePackage.description }}</p>
+          <details
+            v-if="basePackage"
+            class="group rounded-xl border border-sage-200 bg-sage-50/60 p-5"
+          >
+            <summary
+              class="flex cursor-pointer list-none items-center justify-between gap-3 font-serif text-base font-semibold text-sage-900"
+            >
+              Was ist im Basispreis enthalten?
+              <Icon
+                name="ph:caret-down"
+                class="size-4 shrink-0 text-sage-500 transition-transform group-open:rotate-180"
+              />
+            </summary>
+            <p class="mt-3 text-sm text-sage-600">{{ basePackage.description }}</p>
             <ul class="mt-4 grid gap-2 sm:grid-cols-2">
               <li
                 v-for="(item, i) in basePackage.includes"
@@ -704,16 +703,10 @@ const inputClass =
                 {{ item }}
               </li>
             </ul>
-          </div>
+          </details>
 
           <div>
-            <p class="text-sage-700">
-              Beantworten Sie zunächst ein paar kurze Fragen. Danach führen wir Sie Schritt für
-              Schritt durch alle Möglichkeiten. Bei jeder Auswahl sehen Sie sofort, was sie für Ihre
-              Feier bedeutet und was sie kostet.
-            </p>
-
-            <div class="mt-5 grid gap-5 sm:grid-cols-2">
+            <div class="grid gap-5 sm:grid-cols-2">
               <div>
                 <label for="ev-occasion" class="block text-sm font-medium text-sage-800">
                   Anlass *
@@ -807,7 +800,7 @@ const inputClass =
         <!-- ============ STEPS 1..N: Catalogue ============ -->
         <div v-else-if="activeStep" class="space-y-6">
           <NuxtImg
-            v-if="topOption?.image && readyImages[topOption.image]"
+            v-if="!activeStep.compact && topOption?.image && readyImages[topOption.image]"
             :src="topOption.image"
             :alt="topOption.imageAlt ?? topOption.label"
             class="h-48 w-full rounded-xl object-cover md:h-56"
@@ -848,7 +841,7 @@ const inputClass =
                 class="mt-1 size-4 shrink-0 accent-waldhonig-500"
               />
               <NuxtImg
-                v-if="opt.image && readyImages[opt.image]"
+                v-if="!activeStep.compact && opt.image && readyImages[opt.image]"
                 :src="opt.image"
                 :alt="opt.imageAlt ?? opt.label"
                 class="h-16 w-20 shrink-0 rounded-md object-cover"
@@ -871,7 +864,7 @@ const inputClass =
                 </span>
                 <span class="mt-1 block text-sm text-sage-600">{{ opt.description }}</span>
                 <span
-                  v-if="opt.detail"
+                  v-if="opt.detail && !activeStep.compact"
                   class="mt-2 block border-l-2 border-sage-200 pl-3 text-sm text-sage-500 italic"
                 >
                   {{ opt.detail }}

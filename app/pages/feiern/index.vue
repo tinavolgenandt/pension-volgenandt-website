@@ -69,7 +69,7 @@ const steps = [
   },
   {
     title: 'Planung',
-    text: 'Sie erhalten ein Angebot. Nach der Buchung planen wir alle Details gemeinsam in unserer Planungs-App.',
+    text: 'Sie erhalten ein Angebot. Nach der Buchung planen wir die Details gemeinsam.',
   },
   {
     title: 'Feiern',
@@ -81,24 +81,104 @@ const included = [
   {
     icon: 'ph:key-duotone',
     title: 'Das ganze Grundstück für Sie allein',
-    text: 'Die komplette Pension exklusiv für Ihr Festwochenende: alle Zimmer, bis zu 28 Übernachtungsgäste, keine fremden Gäste.',
+    text: 'Fürs Wochenende gibt es keine fremden Gäste im Haus. Bis zu 28 Gäste schlafen in den Zimmern, weitere gegen Aufpreis im eigenen Zelt oder Wohnmobil im Garten.',
   },
   {
     icon: 'ph:tree-duotone',
-    title: 'Unser Garten als festliche Kulisse',
-    text: 'Ein gepflegter, ruhiger Garten mitten im Grünen. Für Regen empfehlen wir ein Festzelt.',
+    title: 'Garten für bis zu 200 Gäste',
+    text: 'Ein ruhiger Garten mitten im Grünen. Ein Festzelt mit Seitenwänden ist nicht im Basispreis enthalten, wir empfehlen es aber für jede Feier.',
   },
   {
     icon: 'ph:fork-knife-duotone',
     title: 'Catering von unseren Partnern',
-    text: 'Der Grillverein Thalwenden grillt live im Garten. Für große Feiern ab 80 Gästen kocht auch der Partyservice Anja kocht aus Witzenhausen. Das Catering ist nicht im Basispreis enthalten.',
+    text: 'Sie wählen im Rechner, wer für Sie kocht. Das Catering ist nicht im Basispreis enthalten.',
   },
   {
-    icon: 'ph:calendar-check-duotone',
-    title: 'Eventplanung aus einer Hand',
-    text: 'Ich plane und koordiniere alles im Vorfeld, damit Sie sich an Ihrem Tag nur um Ihre Gäste kümmern.',
+    icon: 'ph:moon-stars-duotone',
+    title: 'Feiern bis in die Nacht',
+    text: 'Ihre Gäste schlafen vor Ort, niemand muss nachts fahren. Wie lange die Musik draußen laufen kann, bespreche ich mit Ihnen.',
   },
 ]
+
+// Photos from our own garden, to show the setting (not the caterers' photos)
+const impressions = [
+  {
+    src: '/img/events/ambiente-tisch-gedeck.webp',
+    alt: 'Festlich gedeckter Tisch im Garten mit Weingläsern',
+  },
+  {
+    src: '/img/events/ambiente-tisch-aperol.webp',
+    alt: 'Gedeckter Tisch mit Aperol Spritz im Abendlicht',
+  },
+  {
+    src: '/img/events/ambiente-aperol-minze.webp',
+    alt: 'Aperol Spritz mit frischer Minze auf dem Gartentisch',
+  },
+]
+
+// One card per caterer, same layout for each. A partner without a photo gets
+// an icon panel of the same height.
+const cateringPartners = [
+  {
+    name: 'Grillverein Thalwenden',
+    fit: 'Grillbuffet, für jede Gästezahl',
+    text: 'Das Team grillt live bei Ihrer Feier, mit hochwertigen, regionalen Zutaten. Vier Menüs vom Klassiker bis zur Premium-Auswahl, der Preis pro Person sinkt mit der Gästezahl.',
+    url: 'http://grillverein-thalwenden.de/',
+    image: '/img/events/partner-grillverein-grillplatte.webp',
+    imageAlt: 'Große Grillplatte mit Fisch, Spießen, Bratwurst und Burgern',
+    icon: '',
+  },
+  {
+    name: 'Anja kocht',
+    fit: 'Regionale Küche, für Feiern ab 80 Gästen',
+    text: 'Anja Randau und ihr Partyservice aus Witzenhausen kochen regional und frisch. Wegen der Anfahrt kommt Anja für Feiern ab 80 Gästen zu uns.',
+    url: 'https://www.anjakocht.de/',
+    image: '',
+    imageAlt: '',
+    icon: 'ph:cooking-pot-duotone',
+  },
+]
+
+const planningHelpers = [
+  {
+    to: '/feiern/planungshilfen/#belegungsplan',
+    icon: 'ph:bed-duotone',
+    // soft hyphen so the long word breaks inside the narrow phone tile
+    title: 'Zimmer­belegungsplan',
+    text: 'Wer schläft in welchem Bett.',
+  },
+  {
+    to: '/feiern/planungshilfen/#anfahrt',
+    icon: 'ph:car-duotone',
+    title: 'Anfahrt & Parken',
+    text: 'Adresse, Karte und Parkplätze.',
+  },
+  {
+    to: '/feiern/planungshilfen/#ablaufplan',
+    icon: 'ph:clock-duotone',
+    title: 'Ablaufplan für den Tag',
+    text: 'Zeitlicher Rahmen zum Ausfüllen.',
+  },
+  {
+    to: '/feiern/planungshilfen/#checkliste',
+    icon: 'ph:list-checks-duotone',
+    title: 'Checkliste',
+    text: 'Was dabei ist, was wir abstimmen.',
+  },
+]
+
+const contactTabs = [
+  { id: 'rueckruf', label: 'Rückruf vereinbaren' },
+  { id: 'nachricht', label: 'Nachricht schreiben' },
+] as const
+const contactTab = ref<(typeof contactTabs)[number]['id']>('rueckruf')
+
+// A click on an occasion chip preselects it in the planner and jumps there.
+const occasionPreset = useState<string>('event-occasion-preset', () => '')
+function chooseOccasion(id: string) {
+  occasionPreset.value = id
+  document.getElementById('rechner')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
 </script>
 
 <template>
@@ -134,54 +214,70 @@ const included = [
       </div>
     </section>
 
-    <!-- 2. Intro -->
+    <!-- 2. Intro + Anlässe: ein Klick wählt den Anlass im Rechner vor -->
     <section class="mx-auto max-w-3xl px-6 py-12 text-center md:py-16">
       <h2 class="font-serif text-2xl font-semibold text-sage-900 md:text-3xl">
         Ihr Fest ganz ohne Stress
       </h2>
       <p class="mt-4 text-lg leading-relaxed text-sage-800">
-        Fürs Festwochenende gehört Ihnen das <strong>gesamte Grundstück allein</strong>: alle
-        Zimmer, Ihre Gäste übernachten vor Ort, wir organisieren alles von A bis Z, inklusive
-        Catering über unsere Partner und persönlicher Eventplanung.
+        Fürs Festwochenende gehört Ihnen das <strong>gesamte Grundstück allein</strong>. Ihre Gäste
+        übernachten vor Ort, das Catering kommt von unseren Partnern, und ich plane die Feier
+        persönlich mit Ihnen.
       </p>
-      <p class="mt-4 text-lg leading-relaxed text-sage-800">
-        Keine fremden Gäste im Haus: Sie feiern, wir kümmern uns um den Rest.
-      </p>
+      <p class="mt-8 text-sm font-medium tracking-wide text-sage-500 uppercase">Ihr Anlass</p>
+      <div class="mt-3 flex flex-wrap justify-center gap-2">
+        <button
+          v-for="occasion in occasions"
+          :key="occasion.id"
+          type="button"
+          class="inline-flex items-center gap-2 rounded-full border border-sage-200 bg-white px-4 py-2 text-sm font-medium text-sage-800 transition-colors hover:border-waldhonig-300 hover:bg-waldhonig-50"
+          @click="chooseOccasion(occasion.id)"
+        >
+          <Icon :name="occasion.icon" class="size-5 text-waldhonig-500" />
+          {{ occasion.label }}
+        </button>
+      </div>
     </section>
 
-    <!-- 3. Anlässe -->
-    <section class="bg-cream px-6 py-12 md:py-16">
-      <div class="mx-auto max-w-6xl">
-        <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">
-          Für jeden besonderen Anlass
-        </h2>
-        <p class="mb-10 text-center text-sage-600">
-          Ob feierlich oder ausgelassen: wir gestalten Ihren Tag.
-        </p>
-        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          <div
-            v-for="occasion in occasions"
-            :key="occasion.id"
-            class="rounded-xl border border-sage-200 bg-white p-6 text-center"
+    <!-- 3. So läuft's ab -->
+    <section class="bg-sage-50 px-6 py-12 md:py-16">
+      <div class="mx-auto max-w-4xl">
+        <h2 class="mb-10 text-center font-serif text-3xl font-bold text-sage-900">So läuft's ab</h2>
+        <ol class="grid grid-cols-2 gap-x-4 gap-y-8 lg:grid-cols-4">
+          <li
+            v-for="(step, i) in steps"
+            :key="step.title"
+            class="flex flex-col items-center text-center"
           >
-            <Icon :name="occasion.icon" class="mx-auto size-10 text-waldhonig-500" />
-            <h3 class="mt-3 font-serif text-lg font-semibold text-sage-900">
-              {{ occasion.label }}
-            </h3>
-          </div>
+            <span
+              class="flex size-12 items-center justify-center rounded-full bg-waldhonig-500 text-xl font-bold text-white"
+            >
+              {{ i + 1 }}
+            </span>
+            <h3 class="mt-4 font-serif text-lg font-semibold text-sage-900">{{ step.title }}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-sage-600">{{ step.text }}</p>
+          </li>
+        </ol>
+        <div
+          class="mx-auto mt-10 flex max-w-2xl items-start gap-4 rounded-xl border border-sage-200 bg-white p-5"
+        >
+          <Icon name="ph:device-mobile-duotone" class="mt-0.5 size-7 shrink-0 text-waldhonig-500" />
+          <p class="text-sm leading-relaxed text-sage-700">
+            <strong class="text-sage-900">Unsere Planungs-App:</strong> Nach der Buchung pflegen Sie
+            dort Gästeliste und Zimmerverteilung, sehen Ablaufplan und Kosten und schicken mir
+            Wünsche und Dateien. Sie melden sich mit einem Link per E-Mail an, ein Passwort brauchen
+            Sie nicht.
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- 4. Was ist enthalten -->
+    <!-- 4. Was Sie bei uns bekommen -->
     <section class="px-6 py-12 md:py-16">
       <div class="mx-auto max-w-6xl">
-        <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">
+        <h2 class="mb-10 text-center font-serif text-3xl font-bold text-sage-900">
           Was Sie bei uns bekommen
         </h2>
-        <p class="mb-10 text-center text-sage-600">
-          Eine Ansprechpartnerin für alles, damit Sie entspannt feiern können.
-        </p>
         <div class="grid gap-6 sm:grid-cols-2">
           <div
             v-for="item in included"
@@ -210,32 +306,20 @@ const included = [
       />
     </div>
 
-    <!-- Impressionen: echte Fotos vom Garten als Festkulisse -->
+    <!-- 5. Impressionen: Fotos aus unserem Garten (am Handy seitlich wischen) -->
     <section class="px-6 py-12 md:py-16">
       <div class="mx-auto max-w-6xl">
         <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">Impressionen</h2>
         <p class="mb-10 text-center text-sage-600">So könnte Ihr Fest bei uns aussehen.</p>
-        <div class="grid gap-5 sm:grid-cols-3">
+        <div
+          class="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0"
+        >
           <NuxtImg
-            src="/img/events/ambiente-tisch-gedeck.webp"
-            alt="Festlich gedeckter Tisch im Garten mit Weingläsern"
-            class="h-64 w-full rounded-xl object-cover"
-            width="1600"
-            height="1067"
-            loading="lazy"
-          />
-          <NuxtImg
-            src="/img/events/ambiente-tisch-aperol.webp"
-            alt="Gedeckter Tisch mit Aperol Spritz im Abendlicht"
-            class="h-64 w-full rounded-xl object-cover"
-            width="1600"
-            height="1067"
-            loading="lazy"
-          />
-          <NuxtImg
-            src="/img/events/ambiente-aperol-minze.webp"
-            alt="Aperol Spritz mit frischer Minze auf dem Gartentisch"
-            class="h-64 w-full rounded-xl object-cover"
+            v-for="photo in impressions"
+            :key="photo.src"
+            :src="photo.src"
+            :alt="photo.alt"
+            class="h-64 w-[80%] shrink-0 snap-center rounded-xl object-cover sm:w-full"
             width="1600"
             height="1067"
             loading="lazy"
@@ -244,8 +328,8 @@ const included = [
       </div>
     </section>
 
-    <!-- Drohnenvideo: der Garten von oben -->
-    <section class="px-6 py-12 md:py-16">
+    <!-- 6. Drohnenvideo: der Garten von oben -->
+    <section class="px-6 pb-12 md:pb-16">
       <div class="mx-auto max-w-4xl">
         <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">
           Der Garten von oben
@@ -264,110 +348,53 @@ const included = [
       </div>
     </section>
 
-    <!-- Catering-Partner: Grillverein Thalwenden und Anja kocht -->
+    <!-- 7. Catering-Partner: gleich gewichtet, je eine Karte -->
     <section class="bg-sage-50 px-6 py-12 md:py-16">
-      <div class="mx-auto max-w-6xl">
-        <h2 class="mb-10 text-center font-serif text-3xl font-bold text-sage-900">
+      <div class="mx-auto max-w-5xl">
+        <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">
           Unsere Catering-Partner
         </h2>
-        <div class="mb-10 flex flex-col items-center text-center">
-          <img
-            src="/img/events/partner-grillverein-logo.webp"
-            alt="Logo Grillverein Thalwenden"
-            class="size-20 object-contain"
-            width="192"
-            height="192"
-            loading="lazy"
-          />
-          <h3 class="mt-4 font-serif text-2xl font-semibold text-sage-900">
-            Grillverein Thalwenden
-          </h3>
-          <p class="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-sage-700">
-            Für herzhafte Grillspezialitäten arbeiten wir mit dem Grillverein Thalwenden zusammen.
-            Das Team grillt live bei Ihrer Feier, mit hochwertigen, regionalen Zutaten.
-          </p>
-        </div>
-        <div class="grid gap-5 sm:grid-cols-3">
-          <NuxtImg
-            src="/img/events/partner-grillverein-steak.webp"
-            alt="Steaks und Bratwurst brutzeln auf dem Grill des Grillverein Thalwenden"
-            class="h-64 w-full rounded-xl object-cover"
-            width="1600"
-            height="1067"
-            loading="lazy"
-          />
-          <NuxtImg
-            src="/img/events/partner-grillverein-grillplatte.webp"
-            alt="Große Grillplatte mit Fisch, Spießen, Bratwurst und Burgern"
-            class="h-64 w-full rounded-xl object-cover"
-            width="1600"
-            height="1067"
-            loading="lazy"
-          />
-          <NuxtImg
-            src="/img/events/partner-grillverein-team.webp"
-            alt="Team des Grillverein Thalwenden mit Grillstand im Garten"
-            class="h-64 w-full rounded-xl object-cover"
-            width="1600"
-            height="1067"
-            loading="lazy"
-          />
-        </div>
-        <div class="mt-8 text-center">
-          <a
-            href="http://grillverein-thalwenden.de/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 rounded-lg border border-sage-300 bg-white px-5 py-2.5 text-sm font-medium text-sage-700 transition-colors hover:bg-sage-100"
+        <p class="mb-10 text-center text-sage-600">
+          Das Catering ist nicht im Basispreis enthalten. Sie wählen es im Rechner aus.
+        </p>
+        <div class="grid gap-6 sm:grid-cols-2">
+          <article
+            v-for="partner in cateringPartners"
+            :key="partner.name"
+            class="flex flex-col overflow-hidden rounded-xl bg-white"
           >
-            Grillverein Thalwenden entdecken
-            <Icon name="ph:arrow-square-out" class="size-4 text-waldhonig-600" />
-          </a>
-        </div>
-
-        <div class="mx-auto mt-14 max-w-2xl rounded-xl bg-white p-8 text-center">
-          <Icon name="ph:cooking-pot-duotone" class="mx-auto size-10 text-waldhonig-500" />
-          <h3 class="mt-3 font-serif text-2xl font-semibold text-sage-900">Anja kocht</h3>
-          <p class="mt-3 leading-relaxed text-sage-700">
-            Anja Randau und ihr Partyservice aus Witzenhausen kochen regional und frisch. Wegen der
-            Anfahrt kommt Anja für Feiern ab 80 Gästen zu uns.
-          </p>
-          <a
-            href="https://www.anjakocht.de/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="mt-6 inline-flex items-center gap-2 rounded-lg border border-sage-300 bg-white px-5 py-2.5 text-sm font-medium text-sage-700 transition-colors hover:bg-sage-100"
-          >
-            Anja kocht entdecken
-            <Icon name="ph:arrow-square-out" class="size-4 text-waldhonig-600" />
-          </a>
+            <NuxtImg
+              v-if="partner.image"
+              :src="partner.image"
+              :alt="partner.imageAlt"
+              class="h-48 w-full object-cover"
+              width="1600"
+              height="1067"
+              loading="lazy"
+            />
+            <div v-else class="flex h-48 items-center justify-center bg-sage-100">
+              <Icon :name="partner.icon" class="size-16 text-waldhonig-500" />
+            </div>
+            <div class="flex flex-1 flex-col p-6">
+              <h3 class="font-serif text-xl font-semibold text-sage-900">{{ partner.name }}</h3>
+              <p class="mt-1 text-sm font-medium text-waldhonig-700">{{ partner.fit }}</p>
+              <p class="mt-3 flex-1 text-sm leading-relaxed text-sage-700">{{ partner.text }}</p>
+              <a
+                :href="partner.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-5 inline-flex items-center gap-2 self-start rounded-lg border border-sage-300 px-4 py-2 text-sm font-medium text-sage-700 transition-colors hover:bg-sage-100"
+              >
+                Website ansehen
+                <Icon name="ph:arrow-square-out" class="size-4 text-waldhonig-600" />
+              </a>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- 5. So läuft's ab -->
-    <section class="bg-sage-50 px-6 py-12 md:py-16">
-      <div class="mx-auto max-w-4xl">
-        <h2 class="mb-10 text-center font-serif text-3xl font-bold text-sage-900">So läuft's ab</h2>
-        <ol class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          <li
-            v-for="(step, i) in steps"
-            :key="step.title"
-            class="flex flex-col items-center text-center"
-          >
-            <span
-              class="flex size-12 items-center justify-center rounded-full bg-waldhonig-500 text-xl font-bold text-white"
-            >
-              {{ i + 1 }}
-            </span>
-            <h3 class="mt-4 font-serif text-lg font-semibold text-sage-900">{{ step.title }}</h3>
-            <p class="mt-2 text-sm leading-relaxed text-sage-600">{{ step.text }}</p>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- Eventmanagerin -->
+    <!-- 8. Ansprechpartnerin -->
     <section class="px-6 py-12 md:py-16">
       <div class="mx-auto max-w-4xl">
         <div
@@ -414,148 +441,81 @@ const included = [
       </div>
     </section>
 
-    <!-- 6. Preisrechner -->
-    <section id="rechner" class="px-6 py-12 md:py-16">
+    <!-- 9. Preisrechner -->
+    <section id="rechner" class="scroll-mt-20 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-2xl">
         <h2 class="text-center font-serif text-3xl font-bold text-sage-900">
           Stellen Sie sich Ihre Feier zusammen
         </h2>
         <p class="mt-3 mb-8 text-center text-sage-600">
-          Der Rechner zeigt Ihnen Schritt für Schritt einen ersten Richtwert, damit Sie ein Gefühl
-          für den Preis bekommen. Danach melde ich mich mit einem persönlichen Angebot.
+          Der Rechner zeigt Ihnen Schritt für Schritt einen ersten Richtwert. Danach melde ich mich
+          mit einem persönlichen Angebot.
         </p>
         <EventsEventPlanner />
       </div>
     </section>
 
-    <!-- 6.5 Planungshilfen -->
-    <section class="px-6 py-12 md:py-16">
+    <!-- 10. Planungshilfen -->
+    <section class="bg-cream px-6 py-12 md:py-16">
       <div class="mx-auto max-w-5xl">
         <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">
           Hilfreich für Ihre Planung
         </h2>
-        <p class="mb-6 text-center text-sage-600">
+        <p class="mb-10 text-center text-sage-600">
           Vorlagen und Infos, sobald Ihr Termin feststeht.
         </p>
-        <div
-          class="mx-auto mb-10 flex max-w-3xl items-start gap-4 rounded-xl border border-sage-200 bg-sage-50 p-6"
-        >
-          <Icon name="ph:device-mobile-duotone" class="mt-1 size-8 shrink-0 text-waldhonig-500" />
-          <div>
-            <h3 class="font-serif text-lg font-semibold text-sage-900">Unsere Planungs-App</h3>
-            <p class="mt-1 text-sm leading-relaxed text-sage-700">
-              Nach der Buchung bekommen Sie Zugang zu unserer Planungs-App. Dort pflegen Sie
-              Gästeliste und Zimmerverteilung, sehen Ablaufplan und Kosten und schicken mir Wünsche
-              und Dateien. Sie melden sich mit einem Link per E-Mail an, ein Passwort brauchen Sie
-              nicht.
-            </p>
-          </div>
-        </div>
-        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
           <NuxtLink
-            to="/feiern/planungshilfen/#belegungsplan"
-            class="flex flex-col items-center rounded-xl border border-sage-200 bg-white p-6 text-center transition-colors hover:bg-sage-50"
+            v-for="helper in planningHelpers"
+            :key="helper.to"
+            :to="helper.to"
+            class="flex flex-col items-center rounded-xl border border-sage-200 bg-white p-5 text-center transition-colors hover:bg-sage-50"
           >
-            <Icon name="ph:bed-duotone" class="size-9 text-waldhonig-500" />
-            <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">
-              Zimmerbelegungsplan
+            <Icon :name="helper.icon" class="size-8 text-waldhonig-500" />
+            <h3
+              class="mt-3 font-serif text-sm font-semibold break-words hyphens-auto text-sage-900 sm:text-base"
+            >
+              {{ helper.title }}
             </h3>
-            <p class="mt-2 text-sm text-sage-600">Wer schläft in welchem Bett.</p>
-          </NuxtLink>
-          <NuxtLink
-            to="/feiern/planungshilfen/#anfahrt"
-            class="flex flex-col items-center rounded-xl border border-sage-200 bg-white p-6 text-center transition-colors hover:bg-sage-50"
-          >
-            <Icon name="ph:car-duotone" class="size-9 text-waldhonig-500" />
-            <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">
-              Anfahrt &amp; Parken
-            </h3>
-            <p class="mt-2 text-sm text-sage-600">Adresse, Karte und Parkplätze.</p>
-          </NuxtLink>
-          <NuxtLink
-            to="/feiern/planungshilfen/#ablaufplan"
-            class="flex flex-col items-center rounded-xl border border-sage-200 bg-white p-6 text-center transition-colors hover:bg-sage-50"
-          >
-            <Icon name="ph:clock-duotone" class="size-9 text-waldhonig-500" />
-            <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">
-              Ablaufplan für den Tag
-            </h3>
-            <p class="mt-2 text-sm text-sage-600">Zeitlicher Rahmen zum Ausfüllen.</p>
-          </NuxtLink>
-          <NuxtLink
-            to="/feiern/planungshilfen/#checkliste"
-            class="flex flex-col items-center rounded-xl border border-sage-200 bg-white p-6 text-center transition-colors hover:bg-sage-50"
-          >
-            <Icon name="ph:list-checks-duotone" class="size-9 text-waldhonig-500" />
-            <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">
-              Checkliste: Was wir stellen
-            </h3>
-            <p class="mt-2 text-sm text-sage-600">Was inklusive ist, was wir abstimmen.</p>
+            <p class="mt-1 text-sm text-sage-600">{{ helper.text }}</p>
           </NuxtLink>
         </div>
       </div>
     </section>
 
-    <!-- 7. Gut zu wissen -->
-    <section class="bg-cream px-6 py-12 md:py-16">
-      <div class="mx-auto max-w-4xl">
-        <h2 class="mb-8 text-center font-serif text-2xl font-semibold text-sage-900">
-          Gut zu wissen
-        </h2>
-        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <div class="rounded-xl bg-white p-6 text-center">
-            <Icon name="ph:shield-check-duotone" class="mx-auto size-9 text-waldhonig-500" />
-            <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">Völlig privat</h3>
-            <p class="mt-2 text-sm text-sage-600">
-              Das Grundstück gehört fürs Wochenende nur Ihnen.
-            </p>
-          </div>
-          <div class="rounded-xl bg-white p-6 text-center">
-            <Icon name="ph:moon-stars-duotone" class="mx-auto size-9 text-waldhonig-500" />
-            <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">
-              Feiern bis in die Nacht
-            </h3>
-            <p class="mt-2 text-sm text-sage-600">
-              Ihre Gäste schlafen vor Ort, niemand muss nachts fahren. Wie lange die Musik draußen
-              laufen kann, bespreche ich mit Ihnen.
-            </p>
-          </div>
-          <div class="rounded-xl bg-white p-6 text-center">
-            <Icon name="ph:cloud-sun-duotone" class="mx-auto size-9 text-waldhonig-500" />
-            <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">
-              Schlechtwetter-Plan
-            </h3>
-            <p class="mt-2 text-sm text-sage-600">
-              Das Festzelt mit Seitenwänden ist nicht im Basispreis enthalten. Wir empfehlen es für
-              jede Feier.
-            </p>
-          </div>
-          <div class="rounded-xl bg-white p-6 text-center">
-            <Icon name="ph:users-three-duotone" class="mx-auto size-9 text-waldhonig-500" />
-            <h3 class="mt-3 font-serif text-base font-semibold text-sage-900">Bis zu 200 Gäste</h3>
-            <p class="mt-2 text-sm text-sage-600">
-              Feiern Sie mit bis zu 200 Gästen im Garten. Bis zu 28 übernachten in den Zimmern,
-              weitere gegen Aufpreis im Zelt oder Wohnmobil im Garten.
-            </p>
-          </div>
-        </div>
-        <p class="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-sage-600">
-          Sanitäranlagen nutzen Sie über die Zimmer. Gäste im Zelt oder Wohnmobil nutzen Toiletten
-          und Bäder dort mit, eigene Sanitäranlagen im Garten gibt es nicht. Der Caterer richtet
-          seine Küche in der Garage ein, und der Strom für die Musik kommt aus dem Haus.
-        </p>
-      </div>
-    </section>
-
-    <!-- 8. Kontakt-CTA: Gesprächstermin anfragen -->
+    <!-- 11. Kontakt: Rückruf oder Nachricht, beides geht an events@ -->
     <section class="bg-waldhonig-50 px-6 py-12 md:py-16">
-      <div class="mx-auto max-w-2xl text-center">
-        <h2 class="font-serif text-2xl font-semibold text-sage-900">Lieber persönlich sprechen?</h2>
-        <p class="mt-3 text-sage-700">Geben Sie Ihren Wunschtermin an, ich rufe Sie zurück.</p>
-        <div class="mt-8">
-          <EventsCallbackRequest />
+      <div class="mx-auto max-w-2xl">
+        <h2 class="text-center font-serif text-2xl font-semibold text-sage-900">
+          {{ t('events.contactHeading', 'de') }}
+        </h2>
+        <p class="mt-3 text-center text-sage-700">{{ t('events.contactText', 'de') }}</p>
+        <div
+          class="mx-auto mt-8 flex max-w-md rounded-lg border border-sage-200 bg-white p-1"
+          role="tablist"
+        >
+          <button
+            v-for="tab in contactTabs"
+            :key="tab.id"
+            type="button"
+            role="tab"
+            :aria-selected="contactTab === tab.id"
+            class="flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors"
+            :class="
+              contactTab === tab.id
+                ? 'bg-waldhonig-500 text-white'
+                : 'text-sage-700 hover:bg-sage-50'
+            "
+            @click="contactTab = tab.id"
+          >
+            {{ tab.label }}
+          </button>
         </div>
-        <p class="mt-6 text-sm text-sage-500">
+        <div class="mt-8">
+          <EventsCallbackRequest v-if="contactTab === 'rueckruf'" />
+          <ContactForm v-else topic="events" />
+        </div>
+        <p class="mt-6 text-center text-sm text-sage-500">
           Oder rufen Sie mich direkt an:
           <a
             :href="`tel:${appConfig.eventsContact.phone}`"
@@ -564,19 +524,6 @@ const included = [
             {{ appConfig.eventsContact.phoneDisplay }}
           </a>
         </p>
-      </div>
-    </section>
-
-    <!-- 9. Kontaktformular für Fragen zu Feiern (geht an events@) -->
-    <section class="bg-white px-6 py-12 md:py-16">
-      <div class="mx-auto max-w-2xl">
-        <h2 class="text-center font-serif text-2xl font-semibold text-sage-900">
-          {{ t('events.contactHeading', 'de') }}
-        </h2>
-        <p class="mt-3 text-center text-sage-700">{{ t('events.contactText', 'de') }}</p>
-        <div class="mt-8">
-          <ContactForm topic="events" />
-        </div>
       </div>
     </section>
   </div>
