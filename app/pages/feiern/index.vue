@@ -116,23 +116,17 @@ const impressions = [
   },
 ]
 
-// One card per caterer, same layout for each. A partner without a photo gets
+// One card per caterer, name and picture only. A partner without a photo gets
 // an icon panel of the same height.
 const cateringPartners = [
   {
     name: 'Grillverein Thalwenden',
-    fit: 'Grillbuffet, für jede Gästezahl',
-    text: 'Das Team grillt live bei Ihrer Feier, mit regionalen Zutaten. Es gibt vier Menüs vom Klassiker bis zur Premium-Auswahl. Je mehr Gäste, desto günstiger wird es pro Person.',
-    url: 'http://grillverein-thalwenden.de/',
     image: '/img/events/partner-grillverein-team.webp',
     imageAlt: 'Grillmeister des Grillverein Thalwenden in seinem Catering-Zelt',
     icon: '',
   },
   {
     name: 'Anja kocht',
-    fit: 'Regionale Küche, für Feiern ab 80 Gästen',
-    text: 'Anja Randau und ihr Partyservice aus Witzenhausen kochen regional und frisch. Was auf den Tisch kommt, stimmen wir gemeinsam mit Ihnen ab.',
-    url: 'https://www.anjakocht.de/',
     image: '',
     imageAlt: '',
     icon: 'ph:cooking-pot-duotone',
@@ -373,20 +367,9 @@ function chooseOccasion(id: string) {
             <div v-else class="flex h-48 items-center justify-center bg-sage-100">
               <Icon :name="partner.icon" class="size-16 text-waldhonig-500" />
             </div>
-            <div class="flex flex-1 flex-col p-6">
-              <h3 class="font-serif text-xl font-semibold text-sage-900">{{ partner.name }}</h3>
-              <p class="mt-1 text-sm font-medium text-waldhonig-700">{{ partner.fit }}</p>
-              <p class="mt-3 flex-1 text-sm leading-relaxed text-sage-700">{{ partner.text }}</p>
-              <a
-                :href="partner.url"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="mt-5 inline-flex items-center gap-2 self-start rounded-lg border border-sage-300 px-4 py-2 text-sm font-medium text-sage-700 transition-colors hover:bg-sage-100"
-              >
-                Website ansehen
-                <Icon name="ph:arrow-square-out" class="size-4 text-waldhonig-600" />
-              </a>
-            </div>
+            <h3 class="p-5 text-center font-serif text-xl font-semibold text-sage-900">
+              {{ partner.name }}
+            </h3>
           </article>
         </div>
       </div>
