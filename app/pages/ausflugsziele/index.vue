@@ -100,7 +100,7 @@ const activityCards = computed(() => [
               class="h-52 w-full object-cover"
               style="object-position: center 60%"
               loading="lazy"
-              sizes="100vw md:320px"
+              sizes="xs:100vw md:320px"
               width="640"
               height="416"
             />

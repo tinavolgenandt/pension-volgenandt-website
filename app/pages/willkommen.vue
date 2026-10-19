@@ -134,7 +134,7 @@ const { locale } = useLocale()
           alt="Gebäude und Innenhof der Pension Volgenandt in Breitenbach"
           class="w-full rounded-lg object-cover shadow-sm"
           loading="lazy"
-          sizes="100vw md:50vw"
+          sizes="xs:100vw md:50vw"
         />
         <div class="space-y-4 text-sage-700">
           <h2 class="font-serif text-2xl font-semibold text-sage-900">

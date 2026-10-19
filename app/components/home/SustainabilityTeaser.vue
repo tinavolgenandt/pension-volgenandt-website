@@ -32,7 +32,7 @@ const proofPoints = computed(() => [
           :alt="t('home.sustainabilityImageAlt', locale)"
           class="rounded-lg"
           loading="lazy"
-          sizes="100vw md:50vw"
+          sizes="xs:100vw md:50vw"
         />
 
         <!-- Right: Text + proof points -->

@@ -50,7 +50,7 @@ const {
             loading="lazy"
             width="480"
             height="360"
-            sizes="(min-width: 640px) 33vw, 50vw"
+            sizes="xs:50vw sm:33vw"
             class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             @error="onImgError"
           />

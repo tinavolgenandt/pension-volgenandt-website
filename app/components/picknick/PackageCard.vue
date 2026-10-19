@@ -19,7 +19,7 @@ defineProps<{
         class="h-full w-full object-cover"
         :style="imagePosition ? { objectPosition: imagePosition } : {}"
         loading="lazy"
-        sizes="100vw sm:50vw"
+        sizes="xs:100vw sm:50vw"
       />
     </div>
 
