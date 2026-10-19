@@ -55,13 +55,13 @@ const units: Unit[] = [
     ],
   },
   {
-    name: 'Omas Wohnung',
+    name: 'Ferienwohnung Libellenruh',
     badge: '4 Plätze · 4 Bett',
     groups: [
-      { label: 'Zimmer 1', rows: ['Doppelbett – Platz 1', 'Doppelbett – Platz 2'] },
-      { label: 'Zimmer 2', rows: ['Bett 140 – Platz 1', 'Bett 140 – Platz 2'] },
+      { label: 'Schlafzimmer 1', rows: ['Doppelbett – Platz 1', 'Doppelbett – Platz 2'] },
+      { label: 'Schlafzimmer 2', rows: ['Bett 140 – Platz 1', 'Bett 140 – Platz 2'] },
     ],
-    note: 'Wohnzimmer: keine Schlafmöglichkeit.',
+    note: 'Neue Ferienwohnung, buchbar ab 1. März 2027. In der Wohnküche gibt es keinen Schlafplatz.',
   },
   {
     name: 'Zimmer 1 · Wohlfühl-Appartement',

@@ -89,17 +89,17 @@ const included = [
   {
     icon: 'ph:key-duotone',
     title: 'Das ganze Grundstück für Sie allein',
-    text: 'Am Festwochenende sind nur Ihre Gäste im Haus. Bis zu 28 schlafen in den Zimmern, weitere im eigenen Zelt oder Wohnmobil im Garten.',
+    text: 'Am Festwochenende sind nur Ihre Gäste im Haus. Bis zu 28 schlafen in den Zimmern. Weitere Gäste können im Zelt oder im eigenen Wohnmobil im Garten übernachten.',
   },
   {
     icon: 'ph:tree-duotone',
     title: 'Garten für bis zu 200 Gäste',
-    text: 'Ein ruhiger Garten mitten im Grünen. Für Regen empfehlen wir ein Festzelt mit Seitenwänden.',
+    text: 'Ein ruhiger Garten mitten im Grünen. Ist das Wetter unsicher, empfehlen wir ein Festzelt mit Seitenwänden.',
   },
   {
     icon: 'ph:fork-knife-duotone',
     title: 'Catering von unseren Partnern',
-    text: 'Sie wählen, wer für Sie kocht: das Grillbuffet vom Grillverein Thalwenden oder die regionale Küche von Anja kocht.',
+    text: 'Sie wählen zwischen einem Grillbuffet und einem regionalen Buffet. Beides kommt von erfahrenen Catering-Partnern.',
   },
   {
     icon: 'ph:moon-stars-duotone',
@@ -161,7 +161,7 @@ const planningHelpers = [
     to: '/feiern/planungshilfen/#ablaufplan',
     icon: 'ph:clock-duotone',
     title: 'Ablaufplan für den Tag',
-    text: 'Zeitlicher Rahmen zum Ausfüllen.',
+    text: 'Die Programmpunkte für Ihren Tag.',
   },
   {
     to: '/feiern/planungshilfen/#checkliste',
@@ -239,8 +239,8 @@ function chooseOccasion(id: string) {
 
     <!-- 2. Anlässe: ein Klick wählt den Anlass im Rechner vor -->
     <section class="mx-auto max-w-3xl px-6 py-12 text-center md:py-16">
-      <p class="text-sm font-medium tracking-wide text-sage-500 uppercase">Ihr Anlass</p>
-      <div class="mt-3 flex flex-wrap justify-center gap-2">
+      <h2 class="font-serif text-3xl font-bold text-sage-900">Ihr Anlass</h2>
+      <div class="mt-6 flex flex-wrap justify-center gap-2">
         <button
           v-for="occasion in occasions"
           :key="occasion.id"
@@ -285,27 +285,20 @@ function chooseOccasion(id: string) {
       </div>
     </section>
 
-    <!-- 4. Impressionen: Fotos aus unserem Garten (am Handy seitlich wischen) -->
-    <section class="px-6 py-12 md:py-16">
-      <div class="mx-auto max-w-6xl">
-        <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">Impressionen</h2>
-        <p class="mb-10 text-center text-sage-600">So könnte Ihr Fest bei uns aussehen.</p>
-        <div
-          class="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0"
-        >
-          <NuxtImg
-            v-for="photo in impressions"
-            :key="photo.src"
-            :src="photo.src"
-            :alt="photo.alt"
-            class="h-64 w-[80%] shrink-0 snap-center rounded-xl object-cover sm:w-full"
-            width="1600"
-            height="1067"
-            loading="lazy"
-          />
-        </div>
-      </div>
-    </section>
+    <!-- 4. Fotos aus unserem Garten als Auflockerung zwischen den Abschnitten -->
+    <div class="grid grid-cols-3 gap-1 md:gap-2">
+      <NuxtImg
+        v-for="photo in impressions"
+        :key="photo.src"
+        :src="photo.src"
+        :alt="photo.alt"
+        class="h-32 w-full object-cover sm:h-48 md:h-72"
+        width="1600"
+        height="1067"
+        sizes="xs:33vw"
+        loading="lazy"
+      />
+    </div>
 
     <!-- 5. Was Sie bei uns bekommen -->
     <section class="px-6 py-12 md:py-16">
@@ -348,7 +341,8 @@ function chooseOccasion(id: string) {
           Unsere Catering-Partner
         </h2>
         <p class="mb-10 text-center text-sage-600">
-          Das Catering wählen Sie im Rechner aus. Es kommt zum Basispreis dazu.
+          Beide Partner haben schon viele Veranstaltungen ausgerichtet, kleine Familienfeiern ebenso
+          wie große Feste.
         </p>
         <div class="grid gap-6 sm:grid-cols-2">
           <article
@@ -389,8 +383,18 @@ function chooseOccasion(id: string) {
     <section class="px-6 py-12 md:py-16">
       <div class="mx-auto max-w-4xl">
         <div
-          class="grid gap-8 rounded-2xl bg-sage-50 p-8 sm:grid-cols-[auto_1fr] sm:items-center md:p-10"
+          class="relative grid gap-8 rounded-2xl bg-sage-50 p-8 sm:grid-cols-[auto_1fr] sm:items-center md:p-10"
         >
+          <a
+            href="https://www.linkedin.com/in/tina-volgenandt-9420a2136/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Tina Volgenandt auf LinkedIn"
+            title="Tina Volgenandt auf LinkedIn"
+            class="absolute top-4 right-4 rounded-lg p-2 text-sage-500 transition-colors hover:bg-sage-100 hover:text-waldhonig-600"
+          >
+            <Icon name="ph:linkedin-logo" class="size-7" />
+          </a>
           <div class="mx-auto size-48 overflow-hidden rounded-full sm:mx-0">
             <img
               src="/img/events/eventmanagerin-tina.webp"
@@ -430,15 +434,6 @@ function chooseOccasion(id: string) {
                 </a>
               </li>
             </ul>
-            <a
-              href="https://www.linkedin.com/in/tina-volgenandt-9420a2136/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="mt-4 inline-flex items-center gap-2 rounded-lg border border-sage-300 px-5 py-2.5 text-sm font-medium text-sage-700 transition-colors hover:bg-sage-100"
-            >
-              <Icon name="ph:linkedin-logo" class="size-5 text-waldhonig-600" />
-              Profil auf LinkedIn ansehen
-            </a>
           </div>
         </div>
       </div>
@@ -464,9 +459,7 @@ function chooseOccasion(id: string) {
         <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">
           Hilfreich für Ihre Planung
         </h2>
-        <p class="mb-10 text-center text-sage-600">
-          Vorlagen und Infos, sobald Ihr Termin feststeht.
-        </p>
+        <p class="mb-10 text-center text-sage-600">Was wir vor Ihrem Fest gemeinsam planen.</p>
         <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
           <NuxtLink
             v-for="helper in planningHelpers"
