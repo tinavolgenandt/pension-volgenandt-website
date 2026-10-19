@@ -134,7 +134,11 @@ async function handleSubmit() {
       {{ isSubmitting ? 'Wird gesendet …' : 'Rückruf anfragen' }}
     </button>
     <p class="mt-3 text-center text-sm text-sage-500">
-      Geben Sie einen Wunschtermin an, ich rufe Sie zurück.
+      Geben Sie einen Wunschtermin an, ich rufe Sie zurück. Ihre Angaben nutze ich nur dafür, mehr
+      in der
+      <NuxtLink to="/datenschutz/" class="underline hover:text-sage-700"
+        >Datenschutzerklärung</NuxtLink
+      >.
     </p>
   </form>
 </template>

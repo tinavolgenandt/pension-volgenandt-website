@@ -15,9 +15,6 @@ useSeoMeta({
     'Ihr Fest im Grünen im Eichsfeld: Catering von unseren Partnern, persönliche Planung und Übernachtung für Ihre Gäste.',
   ogImage: '/img/events/feiern-hero-poster.webp',
   ogType: 'website',
-  // Prices are still provisional (caterer/insurance not yet confirmed) and the
-  // page isn't linked from nav — noindex until it's ready for real customers.
-  robots: 'noindex, nofollow',
 })
 
 useHead({

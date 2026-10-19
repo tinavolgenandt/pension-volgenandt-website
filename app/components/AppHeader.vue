@@ -55,9 +55,7 @@ const navItems = computed(() => {
     { label: t('nav.activities', 'de'), to: '/aktivitaeten/' },
     { label: t('nav.news', 'de'), to: '/aktuelles/' },
     { label: t('nav.picnic', 'de'), to: '/picknick/' },
-    // 'Feiern' nav entry intentionally omitted for now: /feiern/ is live but
-    // noindex — prices aren't confirmed with suppliers yet. Re-add once ready
-    // (see .planning/event-garden/06-supplier-plan.md).
+    { label: t('nav.celebrations', 'de'), to: '/feiern/' },
     { label: t('nav.sustainability', 'de'), to: '/nachhaltigkeit/' },
     { label: t('nav.contact', 'de'), to: '/kontakt/' },
   ]
@@ -79,18 +77,20 @@ const logoLink = computed(() => (locale.value === 'en' ? '/en/' : '/'))
     class="fixed inset-x-0 top-0 z-40 bg-charcoal-900 transition-[padding] duration-300"
     :class="isCompressed ? 'py-2' : 'py-4'"
   >
-    <div class="mx-auto flex max-w-screen-xl items-center justify-between px-4 lg:px-6">
+    <div
+      class="mx-auto flex max-w-screen-xl items-center justify-between gap-4 px-4 lg:px-6 2xl:max-w-screen-2xl"
+    >
       <!-- Logo -->
-      <div class="min-w-0 shrink">
+      <div class="min-w-0 shrink nav:shrink-0">
         <NuxtLink :to="logoLink" class="group block">
           <span
-            class="font-serif text-xl font-bold text-white transition-[font-size] duration-300 nav:text-2xl"
+            class="font-serif text-xl font-bold text-white transition-[font-size] duration-300 nav:text-2xl nav:whitespace-nowrap"
             :class="isCompressed ? 'nav:text-xl' : 'nav:text-2xl'"
           >
             {{ config.siteName }}
           </span>
           <span
-            class="block font-sans text-xs text-sage-300 transition-[opacity,height] duration-300 nav:text-sm"
+            class="block font-sans text-xs text-sage-300 transition-[opacity,height] duration-300 nav:text-sm nav:whitespace-nowrap"
             :class="isCompressed ? 'h-0 overflow-hidden opacity-0' : 'opacity-100'"
           >
             {{ t('site.tagline', locale) }}
@@ -104,7 +104,7 @@ const logoLink = computed(() => (locale.value === 'en' ? '/en/' : '/'))
           v-for="item in navItems"
           :key="item.to"
           :to="item.to"
-          class="rounded-lg px-3 py-2 font-sans text-sm font-medium text-sage-200 transition-colors duration-200 hover:text-white"
+          class="rounded-lg px-2 py-2 font-sans text-sm font-medium text-sage-200 transition-colors duration-200 hover:text-white 2xl:px-3"
           :class="isActive(item.to) ? 'bg-charcoal-800 text-white' : ''"
         >
           {{ item.label }}
@@ -119,7 +119,8 @@ const logoLink = computed(() => (locale.value === 'en' ? '/en/' : '/'))
         <!-- Phone link -->
         <a
           :href="`tel:${contactPhone.phone}`"
-          class="flex items-center gap-2 font-sans text-sm text-sage-200 transition-colors duration-200 hover:text-white"
+          :aria-label="contactPhone.phoneDisplay"
+          class="flex items-center gap-2 font-sans text-sm whitespace-nowrap text-sage-200 transition-colors duration-200 hover:text-white"
         >
           <svg
             class="size-5 shrink-0"
@@ -135,16 +136,23 @@ const logoLink = computed(() => (locale.value === 'en' ? '/en/' : '/'))
               d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
             />
           </svg>
-          <span>{{ contactPhone.phoneDisplay }}</span>
+          <!-- number shown from 1536px; below that the icon alone keeps the row on one line -->
+          <span class="hidden 2xl:inline">{{ contactPhone.phoneDisplay }}</span>
         </a>
 
         <!-- CTA button — direct to Beds24 booking -->
-        <UiBaseButton variant="primary" size="md" :to="bookingUrl" target="_blank">
+        <UiBaseButton
+          variant="primary"
+          size="md"
+          :to="bookingUrl"
+          target="_blank"
+          class="whitespace-nowrap"
+        >
           {{ t('cta.bookNow', locale) }}
         </UiBaseButton>
       </div>
 
-      <!-- Mobile: CTA + Hamburger (< 1024px) -->
+      <!-- Mobile: CTA + Hamburger (< 1344px) -->
       <div class="flex items-center gap-3 nav:hidden">
         <!-- CTA button (always visible, never hidden in hamburger) -->
         <UiBaseButton

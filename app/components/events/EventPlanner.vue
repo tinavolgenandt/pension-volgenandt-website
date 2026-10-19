@@ -988,6 +988,14 @@ const inputClass =
             />
             {{ isSubmitting ? 'Wird gesendet …' : 'Unverbindliche Anfrage senden' }}
           </button>
+          <p class="text-center text-xs leading-relaxed text-sage-500">
+            Ihre Angaben nutze ich nur für Ihre Anfrage. Damit der Caterer ein Angebot machen kann,
+            schicke ich Name, Kontaktdaten und Ihre Auswahl auch an den Catering-Partner, den Sie
+            gewählt haben. Mehr dazu in der
+            <NuxtLink to="/datenschutz/" class="underline hover:text-sage-700"
+              >Datenschutzerklärung</NuxtLink
+            >.
+          </p>
         </form>
       </div>
 
