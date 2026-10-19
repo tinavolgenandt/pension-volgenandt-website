@@ -32,7 +32,9 @@ const heroVideoSources = {
   webm: `${baseURL}video/feiern-hero.webm`,
   mp4: `${baseURL}video/feiern-hero.mp4`,
 }
-// Fade the video in over the poster once its first frame is painted
+// Fade the video in over the poster once its first frame is painted. It also
+// plays with prefers-reduced-motion (Windows with animation effects off), like
+// the homepage video; hiding it there left desktop visitors with the still.
 const heroVideoReady = ref(false)
 function onHeroVideoPlaying() {
   requestAnimationFrame(() => requestAnimationFrame(() => (heroVideoReady.value = true)))
@@ -97,12 +99,12 @@ const included = [
   {
     icon: 'ph:fork-knife-duotone',
     title: 'Catering von unseren Partnern',
-    text: 'Zwei Partner kochen für Sie: ein Grillbuffet für jede Gästezahl und regionale Küche für Feiern ab 80 Gästen.',
+    text: 'Sie wählen, wer für Sie kocht: das Grillbuffet vom Grillverein Thalwenden oder die regionale Küche von Anja kocht.',
   },
   {
     icon: 'ph:moon-stars-duotone',
     title: 'Feiern bis in die Nacht',
-    text: 'Ihre Gäste schlafen vor Ort, niemand muss nachts fahren. Wie lange die Musik draußen laufen kann, bespreche ich mit Ihnen.',
+    text: 'Wer bei uns übernachtet, muss nachts nicht mehr fahren. Für alle anderen organisiere ich auf Wunsch ein Shuttle oder Taxis. Wie lange die Musik draußen laufen kann, bespreche ich mit Ihnen.',
   },
 ]
 
@@ -123,19 +125,21 @@ const impressions = [
 ]
 
 // One card per caterer, name and picture only. A partner without a photo gets
-// an icon panel of the same height.
+// an icon panel of the same height; `url` links the name to the partner's site.
 const cateringPartners = [
   {
     name: 'Grillverein Thalwenden',
     image: '/img/events/partner-grillverein-team.webp',
     imageAlt: 'Grillmeister des Grillverein Thalwenden in seinem Catering-Zelt',
     icon: '',
+    url: 'https://grillverein-thalwenden.de/',
   },
   {
     name: 'Anja kocht',
     image: '',
     imageAlt: '',
     icon: 'ph:cooking-pot-duotone',
+    url: 'https://www.anjakocht.de/',
   },
 ]
 
@@ -185,9 +189,11 @@ function chooseOccasion(id: string) {
   <div>
     <!-- 1. Hero -->
     <section class="relative h-[60vh] min-h-[420px] overflow-hidden">
+      <!-- Still = first frame of the video, so the fade-in is seamless. The
+           overview shot feiern-hero-poster.webp stays the og:image. -->
       <NuxtImg
-        src="/img/events/feiern-hero-poster.webp"
-        alt="Blick aus der Luft auf die Wiese im Garten der Pension Volgenandt, dahinter Felder"
+        src="/img/events/feiern-hero-start.webp"
+        alt="Blick von oben auf Bäume und Wiese im Garten der Pension Volgenandt"
         class="absolute inset-0 h-full w-full object-cover"
         width="1280"
         height="720"
@@ -231,16 +237,9 @@ function chooseOccasion(id: string) {
       </div>
     </section>
 
-    <!-- 2. Intro + Anlässe: ein Klick wählt den Anlass im Rechner vor -->
+    <!-- 2. Anlässe: ein Klick wählt den Anlass im Rechner vor -->
     <section class="mx-auto max-w-3xl px-6 py-12 text-center md:py-16">
-      <h2 class="font-serif text-2xl font-semibold text-sage-900 md:text-3xl">
-        Feiern, wo Ihre Gäste auch schlafen
-      </h2>
-      <p class="mt-4 text-lg leading-relaxed text-sage-800">
-        Sie feiern im Garten, Ihre Gäste schlafen gleich nebenan in unseren Zimmern. Das Essen kommt
-        von unseren Catering-Partnern, und ich plane die Feier persönlich mit Ihnen.
-      </p>
-      <p class="mt-8 text-sm font-medium tracking-wide text-sage-500 uppercase">Ihr Anlass</p>
+      <p class="text-sm font-medium tracking-wide text-sage-500 uppercase">Ihr Anlass</p>
       <div class="mt-3 flex flex-wrap justify-center gap-2">
         <button
           v-for="occasion in occasions"
@@ -280,14 +279,35 @@ function chooseOccasion(id: string) {
           <Icon name="ph:device-mobile-duotone" class="mt-0.5 size-7 shrink-0 text-waldhonig-500" />
           <p class="text-sm leading-relaxed text-sage-700">
             <strong class="text-sage-900">Unsere Planungs-App:</strong> Nach der Buchung pflegen Sie
-            dort Gästeliste und Zimmerverteilung, sehen Ablaufplan und Kosten und schicken mir
-            Wünsche und Dateien.
+            dort Gästeliste und Zimmerverteilung und sehen Ablaufplan und Kosten.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- 4. Was Sie bei uns bekommen -->
+    <!-- 4. Impressionen: Fotos aus unserem Garten (am Handy seitlich wischen) -->
+    <section class="px-6 py-12 md:py-16">
+      <div class="mx-auto max-w-6xl">
+        <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">Impressionen</h2>
+        <p class="mb-10 text-center text-sage-600">So könnte Ihr Fest bei uns aussehen.</p>
+        <div
+          class="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0"
+        >
+          <NuxtImg
+            v-for="photo in impressions"
+            :key="photo.src"
+            :src="photo.src"
+            :alt="photo.alt"
+            class="h-64 w-[80%] shrink-0 snap-center rounded-xl object-cover sm:w-full"
+            width="1600"
+            height="1067"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Was Sie bei uns bekommen -->
     <section class="px-6 py-12 md:py-16">
       <div class="mx-auto max-w-6xl">
         <h2 class="mb-10 text-center font-serif text-3xl font-bold text-sage-900">
@@ -321,28 +341,6 @@ function chooseOccasion(id: string) {
       />
     </div>
 
-    <!-- 5. Impressionen: Fotos aus unserem Garten (am Handy seitlich wischen) -->
-    <section class="px-6 py-12 md:py-16">
-      <div class="mx-auto max-w-6xl">
-        <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">Impressionen</h2>
-        <p class="mb-10 text-center text-sage-600">So könnte Ihr Fest bei uns aussehen.</p>
-        <div
-          class="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0"
-        >
-          <NuxtImg
-            v-for="photo in impressions"
-            :key="photo.src"
-            :src="photo.src"
-            :alt="photo.alt"
-            class="h-64 w-[80%] shrink-0 snap-center rounded-xl object-cover sm:w-full"
-            width="1600"
-            height="1067"
-            loading="lazy"
-          />
-        </div>
-      </div>
-    </section>
-
     <!-- 7. Catering-Partner: gleich gewichtet, je eine Karte -->
     <section class="bg-sage-50 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-5xl">
@@ -371,7 +369,16 @@ function chooseOccasion(id: string) {
               <Icon :name="partner.icon" class="size-16 text-waldhonig-500" />
             </div>
             <h3 class="p-5 text-center font-serif text-xl font-semibold text-sage-900">
-              {{ partner.name }}
+              <a
+                v-if="partner.url"
+                :href="partner.url"
+                target="_blank"
+                rel="noopener"
+                class="underline decoration-waldhonig-400 underline-offset-4 hover:text-waldhonig-600"
+              >
+                {{ partner.name }}
+              </a>
+              <template v-else>{{ partner.name }}</template>
             </h3>
           </article>
         </div>
@@ -541,10 +548,5 @@ function chooseOccasion(id: string) {
 }
 .feiern-hero-video.is-playing {
   opacity: 1;
-}
-@media (prefers-reduced-motion: reduce) {
-  .feiern-hero-video {
-    display: none;
-  }
 }
 </style>

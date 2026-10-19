@@ -305,6 +305,8 @@ const eventOptionMediaFields = {
   onRequest: z.boolean().optional(),
   // Only offered from this guest count on (e.g. a caterer that travels far).
   minGuests: z.number().optional(),
+  // Partner's website; the wizard links the partner name to it
+  partnerUrl: z.string().optional(),
 }
 
 // Catering price bands — the partner-caterer's per-person price drops as the
@@ -336,7 +338,8 @@ const eventDrinkOptionSchema = z.object({
   id: z.string(),
   label: z.string(),
   description: z.string(),
-  pricePerPersonPerHour: z.number(),
+  // Left out on options with `onRequest` (e.g. drinks on commission)
+  pricePerPersonPerHour: z.number().optional(),
   ...eventOptionMediaFields,
 })
 
@@ -348,6 +351,8 @@ const eventFixedOptionSchema = z.object({
   label: z.string(),
   description: z.string(),
   price: z.number().optional(),
+  // Partner who supplies it, shown above the label (e.g. the tent rental)
+  partnerName: z.string().optional(),
   ...eventOptionMediaFields,
 })
 
@@ -359,6 +364,8 @@ const eventPerPersonChoiceSchema = z.object({
   label: z.string(),
   description: z.string(),
   pricePerPerson: z.number().optional(),
+  // Partner who supplies it, shown above the label (e.g. the patisserie)
+  partnerName: z.string().optional(),
   ...eventOptionMediaFields,
 })
 
@@ -404,8 +411,6 @@ const eventConfigSchema = z.object({
   drinkOptions: z.array(eventDrinkOptionSchema).min(1),
   // Festzelt (recommended rain plan, not in the base): radio incl. "ohne"
   tentOptions: z.array(eventFixedOptionSchema).min(1),
-  // Guests' own tents / campervans in the garden: radio incl. "keine"
-  campingOptions: z.array(eventFixedOptionSchema).min(1),
   // Kaffee & Kuchen: only asked when the party covers the afternoon
   coffeeOptions: z.array(eventFixedOptionSchema).min(1),
   // Photographer / videographer: radio incl. "Keine"; fixed price

@@ -97,9 +97,6 @@ const units: Unit[] = [
   },
 ]
 
-const tentRowCount = ref(4)
-const rvRowCount = ref(3)
-
 const ablaufDefaults = [
   'Check-in / Anreise Übernachtungsgäste',
   'Ankunft Caterer (Aufbau Küche in der Garage)',
@@ -112,7 +109,6 @@ const ablaufDefaults = [
   'Ende Musik / Ruhezeit',
   'Check-out (Folgetag)',
 ]
-const ablaufExtraCount = ref(0)
 
 const included = [
   'Alle Zimmer & Ferienwohnungen exklusiv, bis zu 28 Übernachtungsgäste',
@@ -165,8 +161,9 @@ onMounted(() => {
         Planungshilfen für Ihr Fest
       </h1>
       <p class="mx-auto mt-3 max-w-xl text-sage-700">
-        Vorlagen und Infos für die Zeit zwischen Zusage und Veranstaltungstag. Jeder Abschnitt lässt
-        sich einzeln ausdrucken oder als PDF speichern.
+        Was wir zwischen Zusage und Veranstaltungstag gemeinsam planen. Eintragen können Sie alles
+        nach der Buchung in unserer Planungs-App. Jeder Abschnitt lässt sich einzeln ausdrucken oder
+        als PDF speichern.
       </p>
     </header>
 
@@ -182,8 +179,8 @@ onMounted(() => {
         </button>
       </div>
       <p class="mb-6 text-sage-700">
-        Bitte tragen Sie ein, wer in welchem Bett übernachtet, damit wir jedem Gast direkt seinen
-        Platz zeigen können.
+        In der Planungs-App tragen Sie ein, wer in welchem Bett übernachtet. So können wir jedem
+        Gast direkt seinen Platz zeigen.
       </p>
 
       <div
@@ -217,70 +214,17 @@ onMounted(() => {
             :key="row"
             class="flex items-center gap-3 border-t border-dashed border-sage-200 py-2 first:border-t-0"
           >
-            <span class="w-2/5 shrink-0 text-sm text-sage-600">{{ row }}</span>
-            <input
-              type="text"
-              placeholder="Name eintragen"
-              class="w-full border-b border-sage-300 bg-transparent py-1 text-sm text-sage-900 placeholder:text-sage-400 focus:border-waldhonig-500 focus:outline-none"
-            />
+            <span class="text-sm text-sage-600">{{ row }}</span>
           </div>
         </div>
         <p v-if="unit.note" class="mt-2 text-sm text-sage-500 italic">{{ unit.note }}</p>
       </div>
 
       <div class="mt-8 rounded-xl border border-sage-200 p-5">
-        <p class="mb-4 text-sm text-sage-600">
+        <p class="text-sm text-sage-600">
           Zelt- und Wohnmobilplätze sind nicht im Basispreis enthalten. Die Anzahl bitte vorab mit
           mir abstimmen.
         </p>
-        <p class="mb-2 text-xs tracking-wide text-sage-500 uppercase">Zeltplätze im Garten</p>
-        <div v-for="n in tentRowCount" :key="'tent-' + n" class="mb-2 grid grid-cols-3 gap-3">
-          <input
-            type="text"
-            placeholder="Name"
-            class="border-b border-sage-300 bg-transparent py-1 text-sm focus:border-waldhonig-500 focus:outline-none"
-          />
-          <input
-            type="text"
-            placeholder="Personen"
-            class="border-b border-sage-300 bg-transparent py-1 text-sm focus:border-waldhonig-500 focus:outline-none"
-          />
-          <input
-            type="text"
-            placeholder="Anmerkung"
-            class="border-b border-sage-300 bg-transparent py-1 text-sm focus:border-waldhonig-500 focus:outline-none"
-          />
-        </div>
-        <button
-          class="no-print mb-6 text-sm text-waldhonig-600 hover:underline"
-          @click="tentRowCount++"
-        >
-          + Zeile hinzufügen
-        </button>
-
-        <p class="mb-2 text-xs tracking-wide text-sage-500 uppercase">
-          Wohnmobil-/Wohnwagen-Stellplätze
-        </p>
-        <div v-for="n in rvRowCount" :key="'rv-' + n" class="mb-2 grid grid-cols-3 gap-3">
-          <input
-            type="text"
-            placeholder="Name"
-            class="border-b border-sage-300 bg-transparent py-1 text-sm focus:border-waldhonig-500 focus:outline-none"
-          />
-          <input
-            type="text"
-            placeholder="Kennzeichen"
-            class="border-b border-sage-300 bg-transparent py-1 text-sm focus:border-waldhonig-500 focus:outline-none"
-          />
-          <input
-            type="text"
-            placeholder="Strom benötigt"
-            class="border-b border-sage-300 bg-transparent py-1 text-sm focus:border-waldhonig-500 focus:outline-none"
-          />
-        </div>
-        <button class="no-print text-sm text-waldhonig-600 hover:underline" @click="rvRowCount++">
-          + Zeile hinzufügen
-        </button>
       </div>
     </section>
 
@@ -333,44 +277,18 @@ onMounted(() => {
         </button>
       </div>
       <p class="mb-6 text-sage-700">
-        Grober zeitlicher Rahmen für Ihren Tag. Passen Sie die Punkte gerne an und ergänzen Sie
-        eigene Programmpunkte.
+        Diese Punkte planen wir für Ihren Tag. Uhrzeiten und eigene Programmpunkte tragen Sie in der
+        Planungs-App ein.
       </p>
       <div class="rounded-xl border border-sage-200 p-5">
         <div
           v-for="item in ablaufDefaults"
           :key="item"
-          class="grid grid-cols-[5rem_1fr] gap-3 border-t border-dashed border-sage-200 py-2 first:border-t-0"
+          class="flex items-center gap-3 border-t border-dashed border-sage-200 py-2 first:border-t-0"
         >
-          <input
-            type="text"
-            placeholder="Uhrzeit"
-            class="border-b border-sage-300 bg-transparent py-1 text-sm focus:border-waldhonig-500 focus:outline-none"
-          />
-          <span class="py-1 text-sm text-sage-700">{{ item }}</span>
+          <Icon name="ph:clock-duotone" class="size-4 shrink-0 text-sage-500" />
+          <span class="text-sm text-sage-700">{{ item }}</span>
         </div>
-        <div
-          v-for="n in ablaufExtraCount"
-          :key="'extra-' + n"
-          class="grid grid-cols-[5rem_1fr] gap-3 border-t border-dashed border-sage-200 py-2"
-        >
-          <input
-            type="text"
-            placeholder="Uhrzeit"
-            class="border-b border-sage-300 bg-transparent py-1 text-sm focus:border-waldhonig-500 focus:outline-none"
-          />
-          <input
-            type="text"
-            placeholder="Eigener Programmpunkt"
-            class="border-b border-sage-300 bg-transparent py-1 text-sm focus:border-waldhonig-500 focus:outline-none"
-          />
-        </div>
-        <button
-          class="no-print mt-3 text-sm text-waldhonig-600 hover:underline"
-          @click="ablaufExtraCount++"
-        >
-          + Eigenen Punkt hinzufügen
-        </button>
       </div>
     </section>
 
@@ -402,11 +320,16 @@ onMounted(() => {
         <div class="rounded-xl border border-sage-200 p-5">
           <h3 class="mb-3 font-serif text-lg font-semibold text-sage-900">Gemeinsam abzustimmen</h3>
           <ul class="space-y-3">
-            <li v-for="item in toDiscuss" :key="item" class="text-sm">
-              <label class="flex items-center gap-2 text-sage-700">
-                <input type="checkbox" class="size-4 rounded border-sage-300" />
-                {{ item }}
-              </label>
+            <li
+              v-for="item in toDiscuss"
+              :key="item"
+              class="flex items-start gap-2 text-sm text-sage-700"
+            >
+              <Icon
+                name="ph:chat-circle-dots-duotone"
+                class="mt-0.5 size-4 shrink-0 text-sage-600"
+              />
+              {{ item }}
             </li>
           </ul>
           <p class="mt-4 text-xs text-sage-500">
