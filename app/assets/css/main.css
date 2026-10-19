@@ -47,7 +47,7 @@
   --radius-lg: 0.5rem;
 
   /* Custom breakpoints */
-  --breakpoint-nav: 64rem; /* 1024px: mobile nav breakpoint */
+  --breakpoint-nav: 84rem; /* 1344px: mobile nav below, the desktop nav needs the room */
 }
 
 /* Base typography: 18px body, 1.7 line-height, max 70ch per DSGN-05 */

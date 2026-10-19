@@ -27,6 +27,12 @@ $subjectPrefix  = '[Pension Volgenandt]';
 $partnerEmails = [
     'grillverein-thalwenden' => 'grillverein-thalwenden@gmx.de',
 ];
+// Name used in the greeting and in our copy. Every key in $partnerEmails needs
+// one. A new catering partner = one line in each list (keys match `partner` in
+// content/events/config.yml), then upload this file to IONOS.
+$partnerNames = [
+    'grillverein-thalwenden' => 'Grillverein Thalwenden',
+];
 
 // ---------------------------------------------------------------------------
 // CORS
@@ -72,6 +78,7 @@ $occasion       = trim($input['occasion'] ?? '');
 $eventDate      = trim($input['date'] ?? '');
 $guests         = trim($input['guests'] ?? '');
 $hours          = trim($input['hours'] ?? '');
+$startTime      = trim($input['startTime'] ?? '');
 $cateringTier   = trim($input['cateringTier'] ?? '');
 $notes          = trim($input['notes'] ?? '');
 $partnerMessage = trim($input['partnerMessage'] ?? '');
@@ -118,7 +125,8 @@ if (!empty($errors)) {
 // including our package price. A catering inquiry additionally goes to the
 // partner as a separate HTML mail without our prices (CC to events@, so we see
 // their reply to the guest).
-$isPartnerInquiry = ($partnerEmail !== null && $partnerKey === 'grillverein-thalwenden');
+$partnerName      = $partnerNames[$partnerKey] ?? null;
+$isPartnerInquiry = ($partnerEmail !== null && $partnerName !== null);
 
 $subject = $customSubject !== ''
     ? "$subjectPrefix $customSubject"
@@ -146,6 +154,8 @@ if ($isPartnerInquiry) {
     $safeDate         = htmlspecialchars($eventDate ?: 'noch offen', ENT_QUOTES, 'UTF-8');
     $safeGuests       = htmlspecialchars($guests ?: '–', ENT_QUOTES, 'UTF-8');
     $safeHours        = htmlspecialchars($hours ? "ca. $hours Stunden" : '–', ENT_QUOTES, 'UTF-8');
+    $safeStart        = htmlspecialchars($startTime ? "$startTime Uhr" : '–', ENT_QUOTES, 'UTF-8');
+    $safePartnerName  = htmlspecialchars($partnerName, ENT_QUOTES, 'UTF-8');
     $safeCateringTier = htmlspecialchars($cateringTier ?: 'Catering gewünscht', ENT_QUOTES, 'UTF-8');
     $safeNotes        = nl2br(htmlspecialchars($notes, ENT_QUOTES, 'UTF-8'));
     $safeSelection    = nl2br(htmlspecialchars($partnerMessage, ENT_QUOTES, 'UTF-8'));
@@ -167,13 +177,14 @@ if ($isPartnerInquiry) {
 <head><meta charset=\"UTF-8\"></head>
 <body style=\"font-family: Arial, Helvetica, sans-serif; color: #2d3748; font-size: 14px; line-height: 1.5; padding: 16px;\">
   <div style=\"max-width: 640px; margin: 0 auto;\">
-    <p>Hallo Grillverein Thalwenden,</p>
+    <p>Hallo {$safePartnerName},</p>
     <p>über den Eventplaner auf unserer Website hat jemand eine Feier im Garten angefragt und euer Catering ausgewählt.</p>
 
     <table style=\"width: 100%; border-collapse: collapse; margin: 16px 0;\">"
         . $row('Anlass', $safeOccasion)
         . $row('Wunschtermin', $safeDate)
         . $row('Gäste', $safeGuests)
+        . $row('Beginn', $safeStart)
         . $row('Dauer', $safeHours)
         . $row('Catering', $safeCateringTier)
         . "</table>
@@ -207,8 +218,8 @@ if ($isPartnerInquiry) {
 if ($isPartnerInquiry) {
     $partnerResult = sendSmtp($smtpHost, $smtpPort, $smtpUser, $smtpPass, $recipientEmail, $partnerEmail, $partnerSubject, $partnerBody, $name, $email, $eventsEmail, true);
     $body = ($partnerResult['ok']
-            ? "An Grillverein Thalwenden weitergeleitet ($partnerEmail), ohne unsere Preise.\r\n\r\n"
-            : "ACHTUNG: Weiterleitung an Grillverein Thalwenden fehlgeschlagen. Bitte selbst weitergeben.\r\n\r\n")
+            ? "An $partnerName weitergeleitet ($partnerEmail), ohne unsere Preise.\r\n\r\n"
+            : "ACHTUNG: Weiterleitung an $partnerName fehlgeschlagen. Bitte selbst weitergeben.\r\n\r\n")
         . $body;
 }
 

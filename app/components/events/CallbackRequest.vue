@@ -47,6 +47,7 @@ async function handleSubmit() {
     if (response.ok && data.ok) {
       isSubmitted.value = true
       trackEvent('generate_lead')
+      trackEvent('feier_rueckruf')
     } else if (data.errors) {
       errorMessage.value = data.errors.map((e: { message: string }) => e.message).join(', ')
     } else {
@@ -54,7 +55,7 @@ async function handleSubmit() {
         data.error || 'Leider ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.'
     }
   } catch {
-    errorMessage.value = 'Netzwerkfehler. Bitte versuchen Sie es erneut oder rufen Sie uns an.'
+    errorMessage.value = 'Netzwerkfehler. Bitte versuchen Sie es erneut oder rufen Sie mich an.'
   } finally {
     isSubmitting.value = false
   }
@@ -65,9 +66,9 @@ async function handleSubmit() {
   <!-- Success state -->
   <div v-if="isSubmitted" class="mx-auto max-w-md rounded-xl bg-white p-8 text-center">
     <Icon name="ph:check-circle-duotone" class="mx-auto mb-4 size-12 text-sage-600" />
-    <h3 class="font-serif text-xl font-semibold text-sage-900">Wir melden uns!</h3>
+    <h3 class="font-serif text-xl font-semibold text-sage-900">Ihr Rückrufwunsch ist angekommen</h3>
     <p class="mt-2 text-sage-700">
-      Vielen Dank – wir rufen Sie zu Ihrem Wunschtermin zurück, um in Ruhe über Ihre Feier zu
+      Vielen Dank. Ich rufe Sie zu Ihrem Wunschtermin zurück, um in Ruhe über Ihre Feier zu
       sprechen.
     </p>
   </div>
@@ -134,7 +135,11 @@ async function handleSubmit() {
       {{ isSubmitting ? 'Wird gesendet …' : 'Rückruf anfragen' }}
     </button>
     <p class="mt-3 text-center text-sm text-sage-500">
-      Einfach Wunschtermin angeben – wir melden uns bei Ihnen.
+      Geben Sie einen Wunschtermin an, ich rufe Sie zurück. Ihre Angaben nutze ich nur dafür, mehr
+      in der
+      <NuxtLink to="/datenschutz/" class="underline hover:text-sage-700"
+        >Datenschutzerklärung</NuxtLink
+      >.
     </p>
   </form>
 </template>

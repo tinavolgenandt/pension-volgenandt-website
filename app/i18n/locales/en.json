@@ -122,6 +122,8 @@
     "copyright": "All rights reserved.",
     "ctaHeading": "Ready for your stay in the Eichsfeld?",
     "ctaButton": "Check availability",
+    "eventsCtaHeading": "Planning a party in our garden?",
+    "eventsCtaButton": "Calculate price & enquire",
     "callUs": "Or call us directly",
     "nav": {
       "roomsPrices": "Rooms & Prices",
@@ -507,7 +509,7 @@
     }
   },
   "events": {
-    "contactHeading": "Prefer to write?",
-    "contactText": "Your question about a garden party goes straight to Tina Volgenandt."
+    "contactHeading": "Questions about your party?",
+    "contactText": "I can call you back or answer your message. Both go straight to me, Tina Volgenandt."
   }
 }
