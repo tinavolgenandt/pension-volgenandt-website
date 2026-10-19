@@ -47,6 +47,7 @@ async function handleSubmit() {
     if (response.ok && data.ok) {
       isSubmitted.value = true
       trackEvent('generate_lead')
+      trackEvent('feier_rueckruf')
     } else if (data.errors) {
       errorMessage.value = data.errors.map((e: { message: string }) => e.message).join(', ')
     } else {

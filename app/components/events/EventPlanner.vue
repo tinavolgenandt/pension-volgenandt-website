@@ -515,7 +515,8 @@ watch(
   (val) => {
     if (val && !leadTracked.value) {
       leadTracked.value = true
-      trackEvent('generate_lead')
+      // Started filling in the contact step; not a lead yet
+      trackEvent('feier_anfrage_start')
     }
   },
 )
@@ -598,6 +599,8 @@ async function handleSubmit() {
     if (response.ok && data.ok) {
       isSubmitted.value = true
       trackEvent('generate_lead', { value: estimate.value, currency: 'EUR' })
+      // Own event per sent party enquiry, to import as Google Ads conversion
+      trackEvent('feier_anfrage', { value: estimate.value, currency: 'EUR' })
     } else if (data.errors) {
       errorMessage.value = data.errors.map((e: { message: string }) => e.message).join(', ')
     } else {
