@@ -117,6 +117,7 @@ cateringTiers:
   - id: classic
     partner: grillverein-thalwenden
     partnerName: Grillverein Thalwenden
+    partnerUrl: https://grillverein-thalwenden.de/
     markupPercent: 10
     label: Classic – Der Klassiker
     image: /img/events/partner-grillverein-steak.webp
@@ -136,6 +137,7 @@ cateringTiers:
   - id: signature
     partner: grillverein-thalwenden
     partnerName: Grillverein Thalwenden
+    partnerUrl: https://grillverein-thalwenden.de/
     markupPercent: 10
     label: Signature – Unsere besondere Auswahl
     image: /img/events/partner-grillverein-grillplatte.webp
@@ -155,6 +157,7 @@ cateringTiers:
   - id: prestige
     partner: grillverein-thalwenden
     partnerName: Grillverein Thalwenden
+    partnerUrl: https://grillverein-thalwenden.de/
     markupPercent: 10
     label: Prestige – Premium vom Grill
     image: /img/events/partner-grillverein-team.webp
@@ -174,6 +177,7 @@ cateringTiers:
   - id: elite
     partner: grillverein-thalwenden
     partnerName: Grillverein Thalwenden
+    partnerUrl: https://grillverein-thalwenden.de/
     markupPercent: 10
     label: Élite – Das außergewöhnliche Grillerlebnis
     image: /img/events/partner-grillverein-detail.webp

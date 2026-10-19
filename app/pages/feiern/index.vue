@@ -132,7 +132,7 @@ const cateringPartners = [
     image: '/img/events/partner-grillverein-team.webp',
     imageAlt: 'Grillmeister des Grillverein Thalwenden in seinem Catering-Zelt',
     icon: '',
-    url: '',
+    url: 'https://grillverein-thalwenden.de/',
   },
   {
     name: 'Anja kocht',
@@ -235,16 +235,9 @@ function chooseOccasion(id: string) {
       </div>
     </section>
 
-    <!-- 2. Intro + Anlässe: ein Klick wählt den Anlass im Rechner vor -->
+    <!-- 2. Anlässe: ein Klick wählt den Anlass im Rechner vor -->
     <section class="mx-auto max-w-3xl px-6 py-12 text-center md:py-16">
-      <h2 class="font-serif text-2xl font-semibold text-sage-900 md:text-3xl">
-        Feiern, wo Ihre Gäste auch schlafen
-      </h2>
-      <p class="mt-4 text-lg leading-relaxed text-sage-800">
-        Sie feiern im Garten, Ihre Gäste schlafen gleich nebenan in unseren Zimmern. Das Essen kommt
-        von unseren Catering-Partnern, und ich plane die Feier persönlich mit Ihnen.
-      </p>
-      <p class="mt-8 text-sm font-medium tracking-wide text-sage-500 uppercase">Ihr Anlass</p>
+      <p class="text-sm font-medium tracking-wide text-sage-500 uppercase">Ihr Anlass</p>
       <div class="mt-3 flex flex-wrap justify-center gap-2">
         <button
           v-for="occasion in occasions"
@@ -290,7 +283,29 @@ function chooseOccasion(id: string) {
       </div>
     </section>
 
-    <!-- 4. Was Sie bei uns bekommen -->
+    <!-- 4. Impressionen: Fotos aus unserem Garten (am Handy seitlich wischen) -->
+    <section class="px-6 py-12 md:py-16">
+      <div class="mx-auto max-w-6xl">
+        <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">Impressionen</h2>
+        <p class="mb-10 text-center text-sage-600">So könnte Ihr Fest bei uns aussehen.</p>
+        <div
+          class="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0"
+        >
+          <NuxtImg
+            v-for="photo in impressions"
+            :key="photo.src"
+            :src="photo.src"
+            :alt="photo.alt"
+            class="h-64 w-[80%] shrink-0 snap-center rounded-xl object-cover sm:w-full"
+            width="1600"
+            height="1067"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Was Sie bei uns bekommen -->
     <section class="px-6 py-12 md:py-16">
       <div class="mx-auto max-w-6xl">
         <h2 class="mb-10 text-center font-serif text-3xl font-bold text-sage-900">
@@ -323,28 +338,6 @@ function chooseOccasion(id: string) {
         loading="lazy"
       />
     </div>
-
-    <!-- 5. Impressionen: Fotos aus unserem Garten (am Handy seitlich wischen) -->
-    <section class="px-6 py-12 md:py-16">
-      <div class="mx-auto max-w-6xl">
-        <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">Impressionen</h2>
-        <p class="mb-10 text-center text-sage-600">So könnte Ihr Fest bei uns aussehen.</p>
-        <div
-          class="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0"
-        >
-          <NuxtImg
-            v-for="photo in impressions"
-            :key="photo.src"
-            :src="photo.src"
-            :alt="photo.alt"
-            class="h-64 w-[80%] shrink-0 snap-center rounded-xl object-cover sm:w-full"
-            width="1600"
-            height="1067"
-            loading="lazy"
-          />
-        </div>
-      </div>
-    </section>
 
     <!-- 7. Catering-Partner: gleich gewichtet, je eine Karte -->
     <section class="bg-sage-50 px-6 py-12 md:py-16">
