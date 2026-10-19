@@ -189,9 +189,11 @@ function chooseOccasion(id: string) {
   <div>
     <!-- 1. Hero -->
     <section class="relative h-[60vh] min-h-[420px] overflow-hidden">
+      <!-- Still = first frame of the video, so the fade-in is seamless. The
+           overview shot feiern-hero-poster.webp stays the og:image. -->
       <NuxtImg
-        src="/img/events/feiern-hero-poster.webp"
-        alt="Blick aus der Luft auf die Wiese im Garten der Pension Volgenandt, dahinter Felder"
+        src="/img/events/feiern-hero-start.webp"
+        alt="Blick von oben auf Bäume und Wiese im Garten der Pension Volgenandt"
         class="absolute inset-0 h-full w-full object-cover"
         width="1280"
         height="720"
