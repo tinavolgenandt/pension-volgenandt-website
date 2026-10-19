@@ -28,6 +28,7 @@ interface CatalogOption {
   minGuests?: number
   partner?: string
   partnerName?: string
+  partnerUrl?: string
   markupPercent?: number
   price?: number
   pricePerPerson?: number
@@ -39,7 +40,6 @@ type SelectKey =
   | 'cateringId'
   | 'drinkId'
   | 'tentId'
-  | 'campingId'
   | 'coffeeId'
   | 'photographyId'
   | 'musicId'
@@ -90,7 +90,6 @@ const form = reactive({
   cateringId: '',
   drinkId: '',
   tentId: '',
-  campingId: '',
   coffeeId: '',
   photographyId: '',
   musicId: '',
@@ -180,13 +179,13 @@ const allOptionSteps = computed<WizardStep[]>(() => [
   {
     title: 'Getränke',
     intro:
-      'Die Getränke kommen von uns, zur Selbstbedienung oder mit Service am Tisch. Abgerechnet pro Person und Stunde.',
+      'Die Getränke kommen von uns: als Pauschale zur Selbstbedienung oder mit Service am Tisch, oder auf Kommission nach Verbrauch.',
     groups: [
       {
         key: 'drinkId',
         unit: 'personHour',
         legend: 'Getränke',
-        note: 'Der Preis gilt pro Person und Stunde und wird mit Ihrer Feierdauer multipliziert.',
+        note: 'Die Pauschalen gelten pro Person und Stunde und werden mit Ihrer Feierdauer multipliziert.',
         options: opts('drinkOptions'),
       },
     ],
@@ -196,19 +195,6 @@ const allOptionSteps = computed<WizardStep[]>(() => [
     intro:
       'Das Festzelt ist nicht im Basispreis enthalten. Wir empfehlen es trotzdem für jede Feier, damit Sie bei Regen nicht umplanen müssen.',
     groups: [{ key: 'tentId', unit: 'flat', legend: 'Festzelt', options: opts('tentOptions') }],
-  },
-  {
-    title: 'Übernachten im Garten',
-    intro:
-      'In den Zimmern schlafen bis zu 28 Gäste. Weitere Gäste können im eigenen Zelt oder Wohnmobil im Garten übernachten. Das ist nicht im Basispreis enthalten.',
-    groups: [
-      {
-        key: 'campingId',
-        unit: 'flat',
-        legend: 'Zelt & Wohnmobil',
-        options: opts('campingOptions'),
-      },
-    ],
   },
   {
     // All optional extras on one screen instead of six steps. None has a
@@ -790,13 +776,6 @@ const inputClass =
                 />
               </div>
             </div>
-            <p class="mt-4 rounded-lg bg-sage-50 px-4 py-3 text-sm text-sage-700">
-              Ihre Feier: {{ timeWindow }}.
-              <template v-if="mealLabels.length">
-                Darin liegen: {{ mealLabels.join(', ') }}. Diese Mahlzeiten planen wir im Rechner
-                ein.
-              </template>
-            </p>
           </div>
         </div>
 
@@ -857,7 +836,16 @@ const inputClass =
                   v-if="opt.partnerName"
                   class="block text-xs font-medium tracking-wide text-waldhonig-600 uppercase"
                 >
-                  {{ opt.partnerName }}
+                  <a
+                    v-if="opt.partnerUrl"
+                    :href="opt.partnerUrl"
+                    target="_blank"
+                    rel="noopener"
+                    class="underline underline-offset-2 hover:text-waldhonig-700"
+                  >
+                    {{ opt.partnerName }}
+                  </a>
+                  <template v-else>{{ opt.partnerName }}</template>
                 </span>
                 <span class="flex items-baseline justify-between gap-2">
                   <span class="font-medium text-sage-900">{{ opt.label }}</span>

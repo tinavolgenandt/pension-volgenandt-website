@@ -32,7 +32,9 @@ const heroVideoSources = {
   webm: `${baseURL}video/feiern-hero.webm`,
   mp4: `${baseURL}video/feiern-hero.mp4`,
 }
-// Fade the video in over the poster once its first frame is painted
+// Fade the video in over the poster once its first frame is painted. It also
+// plays with prefers-reduced-motion (Windows with animation effects off), like
+// the homepage video; hiding it there left desktop visitors with the still.
 const heroVideoReady = ref(false)
 function onHeroVideoPlaying() {
   requestAnimationFrame(() => requestAnimationFrame(() => (heroVideoReady.value = true)))
@@ -97,12 +99,12 @@ const included = [
   {
     icon: 'ph:fork-knife-duotone',
     title: 'Catering von unseren Partnern',
-    text: 'Zwei Partner kochen für Sie: ein Grillbuffet für jede Gästezahl und regionale Küche für Feiern ab 80 Gästen.',
+    text: 'Sie wählen, wer für Sie kocht: das Grillbuffet vom Grillverein Thalwenden oder die regionale Küche von Anja kocht.',
   },
   {
     icon: 'ph:moon-stars-duotone',
     title: 'Feiern bis in die Nacht',
-    text: 'Ihre Gäste schlafen vor Ort, niemand muss nachts fahren. Wie lange die Musik draußen laufen kann, bespreche ich mit Ihnen.',
+    text: 'Wer bei uns übernachtet, muss nachts nicht mehr fahren. Für alle anderen organisiere ich auf Wunsch ein Shuttle oder Taxis. Wie lange die Musik draußen laufen kann, bespreche ich mit Ihnen.',
   },
 ]
 
@@ -123,19 +125,21 @@ const impressions = [
 ]
 
 // One card per caterer, name and picture only. A partner without a photo gets
-// an icon panel of the same height.
+// an icon panel of the same height; `url` links the name to the partner's site.
 const cateringPartners = [
   {
     name: 'Grillverein Thalwenden',
     image: '/img/events/partner-grillverein-team.webp',
     imageAlt: 'Grillmeister des Grillverein Thalwenden in seinem Catering-Zelt',
     icon: '',
+    url: '',
   },
   {
     name: 'Anja kocht',
     image: '',
     imageAlt: '',
     icon: 'ph:cooking-pot-duotone',
+    url: 'https://www.anjakocht.de/',
   },
 ]
 
@@ -280,8 +284,7 @@ function chooseOccasion(id: string) {
           <Icon name="ph:device-mobile-duotone" class="mt-0.5 size-7 shrink-0 text-waldhonig-500" />
           <p class="text-sm leading-relaxed text-sage-700">
             <strong class="text-sage-900">Unsere Planungs-App:</strong> Nach der Buchung pflegen Sie
-            dort Gästeliste und Zimmerverteilung, sehen Ablaufplan und Kosten und schicken mir
-            Wünsche und Dateien.
+            dort Gästeliste und Zimmerverteilung und sehen Ablaufplan und Kosten.
           </p>
         </div>
       </div>
@@ -371,7 +374,16 @@ function chooseOccasion(id: string) {
               <Icon :name="partner.icon" class="size-16 text-waldhonig-500" />
             </div>
             <h3 class="p-5 text-center font-serif text-xl font-semibold text-sage-900">
-              {{ partner.name }}
+              <a
+                v-if="partner.url"
+                :href="partner.url"
+                target="_blank"
+                rel="noopener"
+                class="underline decoration-waldhonig-400 underline-offset-4 hover:text-waldhonig-600"
+              >
+                {{ partner.name }}
+              </a>
+              <template v-else>{{ partner.name }}</template>
             </h3>
           </article>
         </div>
@@ -541,10 +553,5 @@ function chooseOccasion(id: string) {
 }
 .feiern-hero-video.is-playing {
   opacity: 1;
-}
-@media (prefers-reduced-motion: reduce) {
-  .feiern-hero-video {
-    display: none;
-  }
 }
 </style>

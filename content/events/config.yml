@@ -37,7 +37,6 @@
 #   - photoboothOptions.fotobox       → fotobox.webp
 #   - stylingOptions.braut            → styling-braut.webp
 #   - stylingOptions.braut_partner    → styling-braut-partner.webp
-#   - cateringTiers.elite             → partner-grillverein-elite.webp (o.ä.)
 
 guestRange:
   min: 10
@@ -177,7 +176,8 @@ cateringTiers:
     partnerName: Grillverein Thalwenden
     markupPercent: 10
     label: Élite – Das außergewöhnliche Grillerlebnis
-    imageAlt: Premium-Grillauswahl der Élite-Genusswelt
+    image: /img/events/partner-grillverein-detail.webp
+    imageAlt: Grillstation des Grillverein Thalwenden mit Gemüsespießen und Beilagen
     description: >-
       Rinderfilet, Rib-Eye, T-Bone, Tomahawk, Hirsch, Wild und Thunfisch:
       individuelle Premium-Auswahl mit hochwertigen Beilagen und Dessert.
@@ -194,6 +194,7 @@ cateringTiers:
   - id: anja-kocht
     partner: anja-kocht
     partnerName: Anja kocht, Witzenhausen
+    partnerUrl: https://www.anjakocht.de/
     label: Regionale Küche für große Feiern
     description: >-
       Partyservice Anja kocht aus Witzenhausen mit regionaler, frischer Küche.
@@ -202,9 +203,10 @@ cateringTiers:
     minGuests: 80
     onRequest: true
 
-# Getränke laufen immer über uns: Selbstbedienung oder mit Service. Preis pro
-# Person PRO STUNDE – hängt von der Feierdauer ab. (Markt 2026: ~25–55 € pp für
-# ~6 h, ~6 € pp je weiterer Stunde → ~6 € self / ~9 € mit Service je Person/Stunde.)
+# Getränke laufen immer über uns: Selbstbedienung, mit Service oder auf
+# Kommission (nach Verbrauch, Preis im Angebot). Pauschalen pro Person PRO
+# STUNDE – hängt von der Feierdauer ab. (Markt 2026: ~25–55 € pp für ~6 h,
+# ~6 € pp je weiterer Stunde → ~6 € self / ~9 € mit Service je Person/Stunde.)
 drinkOptions:
   - id: selbstbedienung
     label: Getränkepauschale – Selbstbedienung
@@ -222,11 +224,19 @@ drinkOptions:
       Getränke werden am Tisch und an der Bar serviert.
       Abgerechnet pro Person und Stunde.
     pricePerPersonPerHour: 9
+  - id: kommission
+    label: Getränke auf Kommission
+    description: >-
+      Wir stellen die Getränke bereit, berechnet wird nur, was Ihre Gäste
+      trinken. Ungeöffnete Flaschen nehmen wir zurück.
+    onRequest: true
 
 # Festzelt: nicht im Basispreis. Wir empfehlen es als Schlechtwetter-Plan für
 # jede Feier, deshalb ist es vorausgewählt. Noch kein Angebot → onRequest.
 tentOptions:
   - id: festzelt
+    partnerName: Zeltverleih Adler
+    partnerUrl: https://zeltverleih-in.de/
     label: Festzelt mit Seitenwänden (empfohlen)
     description: >-
       Zelt mit schließbaren Seitenwänden und Beleuchtung, passend zur Gästezahl.
@@ -239,21 +249,6 @@ tentOptions:
       Sie feiern unter freiem Himmel. Bei Regen gibt es dann keinen geschützten
       Platz für alle Gäste.
     price: 0
-
-# Übernachten im Garten: Zelt oder Wohnmobil der Gäste. Nicht im Basispreis
-# (Tina, 18.10.2026), Preis im Angebot. Keine eigenen Sanitäranlagen im Garten.
-campingOptions:
-  - id: keine
-    label: Keine Zelte oder Wohnmobile
-    description: Alle Übernachtungsgäste schlafen in den Zimmern.
-    price: 0
-  - id: garten
-    label: Zelt- und Wohnmobilplätze im Garten
-    description: >-
-      Weitere Gäste übernachten im eigenen Zelt oder Wohnmobil im Garten. Sie
-      nutzen Toiletten und Bäder in den Zimmern mit, eigene Sanitäranlagen im
-      Garten gibt es nicht.
-    onRequest: true
 
 # Kaffee & Kuchen: wird im Rechner nur gezeigt, wenn die Feier in den
 # Nachmittag fällt, damit diese Mahlzeit immer eingeplant ist.
@@ -429,6 +424,8 @@ cakeOptions:
     detail: Kuchen/Torte organisieren Sie selbst. Diese Position bleibt bei 0 €.
     pricePerPerson: 0
   - id: torte
+    partnerName: LaMaru Pâtisserie, Duderstadt
+    partnerUrl: https://lamaru-patisserie.de/
     label: Festtorte
     image: /img/events/torte-festtorte.webp
     imageAlt: Mehrstöckige Festtorte
@@ -439,6 +436,8 @@ cakeOptions:
       nach der Gästezahl.
     onRequest: true
   - id: torte_sweet
+    partnerName: LaMaru Pâtisserie, Duderstadt
+    partnerUrl: https://lamaru-patisserie.de/
     label: Torte + Sweet Table
     image: /img/events/torte-sweet-table.webp
     imageAlt: Festtorte mit dekoriertem Sweet Table
