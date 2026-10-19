@@ -125,7 +125,7 @@ const { direction } = useSwipe(imageContainerRef, {
           :src="images[currentIndex]?.src"
           :alt="images[currentIndex]?.alt"
           loading="eager"
-          sizes="90vw"
+          sizes="xs:90vw md:90vw xl:90vw 2xl:90vw"
           class="max-h-full max-w-full object-contain"
         />
       </div>

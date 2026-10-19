@@ -165,7 +165,7 @@ const appConfig = useAppConfig()
             alt="Simone and Ralf Volgenandt, your hosts in Breitenbach"
             class="aspect-[4/3] w-full rounded-lg object-cover"
             loading="lazy"
-            sizes="100vw sm:50vw"
+            sizes="xs:100vw sm:50vw"
           />
           <figcaption class="mt-2 text-center text-sm text-sage-600">
             {{ t('hosts.caption', 'en') }}
@@ -177,7 +177,7 @@ const appConfig = useAppConfig()
             alt="Building and courtyard of Pension Volgenandt"
             class="aspect-[4/3] w-full rounded-lg object-cover"
             loading="lazy"
-            sizes="100vw sm:50vw"
+            sizes="xs:100vw sm:50vw"
           />
           <figcaption class="mt-2 text-center text-sm text-sage-600">
             {{ t('hosts.buildingCaption', 'en') }}

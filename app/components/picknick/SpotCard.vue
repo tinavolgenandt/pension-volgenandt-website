@@ -25,7 +25,7 @@ const { locale } = useLocale()
         class="h-full w-full object-cover"
         :style="imagePosition ? { objectPosition: imagePosition } : {}"
         loading="lazy"
-        sizes="100vw sm:50vw lg:33vw"
+        sizes="xs:100vw sm:50vw lg:33vw"
       />
       <div v-else class="flex h-full w-full items-center justify-center bg-sage-100">
         <Icon name="ph:map-pin-duotone" class="size-12 text-sage-300" />

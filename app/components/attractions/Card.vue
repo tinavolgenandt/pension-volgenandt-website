@@ -44,7 +44,7 @@ const categoryBadge = computed<Record<string, { label: string; class: string }>>
         :alt="heroImageAlt"
         class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         loading="lazy"
-        sizes="100vw sm:50vw lg:33vw"
+        sizes="xs:100vw sm:50vw lg:33vw"
         @error="onImgError"
       />
       <span

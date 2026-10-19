@@ -346,7 +346,7 @@ onBeforeUnmount(() => gardenObserver?.disconnect())
               class="h-64 w-full object-cover md:h-72"
               style="object-position: center 80%"
               loading="lazy"
-              sizes="100vw md:50vw"
+              sizes="xs:100vw md:50vw"
             />
           </div>
           <div class="space-y-4 text-sage-700">

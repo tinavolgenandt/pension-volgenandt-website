@@ -115,6 +115,10 @@ export default defineNuxtConfig({
 
   // Image — custom pass-through provider that prepends app.baseURL for GitHub Pages subpath
   image: {
+    // Nuxt Image 2 reads a size without a breakpoint (sizes="100vw") as a
+    // 1px screen and emits "img 1w, img 2w", which Safari iOS renders wrong.
+    // Every sizes value therefore starts at xs: (phones up to 480px).
+    screens: { xs: 480 },
     provider: 'static',
     providers: {
       static: {

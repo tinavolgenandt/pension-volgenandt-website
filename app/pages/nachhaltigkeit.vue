@@ -150,7 +150,7 @@ const sustainabilityFeatures = [
           alt="Photovoltaikanlage auf dem Dach der Pension mit grünem Garten"
           class="rounded-lg"
           loading="lazy"
-          sizes="100vw md:50vw"
+          sizes="xs:100vw md:50vw"
         />
       </div>
     </section>
@@ -164,7 +164,7 @@ const sustainabilityFeatures = [
             alt="Wasser sprudelt aus einem Naturstein am eigenen Brunnen der Pension Volgenandt"
             class="rounded-lg"
             loading="lazy"
-            sizes="100vw md:50vw"
+            sizes="xs:100vw md:50vw"
           />
           <div>
             <h2 class="font-serif text-2xl font-bold text-sage-900">
@@ -215,14 +215,14 @@ const sustainabilityFeatures = [
             alt="Tagpfauenauge auf Sommerflieder im Garten der Pension"
             class="aspect-square w-full rounded-lg object-cover"
             loading="lazy"
-            sizes="50vw md:25vw"
+            sizes="xs:50vw md:25vw"
           />
           <NuxtImg
             src="/img/content/amphibien-gartenteich.webp"
             alt="Amphibien am Gartenteich der Pension Volgenandt"
             class="aspect-square w-full rounded-lg object-cover"
             loading="lazy"
-            sizes="50vw md:25vw"
+            sizes="xs:50vw md:25vw"
           />
         </div>
       </div>
@@ -237,7 +237,7 @@ const sustainabilityFeatures = [
             alt="Apfelbäume mit reifen Früchten im Garten der Pension"
             class="rounded-lg"
             loading="lazy"
-            sizes="100vw md:50vw"
+            sizes="xs:100vw md:50vw"
           />
           <div>
             <h2 class="font-serif text-2xl font-bold text-sage-900">Vom Garten auf den Tisch</h2>
@@ -273,7 +273,7 @@ const sustainabilityFeatures = [
             alt="Lila Krokusse im Frühling"
             class="aspect-square rounded-lg object-cover"
             loading="lazy"
-            sizes="50vw sm:25vw"
+            sizes="xs:50vw sm:25vw"
           />
           <figcaption class="mt-2 text-center text-sm text-sage-600">Frühling</figcaption>
         </figure>
@@ -283,7 +283,7 @@ const sustainabilityFeatures = [
             alt="Blühwiese mit Margeriten im Frühsommer"
             class="aspect-square rounded-lg object-cover"
             loading="lazy"
-            sizes="50vw sm:25vw"
+            sizes="xs:50vw sm:25vw"
           />
           <figcaption class="mt-2 text-center text-sm text-sage-600">Blühwiese</figcaption>
         </figure>
@@ -293,7 +293,7 @@ const sustainabilityFeatures = [
             alt="Reife Kirschen am Baum im Garten"
             class="aspect-square rounded-lg object-cover"
             loading="lazy"
-            sizes="50vw sm:25vw"
+            sizes="xs:50vw sm:25vw"
           />
           <figcaption class="mt-2 text-center text-sm text-sage-600">Kirschernte</figcaption>
         </figure>
@@ -303,7 +303,7 @@ const sustainabilityFeatures = [
             alt="Selbst angebaute Zwiebeln zum Trocknen aufgehängt"
             class="aspect-square rounded-lg object-cover"
             loading="lazy"
-            sizes="50vw sm:25vw"
+            sizes="xs:50vw sm:25vw"
           />
           <figcaption class="mt-2 text-center text-sm text-sage-600">Eigenanbau</figcaption>
         </figure>

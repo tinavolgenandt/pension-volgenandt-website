@@ -153,7 +153,7 @@ const sustainabilityFeatures = [
           alt="Photovoltaic system on the guesthouse roof with green garden"
           class="rounded-lg"
           loading="lazy"
-          sizes="100vw md:50vw"
+          sizes="xs:100vw md:50vw"
         />
       </div>
     </section>
@@ -167,7 +167,7 @@ const sustainabilityFeatures = [
             alt="Water flowing from natural stone at the guesthouse's own well"
             class="rounded-lg"
             loading="lazy"
-            sizes="100vw md:50vw"
+            sizes="xs:100vw md:50vw"
           />
           <div>
             <h2 class="font-serif text-2xl font-bold text-sage-900">
@@ -217,14 +217,14 @@ const sustainabilityFeatures = [
             alt="Peacock butterfly on buddleia in the guesthouse garden"
             class="aspect-square w-full rounded-lg object-cover"
             loading="lazy"
-            sizes="50vw md:25vw"
+            sizes="xs:50vw md:25vw"
           />
           <NuxtImg
             src="/img/content/amphibien-gartenteich.webp"
             alt="Amphibians at the garden pond of Pension Volgenandt"
             class="aspect-square w-full rounded-lg object-cover"
             loading="lazy"
-            sizes="50vw md:25vw"
+            sizes="xs:50vw md:25vw"
           />
         </div>
       </div>
@@ -239,7 +239,7 @@ const sustainabilityFeatures = [
             alt="Apple trees with ripe fruit in the guesthouse garden"
             class="rounded-lg"
             loading="lazy"
-            sizes="100vw md:50vw"
+            sizes="xs:100vw md:50vw"
           />
           <div>
             <h2 class="font-serif text-2xl font-bold text-sage-900">From Garden to Table</h2>
@@ -274,7 +274,7 @@ const sustainabilityFeatures = [
             alt="Purple crocuses in spring"
             class="aspect-square rounded-lg object-cover"
             loading="lazy"
-            sizes="50vw sm:25vw"
+            sizes="xs:50vw sm:25vw"
           />
           <figcaption class="mt-2 text-center text-sm text-sage-600">Spring</figcaption>
         </figure>
@@ -284,7 +284,7 @@ const sustainabilityFeatures = [
             alt="Wildflower meadow with daisies in early summer"
             class="aspect-square rounded-lg object-cover"
             loading="lazy"
-            sizes="50vw sm:25vw"
+            sizes="xs:50vw sm:25vw"
           />
           <figcaption class="mt-2 text-center text-sm text-sage-600">Wildflower Meadow</figcaption>
         </figure>
@@ -294,7 +294,7 @@ const sustainabilityFeatures = [
             alt="Ripe cherries on the tree in the garden"
             class="aspect-square rounded-lg object-cover"
             loading="lazy"
-            sizes="50vw sm:25vw"
+            sizes="xs:50vw sm:25vw"
           />
           <figcaption class="mt-2 text-center text-sm text-sage-600">Cherry Harvest</figcaption>
         </figure>
@@ -304,7 +304,7 @@ const sustainabilityFeatures = [
             alt="Home-grown onions hung up to dry"
             class="aspect-square rounded-lg object-cover"
             loading="lazy"
-            sizes="50vw sm:25vw"
+            sizes="xs:50vw sm:25vw"
           />
           <figcaption class="mt-2 text-center text-sm text-sage-600">Home-grown</figcaption>
         </figure>

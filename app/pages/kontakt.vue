@@ -185,7 +185,7 @@ useJsonLd(
             alt="Simone und Ralf Volgenandt, Ihre Gastgeber in Breitenbach"
             class="aspect-[4/3] w-full rounded-lg object-cover"
             loading="lazy"
-            sizes="100vw sm:50vw"
+            sizes="xs:100vw sm:50vw"
           />
           <figcaption class="mt-2 text-center text-sm text-sage-600">
             {{ t('hosts.caption', locale) }}
@@ -197,7 +197,7 @@ useJsonLd(
             alt="Gebäude und Innenhof der Pension Volgenandt"
             class="aspect-[4/3] w-full rounded-lg object-cover"
             loading="lazy"
-            sizes="100vw sm:50vw"
+            sizes="xs:100vw sm:50vw"
           />
           <figcaption class="mt-2 text-center text-sm text-sage-600">
             {{ t('hosts.buildingCaption', locale) }}

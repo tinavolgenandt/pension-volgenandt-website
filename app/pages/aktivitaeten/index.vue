@@ -109,7 +109,7 @@ function attractionLink(slug: string) {
                 :alt="attraction.heroImageAlt"
                 class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                 loading="lazy"
-                sizes="100vw sm:50vw lg:33vw"
+                sizes="xs:100vw sm:50vw lg:33vw"
               />
             </div>
             <div v-else class="flex aspect-[16/10] items-center justify-center bg-sage-100">
@@ -186,7 +186,7 @@ function attractionLink(slug: string) {
               class="h-52 w-full object-cover"
               style="object-position: center 60%"
               loading="lazy"
-              sizes="100vw md:320px"
+              sizes="xs:100vw md:320px"
               width="640"
               height="416"
             />
