@@ -242,7 +242,7 @@ foreach ($partnerMails as $job) {
     $partnerBody = $buildPartnerBody($job, $partnerGreetings[$job['key']] ?? $partnerName);
 
     // Reply-To is always our events inbox, never the guest
-    $partnerResult = sendSmtp($smtpHost, $smtpPort, $smtpUser, $smtpPass, $recipientEmail, $partnerEmail, $partnerSubject, $partnerBody, 'Pension Volgenandt', $eventsEmail, $eventsEmail, true);
+    $partnerResult = sendSmtp($smtpHost, $smtpPort, $smtpUser, $smtpPass, $recipientEmail, $partnerEmail, $partnerSubject, $partnerBody, 'Simone & Ralf Volgenandt', $eventsEmail, $eventsEmail, true);
     $forwardNotes .= $partnerResult['ok']
         ? "An $partnerName weitergeleitet ($partnerEmail), ohne unsere Preise.\r\n"
         : "ACHTUNG: Weiterleitung an $partnerName fehlgeschlagen. Bitte selbst weitergeben.\r\n";
