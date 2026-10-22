@@ -2,13 +2,14 @@
 #
 # PREISE (Stand 2026-10-18): Der Rechner nennt nur Preise, hinter denen ein
 # echtes Angebot oder unsere eigene Kalkulation steht:
-#   - cateringTiers mit priceBands: echtes Angebot eines Partners (bisher nur
-#     Grillverein Thalwenden, Preisübersicht 2026-08). Eingetragen sind die
-#     Preise des Partners, der Rechner schlägt den Aufschlag darauf
-#     (markupPercent der Stufe, sonst cateringMarkupPercent). Der Partner
-#     sieht in seiner Mail nur seinen eigenen Preis.
+#   - Optionen mit priceBands: echtes Angebot eines Partners (Grillverein
+#     Thalwenden, Preisübersicht 2026-08; LaMaru Pâtisserie, Eventkollektionen
+#     2026-10). Eingetragen sind die Preise des Partners, der Rechner schlägt
+#     den Aufschlag darauf (markupPercent der Option, sonst
+#     cateringMarkupPercent). Ein Catering-Partner sieht in seiner Mail nur
+#     seinen eigenen Preis.
 #   - basePackage und drinkOptions: unsere eigenen Preise.
-# Alles von Dritten ohne Angebot (Zelt, Fotograf, Musik, Deko, Torte, Fotobox,
+# Alles von Dritten ohne Angebot (Zelt, Fotograf, Musik, Deko, Festtorte, Fotobox,
 # Styling, Mobiliar, Kaffee & Kuchen) steht mit `onRequest: true` und ohne
 # Preis drin: Gäste können es auswählen, der Preis kommt ins persönliche
 # Angebot. Liegt ein Angebot vor: `onRequest` entfernen, `price` bzw.
@@ -33,7 +34,6 @@
 #   - decorationOptions.klassisch     → deko-klassisch.webp
 #   - decorationOptions.premium       → deko-premium.webp
 #   - cakeOptions.torte               → torte-festtorte.webp
-#   - cakeOptions.torte_sweet         → torte-sweet-table.webp
 #   - photoboothOptions.fotobox       → fotobox.webp
 #   - stylingOptions.braut            → styling-braut.webp
 #   - stylingOptions.braut_partner    → styling-braut-partner.webp
@@ -95,7 +95,7 @@ basePackage:
     - Endreinigung nach der Feier
     - Stromversorgung für die Musik direkt aus dem Haus
     - Garage als Catering-Küche
-    - Zugang zu unserer Planungs-App
+    - 'Unsere Planungs-App: Stand der Planung, Ablauf und Kosten jederzeit im Blick'
 
 # Catering läuft IMMER über einen unserer Partner (kein hauseigenes Catering).
 # Jede Stufe nennt ihren Partner. `partner` bestimmt, an wen die Anfrage geht:
@@ -108,7 +108,8 @@ basePackage:
 # Grillverein Thalwenden: ECHTES Angebot (Preisübersicht Stand 2026-08), 4
 # Genusswelten, Preis pro Person sinkt mit der Gästezahl (Grillservice inkl.
 # Personal; 2 Mitarbeiter bis 50 Gäste inklusive; Getränke nicht enthalten).
-# priceBands = Preise des Grillvereins OHNE unseren Aufschlag.
+# priceBands = Preise des Grillvereins OHNE unseren Aufschlag. roundUpTo: 1
+# rundet den Gästepreis auf volle Euro auf (34,90 € + 10 % = 38,39 € → 39 €).
 #
 # Anja kocht (Anja Randau, Witzenhausen): liefert wegen der Entfernung (60 km)
 # erst ab 80 Gästen (Mail vom 23.07.2026). Noch kein Preisangebot.
@@ -119,6 +120,7 @@ cateringTiers:
     partnerName: Grillverein Thalwenden
     partnerUrl: https://grillverein-thalwenden.de/
     markupPercent: 10
+    roundUpTo: 1
     label: Classic – Der Klassiker
     image: /img/events/partner-grillverein-steak.webp
     imageAlt: Steaks und Bratwurst brutzeln auf dem Grill des Grillverein Thalwenden
@@ -139,6 +141,7 @@ cateringTiers:
     partnerName: Grillverein Thalwenden
     partnerUrl: https://grillverein-thalwenden.de/
     markupPercent: 10
+    roundUpTo: 1
     label: Signature – Unsere besondere Auswahl
     image: /img/events/partner-grillverein-grillplatte.webp
     imageAlt: Große Grillplatte mit Fisch, Spießen, Bratwurst und Burgern
@@ -159,6 +162,7 @@ cateringTiers:
     partnerName: Grillverein Thalwenden
     partnerUrl: https://grillverein-thalwenden.de/
     markupPercent: 10
+    roundUpTo: 1
     label: Prestige – Premium vom Grill
     image: /img/events/partner-grillverein-team.webp
     imageAlt: Team des Grillverein Thalwenden mit Grillstand im Garten
@@ -179,6 +183,7 @@ cateringTiers:
     partnerName: Grillverein Thalwenden
     partnerUrl: https://grillverein-thalwenden.de/
     markupPercent: 10
+    roundUpTo: 1
     label: Élite – Das außergewöhnliche Grillerlebnis
     image: /img/events/partner-grillverein-detail.webp
     imageAlt: Grillstation des Grillverein Thalwenden mit Gemüsespießen und Beilagen
@@ -419,15 +424,77 @@ decorationOptions:
       Blumenschmuck für Tische, Zelt und Eingang.
     onRequest: true
 
-# Torte & Sweet Table: keine / Hochzeitstorte / Torte + Sweet Table. Pro Person.
-# (Markt 2026: Hochzeitstorte ~4–6 €/Stück, Candy/Sweet Table zusätzlich.)
+# Torte & Pâtisserie: keine / 4 Eventkollektionen von LaMaru / Festtorte.
+# LaMaru Pâtisserie (Maryna Hefel, Duderstadt): ECHTES Angebot, Mail vom
+# 20.10.2026, PDF in .planning/partners/. Preis pro Gast inkl. Pâtisserie,
+# Einwegverpackung, Lieferung zur Pension und 7 % USt. Mindestbestellung über
+# 20 Personen, daher minGuests: 21. priceBands = LaMaru-Preise OHNE unseren
+# Aufschlag; roundUpTo: 1 rundet den Gästepreis auf volle Euro auf (16,90 € +
+# 10 % = 18,59 € → 19 €). Die Festtorte hat noch kein Angebot.
+# partner: lamaru-patisserie → send-mail.php schickt Maryna eine eigene Mail
+# mit ihrer Auswahl und ihrem Preis (ohne unseren Aufschlag).
 cakeOptions:
   - id: keine
     label: Keine Torte
     description: Sie bringen Ihre eigene Torte mit oder verzichten darauf.
     detail: Kuchen/Torte organisieren Sie selbst. Diese Position bleibt bei 0 €.
     pricePerPerson: 0
+  - id: lamaru-klassik
+    partner: lamaru-patisserie
+    partnerName: LaMaru Pâtisserie, Duderstadt
+    partnerUrl: https://lamaru-patisserie.de/
+    markupPercent: 10
+    roundUpTo: 1
+    minGuests: 21
+    label: Klassik – 3 Kreationen pro Gast
+    description: >-
+      Petit Fours, Honig-Törtchen und Éclairs. Frisch geliefert, ab 21 Gästen.
+    priceBands:
+      - maxGuests: 999
+        pricePerPerson: 16.9
+  - id: lamaru-auslese
+    partner: lamaru-patisserie
+    partnerName: LaMaru Pâtisserie, Duderstadt
+    partnerUrl: https://lamaru-patisserie.de/
+    markupPercent: 10
+    roundUpTo: 1
+    minGuests: 21
+    label: Auslese – 4 Kreationen pro Gast
+    description: >-
+      Petit Fours, Honig-Törtchen mit Mascarpone-Creme, Éclairs und
+      Biskuitrolle, zum Beispiel Zitrone. Frisch geliefert, ab 21 Gästen.
+    priceBands:
+      - maxGuests: 999
+        pricePerPerson: 21.9
+  - id: lamaru-meisterstueck
+    partner: lamaru-patisserie
+    partnerName: LaMaru Pâtisserie, Duderstadt
+    partnerUrl: https://lamaru-patisserie.de/
+    markupPercent: 10
+    roundUpTo: 1
+    minGuests: 21
+    label: Meisterstück – 5 Kreationen pro Gast
+    description: >-
+      Wie Auslese, dazu ein Korpustörtchen (Mango, Himbeere, Kaffee, Heidelbeere
+      oder Birne). Frisch geliefert, ab 21 Gästen.
+    priceBands:
+      - maxGuests: 999
+        pricePerPerson: 27.9
+  - id: lamaru-kroenung
+    partner: lamaru-patisserie
+    partnerName: LaMaru Pâtisserie, Duderstadt
+    partnerUrl: https://lamaru-patisserie.de/
+    markupPercent: 10
+    roundUpTo: 1
+    minGuests: 21
+    label: Krönung – 6 Kreationen pro Gast
+    description: >-
+      Wie Meisterstück, dazu Macarons. Frisch geliefert, ab 21 Gästen.
+    priceBands:
+      - maxGuests: 999
+        pricePerPerson: 32.9
   - id: torte
+    partner: lamaru-patisserie
     partnerName: LaMaru Pâtisserie, Duderstadt
     partnerUrl: https://lamaru-patisserie.de/
     label: Festtorte
@@ -438,18 +505,6 @@ cakeOptions:
     detail: >-
       Größe, Geschmack und Optik stimme ich mit Ihnen ab. Die Torte richtet sich
       nach der Gästezahl.
-    onRequest: true
-  - id: torte_sweet
-    partnerName: LaMaru Pâtisserie, Duderstadt
-    partnerUrl: https://lamaru-patisserie.de/
-    label: Torte + Sweet Table
-    image: /img/events/torte-sweet-table.webp
-    imageAlt: Festtorte mit dekoriertem Sweet Table
-    description: >-
-      Festtorte und ein Sweet Table mit Cupcakes, Macarons und Pralinen.
-    detail: >-
-      Am Sweet Table bedienen sich Ihre Gäste den ganzen Tag. Kinder mögen ihn
-      besonders.
     onRequest: true
 
 # Fotobox: keine / Fotobox mit Requisiten. Fester Preis inkl. Aufbau & Betreuung.

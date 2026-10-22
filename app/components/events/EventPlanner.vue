@@ -30,6 +30,7 @@ interface CatalogOption {
   partnerName?: string
   partnerUrl?: string
   markupPercent?: number
+  roundUpTo?: number
   price?: number
   pricePerPerson?: number
   pricePerPersonPerHour?: number
@@ -197,8 +198,8 @@ const allOptionSteps = computed<WizardStep[]>(() => [
     groups: [{ key: 'tentId', unit: 'flat', legend: 'Festzelt', options: opts('tentOptions') }],
   },
   {
-    // All optional extras on one screen instead of six steps. None has a
-    // confirmed price yet, so they are shown compact (no photo, no detail).
+    // All optional extras on one screen instead of six steps, shown compact
+    // (no photo, no detail). Only the patisserie has a price so far.
     title: 'Weitere Wünsche',
     intro:
       'Fotograf, Musik, Deko, Torte, Fotobox und Styling vermitteln wir auf Wunsch. Wählen Sie, was Sie brauchen, ich nehme es ins Angebot auf.',
@@ -220,8 +221,8 @@ const allOptionSteps = computed<WizardStep[]>(() => [
       {
         key: 'cakeId',
         unit: 'person',
-        legend: 'Torte & Sweet Table',
-        options: opts('cakeOptions'),
+        legend: 'Torte & Pâtisserie',
+        options: forGuests(opts('cakeOptions')),
       },
       { key: 'photoboothId', unit: 'flat', legend: 'Fotobox', options: opts('photoboothOptions') },
       { key: 'stylingId', unit: 'flat', legend: 'Styling', options: opts('stylingOptions') },
@@ -300,13 +301,21 @@ function bandedPricePerPerson(bands: PriceBand[], guests: number): number {
 }
 // Catering bands hold the partner's own price; the guest sees it with our
 // markup (the tier's own or the default), rounded to 10 cents
-// (34,90 € + 10 % = 38,40 €).
+// (34,90 € + 10 % = 38,40 €), or up to `roundUpTo` if set
+// (16,90 € + 10 % with roundUpTo 1 = 19 €).
 function partnerPricePerPerson(opt: CatalogOption): number {
   return opt.priceBands?.length ? bandedPricePerPerson(opt.priceBands, form.guests) : 0
 }
 function rawPrice(opt: CatalogOption | undefined, unit: Unit): number {
   if (!opt || opt.onRequest) return 0
   if (unit === 'person') {
+    if (opt.priceBands?.length && opt.roundUpTo) {
+      const step = opt.roundUpTo
+      const withMarkup =
+        (partnerPricePerPerson(opt) * (100 + (opt.markupPercent ?? cateringMarkup.value))) / 100
+      // the epsilon keeps float noise (19.000000001) from adding a whole step
+      return Math.ceil(withMarkup / step - 1e-9) * step
+    }
     if (opt.priceBands?.length)
       return (
         Math.round(
@@ -545,6 +554,21 @@ function buildPartnerMessage(): string {
   return lines.join('\n')
 }
 
+// What the patisserie sees: time, guests and their own collection with THEIR
+// price (without our markup). Nothing from the caterer or our prices.
+function buildPatisserieMessage(cake: CatalogOption): string {
+  const lines = [`Zeit: ${timeWindow.value}`, `Auswahl: ${cake.label}`]
+  if (cake.priceBands?.length) {
+    const p = partnerPricePerPerson(cake)
+    lines.push(
+      `Euer Preis: ${form.guests} × ${perPersonLabel(p)} € = ${formatEuro(Math.round(p * form.guests))} €`,
+    )
+  } else {
+    lines.push('Preis: bitte im Angebot nennen')
+  }
+  return lines.join('\n')
+}
+
 async function handleSubmit() {
   errorMessage.value = ''
   if (!isFormValid.value) {
@@ -556,6 +580,10 @@ async function handleSubmit() {
   isSubmitting.value = true
   try {
     const selectedCatering = opts('cateringTiers').find((t) => t.id === form.cateringId)
+    // Only a cake option with a partner (LaMaru) is forwarded; "Keine Torte" isn't
+    const cakeGroup = allGroups.value.find((g) => g.key === 'cakeId')
+    const selectedCake = cakeGroup ? selectedOption(cakeGroup) : undefined
+    const patisserie = selectedCake?.partner ? selectedCake : undefined
     const response = await fetch(appConfig.contactFormUrl, {
       method: 'POST',
       headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
@@ -579,6 +607,10 @@ async function handleSubmit() {
         // message. send-mail.php only forwards to partners it knows; others
         // (anja-kocht) reach events@ only.
         _partner: selectedCatering?.partner,
+        // Same for the patisserie: a second partner mail with only their part
+        _patisserie: patisserie?.partner,
+        patisserieChoice: patisserie?.label,
+        patisserieMessage: patisserie ? buildPatisserieMessage(patisserie) : undefined,
       }),
     })
     const data = await response.json()
@@ -980,9 +1012,10 @@ const inputClass =
             {{ isSubmitting ? 'Wird gesendet …' : 'Unverbindliche Anfrage senden' }}
           </button>
           <p class="text-center text-xs leading-relaxed text-sage-500">
-            Ihre Angaben nutze ich nur für Ihre Anfrage. Damit der Caterer ein Angebot machen kann,
-            schicke ich Name, Kontaktdaten und Ihre Auswahl auch an den Catering-Partner, den Sie
-            gewählt haben. Mehr dazu in der
+            Ihre Angaben nutze ich nur für Ihre Anfrage. Damit unsere Partner ein Angebot machen
+            können, schicke ich Ihren Namen und Ihre Auswahl an den Caterer und, falls gewählt, an
+            die Konditorei. E-Mail und Telefonnummer gebe ich nicht weiter, das Angebot bekommen Sie
+            von mir. Mehr dazu in der
             <NuxtLink to="/datenschutz/" class="underline hover:text-sage-700"
               >Datenschutzerklärung</NuxtLink
             >.

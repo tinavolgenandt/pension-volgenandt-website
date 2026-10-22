@@ -161,9 +161,9 @@ onMounted(() => {
         Planungshilfen für Ihr Fest
       </h1>
       <p class="mx-auto mt-3 max-w-xl text-sage-700">
-        Was wir zwischen Zusage und Veranstaltungstag gemeinsam planen. Eintragen können Sie alles
-        nach der Buchung in unserer Planungs-App. Jeder Abschnitt lässt sich einzeln ausdrucken oder
-        als PDF speichern.
+        Was wir zwischen Zusage und Veranstaltungstag gemeinsam planen. Nach der Buchung sehen Sie
+        den aktuellen Stand jederzeit in unserer Planungs-App. Jeder Abschnitt lässt sich einzeln
+        ausdrucken oder als PDF speichern.
       </p>
     </header>
 
@@ -179,8 +179,8 @@ onMounted(() => {
         </button>
       </div>
       <p class="mb-6 text-sage-700">
-        In der Planungs-App tragen Sie ein, wer in welchem Bett übernachtet. So können wir jedem
-        Gast direkt seinen Platz zeigen.
+        Wer in welchem Bett übernachtet, sagen Sie mir oder halten es selbst in der Planungs-App
+        fest. So können wir jedem Gast direkt seinen Platz zeigen.
       </p>
 
       <div
@@ -277,8 +277,8 @@ onMounted(() => {
         </button>
       </div>
       <p class="mb-6 text-sage-700">
-        Diese Punkte planen wir für Ihren Tag. Uhrzeiten und eigene Programmpunkte tragen Sie in der
-        Planungs-App ein.
+        Diese Punkte planen wir für Ihren Tag. Uhrzeiten und eigene Programmpunkte stimmen wir
+        gemeinsam ab. Den aktuellen Ablauf sehen Sie jederzeit in der Planungs-App.
       </p>
       <div class="rounded-xl border border-sage-200 p-5">
         <div

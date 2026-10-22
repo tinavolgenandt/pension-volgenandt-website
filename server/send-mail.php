@@ -27,12 +27,18 @@ $subjectPrefix  = '[Pension Volgenandt]';
 // address from the client as the recipient.
 $partnerEmails = [
     'grillverein-thalwenden' => 'grillverein-thalwenden@gmx.de',
+    'lamaru-patisserie'      => 'maryna.hefel@lamaru-patisserie.de',
 ];
-// Name used in the greeting and in our copy. Every key in $partnerEmails needs
-// one. A new catering partner = one line in each list (keys match `partner` in
-// content/events/config.yml), then upload this file to IONOS.
+// Name used in our copy. Every key in $partnerEmails needs one. A new partner
+// = one line in each list (keys match `partner` in content/events/config.yml),
+// then upload this file to IONOS.
 $partnerNames = [
     'grillverein-thalwenden' => 'Grillverein Thalwenden',
+    'lamaru-patisserie'      => 'LaMaru Pâtisserie',
+];
+// Greeting when it differs from the name ("Hallo Maryna," not "Hallo LaMaru …")
+$partnerGreetings = [
+    'lamaru-patisserie' => 'Maryna',
 ];
 
 // ---------------------------------------------------------------------------
@@ -87,6 +93,10 @@ $startTime      = limitText($input['startTime'] ?? '', 10);
 $cateringTier   = limitText($input['cateringTier'] ?? '', 120);
 $notes          = limitText($input['notes'] ?? '', 5000);
 $partnerMessage = limitText($input['partnerMessage'] ?? '', 5000);
+// Cake / patisserie chosen in the calculator: a second partner mail
+$patisserieKey     = limitText($input['_patisserie'] ?? '', 64);
+$patisserieChoice  = limitText($input['patisserieChoice'] ?? '', 120);
+$patisserieMessage = limitText($input['patisserieMessage'] ?? '', 2000);
 
 // ---------------------------------------------------------------------------
 // Honeypot – if filled, silently pretend success (bot trap)
@@ -126,12 +136,34 @@ if (!empty($errors)) {
 // Build email
 // ---------------------------------------------------------------------------
 // Every inquiry reaches us as a plain-text mail with the full message
-// (kontakt@, or events@ for event inquiries),
-// including our package price. A catering inquiry additionally goes to the
-// partner as a separate HTML mail without our prices (CC to events@, so we see
-// their reply to the guest).
-$partnerName      = $partnerNames[$partnerKey] ?? null;
-$isPartnerInquiry = ($partnerEmail !== null && $partnerName !== null);
+// (kontakt@, or events@ for event inquiries), including our package price.
+// The caterer and the patisserie the guest chose each get a separate HTML mail
+// with only their own part and their own price, never ours, and without the
+// guest's e-mail or phone. Their reply comes to events@, never to the guest.
+$partnerMails = [];
+if (isset($partnerEmails[$partnerKey], $partnerNames[$partnerKey])) {
+    $partnerMails[] = [
+        'key'       => $partnerKey,
+        'kind'      => 'Catering',
+        'choice'    => $cateringTier ?: 'Catering gewünscht',
+        'intro'     => 'euer Catering ausgewählt',
+        'heading'   => 'Gewählte Leistungen',
+        'selection' => $partnerMessage,
+        'kitchen'   => true,
+    ];
+}
+if ($patisserieKey !== $partnerKey && isset($partnerEmails[$patisserieKey], $partnerNames[$patisserieKey])) {
+    $partnerMails[] = [
+        'key'       => $patisserieKey,
+        'kind'      => 'Pâtisserie',
+        'choice'    => $patisserieChoice ?: 'Pâtisserie gewünscht',
+        'intro'     => 'bei euch Pâtisserie ausgewählt',
+        'heading'   => 'Eure Auswahl',
+        'selection' => $patisserieMessage,
+        'kitchen'   => false,
+    ];
+}
+$isPartnerInquiry = ($partnerMails !== []);
 
 $subject = $customSubject !== ''
     ? "$subjectPrefix $customSubject"
@@ -146,59 +178,39 @@ $body = "Neue Kontaktanfrage über die Website:\r\n"
     . "Nachricht:\r\n"
     . $message;
 
-if ($isPartnerInquiry) {
-    $details = array_filter([$guests !== '' ? "$guests Gäste" : '', $eventDate]);
-    $partnerSubject = $customSubject !== ''
-        ? "$subjectPrefix $customSubject"
-        : "$subjectPrefix Catering-Anfrage: " . ($occasion ?: 'Feier im Garten') . ($details ? ' (' . implode(', ', $details) . ')' : '');
+$esc = static fn (string $value): string => htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+$row = static fn (string $label, string $value): string =>
+    "<tr><td style=\"padding: 6px 12px 6px 0; color: #4a5d3f; font-weight: 600; vertical-align: top; width: 35%;\">$label</td>"
+    . "<td style=\"padding: 6px 0;\">$value</td></tr>";
 
-    $safeName         = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
-    $safeEmail        = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
-    $safePhone        = htmlspecialchars($phone ?: '–', ENT_QUOTES, 'UTF-8');
-    $safeOccasion     = htmlspecialchars($occasion ?: '–', ENT_QUOTES, 'UTF-8');
-    $safeDate         = htmlspecialchars($eventDate ?: 'noch offen', ENT_QUOTES, 'UTF-8');
-    $safeGuests       = htmlspecialchars($guests ?: '–', ENT_QUOTES, 'UTF-8');
-    $safeHours        = htmlspecialchars($hours ? "ca. $hours Stunden" : '–', ENT_QUOTES, 'UTF-8');
-    $safeStart        = htmlspecialchars($startTime ? "$startTime Uhr" : '–', ENT_QUOTES, 'UTF-8');
-    $safePartnerName  = htmlspecialchars($partnerName, ENT_QUOTES, 'UTF-8');
-    $safeCateringTier = htmlspecialchars($cateringTier ?: 'Catering gewünscht', ENT_QUOTES, 'UTF-8');
-    $safeNotes        = nl2br(htmlspecialchars($notes, ENT_QUOTES, 'UTF-8'));
-    $safeSelection    = nl2br(htmlspecialchars($partnerMessage, ENT_QUOTES, 'UTF-8'));
-
-    $row = static fn (string $label, string $value): string =>
-        "<tr><td style=\"padding: 6px 12px 6px 0; color: #4a5d3f; font-weight: 600; vertical-align: top; width: 35%;\">$label</td>"
-        . "<td style=\"padding: 6px 0;\">$value</td></tr>";
-
+// One partner mail; $job comes from $partnerMails above.
+// Partners never get the guest's e-mail or phone: their offer comes to us and
+// we pass it on (see Reply-To below).
+$buildPartnerBody = static function (array $job, string $greeting) use ($esc, $row, $name, $occasion, $eventDate, $guests, $hours, $startTime, $notes): string {
     $notesBlock = $notes !== ''
-        ? "<h3 style=\"font-size: 15px; margin: 24px 0 8px;\">Wünsche und Notizen</h3><p style=\"margin: 0;\">$safeNotes</p>"
+        ? "<h3 style=\"font-size: 15px; margin: 24px 0 8px;\">Wünsche und Notizen</h3><p style=\"margin: 0;\">" . nl2br($esc($notes)) . "</p>"
         : '';
-
-    $selectionBlock = $partnerMessage !== ''
-        ? "<h3 style=\"font-size: 15px; margin: 24px 0 8px;\">Gewählte Leistungen</h3><p style=\"margin: 0;\">$safeSelection</p>"
+    $selectionBlock = $job['selection'] !== ''
+        ? "<h3 style=\"font-size: 15px; margin: 24px 0 8px;\">" . $esc($job['heading']) . "</h3><p style=\"margin: 0;\">" . nl2br($esc($job['selection'])) . "</p>"
         : '';
+    $kitchenLine = $job['kitchen'] ? "Die Garage dient als Catering-Küche.<br>\n    " : '';
 
-    $partnerBody = "<!DOCTYPE html>
+    return "<!DOCTYPE html>
 <html>
 <head><meta charset=\"UTF-8\"></head>
 <body style=\"font-family: Arial, Helvetica, sans-serif; color: #2d3748; font-size: 14px; line-height: 1.5; padding: 16px;\">
   <div style=\"max-width: 640px; margin: 0 auto;\">
-    <p>Hallo {$safePartnerName},</p>
-    <p>über den Eventplaner auf unserer Website hat jemand eine Feier im Garten angefragt und euer Catering ausgewählt.</p>
+    <p>Hallo " . $esc($greeting) . ",</p>
+    <p>über den Eventplaner auf unserer Website hat jemand eine Feier im Garten angefragt und " . $esc($job['intro']) . ".</p>
 
     <table style=\"width: 100%; border-collapse: collapse; margin: 16px 0;\">"
-        . $row('Anlass', $safeOccasion)
-        . $row('Wunschtermin', $safeDate)
-        . $row('Gäste', $safeGuests)
-        . $row('Beginn', $safeStart)
-        . $row('Dauer', $safeHours)
-        . $row('Catering', $safeCateringTier)
-        . "</table>
-
-    <h3 style=\"font-size: 15px; margin: 24px 0 8px;\">Kontakt</h3>
-    <table style=\"width: 100%; border-collapse: collapse;\">"
-        . $row('Name', $safeName)
-        . $row('E-Mail', "<a href=\"mailto:$safeEmail\" style=\"color: #4a5d3f;\">$safeEmail</a>")
-        . $row('Telefon', $safePhone)
+        . $row('Anlass', $esc($occasion ?: '–'))
+        . $row('Wunschtermin', $esc($eventDate ?: 'noch offen'))
+        . $row('Gäste', $esc($guests ?: '–'))
+        . $row('Beginn', $esc($startTime ? "$startTime Uhr" : '–'))
+        . $row('Dauer', $esc($hours ? "ca. $hours Stunden" : '–'))
+        . $row($esc($job['kind']), $esc($job['choice']))
+        . $row('Angefragt von', $esc($name))
         . "</table>
 
     $notesBlock
@@ -207,25 +219,36 @@ if ($isPartnerInquiry) {
 
     <h3 style=\"font-size: 15px; margin: 24px 0 8px;\">Ort der Feier</h3>
     <p style=\"margin: 0;\">Pension Volgenandt, Otto-Reutter-Straße 28, 37327 Leinefelde-Worbis OT Breitenbach.<br>
-    Die Garage dient als Catering-Küche.<br>
-    Ansprechpartnerin vor Ort: Tina Volgenandt, 0176 55229201, events@pension-volgenandt.de</p>
+    {$kitchenLine}Ansprechpartnerin vor Ort: Tina Volgenandt, 0176 55229201, events@pension-volgenandt.de</p>
 
-    <p style=\"margin-top: 24px;\">Wenn ihr auf diese Mail antwortet, geht die Antwort direkt an {$safeName}. Wir stehen in Kopie.</p>
+    <p style=\"margin-top: 24px;\">Bitte schickt euer Angebot an uns, nicht an den Gast. Eine Antwort auf diese Mail geht an events@pension-volgenandt.de, wir geben das Angebot weiter.</p>
     <p>Viele Grüße aus Breitenbach<br>Tina Volgenandt</p>
   </div>
 </body>
 </html>";
-}
+};
 
 // ---------------------------------------------------------------------------
 // Send via SMTP
 // ---------------------------------------------------------------------------
-if ($isPartnerInquiry) {
-    $partnerResult = sendSmtp($smtpHost, $smtpPort, $smtpUser, $smtpPass, $recipientEmail, $partnerEmail, $partnerSubject, $partnerBody, $name, $email, $eventsEmail, true);
-    $body = ($partnerResult['ok']
-            ? "An $partnerName weitergeleitet ($partnerEmail), ohne unsere Preise.\r\n\r\n"
-            : "ACHTUNG: Weiterleitung an $partnerName fehlgeschlagen. Bitte selbst weitergeben.\r\n\r\n")
-        . $body;
+$forwardNotes = '';
+foreach ($partnerMails as $job) {
+    $partnerName  = $partnerNames[$job['key']];
+    $partnerEmail = $partnerEmails[$job['key']];
+    $details      = array_filter([$guests !== '' ? "$guests Gäste" : '', $eventDate]);
+    $partnerSubject = $customSubject !== ''
+        ? "$subjectPrefix $customSubject"
+        : "$subjectPrefix {$job['kind']}-Anfrage: " . ($occasion ?: 'Feier im Garten') . ($details ? ' (' . implode(', ', $details) . ')' : '');
+    $partnerBody = $buildPartnerBody($job, $partnerGreetings[$job['key']] ?? $partnerName);
+
+    // Reply-To is always our events inbox, never the guest
+    $partnerResult = sendSmtp($smtpHost, $smtpPort, $smtpUser, $smtpPass, $recipientEmail, $partnerEmail, $partnerSubject, $partnerBody, 'Simone & Ralf Volgenandt', $eventsEmail, $eventsEmail, true);
+    $forwardNotes .= $partnerResult['ok']
+        ? "An $partnerName weitergeleitet ($partnerEmail), ohne unsere Preise.\r\n"
+        : "ACHTUNG: Weiterleitung an $partnerName fehlgeschlagen. Bitte selbst weitergeben.\r\n";
+}
+if ($forwardNotes !== '') {
+    $body = $forwardNotes . "\r\n" . $body;
 }
 
 // Without a guest e-mail, Reply-To points back to our own inbox.
