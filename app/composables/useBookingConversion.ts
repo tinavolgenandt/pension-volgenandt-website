@@ -19,8 +19,11 @@ export function useBookingConversion() {
     const value = Number(route.query.amt ?? route.query.betrag) || 0
     const txn = String(route.query.tx ?? route.query.txn ?? '')
 
-    // Ignore direct visits that carry no booking context.
-    if (!txn && value <= 0) return
+    // Ignore direct visits that carry no booking context, and anything that
+    // does not look like a real Beds24 return (numeric booking ID, plausible
+    // total): a hand-made link like ?amt=9999&tx=x must not count as a sale
+    // in Google Ads.
+    if (!/^\d{5,12}$/.test(txn) || value <= 0 || value > 10000) return
 
     // Dedupe: GA4/Ads dedupe by transaction_id, but guard page refreshes too.
     const key = `booking_purchase_${txn || value}`

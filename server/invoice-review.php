@@ -17,6 +17,15 @@ require_once __DIR__ . '/invoice-draft.php';
 require_once __DIR__ . '/invoice-pdf.php';
 require_once __DIR__ . '/invoice-mailer.php';
 
+// The URL carries the review token: never leak it via Referer, never allow
+// the page to be framed or indexed.
+header('Referrer-Policy: no-referrer');
+header('X-Frame-Options: DENY');
+header('X-Content-Type-Options: nosniff');
+header('X-Robots-Tag: noindex, nofollow');
+header('Cache-Control: no-store');
+header("Content-Security-Policy: frame-ancestors 'none'; base-uri 'none'; form-action 'self'");
+
 // ---------------------------------------------------------------------------
 // Shared: apply the editable form fields onto a draft (used by save+approve)
 // ---------------------------------------------------------------------------
@@ -108,6 +117,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['dl']) && in_array($stat
 $flash = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // One POST per draft at a time: a double click on "send" must not mail
+    // the invoice twice. Re-read the draft under the lock. The lock is
+    // released when the script ends.
+    $draftLock = fopen($draftPath . '.lock', 'c');
+    if ($draftLock) {
+        flock($draftLock, LOCK_EX);
+        $draft  = json_decode(file_get_contents($draftPath), true);
+        $status = $draft['status'] ?? 'pending';
+        $invNum = $draft['invoiceNumber'] ?? '';
+    }
+
     $action = $_POST['action'] ?? '';
 
     if ($action === 'save' && $status === 'pending') {
@@ -300,7 +320,7 @@ label { display: block; font-weight: 600; margin-bottom: 6px; }
     <p class="meta">
       Buchung #<?= (int)($draft['bookingId'] ?? 0) ?> &nbsp;·&nbsp;
       Erstellt: <?= date('d.m.Y H:i', strtotime($draft['createdAt'] ?? 'now')) ?> &nbsp;·&nbsp;
-      <span class="badge" style="background:<?= $statusColor ?>;"><?= $statusLabel ?></span>
+      <span class="badge" style="background:<?= htmlspecialchars($statusColor) ?>;"><?= htmlspecialchars($statusLabel) ?></span>
     </p>
 
     <table class="info">
@@ -458,7 +478,7 @@ label { display: block; font-weight: 600; margin-bottom: 6px; }
       <div class="actions">
         <button type="submit" name="action" value="send" class="btn btn-green">✓ Jetzt an Gast senden</button>
         <button type="submit" name="action" value="back" class="btn btn-link"
-                onclick="return confirm('Zurück zur Bearbeitung? Die Rechnungsnummer <?= htmlspecialchars($invNum) ?> bleibt reserviert.');">← Zurück zur Bearbeitung</button>
+                onclick="return confirm(<?= htmlspecialchars(json_encode('Zurück zur Bearbeitung? Die Rechnungsnummer ' . $invNum . ' bleibt reserviert.'), ENT_QUOTES) ?>);">← Zurück zur Bearbeitung</button>
       </div>
     </form>
   </div>
@@ -470,7 +490,7 @@ label { display: block; font-weight: 600; margin-bottom: 6px; }
 
   <div class="preview">
     <div class="preview-head">Rechnungsvorschau</div>
-    <iframe srcdoc="<?= $previewHtml ?>"></iframe>
+    <iframe sandbox srcdoc="<?= $previewHtml ?>"></iframe>
   </div>
 
 </div>

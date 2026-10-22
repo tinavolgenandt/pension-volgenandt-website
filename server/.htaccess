@@ -1,0 +1,46 @@
+# Webspace root on IONOS (https://api.pension-volgenandt.de).
+# Only the PHP endpoints may be reached from the web. Data files, logs,
+# config and include-only scripts are blocked.
+
+Options -Indexes -MultiViews
+
+# Apache otherwise answers near-miss URLs with a list of real file names
+<IfModule mod_speling.c>
+    CheckSpelling Off
+</IfModule>
+
+# Data and config files (inquiry log, vouchers, blocked dates, composer files,
+# php.ini, mail.log, backups)
+<FilesMatch "\.(csv|json|lock|log|ini|md|example|txt|bak|old|orig|swp|dist|yml|yaml|sh|sql)$|^\.|~$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order Deny,Allow
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Include-only PHP files: they define functions/constants and must never run
+# as an entry point.
+<FilesMatch "^(config|smtp|security|vouchers|beds24-api|invoice-draft|invoice-pdf|invoice-mailer)\.php$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order Deny,Allow
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Composer dependencies
+RedirectMatch 403 ^/vendor/
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "no-referrer"
+    Header always set X-Frame-Options "DENY"
+    Header always set Strict-Transport-Security "max-age=31536000"
+    Header always unset X-Powered-By
+    Header unset X-Powered-By
+</IfModule>

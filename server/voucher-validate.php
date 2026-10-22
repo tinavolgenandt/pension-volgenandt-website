@@ -12,6 +12,7 @@
 
 require_once __DIR__ . '/smtp.php'; // also loads config.php + setCorsHeaders()
 require_once __DIR__ . '/vouchers.php';
+require_once __DIR__ . '/security.php';
 
 setCorsHeaders($allowedOrigins);
 
@@ -25,15 +26,18 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$input = json_decode(file_get_contents('php://input'), true);
+// The code is one shared word: without a limit it could be guessed by script.
+enforceRateLimit('voucher-validate', 20, 3600);
+
+$input = json_decode(file_get_contents('php://input', false, null, 0, 8192), true);
 if (!is_array($input)) {
     http_response_code(400);
     echo json_encode(['error' => 'Invalid request body']);
     exit;
 }
 
-$code  = trim($input['code'] ?? '');
-$email = trim($input['email'] ?? '');
+$code  = limitText($input['code'] ?? '', 64);
+$email = limitText($input['email'] ?? '', 254);
 
 if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     echo json_encode(['valid' => false, 'discountPercent' => 0, 'reason' => 'Bitte zuerst eine gültige E-Mail-Adresse eingeben.']);

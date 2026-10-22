@@ -12,24 +12,29 @@
  *   < 7 days / no-show        →  100 % fee (0 % refund)
  */
 
-session_start();
-
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/smtp.php';
+require_once __DIR__ . '/security.php';
+
+startSecureSession('storno_admin');
+sendHtmlSecurityHeaders();
 
 // ---------------------------------------------------------------------------
 // Auth
 // ---------------------------------------------------------------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['pw'])) {
-    if (hash_equals(STORNO_ADMIN_PW, $_POST['pw'])) {
+    // 10 attempts per 15 minutes and IP, so the password cannot be guessed by script
+    enforceRateLimit('storno-login', 10, 900, false);
+    if (is_string($_POST['pw']) && hash_equals(STORNO_ADMIN_PW, $_POST['pw'])) {
+        session_regenerate_id(true);
         $_SESSION['storno_admin'] = true;
     } else {
         $loginError = true;
     }
 }
-if (isset($_POST['logout'])) {
+if (isset($_POST['logout']) && csrfValid()) {
     session_destroy();
-    header('Location: ' . $_SERVER['PHP_SELF']);
+    header('Location: storno-direkt.php');
     exit;
 }
 $loggedIn = !empty($_SESSION['storno_admin']);
@@ -234,13 +239,23 @@ $sent      = false;
 $sendError = null;
 
 if ($loggedIn && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send'])) {
-    $guestName     = trim($_POST['guest_name'] ?? '');
-    $guestEmail    = trim($_POST['guest_email'] ?? '');
-    $arrivalDate   = trim($_POST['arrival_date'] ?? '');
-    $totalRaw      = trim($_POST['total'] ?? '');
-    $paymentMethod = trim($_POST['payment_method'] ?? '');
-    $bookingRef    = trim($_POST['booking_ref'] ?? '');
+    $guestName     = limitText($_POST['guest_name'] ?? '', 120);
+    $guestEmail    = limitText($_POST['guest_email'] ?? '', 254);
+    $arrivalDate   = limitText($_POST['arrival_date'] ?? '', 10);
+    $totalRaw      = limitText($_POST['total'] ?? '', 20);
+    $paymentMethod = limitText($_POST['payment_method'] ?? '', 40);
+    $bookingRef    = limitText($_POST['booking_ref'] ?? '', 60);
 
+    if (!csrfValid()) {
+        $sendError = 'Sitzung abgelaufen. Bitte die Seite neu laden und erneut senden.';
+    } elseif (!filter_var($guestEmail, FILTER_VALIDATE_EMAIL)) {
+        $sendError = 'Bitte eine gültige E-Mail-Adresse eingeben.';
+    } elseif (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $arrivalDate) || !strtotime($arrivalDate)) {
+        $sendError = 'Bitte ein gültiges Anreisedatum eingeben.';
+    }
+}
+
+if ($loggedIn && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send']) && $sendError === null) {
     $total            = (float) str_replace(',', '.', $totalRaw);
     $storno           = calcStorno($arrivalDate, $total);
     $arrivalFormatted = (new DateTime($arrivalDate))->format('d.m.Y');
@@ -321,7 +336,7 @@ $sel = fn(string $k, string $val) => (($_POST[$k] ?? '') === $val) ? ' selected'
 <?php elseif ($sent): ?>
 
   <div class="ok">Stornierungsbestätigung wurde erfolgreich gesendet.</div>
-  <a href="<?= htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES) ?>">← Neue Stornierung</a>
+  <a href="storno-direkt.php">← Neue Stornierung</a>
 
 <?php else: ?>
 
@@ -332,6 +347,7 @@ $sel = fn(string $k, string $val) => (($_POST[$k] ?? '') === $val) ? ' selected'
   <h1>Stornierungsbestätigung senden</h1>
 
   <form method="post">
+    <input type="hidden" name="csrf" value="<?= htmlspecialchars(csrfToken(), ENT_QUOTES, 'UTF-8') ?>">
     <label for="guest_name">Name des Gastes</label>
     <input type="text" id="guest_name" name="guest_name" required value="<?= $v('guest_name') ?>">
 
@@ -363,6 +379,7 @@ $sel = fn(string $k, string $val) => (($_POST[$k] ?? '') === $val) ? ' selected'
 
   <form method="post" style="margin-top:16px;text-align:right;">
     <input type="hidden" name="logout" value="1">
+    <input type="hidden" name="csrf" value="<?= htmlspecialchars(csrfToken(), ENT_QUOTES, 'UTF-8') ?>">
     <button class="btn btn-sm" type="submit">Abmelden</button>
   </form>
 

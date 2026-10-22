@@ -6,9 +6,13 @@
  * Called by admin (Simone) via links in the notification email.
  * GET  ?token=xxx&action=accept|decline  → shows preview page with confirm button
  * POST ?token=xxx&action=accept|decline  → sends guest email, marks booking handled
+ *
+ * GET never changes anything: mail security scanners open every link in a
+ * mail, and would otherwise accept (or decline) a booking on their own.
  */
 
 require_once __DIR__ . '/smtp.php';
+require_once __DIR__ . '/security.php';
 
 $bookingsDir = __DIR__ . '/bookings';
 $adminEmail  = 'kontakt@pension-volgenandt.de';
@@ -359,7 +363,7 @@ function buildDeclineEmail(array $booking, array $parsed): string {
 // Simple admin response page
 // ---------------------------------------------------------------------------
 function adminPage(string $title, string $message, string $color = '#3d5a3e'): void {
-    header('Content-Type: text/html; charset=UTF-8');
+    sendHtmlSecurityHeaders();
     echo '<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '</title>
@@ -379,8 +383,8 @@ function adminPage(string $title, string $message, string $color = '#3d5a3e'): v
 // ---------------------------------------------------------------------------
 // Main logic
 // ---------------------------------------------------------------------------
-$token  = trim($_GET['token'] ?? $_POST['token'] ?? '');
-$action = trim($_GET['action'] ?? $_POST['action'] ?? '');
+$token  = trim((string) ($_POST['token'] ?? $_GET['token'] ?? ''));
+$action = trim((string) ($_POST['action'] ?? $_GET['action'] ?? ''));
 
 if ($token === '' || !preg_match('/^[a-f0-9]{32}$/', $token)) {
     adminPage('Ungültiger Link', 'Dieser Link ist ungültig oder abgelaufen.', '#c0392b');
@@ -394,7 +398,13 @@ if (!file_exists($file)) {
     adminPage('Buchung nicht gefunden', 'Diese Buchung existiert nicht oder wurde bereits bearbeitet.', '#c0392b');
 }
 
-$booking = json_decode(file_get_contents($file), true);
+// Lock the booking file so two clicks (or a scanner plus a click) cannot both
+// send a mail. The lock is released when the script ends.
+$bookingFp = fopen($file, 'r+');
+if ($bookingFp === false || !flock($bookingFp, LOCK_EX)) {
+    adminPage('Fehler', 'Buchungsdaten konnten nicht gelesen werden.', '#c0392b');
+}
+$booking = json_decode(stream_get_contents($bookingFp), true);
 if (!is_array($booking)) {
     adminPage('Fehler', 'Buchungsdaten konnten nicht gelesen werden.', '#c0392b');
 }
@@ -413,7 +423,28 @@ if (($booking['status'] ?? 'pending') !== 'pending') {
 $parsed = parseBookingMessage($booking['message'] ?? '');
 
 // ---------------------------------------------------------------------------
-// Execute action immediately (GET or POST)
+// GET → confirmation page only
+// ---------------------------------------------------------------------------
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    $isAccept = $action === 'accept';
+    $esc      = fn (string $v): string => htmlspecialchars($v, ENT_QUOTES, 'UTF-8');
+    adminPage(
+        $isAccept ? 'Buchung bestätigen?' : 'Buchung ablehnen?',
+        '<strong>Gast:</strong> ' . $esc($booking['name'] ?? '') . '<br>'
+        . '<strong>Datum:</strong> ' . $esc($parsed['datum'] ?: ($booking['bookingDate'] ?? '')) . '<br>'
+        . '<strong>Paket:</strong> ' . $esc($parsed['paket']) . '<br><br>'
+        . '<form method="post" style="margin:0;">'
+        . '<input type="hidden" name="token" value="' . $esc($token) . '">'
+        . '<input type="hidden" name="action" value="' . $esc($action) . '">'
+        . '<button type="submit" style="background:' . ($isAccept ? '#3d5a3e' : '#c0392b') . ';color:#fff;border:none;'
+        . 'padding:12px 24px;border-radius:6px;font-size:15px;font-weight:700;cursor:pointer;">'
+        . ($isAccept ? '&#9989; Ja, bestätigen' : '&#10060; Ja, ablehnen') . '</button></form>',
+        $isAccept ? '#3d5a3e' : '#c0392b'
+    );
+}
+
+// ---------------------------------------------------------------------------
+// POST → execute action
 // ---------------------------------------------------------------------------
 if ($action === 'accept') {
     $emailHtml    = buildConfirmationEmail($booking, $parsed, $packageContents);
@@ -445,7 +476,10 @@ if (!$result['ok']) {
 // Mark as handled
 $booking['status']    = $action === 'accept' ? 'accepted' : 'declined';
 $booking['handledAt'] = date('c');
-file_put_contents($file, json_encode($booking, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+ftruncate($bookingFp, 0);
+rewind($bookingFp);
+fwrite($bookingFp, json_encode($booking, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+fflush($bookingFp);
 
 // Decrement blocked-dates if declined
 if ($action === 'decline' && !empty($booking['bookingDate'])) {

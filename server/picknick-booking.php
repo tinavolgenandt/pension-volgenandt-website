@@ -14,6 +14,7 @@
 
 require_once __DIR__ . '/smtp.php'; // also loads config.php
 require_once __DIR__ . '/vouchers.php';
+require_once __DIR__ . '/security.php';
 
 // ---------------------------------------------------------------------------
 // Config (credentials come from config.php via smtp.php)
@@ -41,27 +42,29 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+enforceRateLimit('picknick-booking', 10, 3600);
+
 // ---------------------------------------------------------------------------
 // Parse + validate input
 // ---------------------------------------------------------------------------
-$input = json_decode(file_get_contents('php://input'), true);
+$input = json_decode(file_get_contents('php://input', false, null, 0, 65536), true);
 if (!is_array($input)) {
     http_response_code(400);
     echo json_encode(['error' => 'Invalid request body']);
     exit;
 }
 
-$paypalOrderId = trim($input['paypalOrderId'] ?? '');
+$paypalOrderId = limitText($input['paypalOrderId'] ?? '', 64);
 $amount        = floatval($input['amount'] ?? 0);
-$name          = trim($input['name'] ?? '');
-$email         = trim($input['email'] ?? '');
-$phone         = trim($input['phone'] ?? '');
-$message       = trim($input['message'] ?? '');
-$subject       = trim($input['_subject'] ?? '');
-$bookingDate   = trim($input['bookingDate'] ?? '');
-$bookingTime   = trim($input['bookingTime'] ?? '');
-$voucherCode   = trim($input['voucherCode'] ?? '');
-$gotcha        = trim($input['_gotcha'] ?? '');
+$name          = limitText($input['name'] ?? '', 120);
+$email         = limitText($input['email'] ?? '', 254);
+$phone         = limitText($input['phone'] ?? '', 40);
+$message       = limitText($input['message'] ?? '', 5000);
+$subject       = limitText($input['_subject'] ?? '', 150);
+$bookingDate   = limitText($input['bookingDate'] ?? '', 10);
+$bookingTime   = limitText($input['bookingTime'] ?? '', 5);
+$voucherCode   = limitText($input['voucherCode'] ?? '', 64);
+$gotcha        = limitText($input['_gotcha'] ?? '', 200);
 
 if ($gotcha !== '') {
     echo json_encode(['ok' => true]);
@@ -70,6 +73,10 @@ if ($gotcha !== '') {
 
 $errors = [];
 if ($paypalOrderId === '') $errors[] = ['field' => 'paypalOrderId', 'message' => 'PayPal Order-ID fehlt.'];
+// The ID goes into the PayPal API path, so only PayPal's own format is allowed.
+elseif (!preg_match('/^[A-Z0-9]{10,32}$/', $paypalOrderId)) $errors[] = ['field' => 'paypalOrderId', 'message' => 'Ungültige PayPal Order-ID.'];
+if ($bookingDate !== '' && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $bookingDate)) $errors[] = ['field' => 'bookingDate', 'message' => 'Ungültiges Datum.'];
+if ($bookingTime !== '' && !preg_match('/^\d{2}:\d{2}$/', $bookingTime)) $errors[] = ['field' => 'bookingTime', 'message' => 'Ungültige Uhrzeit.'];
 if ($name === '') $errors[] = ['field' => 'name', 'message' => 'Name fehlt.'];
 if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = ['field' => 'email', 'message' => 'Ungültige E-Mail-Adresse.'];
 if ($message === '') $errors[] = ['field' => 'message', 'message' => 'Buchungsdetails fehlen.'];
@@ -150,6 +157,37 @@ if (abs($paidAmount - $amount) > 0.01) {
 $transactionId = $order['purchase_units'][0]['payments']['captures'][0]['id'] ?? $paypalOrderId;
 
 // ---------------------------------------------------------------------------
+// One booking per PayPal order. Without this, one paid order could be sent
+// again and again to create bookings and block picnic dates.
+// ---------------------------------------------------------------------------
+if (!is_dir(SECURITY_DATA_DIR)) {
+    @mkdir(SECURITY_DATA_DIR, 0750, true);
+}
+$usedOrdersFile = SECURITY_DATA_DIR . '/used-paypal-orders.json';
+// The guest has already paid at this point: if the file cannot be opened,
+// take the booking anyway instead of losing it.
+$ordersFp = @fopen($usedOrdersFile, 'c+');
+if ($ordersFp !== false) {
+    flock($ordersFp, LOCK_EX);
+    $usedOrders = json_decode(stream_get_contents($ordersFp), true);
+    if (!is_array($usedOrders)) $usedOrders = [];
+    if (isset($usedOrders[$paypalOrderId])) {
+        flock($ordersFp, LOCK_UN);
+        fclose($ordersFp);
+        http_response_code(409);
+        echo json_encode(['error' => 'Diese Zahlung wurde bereits für eine Buchung verwendet.']);
+        exit;
+    }
+    $usedOrders[$paypalOrderId] = date('c');
+    ftruncate($ordersFp, 0);
+    rewind($ordersFp);
+    fwrite($ordersFp, json_encode($usedOrders, JSON_PRETTY_PRINT));
+    fflush($ordersFp);
+    flock($ordersFp, LOCK_UN);
+    fclose($ordersFp);
+}
+
+// ---------------------------------------------------------------------------
 // Store booking with unique token
 // ---------------------------------------------------------------------------
 if (!is_dir($bookingsDir)) {
@@ -196,24 +234,30 @@ file_put_contents("$bookingsDir/$token.json", json_encode($booking, JSON_PRETTY_
 // ---------------------------------------------------------------------------
 // Log to CSV
 // ---------------------------------------------------------------------------
-$logFile = __DIR__ . '/inquiry-log.csv';
-$fp = @fopen($logFile, 'a');
-if ($fp) {
-    if (filesize($logFile) === 0) {
-        fputcsv($fp, ['timestamp', 'token', 'name', 'email', 'type', 'amount']);
-    }
-    fputcsv($fp, [date('Y-m-d H:i:s'), $token, $name, $email, $subject ?: 'Picknick-Buchung', $paidAmount]);
-    fclose($fp);
-}
+// Same columns as send-mail.php. Never log the booking token: it is the only
+// key to the accept/decline/cancel links.
+appendInquiryLog(
+    ['timestamp', 'name', 'email', 'type', 'origin'],
+    [date('Y-m-d H:i:s'), $name, $email, $subject ?: 'Picknick-Buchung', 'picknick-booking']
+);
 
 // ---------------------------------------------------------------------------
 // Update blocked dates
 // ---------------------------------------------------------------------------
 if ($bookingDate !== '') {
     $blockedFile = __DIR__ . '/blocked-dates.json';
-    $blockedData = file_exists($blockedFile) ? json_decode(file_get_contents($blockedFile), true) : [];
-    $blockedData[$bookingDate] = ($blockedData[$bookingDate] ?? 0) + 1;
-    file_put_contents($blockedFile, json_encode($blockedData, JSON_PRETTY_PRINT));
+    $blockedFp   = fopen($blockedFile, 'c+');
+    if ($blockedFp) {
+        flock($blockedFp, LOCK_EX);
+        $blockedData = json_decode(stream_get_contents($blockedFp), true);
+        if (!is_array($blockedData)) $blockedData = [];
+        $blockedData[$bookingDate] = ($blockedData[$bookingDate] ?? 0) + 1;
+        ftruncate($blockedFp, 0);
+        rewind($blockedFp);
+        fwrite($blockedFp, json_encode($blockedData, JSON_PRETTY_PRINT));
+        flock($blockedFp, LOCK_UN);
+        fclose($blockedFp);
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -362,7 +406,7 @@ $adminHtml = '<!DOCTYPE html>
       </tr>
     </table>
     <p style="margin:14px 0 0;font-size:12px;color:#aaa;text-align:center;">
-      Diese Links sind einmalig verwendbar. Nach dem Klick wird automatisch eine E-Mail an den Gast gesendet.
+      Diese Links sind einmalig verwendbar. Nach dem Klick bestätigst du noch einmal, erst dann geht die E-Mail an den Gast.
     </p>
   </td></tr>
 
@@ -380,7 +424,7 @@ sendSmtp(
     $adminEmail,          // to (admin)
     '🧺 Neue Picknick-Anfrage: ' . $name . ' – ' . $bookingDate,
     $adminHtml,
-    htmlspecialchars($name, ENT_QUOTES, 'UTF-8'), $email, // reply-to guest
+    $name, $email, // reply-to guest (sendSmtp encodes the name)
     '', true
 );
 

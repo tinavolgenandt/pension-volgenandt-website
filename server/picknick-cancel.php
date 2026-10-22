@@ -8,12 +8,13 @@
  */
 
 require_once __DIR__ . '/smtp.php';
+require_once __DIR__ . '/security.php';
 
 $bookingsDir = __DIR__ . '/bookings';
 $adminEmail  = 'kontakt@pension-volgenandt.de';
 
 function adminPage(string $title, string $message, string $color = '#3d5a3e'): void {
-    header('Content-Type: text/html; charset=UTF-8');
+    sendHtmlSecurityHeaders();
     echo '<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '</title>
@@ -104,7 +105,7 @@ function buildCancellationEmail(array $booking, array $parsed): string {
 }
 
 // --- Main logic ---
-$token = trim($_GET['token'] ?? $_POST['token'] ?? '');
+$token = trim((string) ($_POST['token'] ?? $_GET['token'] ?? ''));
 
 if ($token === '' || !preg_match('/^[a-f0-9]{32}$/', $token)) {
     adminPage('Ung&uuml;ltiger Link', 'Dieser Link ist ung&uuml;ltig.', '#c0392b');
@@ -136,7 +137,7 @@ $tok    = htmlspecialchars($token, ENT_QUOTES, 'UTF-8');
 
 // GET → confirmation page
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Content-Type: text/html; charset=UTF-8');
+    sendHtmlSecurityHeaders();
     echo '<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Buchung stornieren &ndash; Pension Volgenandt</title>

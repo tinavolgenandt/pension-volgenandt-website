@@ -745,7 +745,8 @@ function isInvoiceNumberUsed(string $num, string $excludeToken): bool {
  * already used by another draft — callers must not proceed on false.
  */
 function tryAssignInvoiceNumber(array &$draft, string $requestedNumber, string $draftPath): bool {
-    if (!preg_match('/^(\d{4})-(\d{3,})$/', $requestedNumber, $m)) {
+    // \z, not $: $ would also accept a trailing newline
+    if (!preg_match('/^(\d{4})-(\d{3,})\z/', $requestedNumber, $m)) {
         return false;
     }
     $year  = (int)$m[1];
