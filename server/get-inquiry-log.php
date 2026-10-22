@@ -5,19 +5,24 @@
  */
 
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/security.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
-$apiKey      = $_GET['key'] ?? '';
+// Prefer the X-Api-Key header: a key in the URL ends up in server logs.
+// ?key= still works for existing callers.
+$apiKey      = (string) ($_SERVER['HTTP_X_API_KEY'] ?? $_GET['key'] ?? '');
 $expectedKey = INQUIRY_LOG_API_KEY;
 
-if ($apiKey === '' || $apiKey !== $expectedKey) {
+enforceRateLimit('inquiry-log', 30, 3600);
+
+if ($apiKey === '' || $expectedKey === '' || $expectedKey === 'CHANGE_ME' || !hash_equals($expectedKey, $apiKey)) {
     http_response_code(403);
     echo json_encode(['error' => 'Unauthorized']);
     exit;
 }
 
-$logFile = __DIR__ . '/inquiry-log.csv';
+$logFile = inquiryLogPath();
 
 if (!file_exists($logFile) || filesize($logFile) === 0) {
     echo json_encode(['entries' => []]);

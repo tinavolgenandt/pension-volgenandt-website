@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { useJsonLd } from '~/composables/useJsonLd'
+import { t } from '~/utils/translations'
+
+const { locale } = useLocale()
 
 definePageMeta({
   breadcrumb: { label: 'Picknick-Korb' },
@@ -375,17 +378,23 @@ onBeforeUnmount(() => gardenObserver?.disconnect())
             </a>
           </div>
         </div>
-        <!-- Google Maps Embed -->
-        <div class="mt-8 overflow-hidden rounded-lg shadow-sm">
+        <!-- Google Maps Embed (loads only after consent, as the privacy policy promises) -->
+        <AttractionsMapConsent
+          class="mt-8 shadow-sm"
+          height="h-64 md:h-80"
+          placeholder-image="/img/map/kontakt-placeholder.webp"
+          :placeholder-alt="t('map.directionsPlaceholderAlt', locale)"
+        >
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500!2d10.322024!3d51.4122668!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a4e7f6898bd1e7%3A0xba82640946e15fd5!2sPension%20Volgenandt!5e0!3m2!1sde!2sde!4v1"
-            class="h-64 w-full md:h-80"
+            class="h-full w-full"
             style="border: 0"
             allowfullscreen
             loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
+            referrerpolicy="strict-origin-when-cross-origin"
+            title="Google Maps: Pension Volgenandt"
           />
-        </div>
+        </AttractionsMapConsent>
       </div>
     </section>
 

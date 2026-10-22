@@ -27,17 +27,15 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // ---------------------------------------------------------------------------
-// Validate webhook secret (when configured)
-// Skip validation if secret is not yet set (Phase 0 setup)
+// Validate webhook secret. Without a configured secret the endpoint stays
+// closed, so a missing config line can never open it to everyone.
 // ---------------------------------------------------------------------------
-$secret = INVOICE_WEBHOOK_SECRET;
-if ($secret !== '') {
-    $provided = $_SERVER['HTTP_X_INVOICE_SECRET'] ?? '';
-    if (!hash_equals($secret, $provided)) {
-        http_response_code(403);
-        echo json_encode(['error' => 'Unauthorized']);
-        exit;
-    }
+$secret   = INVOICE_WEBHOOK_SECRET;
+$provided = (string) ($_SERVER['HTTP_X_INVOICE_SECRET'] ?? '');
+if ($secret === '' || $secret === 'CHANGE_ME' || !hash_equals($secret, $provided)) {
+    http_response_code(403);
+    echo json_encode(['error' => 'Unauthorized']);
+    exit;
 }
 
 // ---------------------------------------------------------------------------

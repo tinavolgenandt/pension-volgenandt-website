@@ -47,6 +47,21 @@ function sendSmtp(string $host, int $port, string $user, string $pass, string $f
     $cc           = str_replace(["\r", "\n"], '', $cc);
     $bcc          = str_replace(["\r", "\n"], '', $bcc);
 
+    // Envelope addresses must not smuggle extra SMTP syntax ("a>, <b").
+    foreach ([$from, $to, $cc, $bcc, $replyToEmail] as $address) {
+        if ($address !== '' && !filter_var($address, FILTER_VALIDATE_EMAIL)) {
+            return ['ok' => false, 'error' => 'Invalid e-mail address'];
+        }
+    }
+
+    // The display name comes from form input: encode it so quotes, commas or
+    // angle brackets cannot add extra Reply-To addresses.
+    $encodedReplyToName = '=?UTF-8?B?' . base64_encode($replyToName) . '?=';
+
+    // A bare CR or LF next to a dot can end the DATA section early on some
+    // servers (SMTP smuggling). Normalise every line ending to LF first.
+    $body = str_replace(["\r\n", "\r"], "\n", $body);
+
     $errno = 0;
     $errstr = '';
     $conn = @stream_socket_client("tcp://$host:$port", $errno, $errstr, 15);
@@ -162,7 +177,7 @@ function sendSmtp(string $host, int $port, string $user, string $pass, string $f
         $msgHeaders = "From: Simone & Ralf Volgenandt <$from>\r\n"
             . "To: $to\r\n"
             . ($cc !== '' ? "Cc: $cc\r\n" : '')
-            . "Reply-To: $replyToName <$replyToEmail>\r\n"
+            . "Reply-To: $encodedReplyToName <$replyToEmail>\r\n"
             . "Subject: $encodedSubject\r\n"
             . "Date: $date\r\n"
             . "MIME-Version: 1.0\r\n"
@@ -170,7 +185,7 @@ function sendSmtp(string $host, int $port, string $user, string $pass, string $f
             . "Content-Transfer-Encoding: 8bit\r\n"
             . "X-Mailer: PensionVolgenandt/1.0\r\n";
 
-        $bodyLines = explode("\n", str_replace("\r\n", "\n", $body));
+        $bodyLines = explode("\n", $body);
         $escapedBody = '';
         foreach ($bodyLines as $line) {
             if (strpos($line, '.') === 0) {

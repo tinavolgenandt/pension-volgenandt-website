@@ -7,9 +7,11 @@
  * accept / decline / cancel actions.
  */
 
-session_start();
-
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/security.php';
+
+startSecureSession('pk_admin');
+sendHtmlSecurityHeaders();
 
 $bookingsDir = __DIR__ . '/bookings';
 $confirmBase = 'https://api.pension-volgenandt.de/picknick-confirm.php';
@@ -17,15 +19,18 @@ $cancelBase  = 'https://api.pension-volgenandt.de/picknick-cancel.php';
 
 // --- Auth ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['pw'])) {
-    if (hash_equals(PICKNICK_ADMIN_PW, $_POST['pw'])) {
+    // 10 attempts per 15 minutes and IP, so the password cannot be guessed by script
+    enforceRateLimit('picknick-admin-login', 10, 900, false);
+    if (is_string($_POST['pw']) && hash_equals(PICKNICK_ADMIN_PW, $_POST['pw'])) {
+        session_regenerate_id(true);
         $_SESSION['pk_admin'] = true;
     } else {
         $loginError = true;
     }
 }
-if (isset($_POST['logout'])) {
+if (isset($_POST['logout']) && csrfValid()) {
     session_destroy();
-    header('Location: ' . $_SERVER['PHP_SELF']);
+    header('Location: picknick-admin.php');
     exit;
 }
 
@@ -103,7 +108,6 @@ function rowBg(string $status): string {
     };
 }
 
-header('Content-Type: text/html; charset=UTF-8');
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -167,6 +171,7 @@ a.contact:hover { text-decoration: underline; }
   </div>
   <?php if ($loggedIn): ?>
   <form method="post" style="margin:0;">
+    <input type="hidden" name="csrf" value="<?= htmlspecialchars(csrfToken(), ENT_QUOTES, 'UTF-8') ?>">
     <button class="logout-btn" name="logout" value="1">Abmelden</button>
   </form>
   <?php endif; ?>

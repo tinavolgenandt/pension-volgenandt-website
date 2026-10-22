@@ -7,6 +7,7 @@
  */
 
 require_once __DIR__ . '/smtp.php';
+require_once __DIR__ . '/security.php';
 
 // ---------------------------------------------------------------------------
 // Configuration
@@ -52,10 +53,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+// Anyone can post here, and a partner inquiry also mails the partner. Keep a
+// script from using us to flood our inboxes or theirs.
+enforceRateLimit('send-mail', 5, 600);
+
 // ---------------------------------------------------------------------------
 // Parse input
 // ---------------------------------------------------------------------------
-$input = json_decode(file_get_contents('php://input'), true);
+$input = json_decode(file_get_contents('php://input', false, null, 0, 65536), true);
 
 if (!is_array($input)) {
     http_response_code(400);
@@ -63,25 +68,25 @@ if (!is_array($input)) {
     exit;
 }
 
-$name           = trim($input['name'] ?? '');
-$email          = trim($input['email'] ?? '');
-$phone          = trim($input['phone'] ?? '');
-$message        = trim($input['message'] ?? '');
-$gotcha         = trim($input['_gotcha'] ?? '');
-$customSubject  = trim($input['_subject'] ?? '');
-$partnerKey     = trim($input['_partner'] ?? '');
+$name           = limitText($input['name'] ?? '', 120);
+$email          = limitText($input['email'] ?? '', 254);
+$phone          = limitText($input['phone'] ?? '', 40);
+$message        = limitText($input['message'] ?? '', 10000);
+$gotcha         = limitText($input['_gotcha'] ?? '', 200);
+$customSubject  = limitText($input['_subject'] ?? '', 150);
+$partnerKey     = limitText($input['_partner'] ?? '', 64);
 $partnerEmail   = $partnerEmails[$partnerKey] ?? null;
-$topic          = trim($input['_topic'] ?? '');
+$topic          = limitText($input['_topic'] ?? '', 32);
 $internalTo     = $topicRecipients[$topic] ?? $recipientEmail;
 
-$occasion       = trim($input['occasion'] ?? '');
-$eventDate      = trim($input['date'] ?? '');
-$guests         = trim($input['guests'] ?? '');
-$hours          = trim($input['hours'] ?? '');
-$startTime      = trim($input['startTime'] ?? '');
-$cateringTier   = trim($input['cateringTier'] ?? '');
-$notes          = trim($input['notes'] ?? '');
-$partnerMessage = trim($input['partnerMessage'] ?? '');
+$occasion       = limitText($input['occasion'] ?? '', 120);
+$eventDate      = limitText($input['date'] ?? '', 40);
+$guests         = limitText($input['guests'] ?? '', 10);
+$hours          = limitText($input['hours'] ?? '', 10);
+$startTime      = limitText($input['startTime'] ?? '', 10);
+$cateringTier   = limitText($input['cateringTier'] ?? '', 120);
+$notes          = limitText($input['notes'] ?? '', 5000);
+$partnerMessage = limitText($input['partnerMessage'] ?? '', 5000);
 
 // ---------------------------------------------------------------------------
 // Honeypot – if filled, silently pretend success (bot trap)
@@ -227,23 +232,14 @@ if ($isPartnerInquiry) {
 $result = sendSmtp($smtpHost, $smtpPort, $smtpUser, $smtpPass, $recipientEmail, $internalTo, $subject, $body, $name, $email ?: $internalTo);
 
 if ($result['ok']) {
-    // Log inquiry to CSV for statistics collection
-    $logFile = __DIR__ . '/inquiry-log.csv';
-    $logLine = [
+    // Log inquiry to CSV for statistics collection (data/, not web-reachable)
+    appendInquiryLog(['timestamp', 'name', 'email', 'type', 'origin'], [
         date('Y-m-d H:i:s'),
         $name,
         $email,
         $customSubject !== '' ? $customSubject : ($isPartnerInquiry ? 'Catering-Anfrage' : 'Kontaktanfrage'),
         $_SERVER['HTTP_REFERER'] ?? '',
-    ];
-    $fp = @fopen($logFile, 'a');
-    if ($fp) {
-        if (@filesize($logFile) === 0 || !file_exists($logFile)) {
-            fputcsv($fp, ['timestamp', 'name', 'email', 'type', 'origin']);
-        }
-        fputcsv($fp, $logLine);
-        fclose($fp);
-    }
+    ]);
 
     echo json_encode(['ok' => true]);
 } else {

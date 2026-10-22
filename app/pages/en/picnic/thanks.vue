@@ -13,10 +13,29 @@ useSeoMeta({
 })
 
 const route = useRoute()
-const betrag = computed(() => Number(route.query.betrag) || 0)
-const personen = computed(() => Number(route.query.personen) || 0)
+// Values come from the URL: only show what a real booking can produce, so a
+// crafted link cannot put arbitrary text or amounts on our page.
+const betrag = computed(() => {
+  const value = Number(route.query.betrag) || 0
+  return value > 0 && value <= 250 ? value : 0
+})
+const personen = computed(() => {
+  const value = Number(route.query.personen) || 0
+  return Number.isInteger(value) && value > 0 && value <= 20 ? value : 0
+})
 const paket = computed(() => String(route.query.paket || ''))
-const txn = computed(() => String(route.query.txn || ''))
+const txn = computed(() => {
+  const value = String(route.query.txn || '')
+  return /^[A-Z0-9]{6,32}$/.test(value) ? value : ''
+})
+
+// Only show a package name we actually sell
+const { data: packagesData } = await useAsyncData('thanks-packages', () =>
+  queryCollection('picknickPackages').first(),
+)
+const selectedPackage = computed(() =>
+  (packagesData.value?.items ?? []).find((p) => p.name === paket.value),
+)
 </script>
 
 <template>
@@ -37,9 +56,9 @@ const txn = computed(() => String(route.query.txn || ''))
     <div v-if="betrag > 0" class="mt-10 rounded-xl bg-waldhonig-50 p-6 text-left">
       <h2 class="font-serif text-xl font-semibold text-sage-900">Your Request</h2>
       <dl class="mt-4 space-y-2 text-sm">
-        <div v-if="paket" class="flex justify-between">
+        <div v-if="selectedPackage" class="flex justify-between">
           <dt class="text-sage-600">Package</dt>
-          <dd class="font-medium text-sage-900">{{ paket }}</dd>
+          <dd class="font-medium text-sage-900">{{ selectedPackage.name }}</dd>
         </div>
         <div v-if="personen" class="flex justify-between">
           <dt class="text-sage-600">Guests</dt>
