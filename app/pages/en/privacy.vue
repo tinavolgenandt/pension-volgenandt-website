@@ -431,9 +431,10 @@ useSeoMeta({
         <p class="mt-2">
           Wenn Sie über den Preisrechner auf unserer Seite „Feiern im Garten“ eine Feier anfragen,
           wählen Sie dort einen Catering-Partner und auf Wunsch Torte oder Pâtisserie aus. Damit die
-          Partner Ihnen ein Angebot machen können, leiten wir Ihren Namen, Ihre Kontaktdaten, die
-          Eckdaten Ihrer Feier und Ihre Auswahl an den jeweiligen Partner weiter. Unsere eigenen
-          Preise und die Gesamtsumme geben wir nicht weiter. Empfänger sind derzeit der Grillverein
+          Partner uns ein Angebot für Sie machen können, leiten wir Ihren Namen, die Eckdaten Ihrer
+          Feier und Ihre Auswahl an den jeweiligen Partner weiter. Ihre E-Mail-Adresse, Ihre
+          Telefonnummer, unsere eigenen Preise und die Gesamtsumme geben wir nicht weiter. Das
+          Angebot des Partners erhalten Sie von uns. Empfänger sind derzeit der Grillverein
           Thalwenden und die LaMaru Pâtisserie in Duderstadt. Die Weitergabe erfolgt zur
           Durchführung vorvertraglicher Maßnahmen auf Ihre Anfrage hin (Art. 6 Abs. 1 lit. b DSGVO).
         </p>

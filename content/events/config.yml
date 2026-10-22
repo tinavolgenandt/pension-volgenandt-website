@@ -108,7 +108,8 @@ basePackage:
 # Grillverein Thalwenden: ECHTES Angebot (Preisübersicht Stand 2026-08), 4
 # Genusswelten, Preis pro Person sinkt mit der Gästezahl (Grillservice inkl.
 # Personal; 2 Mitarbeiter bis 50 Gäste inklusive; Getränke nicht enthalten).
-# priceBands = Preise des Grillvereins OHNE unseren Aufschlag.
+# priceBands = Preise des Grillvereins OHNE unseren Aufschlag. roundUpTo: 1
+# rundet den Gästepreis auf volle Euro auf (34,90 € + 10 % = 38,39 € → 39 €).
 #
 # Anja kocht (Anja Randau, Witzenhausen): liefert wegen der Entfernung (60 km)
 # erst ab 80 Gästen (Mail vom 23.07.2026). Noch kein Preisangebot.
@@ -119,6 +120,7 @@ cateringTiers:
     partnerName: Grillverein Thalwenden
     partnerUrl: https://grillverein-thalwenden.de/
     markupPercent: 10
+    roundUpTo: 1
     label: Classic – Der Klassiker
     image: /img/events/partner-grillverein-steak.webp
     imageAlt: Steaks und Bratwurst brutzeln auf dem Grill des Grillverein Thalwenden
@@ -139,6 +141,7 @@ cateringTiers:
     partnerName: Grillverein Thalwenden
     partnerUrl: https://grillverein-thalwenden.de/
     markupPercent: 10
+    roundUpTo: 1
     label: Signature – Unsere besondere Auswahl
     image: /img/events/partner-grillverein-grillplatte.webp
     imageAlt: Große Grillplatte mit Fisch, Spießen, Bratwurst und Burgern
@@ -159,6 +162,7 @@ cateringTiers:
     partnerName: Grillverein Thalwenden
     partnerUrl: https://grillverein-thalwenden.de/
     markupPercent: 10
+    roundUpTo: 1
     label: Prestige – Premium vom Grill
     image: /img/events/partner-grillverein-team.webp
     imageAlt: Team des Grillverein Thalwenden mit Grillstand im Garten
@@ -179,6 +183,7 @@ cateringTiers:
     partnerName: Grillverein Thalwenden
     partnerUrl: https://grillverein-thalwenden.de/
     markupPercent: 10
+    roundUpTo: 1
     label: Élite – Das außergewöhnliche Grillerlebnis
     image: /img/events/partner-grillverein-detail.webp
     imageAlt: Grillstation des Grillverein Thalwenden mit Gemüsespießen und Beilagen

@@ -138,8 +138,8 @@ if (!empty($errors)) {
 // Every inquiry reaches us as a plain-text mail with the full message
 // (kontakt@, or events@ for event inquiries), including our package price.
 // The caterer and the patisserie the guest chose each get a separate HTML mail
-// with only their own part and their own price, never ours (CC to events@, so
-// we see their reply to the guest).
+// with only their own part and their own price, never ours, and without the
+// guest's e-mail or phone. Their reply comes to events@, never to the guest.
 $partnerMails = [];
 if (isset($partnerEmails[$partnerKey], $partnerNames[$partnerKey])) {
     $partnerMails[] = [
@@ -184,9 +184,9 @@ $row = static fn (string $label, string $value): string =>
     . "<td style=\"padding: 6px 0;\">$value</td></tr>";
 
 // One partner mail; $job comes from $partnerMails above.
-$buildPartnerBody = static function (array $job, string $greeting) use ($esc, $row, $name, $email, $phone, $occasion, $eventDate, $guests, $hours, $startTime, $notes): string {
-    $safeName   = $esc($name);
-    $safeEmail  = $esc($email);
+// Partners never get the guest's e-mail or phone: their offer comes to us and
+// we pass it on (see Reply-To below).
+$buildPartnerBody = static function (array $job, string $greeting) use ($esc, $row, $name, $occasion, $eventDate, $guests, $hours, $startTime, $notes): string {
     $notesBlock = $notes !== ''
         ? "<h3 style=\"font-size: 15px; margin: 24px 0 8px;\">Wünsche und Notizen</h3><p style=\"margin: 0;\">" . nl2br($esc($notes)) . "</p>"
         : '';
@@ -210,13 +210,7 @@ $buildPartnerBody = static function (array $job, string $greeting) use ($esc, $r
         . $row('Beginn', $esc($startTime ? "$startTime Uhr" : '–'))
         . $row('Dauer', $esc($hours ? "ca. $hours Stunden" : '–'))
         . $row($esc($job['kind']), $esc($job['choice']))
-        . "</table>
-
-    <h3 style=\"font-size: 15px; margin: 24px 0 8px;\">Kontakt</h3>
-    <table style=\"width: 100%; border-collapse: collapse;\">"
-        . $row('Name', $safeName)
-        . $row('E-Mail', "<a href=\"mailto:$safeEmail\" style=\"color: #4a5d3f;\">$safeEmail</a>")
-        . $row('Telefon', $esc($phone ?: '–'))
+        . $row('Angefragt von', $esc($name))
         . "</table>
 
     $notesBlock
@@ -227,7 +221,7 @@ $buildPartnerBody = static function (array $job, string $greeting) use ($esc, $r
     <p style=\"margin: 0;\">Pension Volgenandt, Otto-Reutter-Straße 28, 37327 Leinefelde-Worbis OT Breitenbach.<br>
     {$kitchenLine}Ansprechpartnerin vor Ort: Tina Volgenandt, 0176 55229201, events@pension-volgenandt.de</p>
 
-    <p style=\"margin-top: 24px;\">Wenn ihr auf diese Mail antwortet, geht die Antwort direkt an {$safeName}. Wir stehen in Kopie.</p>
+    <p style=\"margin-top: 24px;\">Bitte schickt euer Angebot an uns, nicht an den Gast. Eine Antwort auf diese Mail geht an events@pension-volgenandt.de, wir geben das Angebot weiter.</p>
     <p>Viele Grüße aus Breitenbach<br>Tina Volgenandt</p>
   </div>
 </body>
@@ -247,7 +241,8 @@ foreach ($partnerMails as $job) {
         : "$subjectPrefix {$job['kind']}-Anfrage: " . ($occasion ?: 'Feier im Garten') . ($details ? ' (' . implode(', ', $details) . ')' : '');
     $partnerBody = $buildPartnerBody($job, $partnerGreetings[$job['key']] ?? $partnerName);
 
-    $partnerResult = sendSmtp($smtpHost, $smtpPort, $smtpUser, $smtpPass, $recipientEmail, $partnerEmail, $partnerSubject, $partnerBody, $name, $email, $eventsEmail, true);
+    // Reply-To is always our events inbox, never the guest
+    $partnerResult = sendSmtp($smtpHost, $smtpPort, $smtpUser, $smtpPass, $recipientEmail, $partnerEmail, $partnerSubject, $partnerBody, 'Pension Volgenandt', $eventsEmail, $eventsEmail, true);
     $forwardNotes .= $partnerResult['ok']
         ? "An $partnerName weitergeleitet ($partnerEmail), ohne unsere Preise.\r\n"
         : "ACHTUNG: Weiterleitung an $partnerName fehlgeschlagen. Bitte selbst weitergeben.\r\n";

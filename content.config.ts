@@ -329,6 +329,8 @@ const eventCateringTierSchema = z.object({
   priceBands: z.array(eventPriceBandSchema).min(1).optional(),
   // Our markup on this partner's prices; falls back to cateringMarkupPercent
   markupPercent: z.number().optional(),
+  // Round the guest price up to this step in euros (1 = whole euros)
+  roundUpTo: z.number().optional(),
   ...eventOptionMediaFields,
 })
 

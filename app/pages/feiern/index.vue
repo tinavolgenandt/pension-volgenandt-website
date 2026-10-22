@@ -288,8 +288,7 @@ function chooseOccasion(id: string) {
           <p class="text-sm leading-relaxed text-sage-700">
             <strong class="text-sage-900">Unsere Planungs-App:</strong> Nach der Buchung sehen Sie
             dort jederzeit, wie weit die Planung ist: was erledigt ist, was als Nächstes ansteht,
-            den Ablauf Ihres Tages und die Kosten. Pflegen müssen Sie dort nichts. Wenn Sie möchten,
-            halten Sie Gästeliste und Zimmerverteilung gleich dort fest.
+            den Ablauf Ihres Tages und die Kosten.
           </p>
         </div>
       </div>

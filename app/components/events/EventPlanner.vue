@@ -1013,8 +1013,9 @@ const inputClass =
           </button>
           <p class="text-center text-xs leading-relaxed text-sage-500">
             Ihre Angaben nutze ich nur für Ihre Anfrage. Damit unsere Partner ein Angebot machen
-            können, schicke ich Name, Kontaktdaten und Ihre Auswahl auch an den Caterer und, falls
-            gewählt, an die Konditorei. Mehr dazu in der
+            können, schicke ich Ihren Namen und Ihre Auswahl an den Caterer und, falls gewählt, an
+            die Konditorei. E-Mail und Telefonnummer gebe ich nicht weiter, das Angebot bekommen Sie
+            von mir. Mehr dazu in der
             <NuxtLink to="/datenschutz/" class="underline hover:text-sage-700"
               >Datenschutzerklärung</NuxtLink
             >.
