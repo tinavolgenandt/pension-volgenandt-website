@@ -95,7 +95,7 @@ basePackage:
     - Endreinigung nach der Feier
     - Stromversorgung für die Musik direkt aus dem Haus
     - Garage als Catering-Küche
-    - Zugang zu unserer Planungs-App
+    - 'Unsere Planungs-App: Stand der Planung, Ablauf und Kosten jederzeit im Blick'
 
 # Catering läuft IMMER über einen unserer Partner (kein hauseigenes Catering).
 # Jede Stufe nennt ihren Partner. `partner` bestimmt, an wen die Anfrage geht:
@@ -424,7 +424,10 @@ decorationOptions:
 # 20.10.2026, PDF in .planning/partners/. Preis pro Gast inkl. Pâtisserie,
 # Einwegverpackung, Lieferung zur Pension und 7 % USt. Mindestbestellung über
 # 20 Personen, daher minGuests: 21. priceBands = LaMaru-Preise OHNE unseren
-# Aufschlag. Die Festtorte hat noch kein Angebot.
+# Aufschlag; roundUpTo: 1 rundet den Gästepreis auf volle Euro auf (16,90 € +
+# 10 % = 18,59 € → 19 €). Die Festtorte hat noch kein Angebot.
+# partner: lamaru-patisserie → send-mail.php schickt Maryna eine eigene Mail
+# mit ihrer Auswahl und ihrem Preis (ohne unseren Aufschlag).
 cakeOptions:
   - id: keine
     label: Keine Torte
@@ -432,9 +435,11 @@ cakeOptions:
     detail: Kuchen/Torte organisieren Sie selbst. Diese Position bleibt bei 0 €.
     pricePerPerson: 0
   - id: lamaru-klassik
+    partner: lamaru-patisserie
     partnerName: LaMaru Pâtisserie, Duderstadt
     partnerUrl: https://lamaru-patisserie.de/
     markupPercent: 10
+    roundUpTo: 1
     minGuests: 21
     label: Klassik – 3 Kreationen pro Gast
     description: >-
@@ -443,9 +448,11 @@ cakeOptions:
       - maxGuests: 999
         pricePerPerson: 16.9
   - id: lamaru-auslese
+    partner: lamaru-patisserie
     partnerName: LaMaru Pâtisserie, Duderstadt
     partnerUrl: https://lamaru-patisserie.de/
     markupPercent: 10
+    roundUpTo: 1
     minGuests: 21
     label: Auslese – 4 Kreationen pro Gast
     description: >-
@@ -455,9 +462,11 @@ cakeOptions:
       - maxGuests: 999
         pricePerPerson: 21.9
   - id: lamaru-meisterstueck
+    partner: lamaru-patisserie
     partnerName: LaMaru Pâtisserie, Duderstadt
     partnerUrl: https://lamaru-patisserie.de/
     markupPercent: 10
+    roundUpTo: 1
     minGuests: 21
     label: Meisterstück – 5 Kreationen pro Gast
     description: >-
@@ -467,9 +476,11 @@ cakeOptions:
       - maxGuests: 999
         pricePerPerson: 27.9
   - id: lamaru-kroenung
+    partner: lamaru-patisserie
     partnerName: LaMaru Pâtisserie, Duderstadt
     partnerUrl: https://lamaru-patisserie.de/
     markupPercent: 10
+    roundUpTo: 1
     minGuests: 21
     label: Krönung – 6 Kreationen pro Gast
     description: >-
@@ -478,6 +489,7 @@ cakeOptions:
       - maxGuests: 999
         pricePerPerson: 32.9
   - id: torte
+    partner: lamaru-patisserie
     partnerName: LaMaru Pâtisserie, Duderstadt
     partnerUrl: https://lamaru-patisserie.de/
     label: Festtorte

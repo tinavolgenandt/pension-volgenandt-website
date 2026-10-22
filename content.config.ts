@@ -370,6 +370,10 @@ const eventPerPersonChoiceSchema = z.object({
   // plus markupPercent (falls back to cateringMarkupPercent), as for catering
   priceBands: z.array(eventPriceBandSchema).min(1).optional(),
   markupPercent: z.number().optional(),
+  // Round the guest price up to this step in euros (1 = whole euros)
+  roundUpTo: z.number().optional(),
+  // Partner key the enquiry is also mailed to (see server/send-mail.php)
+  partner: z.string().optional(),
   ...eventOptionMediaFields,
 })
 

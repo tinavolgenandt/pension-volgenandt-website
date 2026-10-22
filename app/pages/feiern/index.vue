@@ -124,29 +124,29 @@ const impressions = [
   },
 ]
 
-// One card per partner (caterers, patisserie), name and picture only. A partner
-// without a photo gets an icon panel of the same height; `url` links the name
-// to the partner's site.
+// One card per partner (caterers, patisserie): the partner's own logo (taken
+// from their website) and name, both linking to their site. width/height are
+// the logo files' real sizes.
 const cateringPartners = [
   {
     name: 'Grillverein Thalwenden',
-    image: '/img/events/partner-grillverein-team.webp',
-    imageAlt: 'Grillmeister des Grillverein Thalwenden in seinem Catering-Zelt',
-    icon: '',
+    logo: '/img/events/partner-grillverein-logo.webp',
+    width: 243,
+    height: 218,
     url: 'https://grillverein-thalwenden.de/',
   },
   {
     name: 'Anja kocht',
-    image: '',
-    imageAlt: '',
-    icon: 'ph:cooking-pot-duotone',
+    logo: '/img/events/partner-anjakocht-logo.webp',
+    width: 427,
+    height: 95,
     url: 'https://www.anjakocht.de/',
   },
   {
     name: 'LaMaru Pâtisserie',
-    image: '/img/events/partner-lamaru-konditorei.webp',
-    imageAlt: 'Konditorin der LaMaru Pâtisserie streicht eine Schokoladentorte glatt',
-    icon: '',
+    logo: '/img/events/partner-lamaru-logo.webp',
+    width: 480,
+    height: 358,
     url: 'https://lamaru-patisserie.de/',
   },
 ]
@@ -286,8 +286,10 @@ function chooseOccasion(id: string) {
         >
           <Icon name="ph:device-mobile-duotone" class="mt-0.5 size-7 shrink-0 text-waldhonig-500" />
           <p class="text-sm leading-relaxed text-sage-700">
-            <strong class="text-sage-900">Unsere Planungs-App:</strong> Nach der Buchung pflegen Sie
-            dort Gästeliste und Zimmerverteilung und sehen Ablaufplan und Kosten.
+            <strong class="text-sage-900">Unsere Planungs-App:</strong> Nach der Buchung sehen Sie
+            dort jederzeit, wie weit die Planung ist: was erledigt ist, was als Nächstes ansteht,
+            den Ablauf Ihres Tages und die Kosten. Pflegen müssen Sie dort nichts. Wenn Sie möchten,
+            halten Sie Gästeliste und Zimmerverteilung gleich dort fest.
           </p>
         </div>
       </div>
@@ -356,21 +358,26 @@ function chooseOccasion(id: string) {
             :key="partner.name"
             class="flex flex-col overflow-hidden rounded-xl bg-white"
           >
-            <NuxtImg
-              v-if="partner.image"
-              :src="partner.image"
-              :alt="partner.imageAlt"
-              class="h-48 w-full object-cover"
-              width="1600"
-              height="1067"
-              loading="lazy"
-            />
-            <div v-else class="flex h-48 items-center justify-center bg-sage-100">
-              <Icon :name="partner.icon" class="size-16 text-waldhonig-500" />
-            </div>
-            <h3 class="p-5 text-center font-serif text-xl font-semibold text-sage-900">
+            <!-- Logo links too; hidden from screen readers, the name below is the link -->
+            <a
+              :href="partner.url"
+              target="_blank"
+              rel="noopener"
+              tabindex="-1"
+              aria-hidden="true"
+              class="flex h-48 items-center justify-center p-8"
+            >
+              <img
+                :src="partner.logo"
+                alt=""
+                :width="partner.width"
+                :height="partner.height"
+                class="max-h-full w-auto max-w-full object-contain"
+                loading="lazy"
+              />
+            </a>
+            <h3 class="px-5 pb-5 text-center font-serif text-xl font-semibold text-sage-900">
               <a
-                v-if="partner.url"
                 :href="partner.url"
                 target="_blank"
                 rel="noopener"
@@ -378,7 +385,6 @@ function chooseOccasion(id: string) {
               >
                 {{ partner.name }}
               </a>
-              <template v-else>{{ partner.name }}</template>
             </h3>
           </article>
         </div>
