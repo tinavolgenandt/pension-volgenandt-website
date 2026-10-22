@@ -124,14 +124,14 @@ const impressions = [
   },
 ]
 
-// One card per partner (caterers, patisserie): the partner's own logo (taken
-// from their website) and name, both linking to their site. width/height are
-// the logo files' real sizes.
+// One entry per partner (caterers, patisserie): the partner's own logo (taken
+// from their website, transparent so it sits on the section colour) and name,
+// both linking to their site. width/height are the logo files' real sizes.
 const cateringPartners = [
   {
     name: 'Grillverein Thalwenden',
     logo: '/img/events/partner-grillverein-logo.webp',
-    width: 243,
+    width: 242,
     height: 218,
     url: 'https://grillverein-thalwenden.de/',
   },
@@ -343,7 +343,7 @@ function chooseOccasion(id: string) {
       />
     </div>
 
-    <!-- 7. Partner (Catering, Pâtisserie): gleich gewichtet, je eine Karte -->
+    <!-- 7. Partner (Catering, Pâtisserie): gleich gewichtet, je Logo und Name -->
     <section class="bg-sage-50 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-5xl">
         <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">Unsere Partner</h2>
@@ -355,7 +355,7 @@ function chooseOccasion(id: string) {
           <article
             v-for="partner in cateringPartners"
             :key="partner.name"
-            class="flex flex-col overflow-hidden rounded-xl bg-white"
+            class="flex flex-col"
           >
             <!-- Logo links too; hidden from screen readers, the name below is the link -->
             <a
