@@ -352,11 +352,7 @@ function chooseOccasion(id: string) {
           wie große Feste. Torten und Pâtisserie kommen von LaMaru, einer Konditorei in Duderstadt.
         </p>
         <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <article
-            v-for="partner in cateringPartners"
-            :key="partner.name"
-            class="flex flex-col"
-          >
+          <article v-for="partner in cateringPartners" :key="partner.name" class="flex flex-col">
             <!-- Logo links too; hidden from screen readers, the name below is the link -->
             <a
               :href="partner.url"
