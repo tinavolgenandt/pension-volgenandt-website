@@ -124,8 +124,9 @@ const impressions = [
   },
 ]
 
-// One card per caterer, name and picture only. A partner without a photo gets
-// an icon panel of the same height; `url` links the name to the partner's site.
+// One card per partner (caterers, patisserie), name and picture only. A partner
+// without a photo gets an icon panel of the same height; `url` links the name
+// to the partner's site.
 const cateringPartners = [
   {
     name: 'Grillverein Thalwenden',
@@ -140,6 +141,13 @@ const cateringPartners = [
     imageAlt: '',
     icon: 'ph:cooking-pot-duotone',
     url: 'https://www.anjakocht.de/',
+  },
+  {
+    name: 'LaMaru Pâtisserie',
+    image: '/img/events/partner-lamaru-konditorei.webp',
+    imageAlt: 'Konditorin der LaMaru Pâtisserie streicht eine Schokoladentorte glatt',
+    icon: '',
+    url: 'https://lamaru-patisserie.de/',
   },
 ]
 
@@ -334,17 +342,15 @@ function chooseOccasion(id: string) {
       />
     </div>
 
-    <!-- 7. Catering-Partner: gleich gewichtet, je eine Karte -->
+    <!-- 7. Partner (Catering, Pâtisserie): gleich gewichtet, je eine Karte -->
     <section class="bg-sage-50 px-6 py-12 md:py-16">
       <div class="mx-auto max-w-5xl">
-        <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">
-          Unsere Catering-Partner
-        </h2>
+        <h2 class="mb-2 text-center font-serif text-3xl font-bold text-sage-900">Unsere Partner</h2>
         <p class="mb-10 text-center text-sage-600">
-          Beide Partner haben schon viele Veranstaltungen ausgerichtet, kleine Familienfeiern ebenso
-          wie große Feste.
+          Beide Caterer haben schon viele Veranstaltungen ausgerichtet, kleine Familienfeiern ebenso
+          wie große Feste. Torten und Pâtisserie kommen von LaMaru, einer Konditorei in Duderstadt.
         </p>
-        <div class="grid gap-6 sm:grid-cols-2">
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <article
             v-for="partner in cateringPartners"
             :key="partner.name"

@@ -366,6 +366,10 @@ const eventPerPersonChoiceSchema = z.object({
   pricePerPerson: z.number().optional(),
   // Partner who supplies it, shown above the label (e.g. the patisserie)
   partnerName: z.string().optional(),
+  // Partner offer instead of our own price: the partner's per-person price
+  // plus markupPercent (falls back to cateringMarkupPercent), as for catering
+  priceBands: z.array(eventPriceBandSchema).min(1).optional(),
+  markupPercent: z.number().optional(),
   ...eventOptionMediaFields,
 })
 

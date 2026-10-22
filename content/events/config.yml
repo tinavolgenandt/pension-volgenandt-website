@@ -2,13 +2,14 @@
 #
 # PREISE (Stand 2026-10-18): Der Rechner nennt nur Preise, hinter denen ein
 # echtes Angebot oder unsere eigene Kalkulation steht:
-#   - cateringTiers mit priceBands: echtes Angebot eines Partners (bisher nur
-#     Grillverein Thalwenden, Preisübersicht 2026-08). Eingetragen sind die
-#     Preise des Partners, der Rechner schlägt den Aufschlag darauf
-#     (markupPercent der Stufe, sonst cateringMarkupPercent). Der Partner
-#     sieht in seiner Mail nur seinen eigenen Preis.
+#   - Optionen mit priceBands: echtes Angebot eines Partners (Grillverein
+#     Thalwenden, Preisübersicht 2026-08; LaMaru Pâtisserie, Eventkollektionen
+#     2026-10). Eingetragen sind die Preise des Partners, der Rechner schlägt
+#     den Aufschlag darauf (markupPercent der Option, sonst
+#     cateringMarkupPercent). Ein Catering-Partner sieht in seiner Mail nur
+#     seinen eigenen Preis.
 #   - basePackage und drinkOptions: unsere eigenen Preise.
-# Alles von Dritten ohne Angebot (Zelt, Fotograf, Musik, Deko, Torte, Fotobox,
+# Alles von Dritten ohne Angebot (Zelt, Fotograf, Musik, Deko, Festtorte, Fotobox,
 # Styling, Mobiliar, Kaffee & Kuchen) steht mit `onRequest: true` und ohne
 # Preis drin: Gäste können es auswählen, der Preis kommt ins persönliche
 # Angebot. Liegt ein Angebot vor: `onRequest` entfernen, `price` bzw.
@@ -33,7 +34,6 @@
 #   - decorationOptions.klassisch     → deko-klassisch.webp
 #   - decorationOptions.premium       → deko-premium.webp
 #   - cakeOptions.torte               → torte-festtorte.webp
-#   - cakeOptions.torte_sweet         → torte-sweet-table.webp
 #   - photoboothOptions.fotobox       → fotobox.webp
 #   - stylingOptions.braut            → styling-braut.webp
 #   - stylingOptions.braut_partner    → styling-braut-partner.webp
@@ -419,14 +419,64 @@ decorationOptions:
       Blumenschmuck für Tische, Zelt und Eingang.
     onRequest: true
 
-# Torte & Sweet Table: keine / Hochzeitstorte / Torte + Sweet Table. Pro Person.
-# (Markt 2026: Hochzeitstorte ~4–6 €/Stück, Candy/Sweet Table zusätzlich.)
+# Torte & Pâtisserie: keine / 4 Eventkollektionen von LaMaru / Festtorte.
+# LaMaru Pâtisserie (Maryna Hefel, Duderstadt): ECHTES Angebot, Mail vom
+# 20.10.2026, PDF in .planning/partners/. Preis pro Gast inkl. Pâtisserie,
+# Einwegverpackung, Lieferung zur Pension und 7 % USt. Mindestbestellung über
+# 20 Personen, daher minGuests: 21. priceBands = LaMaru-Preise OHNE unseren
+# Aufschlag. Die Festtorte hat noch kein Angebot.
 cakeOptions:
   - id: keine
     label: Keine Torte
     description: Sie bringen Ihre eigene Torte mit oder verzichten darauf.
     detail: Kuchen/Torte organisieren Sie selbst. Diese Position bleibt bei 0 €.
     pricePerPerson: 0
+  - id: lamaru-klassik
+    partnerName: LaMaru Pâtisserie, Duderstadt
+    partnerUrl: https://lamaru-patisserie.de/
+    markupPercent: 10
+    minGuests: 21
+    label: Klassik – 3 Kreationen pro Gast
+    description: >-
+      Petit Fours, Honig-Törtchen und Éclairs. Frisch geliefert, ab 21 Gästen.
+    priceBands:
+      - maxGuests: 999
+        pricePerPerson: 16.9
+  - id: lamaru-auslese
+    partnerName: LaMaru Pâtisserie, Duderstadt
+    partnerUrl: https://lamaru-patisserie.de/
+    markupPercent: 10
+    minGuests: 21
+    label: Auslese – 4 Kreationen pro Gast
+    description: >-
+      Petit Fours, Honig-Törtchen mit Mascarpone-Creme, Éclairs und
+      Biskuitrolle, zum Beispiel Zitrone. Frisch geliefert, ab 21 Gästen.
+    priceBands:
+      - maxGuests: 999
+        pricePerPerson: 21.9
+  - id: lamaru-meisterstueck
+    partnerName: LaMaru Pâtisserie, Duderstadt
+    partnerUrl: https://lamaru-patisserie.de/
+    markupPercent: 10
+    minGuests: 21
+    label: Meisterstück – 5 Kreationen pro Gast
+    description: >-
+      Wie Auslese, dazu ein Korpustörtchen (Mango, Himbeere, Kaffee, Heidelbeere
+      oder Birne). Frisch geliefert, ab 21 Gästen.
+    priceBands:
+      - maxGuests: 999
+        pricePerPerson: 27.9
+  - id: lamaru-kroenung
+    partnerName: LaMaru Pâtisserie, Duderstadt
+    partnerUrl: https://lamaru-patisserie.de/
+    markupPercent: 10
+    minGuests: 21
+    label: Krönung – 6 Kreationen pro Gast
+    description: >-
+      Wie Meisterstück, dazu Macarons. Frisch geliefert, ab 21 Gästen.
+    priceBands:
+      - maxGuests: 999
+        pricePerPerson: 32.9
   - id: torte
     partnerName: LaMaru Pâtisserie, Duderstadt
     partnerUrl: https://lamaru-patisserie.de/
@@ -438,18 +488,6 @@ cakeOptions:
     detail: >-
       Größe, Geschmack und Optik stimme ich mit Ihnen ab. Die Torte richtet sich
       nach der Gästezahl.
-    onRequest: true
-  - id: torte_sweet
-    partnerName: LaMaru Pâtisserie, Duderstadt
-    partnerUrl: https://lamaru-patisserie.de/
-    label: Torte + Sweet Table
-    image: /img/events/torte-sweet-table.webp
-    imageAlt: Festtorte mit dekoriertem Sweet Table
-    description: >-
-      Festtorte und ein Sweet Table mit Cupcakes, Macarons und Pralinen.
-    detail: >-
-      Am Sweet Table bedienen sich Ihre Gäste den ganzen Tag. Kinder mögen ihn
-      besonders.
     onRequest: true
 
 # Fotobox: keine / Fotobox mit Requisiten. Fester Preis inkl. Aufbau & Betreuung.

@@ -197,8 +197,8 @@ const allOptionSteps = computed<WizardStep[]>(() => [
     groups: [{ key: 'tentId', unit: 'flat', legend: 'Festzelt', options: opts('tentOptions') }],
   },
   {
-    // All optional extras on one screen instead of six steps. None has a
-    // confirmed price yet, so they are shown compact (no photo, no detail).
+    // All optional extras on one screen instead of six steps, shown compact
+    // (no photo, no detail). Only the patisserie has a price so far.
     title: 'Weitere Wünsche',
     intro:
       'Fotograf, Musik, Deko, Torte, Fotobox und Styling vermitteln wir auf Wunsch. Wählen Sie, was Sie brauchen, ich nehme es ins Angebot auf.',
@@ -220,8 +220,8 @@ const allOptionSteps = computed<WizardStep[]>(() => [
       {
         key: 'cakeId',
         unit: 'person',
-        legend: 'Torte & Sweet Table',
-        options: opts('cakeOptions'),
+        legend: 'Torte & Pâtisserie',
+        options: forGuests(opts('cakeOptions')),
       },
       { key: 'photoboothId', unit: 'flat', legend: 'Fotobox', options: opts('photoboothOptions') },
       { key: 'stylingId', unit: 'flat', legend: 'Styling', options: opts('stylingOptions') },
